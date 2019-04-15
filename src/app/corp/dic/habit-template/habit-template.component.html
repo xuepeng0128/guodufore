@@ -1,0 +1,55 @@
+
+
+<div class="m-t-sm text-center" nz-row>
+  <div nz-col [nzSpan]="24" class="text-center">
+    <a href="javaScript:;" class="ant-btn ant-btn-primary" (click)="onQuery()">查询</a>
+    <a href="javaScript:;" class="ant-btn ant-btn-primary" (click)="onAdd()">添加</a>
+  </div>
+</div>
+<div class="m-t-sm" nz-row>
+  <div nz-col [nzSpan]="24">
+    <nz-table
+      #ajaxTable
+      nzBordered
+      nzShowSizeChanger
+      [nzFrontPagination]="false"
+      [nzData]="habitArray"
+    >
+      <thead >
+      <tr>
+        <th>序号</th>
+        <th>类别</th>
+        <th>习惯编号</th>
+        <th>习惯名称</th>
+        <th>描述</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of ajaxTable.data ;let no=index">
+        <td>{{no+1}}</td>
+        <td [ngSwitch]="data.habitClass">
+          <b *ngSwitchCase="1" > 德</b>
+          <b *ngSwitchCase="2" > 智</b>
+          <b *ngSwitchCase="3" > 体</b>
+          <b *ngSwitchCase="4" > 美</b>
+          <b *ngSwitchCase="5" > 劳</b>
+          <b *ngSwitchDefault> 劳</b>
+        </td>
+        <td>{{data.habitId}}</td>
+        <td>{{data.habitName}}</td>
+        <td>{{data.memo}}</td>
+
+        <td>
+          <a href="javaScript:;" *ngIf="user.supperAdmin " (click)="onEdit(data)">修改</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a href="javaScript:;" *ngIf="user.supperAdmin" (click)="onDelete(data)">删除</a>
+        </td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+
+<app-win-habit [habitWinOrder$]="habitWinOrder$" (onHabitSaved)="onSaved($event)"></app-win-habit>
+

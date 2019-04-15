@@ -1,0 +1,106 @@
+
+  <div nz-row>
+    <div nz-col [nzSpan]="8">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">学校编号</nz-form-label>
+        <nz-form-control [nzSpan]="15">
+          <input nz-input [(ngModel)]="queryParams.schoolId">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="8">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">学校名称</nz-form-label>
+        <nz-form-control [nzSpan]="15">
+          <input nz-input [(ngModel)]="queryParams.schoolName">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="8">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">地区</nz-form-label>
+        <nz-form-control [nzSpan]="15">
+          <app-district-select [(ngModel)]="queryParams.tradeId"></app-district-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row>
+    <div nz-col [nzSpan]="8">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">地址</nz-form-label>
+        <nz-form-control [nzSpan]="15">
+          <input nz-input [nzSize]="'default'" [(ngModel)]="queryParams.address" >
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="8">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">业务员</nz-form-label>
+        <nz-form-control [nzSpan]="15" >
+
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+  </div>
+
+  <div class="m-t-sm text-center" nz-row>
+    <div nz-col [nzSpan]="24" class="text-center">
+      <a href="javaScript:;" class="ant-btn ant-btn-primary" (click)="onQuery()">查询</a>
+      <a href="javaScript:;" class="ant-btn ant-btn-primary" (click)="onRegist()">新注册</a>
+      <a class="ant-btn ant-btn-primary m-l-xs" download="学校资源.xls" *ngIf="user.supperAdmin "  >excel导出</a>
+    </div>
+  </div>
+  <div class="m-t-sm" nz-row>
+    <div nz-col [nzSpan]="24">
+      <nz-table
+        #ajaxTable
+        nzBordered
+        nzShowSizeChanger
+        [nzFrontPagination]="false"
+        [nzData]="schoolList$| async "
+        [nzTotal]="total"
+        [(nzPageIndex)]="queryParams.pageNo"
+        [(nzPageSize)]="queryParams.pageSize"
+        (nzPageIndexChange)="onPageChange($event)"
+      >
+        <thead >
+        <tr>
+          <th>序号</th>
+          <th>学校编号</th>
+          <th>学校名称</th>
+          <th>市</th>
+          <th>区</th>
+          <th>地址</th>
+          <th>类型</th>
+          <th>业务员</th>
+          <th>注册时间</th>
+          <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let data of ajaxTable.data ;let no=index">
+          <td>{{no+1}}</td>
+          <td>{{data.schoolId}}</td>
+          <td>{{data.schoolName}}</td>
+          <td>{{data.district?.city.cityName}}</td>
+          <td>{{data.district?.districtName}}</td>
+          <td>{{data.address | cutSizePipe:18}}</td>
+          <td>{{data.schoolStyle==='1' ? '小学' :'初中'}}</td>
+          <td>{{data.saleMan?.employeeName}}</td>
+          <td>{{data.regTime | date: 'yyyy-MM-dd' }}</td>
+
+          <td>
+            <a href="javaScript:;" *ngIf="user.supperAdmin " (click)="onEdit(data)">修改</a>
+            <nz-divider nzType="vertical"></nz-divider>
+            <a href="javaScript:;" *ngIf="user.supperAdmin" (click)="onDelete(data)">删除</a>
+          </td>
+        </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+
+<app-win-school [schoolWinOrder$]="schoolWinOrder$" (onSchoolSaved)="onSaved($event)"></app-win-school>
+

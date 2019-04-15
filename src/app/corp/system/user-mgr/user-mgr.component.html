@@ -1,0 +1,62 @@
+
+<div nz-row>
+  <div nz-col [nzSpan]="6">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6">账号</nz-form-label>
+      <nz-form-control [nzSpan]="15">
+        <input nz-input [(ngModel)]="queryParams.paperId">
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  <div nz-col [nzSpan]="6">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6">姓名</nz-form-label>
+      <nz-form-control [nzSpan]="15">
+        <input nz-input [(ngModel)]="queryParams.schoolName">
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+</div>
+
+<div class="m-t-sm text-center" nz-row>
+  <div nz-col [nzSpan]="24" class="text-center">
+    <a href="javaScript:;" class="ant-btn ant-btn-primary" (click)="onQuery()">查询</a>
+    <a href="javaScript:;" class="ant-btn ant-btn-primary" (click)="onRegist()">新增</a>
+  </div>
+</div>
+<div class="m-t-sm" nz-row>
+  <div nz-col [nzSpan]="24">
+    <nz-table
+      #ajaxTable
+      nzBordered
+      nzShowSizeChanger
+      [nzFrontPagination]="false"
+      [nzData]="userArray$ | async"
+    >
+      <thead >
+      <tr>
+        <th>序号</th>
+        <th>账号</th>
+        <th>姓名</th>
+        <th>身份证</th>
+        <th>职务</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of ajaxTable.data ;let no=index">
+        <td>{{no+1}}</td>
+        <td>{{data.account}}</td>
+        <td>{{data.employee.employeeName}}</td>
+        <td>{{data.employee.paperId}}</td>
+        <td>{{data.employee.duty.corpDutyName}}</td>
+        <td>
+          <a href="javaScript:;" *ngIf="user.supperAdmin " (click)="onEdit(data)">修改</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a href="javaScript:;" *ngIf="user.supperAdmin" (click)="onDelete(data)">删除</a>
+        </td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>

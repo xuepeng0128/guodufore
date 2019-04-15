@@ -1,0 +1,5 @@
+
+<nz-select [nzSize]="'default'" [(ngModel)]="currentValue" >
+  <nz-option *ngFor="let item of districtArray " [nzLabel]="item.districtName" [nzValue]="item.districtId"></nz-option>
+</nz-select>
+
