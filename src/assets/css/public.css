@@ -1,0 +1,68 @@
+.m-t-xs{
+  margin-top:10px;
+}
+.m-t-sm{
+  margin-top: 15px;
+}
+.m-t-lg{
+  margin-top:30px;
+}
+.m-l-xs{
+  margin-left:10px;
+}
+.pull-right{
+  float:right !important;
+}
+.pull-left{
+  float:left;
+}
+.text-center{
+  text-align: center;
+}
+.text-left{
+  text-align: left;
+}
+.text-right{
+  text-align: right;
+}
+.text-nowrap{
+  white-space: nowrap;
+}
+.col-red{
+  color:red;
+}
+.ant-select, .ant-select ol, .ant-select ul{
+  width: 100%;
+}
+.ant-form-item {
+  margin: 0 0 10px !important;
+}
+[nz-button] {
+  margin-right: 8px;
+}
+.systable thead tr th{
+  text-align: center;
+}
+.ant-table-thead>tr>th {
+  background: #bde8fc;
+}
+.ant-modal-title {
+  color: #1890ff;
+}
+
+/*日期组件样式*/
+:root .ant-form-item-children,:root .ant-time-picker{
+  width:100%;
+}
+:root .ant-calendar-picker,:root .ant-time-picker {
+  width:100%;
+}
+:root .ant-calendar-picker,:root .ant-time-picker{
+  width:100%;
+}
+.print-table tr th ,.print-table tr td{
+  color:#333;
+  font-weight: 500;
+  padding:5px;
+}
+

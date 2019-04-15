@@ -1,0 +1,67 @@
+
+<nz-modal [(nzVisible)]="isSchoolModalShow"
+           [nzTitle]="'学校详细'"
+          [nzCancelText]="'关闭'"
+          (nzOnCancel)="isSchoolModalShow=false"
+          [nzOkText]="'保存'"
+          (nzOnOk)="onSave()"
+          [nzMaskClosable]="false"
+          [nzWidth]="800"
+>
+
+    <div nz-row>
+      <div nz-col [nzSpan]="12">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6">学校编号</nz-form-label>
+          <nz-form-control [nzSpan]="17">
+            <input nz-input [(ngModel)]="currentSchool.schoolId"  >
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="12">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6">学校名称</nz-form-label>
+          <nz-form-control [nzSpan]="17">
+            <input nz-input [(ngModel)]="currentSchool.schoolName" >
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row>
+      <div nz-col [nzSpan]="12">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6">所在市</nz-form-label>
+          <nz-form-control [nzSpan]="17">
+           {{currentSchool.district?.city.cityName}}
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="12">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6">所在区</nz-form-label>
+          <nz-form-control [nzSpan]="17">
+           <app-district-select [(ngModel)]="currentSchool.district"></app-district-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row>
+      <div nz-col [nzSpan]="12">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6">地址</nz-form-label>
+          <nz-form-control [nzSpan]="17">
+            <input nz-input [(ngModel)]="currentSchool.address" >
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="12">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6">业务员</nz-form-label>
+          <nz-form-control [nzSpan]="17">
+           <app-employee-select [ngModel]="currentSchool.saleMan?.paperId" ></app-employee-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+
+</nz-modal>

@@ -1,0 +1,51 @@
+
+<nz-modal [(nzVisible)]="isEmployeeModalShow"
+          [nzTitle]="'公司员工'"
+          [nzCancelText]="'关闭'"
+          (nzOnCancel)="isEmployeeModalShow=false"
+          [nzOkText]="'保存'"
+          (nzOnOk)="onSave()"
+          [nzMaskClosable]="false"
+          [nzWidth]="800"
+>
+
+    <div nz-row>
+      <div nz-col [nzSpan]="12">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6">身份证</nz-form-label>
+          <nz-form-control [nzSpan]="17">
+            <input nz-input [(ngModel)]="currentEmployee.paperId" >
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="12">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6">名称</nz-form-label>
+          <nz-form-control [nzSpan]="17">
+            <input nz-input [(ngModel)]="currentEmployee.employeeName"  >
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row>
+      <div nz-col [nzSpan]="12">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6">联系电话</nz-form-label>
+          <nz-form-control [nzSpan]="17">
+            <input nz-input [(ngModel)]="currentEmployee.tel" >
+
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="12">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6">职务</nz-form-label>
+          <nz-form-control [nzSpan]="17">
+            <app-corp-duty-select [(ngModel)]="currentEmployee.duty.corpDutyId" [defaultShow]="'请选择'"></app-corp-duty-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+
+
+</nz-modal>

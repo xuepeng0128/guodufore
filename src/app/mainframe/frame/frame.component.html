@@ -1,0 +1,39 @@
+
+<nz-layout class="layout">
+  <nz-header style="background: #2A6FA8;position:fixed; width:100%;z-index:999">
+    <h3 class="logo text-center" >麦 博 睿 微 习 惯 管 理 平 台</h3>
+  </nz-header>
+  <nz-layout>
+    <nz-sider [nzWidth]="200" style="background:#fff;overflow: auto; height: 100vh; position: fixed; left: 0;top:64px;">
+      <ul nz-menu [nzMode]="'inline'" style="height:100%">
+        <li nz-submenu *ngFor="let menu of menuArray$ |async ">
+          <span title><i class="anticon anticon-profile" [routerLink]="menu.url"></i>{{menu.menuName}}</span>
+          <ul>
+            <!--<li nz-menu-item *ngFor="let submenu of menu.subMenus" [routerLink]="submenu.url" [queryParams]="{power : submenu.opPower}"  [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" (click)="pareMenuName=menu.menuName;subMenuName=submenu.menuName;">{{submenu.menuName}}</li>-->
+            <li nz-menu-item *ngFor="let submenu of menu.subMenu"  >
+              <a [routerLink]="submenu.url" [queryParams]="{power : submenu.powers}"  [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" (click)="pareMenuName=menu.menuName;subMenuName=submenu.menuName;">{{submenu.menuName}}</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nz-sider>
+    <nz-layout style="padding:0 24px 24px;margin-left:200px;margin-top:64px;">
+      <nz-breadcrumb style="margin:16px 0;">
+        <nz-breadcrumb-item>{{pareMenuName}}</nz-breadcrumb-item>
+        <nz-breadcrumb-item>{{subMenuName}}</nz-breadcrumb-item>
+      </nz-breadcrumb>
+      <!--<nz-spin class="tip" [nzSize]="'large'" [nzTip]="'数据交互中...'" [nzDelay]="100" [nzSpinning]="loading">&ndash;&gt;-->
+      <nz-content style="background:#fff; padding: 24px;overflow: scroll" [ngStyle]="{'height':clientHeight +'px'}">
+
+            <router-outlet></router-outlet>
+
+      </nz-content>
+      <!--</nz-spin>-->
+    </nz-layout>
+  </nz-layout>
+  <nz-footer style="text-align: center;"></nz-footer>
+</nz-layout>
+
+
+
+

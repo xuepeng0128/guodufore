@@ -1,0 +1,81 @@
+
+
+<div class="m-t-sm text-center" nz-row>
+  <div nz-col [nzSpan]="24" class="text-center">
+    <a href="javaScript:;" class="ant-btn ant-btn-primary" (click)="onQuery()">查询</a>
+    <a href="javaScript:;" class="ant-btn ant-btn-primary" (click)="onAdd()">新增加</a>
+  </div>
+</div>
+<div class="m-t-sm" nz-row>
+  <div nz-col [nzSpan]="24">
+    <nz-table
+      #ajaxTable
+      nzBordered
+      nzShowSizeChanger
+      [nzFrontPagination]="false"
+      [nzData]="teacherdutyArray"
+    >
+      <thead >
+      <tr>
+        <th>序号</th>
+        <th>职务编号</th>
+        <th>职务名称</th>
+        <th>管理层</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of ajaxTable.data ;let no=index">
+        <td>{{no+1}}</td>
+        <td>{{data.teacherDutyId}}</td>
+        <td>{{data.teacherDutyName}}</td>
+        <td>{{data.master ? '是' :'否'}}</td>
+
+        <td>
+          <a href="javaScript:;" *ngIf="user.supperAdmin " (click)="onEdit(data)">修改</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a href="javaScript:;" *ngIf="user.supperAdmin" (click)="onDelete(data)">删除</a>
+        </td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+
+<nz-modal [(nzVisible)]="isTeacherDutyModalShow"
+          [nzTitle]="'公司职务'"
+          [nzCancelText]="'关闭'"
+          (nzOnCancel)="isTeacherDutyModalShow=false"
+          [nzOkText]="'保存'"
+          (nzOnOk)="onSave()"
+          [nzMaskClosable]="false"
+          [nzWidth]="500"
+>
+
+  <div nz-row>
+    <div nz-col [nzSpan]="8">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">编号</nz-form-label>
+        <nz-form-control [nzSpan]="17">
+          <input nz-input [(ngModel)]="currentTeacherDuty.teacherDutyId"  >
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="8">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">名称</nz-form-label>
+        <nz-form-control [nzSpan]="17">
+          <input nz-input [(ngModel)]="currentTeacherDuty.teacherDutyName" >
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="8">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="8">管理层</nz-form-label>
+        <nz-form-control [nzSpan]="12" [nzOffset]="4">
+          <label nz-checkbox [(ngModel)]="currentTeacherDuty.master"></label>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</nz-modal>

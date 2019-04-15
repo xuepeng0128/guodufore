@@ -1,0 +1,3 @@
+<nz-select [nzSize]="'default'" [(ngModel)]="currentValue" (change)="onValueSelected()">
+  <nz-option *ngFor="let item of schoolArray$ | async " [nzLabel]="item.schoolName" [nzValue]="item.schoolId"></nz-option>
+</nz-select>

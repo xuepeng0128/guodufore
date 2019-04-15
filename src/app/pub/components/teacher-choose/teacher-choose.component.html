@@ -1,0 +1,42 @@
+<nz-modal [(nzVisible)]="isTeacherChooseModalShow"
+          [nzTitle]="'选择教师'"
+          [nzCancelText]="'关闭'"
+          (nzOnCancel)="isTeacherChooseModalShow=false"
+          [nzOkText]="'保存'"
+          (nzOnOk)="onMulChoose()"
+          [nzMaskClosable]="false"
+          [nzWidth]="800"
+>
+  <div nz-col [nzSpan]="24">
+  <input nz-input  placeholder="输入名称过滤教师" [(ngModel)]="entFilter" >
+  </div>
+  <div nz-col [nzSpan]="24">
+    <nz-table
+      #ajaxTable_teacher
+      nzBordered
+      [nzScroll]="{ y: '240px' }"
+      [nzHideOnSinglePage]="true"
+      [nzFrontPagination]="false"
+      [nzData]="teacherList"
+    >
+      <thead>
+      <tr>
+        <th nzWidth="5%" *ngIf="!singleChoose" ></th>
+        <th>身份证号</th>
+        <th>名称</th>
+        <th>职务</th>
+        <th *ngIf="singleChoose">选择</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of ajaxTable_teacher.data  | arrayTextFilter: {keyName: 'teacherName', filterText: entFilter} ;let no=index   ">
+        <td align="center" nzShowCheckbox [(nzChecked)]="data.choosed" (nzCheckedChange)="refreshStatus_usually()" *ngIf="!singleChoose"></td>
+        <td align="center">{{data.paperId}}</td>
+        <td align="center">{{data.teacherName}}</td>
+        <td align="center">{{data.teacherDuty.teacherDutyName}}</td>
+        <td align="center" *ngIf="singleChoose"><a href="javascript:;"  (click)="onSingleChoose(data)">[选择]</a> </td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</nz-modal>

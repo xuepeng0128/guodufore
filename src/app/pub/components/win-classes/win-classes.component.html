@@ -1,0 +1,94 @@
+
+<nz-modal [(nzVisible)]="isClassesModalShow"
+          [nzTitle]="'班级'"
+          [nzCancelText]="'关闭'"
+          (nzOnCancel)="isClassesModalShow=false"
+          [nzOkText]="'保存'"
+          (nzOnOk)="onSave()"
+          [nzMaskClosable]="false"
+          [nzWidth]="800"
+>
+
+    <div nz-row>
+      <div nz-col [nzSpan]="8">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6">学籍</nz-form-label>
+          <nz-form-control [nzSpan]="17">
+           <app-year-select [(ngModel)]="currentClasses.grade"></app-year-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="8">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6">班级</nz-form-label>
+          <nz-form-control [nzSpan]="17">
+            <nz-input-number [(ngModel)]="currentClasses.classes" [nzMin]="1" [nzMax]="10" [nzStep]="1"></nz-input-number>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="8">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6">班主任</nz-form-label>
+          <nz-form-control [nzSpan]="17">
+            <input nz-input [value]="currentClasses.headmaster.teacherName" [readonly]="true" >
+            <i nz-icon type="minus-circle-o" class="dynamic-add-button" (click)="chooseTeacher()"></i>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row>
+      <div nz-col [nzSpan]="24">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6">代课老师</nz-form-label>
+          <nz-form-control [nzSpan]="17" >
+            <nz-tag *ngFor="let t of currentClasses.assTeachers" nzMode="checkable" [nzChecked]="true" (nzOnClose)="onRemoveAssTeacher(t)" >{{t.teacherName}}</nz-tag>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  <div nz-row>
+    <div nz-col [nzSpan]="24">
+      <a [href]="templateFilePath" > [模板下载]</a>
+      <nz-upload nzAction="/api/school/basemsg/student/importStudent"   (nzChange)="handleDataChange($event)">
+        <button nz-button><i nz-icon type="upload"></i><span>导入</span></button>
+      </nz-upload>
+    </div>
+  </div>
+  <div nz-row>
+    <div nz-col [nzSpan]="24">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">学生</nz-form-label>
+        <nz-form-control [nzSpan]="17">
+          <nz-table
+            #ajaxTable_student
+            nzBordered
+            [nzScroll]="{ y: '240px' }"
+            [nzHideOnSinglePage]="true"
+            [nzFrontPagination]="false"
+            [nzScroll]="{ y: '240px' }"
+            [nzData]="currentClasses.students"
+          >
+            <thead>
+            <tr>
+              <th>身份证号</th>
+              <th>名称</th>
+              <th>电话</th>
+              <th>住址</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let data of ajaxTable_student.data">
+              <td align="center">{{data.paperId}}</td>
+              <td align="center">{{data.studentName}}</td>
+              <td align="center">{{data.tel}}</td>
+              <td align="center">{{data.address}}</td>
+            </tr>
+            </tbody>
+          </nz-table>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+
+</nz-modal>
+<app-teacher-choose [teacherChooseSign$]="teacherChooseSign$" (onTeacherChoosed)="onTeacherChoosed($event)" ></app-teacher-choose>
