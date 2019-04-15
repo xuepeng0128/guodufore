@@ -3,9 +3,11 @@ import {from, Observable, of} from 'rxjs';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
 
 
+
 import {distinct, flatMap, map, mergeScan, takeLast} from 'rxjs/operators';
 import {Nation} from '../../../entity/Nation';
 import {NationService} from '../../../shared/service/dic/nation.service';
+
 
 @Component({
   selector: 'app-city-select',
@@ -22,7 +24,9 @@ export class CitySelectComponent implements OnInit {
   @Input() defaultShow: string;
   // 当选择的值发生变化，激发事件
   @Output() onValueChanged: EventEmitter<any> = new EventEmitter<any>();
+
   cityArray$: Observable<Array<Nation>>;
+
   private _CURRENTVALUE = '0'; // 市州选择 ngModel
   private onValueChangeCallBack: any = {};
 
@@ -49,6 +53,7 @@ export class CitySelectComponent implements OnInit {
 
   registerOnTouched(fn: any): void {
   }
+
   constructor(private  nationsvr: NationService) { }
 
   ngOnInit() {
@@ -56,6 +61,7 @@ export class CitySelectComponent implements OnInit {
       map( (re: Array<Nation> ) => [
         new Nation({nationId : '0', nationName : this.defaultShow })
       ].concat(re.filter(o => o.nationId.indexOf('00') !== -1 ))),
+
     );
   }
   onValueSelected = () => {

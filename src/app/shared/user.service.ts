@@ -2,8 +2,10 @@ import { Injectable } from '@angular/core';
 import {User} from '../entity/User';
 import {HttpService} from './service/baseapi/http.service';
 import {Observable} from 'rxjs';
+
 import {IUserList} from './interface/IUserList';
 import {map} from 'rxjs/operators';
+
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +28,7 @@ export class UserService {
  }
 
  onvalidateLogin = (user: User): Observable<User> => {
+
      return this.httpsvr.onHttpPost('/api/system/user/validateUser', user);
  }
 
@@ -49,6 +52,7 @@ insertUser = (user: User ): Observable<User> => {
 
   deleteUser = (account: string): Observable<string> => {
     return this.httpsvr.onHttpGet('/api/system/user/deleteUser', {account});
+
   }
 
 }
