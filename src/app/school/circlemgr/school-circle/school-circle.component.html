@@ -1,40 +1,32 @@
 
 <div nz-row>
-  <div nz-col [nzSpan]="6">
+  <div nz-col [nzSpan]="8">
     <nz-form-item>
       <nz-form-label [nzSpan]="6">圈名:</nz-form-label>
       <nz-form-control [nzSpan]="15">
-        <input nz-input [(ngModel)]="queryParams.circleName">
+        <input nz-input [(ngModel)]="queryParams.paperId">
       </nz-form-control>
     </nz-form-item>
   </div>
-  <div nz-col [nzSpan]="6">
+  <div nz-col [nzSpan]="8">
     <nz-form-item>
-      <nz-form-label [nzSpan]="6">圈内老师</nz-form-label>
+      <nz-form-label [nzSpan]="6">年级</nz-form-label>
       <nz-form-control [nzSpan]="15">
-        <input nz-input [(ngModel)]="queryParams.teacharName">
+        <nz-input-number
+          [(ngModel)]="queryParams.grade"
+          [nzMin]="1"
+          [nzMax]="10"
+          [nzStep]="1"
+          [nzDisabled]="isDisabled"
+        ></nz-input-number>
       </nz-form-control>
     </nz-form-item>
   </div>
-  <div nz-col [nzSpan]="6">
+  <div nz-col [nzSpan]="8">
     <nz-form-item>
-      <nz-form-label [nzSpan]="6">圈内学生</nz-form-label>
+      <nz-form-label [nzSpan]="6">职务</nz-form-label>
       <nz-form-control [nzSpan]="15">
-        <input nz-input [(ngModel)]="queryParams.studentName">
-      </nz-form-control>
-    </nz-form-item>
-  </div>
-  <div nz-col [nzSpan]="6">
-    <nz-form-item>
-      <nz-form-label [nzSpan]="6">建圈时间</nz-form-label>
-      <nz-form-control [nzSpan]="7">
-        <nz-date-picker [(ngModel)]="date" (ngModelChange)="onChange($event)"></nz-date-picker>
-      </nz-form-control>
-      <nz-form-control [nzSpan]="2">
-        --
-      </nz-form-control>
-      <nz-form-control [nzSpan]="7">
-        <nz-date-picker [(ngModel)]="date" (ngModelChange)="onChange($event)"></nz-date-picker>
+        <input nz-input [(ngModel)]="queryParams.duty">
       </nz-form-control>
     </nz-form-item>
   </div>

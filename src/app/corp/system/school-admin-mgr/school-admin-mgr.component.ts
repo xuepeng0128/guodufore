@@ -8,6 +8,7 @@ import {switchMap} from 'rxjs/operators';
 import {School} from '../../../entity/School';
 import {ClassesService} from '../../../shared/service/basemsg/classes.service';
 import {NzMessageService} from 'ng-zorro-antd';
+import {IUserList} from '../../../shared/interface/IUserList';
 
 @Component({
   selector: 'app-school-admin-mgr',
@@ -17,7 +18,7 @@ import {NzMessageService} from 'ng-zorro-antd';
 export class SchoolAdminMgrComponent implements OnInit {
   user: User = this.usersvr.getUserStorage();
   isUserModalShow = false;
-  userArray: Array<User> = new Array<User>();
+  userArray: Array<IUserList> = new Array<IUserList>();
   currentUser: User = new User({manageSchool : new School()});
   editState = 'browse';
   constructor(private usersvr: UserService, private message: NzMessageService) { }

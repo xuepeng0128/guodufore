@@ -13,13 +13,10 @@ export class CorpdutyService {
   corpDutyList = (): Observable<Array<CorpDuty>> => {
     return this.httpsvr.onHttpGet('/api/dic/corpduty/corpDutyList', {});
   }
-  findById = (corpDutyId: string): Observable<CorpDuty> => {
-     return this.httpsvr.onHttpGet('', {corpDutyId});
-  }
-  insertCorpDuty = (corpDuty: CorpDuty): Observable<CorpDuty> => {
+  insertCorpDuty = (corpDuty: CorpDuty): Observable<string> => {
     return this.httpsvr.onHttpPost('/api/dic/corpduty/insertCorpDuty', corpDuty);
   }
-  updateCorpDuty = (corpDuty: CorpDuty): Observable<CorpDuty> => {
+  updateCorpDuty = (corpDuty: CorpDuty): Observable<string> => {
     return this.httpsvr.onHttpPost('/api/dic/corpduty/updateCorpDuty', corpDuty);
   }
 

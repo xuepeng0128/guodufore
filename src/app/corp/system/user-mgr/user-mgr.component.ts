@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import {Observable, Subject} from 'rxjs';
-import {Employee} from '../../../entity/Employee';
-import {EmployeeService} from '../../../shared/service/system/employee.service';
+import {Observable, of, Subject} from 'rxjs';
 import {UserService} from '../../../shared/user.service';
 import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {flatMap, map, switchMap} from 'rxjs/operators';
 import {User} from '../../../entity/User';
 import {isNullOrUndefined} from 'util';
 import {MSG_SAVE_ERROR} from '../../../shared/SysMessage';
-import {HabitService} from '../../../shared/service/basemsg/habit.service';
+import {IUserList} from '../../../shared/interface/IUserList';
+import {IUserQueryParams} from '../../../shared/interface/queryparams/IUserQueryParams';
+
 
 
 @Component({
@@ -21,21 +21,32 @@ export class UserMgrComponent implements OnInit {
   userEditModelShow = false;
   currentUser: User = new User({});
   editState: 'browse' | 'add' | 'edit' = 'browse';
-  queryParams = {
-    account : '',
-    employeeName : ''
-  };
-  userArray$: Observable<Array<User>> = new Observable<Array<User>>();
-  total = 0;
+  queryParams: IUserQueryParams = {
+  account: '',
+  employeeName: '',
+  kind: '1',
+  pageSize : 20,
+  pageNo : 1,
+  pageBegin : 0
+};
+  userArray$: Observable<Array<IUserList>> = new Observable<Array<IUserList>>();
+  total$ = of(0);
   constructor(private usersvr: UserService , private modalService: NzModalService, private message: NzMessageService) { }
 
   ngOnInit() {
-
+   this.onQuery();
   }
   onQuery = () => {
+    this.queryParams.pageNo = 1;
+    this.queryParams.pageBegin = 0;
+    this.userArray$ = this.usersvr.userList(this.queryParams);
+
+  }
+  onPageChange = (e) => {
+    this.queryParams.pageNo=e;
+    this.queryParams.pageBegin= this.queryParams.pageSize * (this.queryParams.pageNo-1);
     this.userArray$ = this.usersvr.userList(this.queryParams);
   }
-
   onRegist = () => {
 
   }

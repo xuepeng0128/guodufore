@@ -6,7 +6,6 @@ import {NzMessageService} from 'ng-zorro-antd';
 import {isNullOrUndefined} from 'util';
 import {MSG_DELETE_ERROR, MSG_SAVE_ERROR, MSG_SAVE_SUCCESS} from '../../../shared/SysMessage';
 import {EmployeeService} from '../../../shared/service/system/employee.service';
-import {DistrictService} from '../../../shared/service/baseapi/district.service';
 import {flatMap, map} from 'rxjs/operators';
 
 @Component({
@@ -21,7 +20,7 @@ export class WinSchoolComponent implements OnInit {
   isSchoolModalShow = false;
   nowState = 'browse';
   constructor(private schoolsvr: SchoolService, private message: NzMessageService,
-              private emloyeesvr: EmployeeService, private districtsvr: DistrictService) { }
+              private emloyeesvr: EmployeeService) { }
 
   ngOnInit() {
     this.schoolWinOrder$.subscribe(re => {
@@ -35,22 +34,10 @@ export class WinSchoolComponent implements OnInit {
   }
 
   onSave = () => {
-     // 补全school区，employee
-      combineLatest(
-             this.districtsvr.singleDistrict(this.currentSchool.district.districtId),
-             this.emloyeesvr.singleEmployee(this.currentSchool.saleMan.paperId)
-      ).pipe(
-          flatMap(
-            re => {
-              this.currentSchool.saleMan = re[1];
-              this.currentSchool.district = re[0];
-              if (this.nowState === 'add') {
-                return this.schoolsvr.insertSchool(this.currentSchool);
-              } else {
-                return this.schoolsvr.updateSchool(this.currentSchool);
-              }
-            }
-          )).subscribe(
+              iif (() => this.nowState === 'add',
+                this.schoolsvr.insertSchool(this.currentSchool),
+                this.schoolsvr.updateSchool(this.currentSchool)
+          ).subscribe(
                re => {
                        if (!isNullOrUndefined(re)) {
                          this.message.create('success', MSG_SAVE_SUCCESS);

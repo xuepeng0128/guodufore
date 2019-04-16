@@ -1,9 +1,9 @@
 import {Component, EventEmitter, forwardRef, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
-import {concat, Observable, of} from 'rxjs';
-import {City} from '../../../entity/City';
-import {District} from '../../../entity/District';
-import {DistrictService} from '../../../shared/service/dic/district.service';
+import {concat, iif, Observable, of} from 'rxjs';
+import {Nation} from '../../../entity/Nation';
+import {map} from 'rxjs/operators';
+import {NationService} from '../../../shared/service/dic/nation.service';
 
 @Component({
   selector: 'app-district-select',
@@ -23,7 +23,7 @@ export class DistrictSelectComponent implements OnInit , OnChanges {
   private onValueChangeCallBack: any = {};
 
   // 区县列表
-  public   districtArray: Array<District> = new Array<District>();
+  public   districtArray$: Observable<Array<Nation>> = new Observable<Array<Nation>>();
 
   get currentValue(): string {
     return this._CURRENTVALUE;
@@ -49,24 +49,23 @@ export class DistrictSelectComponent implements OnInit , OnChanges {
 
   registerOnTouched(fn: any): void {
   }
-  constructor(private districtsvr: DistrictService) { }
+  constructor(private nationsvr: NationService) { }
 
 
   ngOnInit() {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    let arealist: Array<District> = new Array<District>();
-    if (this.cityId === '0') {
-      arealist = new Array<District>();
-    } else {
-      // 根据市州id 过滤出所属区县
-      arealist = this.districtsvr.getDistrictsStorage().filter(o => o.city.cityId === this.cityId);
-    }
-    this._CURRENTVALUE = '0';
+    this.districtArray$ =
+    iif( () => this.cityId === '0',
+                    of([new Nation({nationId : '0' , nationName: this.defaultShow})]),
+                    this.nationsvr.nationList().pipe(
+                      map( (re: Array<Nation> ) => [
+                        new Nation({nationId : '0', nationName : this.defaultShow })
+                      ].concat(re.filter(o => o.nationId.indexOf('00') === -1 && o.nationId.substring(0, 4) === this.cityId.substring(0, 4) )),
+                    ))
+      );
 
-    arealist.splice(0, 0, new District({districtId : '0', districtName: this.defaultShow}));
-    this.districtArray = arealist;
 
   }
 

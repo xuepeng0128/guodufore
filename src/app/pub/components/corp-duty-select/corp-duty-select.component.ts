@@ -1,7 +1,6 @@
 import {Component, EventEmitter, forwardRef, Input, OnInit, Output} from '@angular/core';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
 import {Observable} from 'rxjs';
-import {Employee} from '../../../entity/Employee';
 import {CorpDuty} from '../../../entity/CorpDuty';
 import {map} from 'rxjs/operators';
 import {CorpdutyService} from '../../../shared/service/dic/corpduty.service';

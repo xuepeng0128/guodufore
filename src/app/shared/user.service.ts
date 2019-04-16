@@ -3,6 +3,10 @@ import {User} from '../entity/User';
 import {HttpService} from './service/baseapi/http.service';
 import {Observable} from 'rxjs';
 
+import {IUserList} from './interface/IUserList';
+import {map} from 'rxjs/operators';
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -24,23 +28,31 @@ export class UserService {
  }
 
  onvalidateLogin = (user: User): Observable<User> => {
-     return this.httpsvr.onHttpPost('/api/corp/system/user/validateUser', user);
+
+     return this.httpsvr.onHttpPost('/api/system/user/validateUser', user);
  }
 
-userList = (queryParams: any): Observable<Array<User>> => {
-  return this.httpsvr.onHttpGet('/api/corp/system/user/userList', queryParams);
+userList = (queryParams: any): Observable<Array<IUserList>> => {
+  return this.httpsvr.onHttpGet('/api/system/user/userList', queryParams).pipe(
+      map(re =>  re as Array<IUserList>)
+  );
 }
-
+  userListTotal = (queryParams: any): Observable<Array<IUserList>> => {
+    return this.httpsvr.onHttpGet('/api/system/user/userList', queryParams).pipe(
+      map(re =>  re as Array<IUserList>)
+    );
+  }
 insertUser = (user: User ): Observable<User> => {
-  return this.httpsvr.onHttpPost('/api/corp/system/user/insertUser', user);
+  return this.httpsvr.onHttpPost('/api/system/user/insertUser', user);
 }
 
   updateUser = (user: User ): Observable<User> => {
-    return this.httpsvr.onHttpPost('/api/corp/system/user/updateUser', user);
+    return this.httpsvr.onHttpPost('/api/system/user/updateUser', user);
   }
 
   deleteUser = (account: string): Observable<string> => {
-    return this.httpsvr.onHttpGet('/api/corp/system/user/deleteUser', {account});
+    return this.httpsvr.onHttpGet('/api/system/user/deleteUser', {account});
+
   }
 
 }

@@ -1,11 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {combineLatest, iif, Subject} from 'rxjs';
-import {School} from '../../../entity/School';
-import {SchoolService} from '../../../shared/service/basemsg/school.service';
 import {NzMessageService} from 'ng-zorro-antd';
 import {EmployeeService} from '../../../shared/service/system/employee.service';
-import {DistrictService} from '../../../shared/service/baseapi/district.service';
-import {flatMap} from 'rxjs/operators';
 import {isNullOrUndefined} from 'util';
 import {MSG_SAVE_ERROR, MSG_SAVE_SUCCESS} from '../../../shared/SysMessage';
 import {Employee} from '../../../entity/Employee';
@@ -37,8 +33,7 @@ export class WinEmployeeComponent implements OnInit {
   }
 
   onSave = () => {
-
-
+    // 补全school区，employee
 
           iif (() => this.nowState === 'add',
                           this.emloyeesvr.insertEmployee(this.currentEmployee),
@@ -54,9 +49,4 @@ export class WinEmployeeComponent implements OnInit {
         }
       });
   }
-
-
-
-
-
 }

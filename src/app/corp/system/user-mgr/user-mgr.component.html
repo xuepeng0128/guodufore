@@ -32,6 +32,10 @@
       nzShowSizeChanger
       [nzFrontPagination]="false"
       [nzData]="userArray$ | async"
+      [nzTotal]="total$ | async"
+      [(nzPageIndex)]="queryParams.pageNo"
+      [(nzPageSize)]="queryParams.pageSize"
+      (nzPageIndexChange)="onPageChange($event)"
     >
       <thead >
       <tr>
