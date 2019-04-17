@@ -43,6 +43,8 @@ export class SinginComponent implements OnInit {
     ) .subscribe(res => {
         if (res) {
                 this.router.navigate(['/']);
+
+
         }
       }
     );
