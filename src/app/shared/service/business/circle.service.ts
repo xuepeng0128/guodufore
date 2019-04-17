@@ -11,13 +11,13 @@ export class CircleService {
   constructor(private httpsvr: HttpService) { }
 
   allCircleList = (queryparams: any): Observable<{list: Array<Circle>, total: number}> => {
-    return this.httpsvr.onHttpGet('/api/corp/basemsg/circle/allcircleList', queryparams);
+    return this.httpsvr.onHttpGet('/api/buisness/circle/circleList', queryparams);
   }
  schoolCircleList =(queryParams : any) : Observable<{list: Array<Circle>, total: number}> => {
-   return this.httpsvr.onHttpGet('/api/corp/basemsg/circle/schoolCircleList', queryParams);
+   return this.httpsvr.onHttpGet('/api/buisness/circle/schoolCircleList', queryParams);
  }
   insertCircle = (circle: Circle): Observable<Circle> => {
-    return this.httpsvr.onHttpPost('/api/school/buisness/circle/insertCircle', circle);
+    return this.httpsvr.onHttpPost('/api/buisness/circle/insertCircle', circle);
   }
   updateCircle = (circle: Circle): Observable<Circle> => {
     return this.httpsvr.onHttpPost('/api/school/buisness/circle/updateCircle', circle);

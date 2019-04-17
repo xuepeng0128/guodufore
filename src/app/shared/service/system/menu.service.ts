@@ -11,7 +11,7 @@ export class MenuService {
   constructor(private httpsvr: HttpService) { }
 
   allMenu = (kind: string ): Observable<Array<Menu>> => {
-     return this.httpsvr.onHttpGet('/api/corp/system/menu/allMenu', {kind });
+     return this.httpsvr.onHttpGet('/api/system/menu/menuList', {kind });
   }
 
 

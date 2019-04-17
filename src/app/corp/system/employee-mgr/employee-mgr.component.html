@@ -48,14 +48,11 @@
       nzShowSizeChanger
       [nzFrontPagination]="false"
       [nzData]="employeeArray$ | async"
-      [nzTotal]="total"
-      [(nzPageIndex)]="queryParams.pageNo"
-      [(nzPageSize)]="queryParams.pageSize"
-      (nzPageIndexChange)="onPageChange($event)"
     >
       <thead >
       <tr>
         <th>序号</th>
+        <th>职员编号</th>
         <th>身份证</th>
         <th>姓名</th>
         <th>联系电话</th>
@@ -66,12 +63,15 @@
       <tbody>
       <tr *ngFor="let data of ajaxTable.data ;let no=index">
         <td>{{no+1}}</td>
+        <td>{{data.employeeId}}</td>
         <td>{{data.paperId}}</td>
         <td>{{data.employeeName}}</td>
         <td>{{data.tel}}</td>
-        <td>{{data.saleMan.dutyName}}</td>
+        <td>{{data.corpDutyName}}</td>
         <td>
           <a href="javaScript:;" *ngIf="user.supperAdmin " (click)="onEdit(data)">修改</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a href="javaScript:;" *ngIf="user.supperAdmin" (click)="onLeave(data)">离职</a>
           <nz-divider nzType="vertical"></nz-divider>
           <a href="javaScript:;" *ngIf="user.supperAdmin" (click)="onDelete(data)">删除</a>
         </td>

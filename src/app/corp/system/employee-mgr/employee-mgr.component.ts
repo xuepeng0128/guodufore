@@ -3,10 +3,8 @@ import {Observable, Subject} from 'rxjs';
 import {Employee} from '../../../entity/Employee';
 import {EmployeeService} from '../../../shared/service/system/employee.service';
 import {flatMap, map} from 'rxjs/operators';
-import {School} from '../../../entity/School';
 import {UserService} from '../../../shared/user.service';
 import {NzMessageService, NzModalService} from 'ng-zorro-antd';
-import {ClassesService} from '../../../shared/service/basemsg/classes.service';
 
 @Component({
   selector: 'app-employee-mgr',
@@ -18,13 +16,7 @@ export class EmployeeMgrComponent implements OnInit {
   employeeWinOrder$: Subject<{nowState: string , employee: Employee}> = new Subject<{nowState: string , employee: Employee}>() ;
 
   queryParams = {
-    paperId : '',
-    employeeName : '',
-    tel : '',
-    dutyName : '',
-    pageSize : 20,
-    pageNo : 1,
-    getTotal : '1'
+    employeeName : ''
   };
   employeeArray$: Observable<Array<Employee>> = new Observable<Array<Employee>>();
   total = 0;
@@ -37,13 +29,7 @@ export class EmployeeMgrComponent implements OnInit {
 
   }
   onQuery = () => {
-    this.queryParams.getTotal = '1';
-    this.employeeArray$ = this.employeesvr.employeeList(this.queryParams).pipe(
-      map( re => {
-        this.total = re.total;
-        return re.list ;
-      })
-    );
+    this.employeeArray$ = this.employeesvr.employeeList(this.queryParams);
   }
   onPageChange = (e) => {
     this.queryParams.pageNo = e;
