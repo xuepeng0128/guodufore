@@ -9,6 +9,7 @@ import {School} from '../../../entity/School';
 import {ClassesService} from '../../../shared/service/basemsg/classes.service';
 import {NzMessageService} from 'ng-zorro-antd';
 import {IUserList} from '../../../shared/interface/IUserList';
+import {LoginUser} from "../../../entity/LoginUser";
 
 @Component({
   selector: 'app-school-admin-mgr',
@@ -16,10 +17,10 @@ import {IUserList} from '../../../shared/interface/IUserList';
   styleUrls: ['./school-admin-mgr.component.css']
 })
 export class SchoolAdminMgrComponent implements OnInit {
-  user: User = this.usersvr.getUserStorage();
+  user: LoginUser = this.usersvr.getUserStorage();
   isUserModalShow = false;
   userArray: Array<IUserList> = new Array<IUserList>();
-  currentUser: User = new User({manageSchool : new School()});
+  currentUser: User = new User({});
   editState = 'browse';
   constructor(private usersvr: UserService, private message: NzMessageService) { }
 

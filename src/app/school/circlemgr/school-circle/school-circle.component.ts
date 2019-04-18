@@ -9,6 +9,7 @@ import {MSG_SAVE_ERROR, MSG_SAVE_SUCCESS} from '../../../shared/SysMessage';
 import {map, switchMap} from 'rxjs/operators';
 import {iif} from 'rxjs/index';
 import {CircleService} from '../../../shared/service/business/circle.service';
+import {LoginUser} from "../../../entity/LoginUser";
 
 @Component({
   selector: 'app-school-circle',
@@ -17,7 +18,7 @@ import {CircleService} from '../../../shared/service/business/circle.service';
 })
 export class SchoolCircleComponent implements OnInit {
 
-  user: User = this.usersvr.getUserStorage();
+  user: LoginUser = this.usersvr.getUserStorage();
   isSchoolCircleModalShow = false;
   schoolCircleArray: Array<Circle> = new Array<Circle>();
   currentSchoolCircle: Circle = new Circle();
@@ -26,7 +27,7 @@ export class SchoolCircleComponent implements OnInit {
   queryParams = {
     circleName : '',
     schoolId : this.user.manageSchool.schoolId,
-    teacherPaperId : this.user.teacher.teacherDuty.master ? '' : this.user.teacher.paperId,
+    teacherPaperId : this.user.teacher ? '' : this.user.teacher.paperId,
     teacharName : '',
     studentName : '',
     buildDateBegin : new Date() ,

@@ -68,7 +68,7 @@ onDelete = (school: ISchoolQueryResult) => {
       nzTitle: '<i>提示</i>',
       nzContent: '<b>确定删除该数据吗?</b>',
       nzOnOk: () => {
-       this.schoolList$ =  this.schoolsvr.deleteSchool(school).pipe(
+       this.schoolList$ =  this.schoolsvr.deleteSchool(school.schoolId).pipe(
           flatMap(re => {
                 this.queryParams.pageBegin = (this.queryParams.pageNo - 1) * this.queryParams.pageSize;
                 return  this.schoolsvr.schoolList(this.queryParams);

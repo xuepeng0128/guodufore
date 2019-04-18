@@ -7,6 +7,7 @@ import {flatMap, map} from 'rxjs/operators';
 import {CircleService} from '../../../shared/service/business/circle.service';
 import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {CommonService} from '../../../shared/common.service';
+import {LoginUser} from "../../../entity/LoginUser";
 
 @Component({
   selector: 'app-circle',
@@ -14,7 +15,7 @@ import {CommonService} from '../../../shared/common.service';
   styleUrls: ['./circle.component.css']
 })
 export class CircleComponent implements OnInit {
-  user: User = this.usersvr.getUserStorage();
+  user: LoginUser = this.usersvr.getUserStorage();
   queryParams = {
     schoolstyle : '0', // 1.全日制学校,2.培训学校
     schoolName : '',

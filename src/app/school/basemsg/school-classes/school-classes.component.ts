@@ -20,7 +20,7 @@ export class SchoolClassesComponent implements OnInit {
   queryParams = {
     grade : '',
     classes : '' ,
-    schoolId : this.user.teacher.onserve.school.schoolId,
+    schoolId : this.user.school.schoolId,
     headmasterName : ''
   };
   constructor(private usersvr: UserService, private classessvr: ClassesService,

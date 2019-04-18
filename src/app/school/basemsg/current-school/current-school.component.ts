@@ -15,7 +15,7 @@ import {flatMap} from 'rxjs/operators';
   styleUrls: ['./current-school.component.css']
 })
 export class CurrentSchoolComponent implements OnInit {
-  currentSchool: School = (this.usersvr.getUserStorage() as User).manageSchool;
+  currentSchool: School = this.usersvr.getUserStorage().school;
 
   constructor(private schoolsvr: SchoolService, private message: NzMessageService,
               private usersvr: UserService) {

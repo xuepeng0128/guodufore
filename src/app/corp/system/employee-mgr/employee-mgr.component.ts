@@ -32,11 +32,7 @@ export class EmployeeMgrComponent implements OnInit {
     this.employeeArray$ = this.employeesvr.employeeList(this.queryParams);
   }
   onPageChange = (e) => {
-    this.queryParams.pageNo = e;
-    this.queryParams.getTotal = '0';
-    this.employeeArray$ = this.employeesvr.employeeList(this.queryParams).pipe(
-      map( re => re.list)
-    );
+    this.employeeArray$ = this.employeesvr.employeeList(this.queryParams);
   }
 
   onRegist = () => {
@@ -57,11 +53,6 @@ export class EmployeeMgrComponent implements OnInit {
       nzOnOk: () => {
         this.employeeArray$ =  this.employeesvr.deleteEmployee(employee).pipe(
           flatMap(re => this.employeesvr.employeeList(this.queryParams))
-        ).pipe(
-          map( re => {
-            this.total = re.total;
-            return re.list ;
-          })
         );
       }
     });

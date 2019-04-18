@@ -8,6 +8,7 @@ import {flatMap, map, switchMap} from 'rxjs/operators';
 import {ClassesService} from '../../../shared/service/basemsg/classes.service';
 import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {MSG_SAVE_ERROR, MSG_SAVE_SUCCESS} from '../../../shared/SysMessage';
+import {LoginUser} from "../../../entity/LoginUser";
 
 @Component({
   selector: 'app-corp-duty',
@@ -15,7 +16,7 @@ import {MSG_SAVE_ERROR, MSG_SAVE_SUCCESS} from '../../../shared/SysMessage';
   styleUrls: ['./corp-duty.component.css']
 })
 export class CorpDutyComponent implements OnInit {
-  user: User = this.usersvr.getUserStorage();
+  user: LoginUser = this.usersvr.getUserStorage();
   isCorpDutyModalShow = false;
   corpdutyArray: Array<CorpDuty> = new Array<CorpDuty>();
   currentCorpDuty: CorpDuty = new CorpDuty({});

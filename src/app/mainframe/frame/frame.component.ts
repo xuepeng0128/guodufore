@@ -7,6 +7,7 @@ import {iif, Observable} from 'rxjs';
 import {Menu} from '../../entity/Menu';
 import {MenuService} from '../../shared/service/system/menu.service';
 import {of} from 'rxjs/internal/observable/of';
+import {LoginUser} from "../../entity/LoginUser";
 
 @Component({
   selector: 'app-frame',
@@ -15,7 +16,7 @@ import {of} from 'rxjs/internal/observable/of';
 })
 export class FrameComponent implements OnInit, AfterViewInit {
   loading = false;
-  user: User = this.usersvr.getUserStorage();
+  user: LoginUser = this.usersvr.getUserStorage();
   menuArray$: Observable<Array<Menu>> = iif(
     () => this.user.supperAdmin==='1' || this.user.schoolAdmin || this.user.trainSchoolAdmin ,
                this.menusvr.allMenu(this.user.supperAdmin ? '1' : (this.user.schoolAdmin ? '2' : '3')),

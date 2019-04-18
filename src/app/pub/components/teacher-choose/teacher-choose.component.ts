@@ -12,7 +12,7 @@ import {map} from 'rxjs/operators';
   styleUrls: ['./teacher-choose.component.css']
 })
 export class TeacherChooseComponent implements OnInit {
-  user: User = this.usersvr.getUserStorage();
+  user: LoginUser = this.usersvr.getUserStorage();
   @Input() teacherChooseSign$: Subject<{ singleChoose: boolean, haveChoosedTeacher: Array<Teacher>}>
   = new Subject<{ singleChoose: boolean, haveChoosedTeacher: Array<Teacher>}>();
 

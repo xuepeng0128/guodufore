@@ -7,6 +7,7 @@ import {iif} from 'rxjs';
 import {switchMap} from 'rxjs/operators';
 import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {MSG_SAVE_ERROR, MSG_SAVE_SUCCESS} from '../../../shared/SysMessage';
+import {LoginUser} from "../../../entity/LoginUser";
 
 @Component({
   selector: 'app-teacher-duty',
@@ -14,7 +15,7 @@ import {MSG_SAVE_ERROR, MSG_SAVE_SUCCESS} from '../../../shared/SysMessage';
   styleUrls: ['./teacher-duty.component.css']
 })
 export class TeacherDutyComponent implements OnInit {
-  user: User = this.usersvr.getUserStorage();
+  user: LoginUser = this.usersvr.getUserStorage();
   isTeacherDutyModalShow = false;
   teacherdutyArray: Array<TeacherDuty> = new Array<TeacherDuty>();
   currentTeacherDuty: TeacherDuty = new TeacherDuty({});

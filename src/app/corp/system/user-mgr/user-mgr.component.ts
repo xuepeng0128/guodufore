@@ -8,6 +8,7 @@ import {isNullOrUndefined} from 'util';
 import {MSG_SAVE_ERROR} from '../../../shared/SysMessage';
 import {IUserList} from '../../../shared/interface/IUserList';
 import {IUserQueryParams} from '../../../shared/interface/queryparams/IUserQueryParams';
+import {LoginUser} from "../../../entity/LoginUser";
 
 
 
@@ -17,7 +18,7 @@ import {IUserQueryParams} from '../../../shared/interface/queryparams/IUserQuery
   styleUrls: ['./user-mgr.component.css']
 })
 export class UserMgrComponent implements OnInit {
-  user = this.usersvr.getUserStorage();
+  loginUser : LoginUser = this.usersvr.getUserStorage();
   userEditModelShow = false;
   currentUser: User = new User({});
   editState: 'browse' | 'add' | 'edit' = 'browse';
@@ -66,8 +67,8 @@ export class UserMgrComponent implements OnInit {
     });
   }
     onResetPwd = (user: User) => {
-       user.passWord = '123456';
-       this.usersvr.updateUser(this.user).subscribe(u => {
+       this.loginUser.user.passWord = '123456';
+       this.usersvr.updateUser(this.loginUser.user).subscribe(u => {
          if (isNullOrUndefined(u)) {
             this.message.create('error', MSG_SAVE_ERROR);
          } else {

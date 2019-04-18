@@ -8,6 +8,7 @@ import {StudySubjectService} from '../../../shared/service/dic/study-subject.ser
 import {ClassesService} from '../../../shared/service/basemsg/classes.service';
 import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {MSG_SAVE_ERROR, MSG_SAVE_SUCCESS} from '../../../shared/SysMessage';
+import {LoginUser} from "../../../entity/LoginUser";
 
 @Component({
   selector: 'app-study-subject',
@@ -15,7 +16,7 @@ import {MSG_SAVE_ERROR, MSG_SAVE_SUCCESS} from '../../../shared/SysMessage';
   styleUrls: ['./study-subject.component.css']
 })
 export class StudySubjectComponent implements OnInit {
-  user: User = this.usersvr.getUserStorage();
+  user: LoginUser = this.usersvr.getUserStorage();
   isStudySubjectModalShow = false;
   studySubjectArray: Array<StudySubject> = new Array<StudySubject>();
   currentStudySubject: StudySubject = new StudySubject();

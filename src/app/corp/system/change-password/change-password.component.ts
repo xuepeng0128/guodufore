@@ -6,6 +6,7 @@ import {User} from '../../../entity/User';
 import {UserService} from '../../../shared/user.service';
 import {isNullOrUndefined} from 'util';
 import {MSG_DELETE_ERROR, MSG_SAVE_SUCCESS} from '../../../shared/SysMessage';
+import {LoginUser} from "../../../entity/LoginUser";
 
 @Component({
   selector: 'app-change-password',
@@ -17,7 +18,7 @@ export class ChangePasswordComponent implements OnInit {
   newPassWord: string; // 新密码
   newPassWordAgain: string; // 确认新密码
   msg: string; // 提示
-  user: User = this.usersvr.getUserStorage();
+  user: LoginUser = this.usersvr.getUserStorage();
 
   constructor(private usersvr: UserService, private message: NzMessageService) { }
 

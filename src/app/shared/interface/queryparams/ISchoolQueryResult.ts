@@ -8,7 +8,7 @@ export interface ISchoolQueryResult {
   longitude?: number ;
   latitude?: number ;
   address?: string ;
-  schoolStyle?: string ;
+  schoolStyle?: number ;
   saleManId?: string ;
   saleManName?: string;
   regTime?: Date ;

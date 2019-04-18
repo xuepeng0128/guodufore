@@ -10,6 +10,7 @@ import {SubjectExamClassService} from '../../../shared/service/dic/subject-exam-
 import {ClassesService} from '../../../shared/service/basemsg/classes.service';
 import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {MSG_SAVE_ERROR, MSG_SAVE_SUCCESS} from '../../../shared/SysMessage';
+import {LoginUser} from "../../../entity/LoginUser";
 
 @Component({
   selector: 'app-subject-exam-class',
@@ -17,7 +18,7 @@ import {MSG_SAVE_ERROR, MSG_SAVE_SUCCESS} from '../../../shared/SysMessage';
   styleUrls: ['./subject-exam-class.component.css']
 })
 export class SubjectExamClassComponent implements OnInit {
-  user: User = this.usersvr.getUserStorage();
+  user: LoginUser = this.usersvr.getUserStorage();
   isSubjectExamClassModalShow = false;
   subjectExamClassArray: Array<SubjectExamClass> = new Array<SubjectExamClass>();
   currentSubjectExamClass: SubjectExamClass = new SubjectExamClass({studySubject : new StudySubject()});
