@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpService} from '../baseapi/http.service';
 import {Observable} from 'rxjs';
-import {Student} from '../../../entity/Student';
 import {Teacher} from '../../../entity/Teacher';
+import {ITeacherQueryParams} from '../../interface/queryparams/ITeacherQueryParams';
+import {ITeacherQueryResult} from '../../interface/queryparams/ITeacherQueryResult';
 
 @Injectable({
   providedIn: 'root'
@@ -11,10 +12,12 @@ export class TeacherService {
 
   constructor(private httpsvr: HttpService) { }
 
-  teacherList = (queryParams: any): Observable<{list: Array<Teacher>, total: number}> => {
-    return this.httpsvr.onHttpGet('/api/corp/basemsg/teacher/teacherList', queryParams);
+  teacherList = (queryParams: ITeacherQueryParams): Observable<Array<ITeacherQueryResult>> => {
+    return this.httpsvr.onHttpGet('/api/basemsg/teacher/teacherList', queryParams);
   }
-
+ teacherListTotal =(queryParams: ITeacherQueryParams): Observable<number> => {
+   return this.httpsvr.onHttpGet('/api/basemsg/teacher/teacherListTotal', queryParams);
+ }
 
   /**
    * 导出

@@ -35,13 +35,14 @@
 </div>
 <div class="m-t-sm" nz-row>
   <div nz-col [nzSpan]="24">
+
     <nz-table
       #ajaxTable
       nzBordered
       nzShowSizeChanger
       [nzFrontPagination]="false"
       [nzData]="teacherList$ | async"
-      [nzTotal]="total"
+      [nzTotal]="total$ | async"
       [(nzPageIndex)]="queryParams.pageNo"
       [(nzPageSize)]="queryParams.pageSize"
       (nzPageIndexChange)="onPageChange($event)"
@@ -61,9 +62,9 @@
         <td>{{no+1}}</td>
         <td>{{data.paperId}}</td>
         <td>{{data.teacherName}}</td>
-        <td>{{data.duty}}</td>
+        <td>{{data.teacherDutyName}}</td>
         <td>{{data.tel}}</td>
-        <td>{{data.onserve.school.schoolName}}</td>
+        <td>{{data.schoolName}}</td>
       </tr>
       </tbody>
     </nz-table>

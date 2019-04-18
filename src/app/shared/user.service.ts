@@ -5,23 +5,24 @@ import {Observable} from 'rxjs';
 
 import {IUserList} from './interface/IUserList';
 import {map} from 'rxjs/operators';
+import {LoginUser} from '../entity/LoginUser';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  STORAGE_KEY = '_user';
+  STORAGE_KEY = '_loginuser';
   constructor(private httpsvr: HttpService) { }
 
-  getUserStorage = (): User => {
+  getUserStorage = (): LoginUser => {
     const user = sessionStorage.getItem(this.STORAGE_KEY);
     if (user) {
-      return JSON.parse(user) as User;
+      return JSON.parse(user) as LoginUser;
     }
     return null;
   }
- setUserStorage = (user: User) => {
+ setUserStorage = (user: LoginUser) => {
    if (user) {
      sessionStorage.setItem(this.STORAGE_KEY, JSON.stringify(user));
    }

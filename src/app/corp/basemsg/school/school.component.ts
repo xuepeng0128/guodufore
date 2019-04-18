@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import {Observable, of, Subject} from 'rxjs';
+import {iif, Observable, of, Subject} from 'rxjs';
 import {School} from '../../../entity/School';
 import {SchoolService} from '../../../shared/service/basemsg/school.service';
 import {UserService} from '../../../shared/user.service';
 import {flatMap, map} from 'rxjs/operators';
 import {NzMessageService, NzModalService} from 'ng-zorro-antd';
-import {ClassesService} from '../../../shared/service/basemsg/classes.service';
+import {ISchoolQueryResult} from '../../../shared/interface/queryparams/ISchoolQueryResult';
+import {ISchoolQueryParams} from '../../../shared/interface/queryparams/ISchoolQueryParams';
+import {CommonService} from '../../../shared/common.service';
 
 @Component({
   selector: 'app-school',
@@ -15,65 +17,64 @@ import {ClassesService} from '../../../shared/service/basemsg/classes.service';
 export class SchoolComponent implements OnInit {
   user = this.usersvr.getUserStorage();
   schoolWinOrder$: Subject<{nowState: string , school: School}> = new Subject<{nowState: string , school: School}>() ;
-  schoolList$: Observable<Array<School>> = new Observable<Array<School>>();
-  total = 0;
-  queryParams = {
-     schoolId : '',
-    schoolName : '',
-    districtId : '',
-     address : '',
-     employeeName : '',
-    pageSize : 20,
-    pageNo : 1,
-    getTotal : '1'
+  schoolList$: Observable<Array<ISchoolQueryResult>> = of([]);
+  total$: Observable<number> = of(0);
+  queryParams: ISchoolQueryParams = {
+            schoolName : '',
+            cityId : '0',
+            districtId : '0',
+            schoolStyle: '0',
+            regTimeBegin : this.commonsvr.yearBegin(),
+            regTimeEnd: new Date(),
+            train : 0,
+            saleManId : '',
+            pageSize : 20 ,
+            pageNo : 1,
+            pageBegin : 0
   };
   constructor(private schoolsvr: SchoolService, private usersvr: UserService,
-              private modalService: NzModalService, private message: NzMessageService) { }
+              private modalService: NzModalService, private message: NzMessageService,
+              private commonsvr: CommonService) { }
 
   ngOnInit() {
   }
 
   onQuery = () => {
-    this.queryParams.getTotal = '1';
-    this.schoolList$ = this.schoolsvr.schoolList(this.queryParams).pipe(
-      map( re => {
-        this.total = re.total;
-        return re.list ;
-      })
-    );
+    this.queryParams.pageBegin = (this.queryParams.pageNo - 1) * this.queryParams.pageSize;
+    this.schoolList$ = this.schoolsvr.schoolList(this.queryParams);
+    this.total$ = this.schoolsvr.schoolListTotal(this.queryParams);
   }
   onPageChange = (e) => {
     this.queryParams.pageNo = e;
-    this.queryParams.getTotal = '0';
-    this.schoolList$ = this.schoolsvr.schoolList(this.queryParams).pipe(
-      map( re => re.list)
-    );
+    this.schoolList$ = this.schoolsvr.schoolList(this.queryParams);
   }
 
 onRegist = () => {
   this.schoolWinOrder$.next({nowState: 'add', school: null});
 }
-  onEdit = (school: School) => {
-    this.schoolWinOrder$.next({nowState: 'edit', school});
+  onEdit = (school: ISchoolQueryResult) => {
+    this.schoolWinOrder$.next({nowState: 'edit', school : school as School });
+
   }
-  onSaved = (school: School) => {
-    this.schoolList$ = this.schoolsvr.schoolList(this.queryParams).pipe(
-      map( re => re.list)
-    );
+onSaved = (editstate: string) => {
+    this.schoolList$ = this.schoolsvr.schoolList(this.queryParams);
+    this.total$ = iif( () => editstate === 'add',
+                         this.total$.pipe(map(total => total + 1)),
+                         this.total$
+      );
   }
-  onDelete = (school: School) => {
+onDelete = (school: ISchoolQueryResult) => {
     this.modalService.confirm({
       nzTitle: '<i>提示</i>',
       nzContent: '<b>确定删除该数据吗?</b>',
       nzOnOk: () => {
        this.schoolList$ =  this.schoolsvr.deleteSchool(school).pipe(
-          flatMap(re => this.schoolsvr.schoolList(this.queryParams))
-        ).pipe(
-         map( re => {
-           this.total = re.total;
-           return re.list ;
-         })
-       );
+          flatMap(re => {
+                this.queryParams.pageBegin = (this.queryParams.pageNo - 1) * this.queryParams.pageSize;
+                return  this.schoolsvr.schoolList(this.queryParams);
+          })
+        );
+       this.total$ = this.total$.pipe(map(total => total - 1));
       }
     });
   }

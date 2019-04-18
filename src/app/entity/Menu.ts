@@ -1,19 +1,23 @@
 export class Menu {
-  menuId: string ; // 菜单编号
-  menuName: string  ; // 菜单名称
-  subMenu: Array<Menu> ; // 上级菜单编号
-  url: string  ; // 链接地址
-  powers: Array<any>; // 权限
-  kind: string ; // 1.公司 ，2.学校，3.机构
+  private String; menuId;
+  private String; menuName;
+  private String; pareMenuId;
+  private String; url;
+  private String; icon;
+  private String; power;
+  private int;    paixu;
+  private int;   kind; // 1.公司 ，2.学校，3.机构
 
+  subMenus: Array<Menu> ; // 子菜单
 
-  constructor(options: {menuId?: string, menuName?: string, subMenu?: Array<Menu>, url?: string, powers?: Array<any>,
-                        kind?: string}= {}) {
+  constructor(options: {menuId?: string, menuName?: string, pareMenuId?: string , url?: string, icon?: string,
+                         power?: string, paixu: number, kind?: number}= {}) {
     this.menuId = options.menuId;
     this.menuName = options.menuName;
-    this.subMenu = options.subMenu;
+    this.pareMenuId = options.pareMenuId;
     this.url = options.url;
-    this.powers = options.powers;
+    this.icon = options.icon;
+    this.paixu = options.paixu;
     this.kind = options.kind;
   }
 }

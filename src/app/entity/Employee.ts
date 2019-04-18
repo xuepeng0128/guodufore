@@ -1,20 +1,20 @@
 import {CorpDuty} from './CorpDuty';
 
 export class Employee {
-  employeeId : string;
-  paperId : string;
-  employeeName : string;
-  tel : string;
-  corpDutyId : string ;
-  corpDutyName : string;
-  enterDate : Date;
-  leaveDate :Date;
-  wxcode : string;
+  employeeId: string;
+  paperId: string;
+  employeeName: string;
+  tel: string;
+  corpDutyId: string ;
+  corpDutyName: string;
+  enterDate: Date;
+  leaveDate: Date;
+  wxcode: string;
 
 
-  constructor(options :{employeeId: string, paperId: string, employeeName: string,
+  constructor(options: {employeeId: string, paperId: string, employeeName: string,
                         tel: string, corpDutyId: string, corpDutyName: string,
-                         enterDate: Date, leaveDate: Date, wxcode: string}={}) {
+                         enterDate: Date, leaveDate: Date, wxcode: string}= {}) {
     this.employeeId = options.employeeId || '';
     this.paperId = options.paperId || '';
     this.employeeName = options.employeeName || '';
@@ -23,6 +23,6 @@ export class Employee {
     this.corpDutyName = options.corpDutyName || '';
     this.enterDate = options.enterDate || new Date();
     this.leaveDate = options.leaveDate;
-    this.wxcode = options.wxcode ||'';
+    this.wxcode = options.wxcode || '';
   }
 }

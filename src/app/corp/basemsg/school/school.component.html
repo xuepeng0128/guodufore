@@ -60,12 +60,13 @@
         nzShowSizeChanger
         [nzFrontPagination]="false"
         [nzData]="schoolList$| async "
-        [nzTotal]="total"
+        [nzTotal]="total | async"
         [(nzPageIndex)]="queryParams.pageNo"
         [(nzPageSize)]="queryParams.pageSize"
         (nzPageIndexChange)="onPageChange($event)"
       >
         <thead >
+
         <tr>
           <th>序号</th>
           <th>学校编号</th>
@@ -76,6 +77,12 @@
           <th>类型</th>
           <th>业务员</th>
           <th>注册时间</th>
+          <th>联系电话</th>
+          <th>联系人</th>
+          <th>班级总数</th>
+          <th>圈子总数</th>
+          <th>学生数</th>
+          <th>老师数</th>
           <th>操作</th>
         </tr>
         </thead>
@@ -84,13 +91,18 @@
           <td>{{no+1}}</td>
           <td>{{data.schoolId}}</td>
           <td>{{data.schoolName}}</td>
-          <td>{{data.district?.city.cityName}}</td>
-          <td>{{data.district?.districtName}}</td>
+          <td>{{data.cityName}}</td>
+          <td>{{data.districtName}}</td>
           <td>{{data.address | cutSizePipe:18}}</td>
           <td>{{data.schoolStyle==='1' ? '小学' :'初中'}}</td>
-          <td>{{data.saleMan?.employeeName}}</td>
+          <td>{{data.saleManName}}</td>
           <td>{{data.regTime | date: 'yyyy-MM-dd' }}</td>
-
+          <td>{{data.tel}}</td>
+          <td>{{data.linkMan}}</td>
+          <td>{{data.classesNum}}</td>
+          <td>{{data.circleNum}}</td>
+          <td>{{data.studentNum}}</td>
+          <td>{{data.teacherNum}}</td>
           <td>
             <a href="javaScript:;" *ngIf="user.supperAdmin " (click)="onEdit(data)">修改</a>
             <nz-divider nzType="vertical"></nz-divider>

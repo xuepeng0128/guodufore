@@ -17,7 +17,7 @@ export class FrameComponent implements OnInit, AfterViewInit {
   loading = false;
   user: User = this.usersvr.getUserStorage();
   menuArray$: Observable<Array<Menu>> = iif(
-    () => this.user.supperAdmin || this.user.schoolAdmin || this.user.trainSchoolAdmin ,
+    () => this.user.supperAdmin==='1' || this.user.schoolAdmin || this.user.trainSchoolAdmin ,
                this.menusvr.allMenu(this.user.supperAdmin ? '1' : (this.user.schoolAdmin ? '2' : '3')),
                of(this.user.powerMenu)
 

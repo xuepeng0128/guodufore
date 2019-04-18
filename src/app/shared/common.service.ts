@@ -39,6 +39,9 @@ export class CommonService {
     }
   }
 
+  yearBegin = (): Date => {
+    return new Date( (new Date()).getFullYear() + '-01-01');
+  }
   calculate = (paperId: string): boolean => {
     const reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
     if (reg.test(paperId) === false) {
@@ -58,7 +61,7 @@ export class CommonService {
       }
 
       if (nj > 6) {
-         return '毕业';
+         return '小学毕业';
       } else {
         return nj.toString();
       }
@@ -75,7 +78,7 @@ export class CommonService {
     }
 
     if (nj > 3) {
-      return '毕业';
+      return '初中毕业';
     } else {
       return nj.toString();
     }

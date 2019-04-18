@@ -13,13 +13,13 @@ export class EmployeeService {
   employeeList = (queryparams: any): Observable<Array<Employee>> => {
      return this.httpsvr.onHttpGet('/api/system/employee/employeeList', queryparams);
   }
-  insertEmployee = (employee: Employee): Observable<String> => {
+  insertEmployee = (employee: Employee): Observable<string> => {
      return this.httpsvr.onHttpPost('/api/system/employee/insertEmployee', employee);
   }
-  updateEmployee = (employee: Employee): Observable<String> => {
+  updateEmployee = (employee: Employee): Observable<string> => {
     return this.httpsvr.onHttpPost('/api/system/employee/updateEmployee', employee);
   }
-  deleteEmployee = (employee: Employee): Observable<String> => {
+  deleteEmployee = (employee: Employee): Observable<string> => {
     return this.httpsvr.onHttpPost('/api/system/employee/updateEmployee', employee);
   }
 

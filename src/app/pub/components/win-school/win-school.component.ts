@@ -19,8 +19,7 @@ export class WinSchoolComponent implements OnInit {
   currentSchool: School = new School({});
   isSchoolModalShow = false;
   nowState = 'browse';
-  constructor(private schoolsvr: SchoolService, private message: NzMessageService,
-              private emloyeesvr: EmployeeService) { }
+  constructor(private schoolsvr: SchoolService, private message: NzMessageService) { }
 
   ngOnInit() {
     this.schoolWinOrder$.subscribe(re => {
