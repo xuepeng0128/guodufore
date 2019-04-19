@@ -34,18 +34,20 @@ export class SchoolComponent implements OnInit {
   };
   constructor(private schoolsvr: SchoolService, private usersvr: UserService,
               private modalService: NzModalService, private message: NzMessageService,
-              private commonsvr: CommonService) { }
+              public commonsvr: CommonService) { }
 
   ngOnInit() {
   }
 
   onQuery = () => {
-    this.queryParams.pageBegin = (this.queryParams.pageNo - 1) * this.queryParams.pageSize;
+    this.queryParams.pageNo = 1;
+    this.queryParams.pageBegin = 0;
     this.schoolList$ = this.schoolsvr.schoolList(this.queryParams);
     this.total$ = this.schoolsvr.schoolListTotal(this.queryParams);
   }
   onPageChange = (e) => {
     this.queryParams.pageNo = e;
+    this.queryParams.pageBegin = (this.queryParams.pageNo - 1) * this.queryParams.pageSize;
     this.schoolList$ = this.schoolsvr.schoolList(this.queryParams);
   }
 

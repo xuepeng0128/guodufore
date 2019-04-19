@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import {User} from '../../../entity/User';
 import {UserService} from '../../../shared/user.service';
 
-import {iif} from 'rxjs';
-import {switchMap} from 'rxjs/operators';
-import {School} from '../../../entity/School';
+import {iif, Observable, of} from 'rxjs';
+import {map, switchMap} from 'rxjs/operators';
 import {NzMessageService} from 'ng-zorro-antd';
-import {IUserList} from '../../../shared/interface/IUserList';
 import {LoginUser} from '../../../entity/LoginUser';
+import {IUserQueryResult} from '../../../shared/interface/queryparams/IUserQueryResult';
+import {IUserQueryParams} from '../../../shared/interface/queryparams/IUserQueryParams';
 
 
 @Component({
@@ -18,17 +18,31 @@ import {LoginUser} from '../../../entity/LoginUser';
 export class SchoolAdminMgrComponent implements OnInit {
   user: LoginUser = this.usersvr.getUserStorage();
   isUserModalShow = false;
-  userArray: Array<IUserList> = new Array<IUserList>();
+  userArray$: Observable<Array<IUserQueryResult>> = of([]);
+  total$ = of(0);
   currentUser: User = new User({});
   editState = 'browse';
+  queryParams: IUserQueryParams = {
+    schoolAdmin : true,
+    pageSize: 1000,
+    pageNo: 1,
+    pageBegin : 0
+  };
   constructor(private usersvr: UserService, private message: NzMessageService) { }
 
   ngOnInit() {
+    this.onQuery();
   }
   onQuery = () => {
-    this.usersvr.userList({schoolAdmin : '1', pageSize: 1000, pageNo: 1, getTotal: '1'}).subscribe(re => {
-      this.userArray = re;
-    });
+    this.queryParams.pageNo = 1;
+    this.queryParams.pageBegin = 0;
+    this.userArray$ = this.usersvr.userList(this.queryParams);
+    this.total$ = this.usersvr.userListTotal(this.queryParams);
+  }
+  onPageChange = (e) => {
+    this.queryParams.pageNo = e;
+    this.queryParams.pageBegin = (this.queryParams.pageNo - 1) * this.queryParams.pageSize;
+    this.userArray$ = this.usersvr.userList(this.queryParams);
   }
   onAdd = () => {
     this.editState = 'add';
@@ -42,17 +56,23 @@ export class SchoolAdminMgrComponent implements OnInit {
     this.isUserModalShow = true;
   }
   onSave = () => {
-    iif(
+    this.isUserModalShow = false;
+    this.userArray$ = iif(
       () => this.editState === 'add',
       this.usersvr.insertUser(this.currentUser),
       this.usersvr.updateUser(this.currentUser)
-    ).subscribe(re => this.isUserModalShow = false);
+    ).pipe(
+       switchMap(() =>
+         this.usersvr.userList(this.queryParams)
+        )
+    );
+    this.total$ = this.editState === 'add' ? this.total$.pipe(map(re => re + 1)) : this.total$;
   }
-  onDelete = (u: User) => {
-    this.usersvr.deleteUser(u.account).pipe(
-      switchMap(() => this.usersvr.userList({schoolAdmin : '1', pageSize: 1000, pageNo: 1, getTotal: '1'}))
-    ).subscribe( re => {
-      this.userArray = re ;
-    });
-  }
+  // onDelete = (u: User) => {
+  //   this.usersvr.deleteUser(u.account).pipe(
+  //     switchMap(() => this.usersvr.userList({schoolAdmin : '1', pageSize: 1000, pageNo: 1, getTotal: '1'}))
+  //   ).subscribe( re => {
+  //     this.userArray = re ;
+  //   });
+  // }
 }

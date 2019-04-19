@@ -18,14 +18,22 @@
     </div>
     <div nz-col [nzSpan]="8">
       <nz-form-item>
-        <nz-form-label [nzSpan]="6">地区</nz-form-label>
+        <nz-form-label [nzSpan]="6">市</nz-form-label>
         <nz-form-control [nzSpan]="15">
-          <app-district-select [(ngModel)]="queryParams.tradeId"></app-district-select>
+          <app-city-select [(ngModel)]="queryParams.cityId" [defaultShow]="'--全部--'"></app-city-select>
         </nz-form-control>
       </nz-form-item>
     </div>
   </div>
   <div nz-row>
+    <div nz-col [nzSpan]="8">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">区县</nz-form-label>
+        <nz-form-control [nzSpan]="15">
+          <app-district-select [(ngModel)]="queryParams.districtId" [cityId]="queryParams.cityId" [defaultShow]="'--全部--'"></app-district-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
     <div nz-col [nzSpan]="8">
       <nz-form-item>
         <nz-form-label [nzSpan]="6">地址</nz-form-label>

@@ -12,9 +12,9 @@
     <div nz-row>
       <div nz-col [nzSpan]="12">
         <nz-form-item>
-          <nz-form-label [nzSpan]="6">身份证</nz-form-label>
+          <nz-form-label [nzSpan]="6">员工编号</nz-form-label>
           <nz-form-control [nzSpan]="17">
-            <input nz-input [(ngModel)]="currentEmployee.paperId" >
+            <input nz-input [(ngModel)]="currentEmployee.paperId" placeholder="系统生成" [readonly]="true" >
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -41,7 +41,7 @@
         <nz-form-item>
           <nz-form-label [nzSpan]="6">职务</nz-form-label>
           <nz-form-control [nzSpan]="17">
-            <app-corp-duty-select [(ngModel)]="currentEmployee.duty.corpDutyId" [defaultShow]="'请选择'"></app-corp-duty-select>
+            <app-corp-duty-select [(ngModel)]="currentEmployee.corpDutyId" [defaultShow]="'请选择'"></app-corp-duty-select>
           </nz-form-control>
         </nz-form-item>
       </div>

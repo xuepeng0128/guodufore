@@ -2,10 +2,9 @@ import { Injectable } from '@angular/core';
 import {User} from '../entity/User';
 import {HttpService} from './service/baseapi/http.service';
 import {Observable} from 'rxjs';
-
-import {IUserList} from './interface/IUserList';
 import {map} from 'rxjs/operators';
 import {LoginUser} from '../entity/LoginUser';
+import {IUserQueryResult} from './interface/queryparams/IUserQueryResult';
 
 
 @Injectable({
@@ -32,15 +31,11 @@ export class UserService {
      return this.httpsvr.onHttpPost('/api/system/user/validateUser', user);
  }
 
-userList = (queryParams: any): Observable<Array<IUserList>> => {
-  return this.httpsvr.onHttpGet('/api/system/user/userList', queryParams).pipe(
-      map(re =>  re as Array<IUserList>)
-  );
+userList = (queryParams: any): Observable<Array<IUserQueryResult>> => {
+  return this.httpsvr.onHttpGet('/api/system/user/userList', queryParams);
 }
-  userListTotal = (queryParams: any): Observable<Array<IUserList>> => {
-    return this.httpsvr.onHttpGet('/api/system/user/userList', queryParams).pipe(
-      map(re =>  re as Array<IUserList>)
-    );
+  userListTotal = (queryParams: any): Observable<number> => {
+    return this.httpsvr.onHttpGet('/api/system/user/userListTotal', queryParams);
   }
 insertUser = (user: User ): Observable<string> => {
   return this.httpsvr.onHttpPost('/api/system/user/insertUser', user);

@@ -47,6 +47,7 @@ import { CorpDutySelectComponent } from './components/corp-duty-select/corp-duty
     WinHabitComponent,
     WinClassesComponent,
     YearSelectComponent,
+    CitySelectComponent,
     DistrictSelectComponent,
     EmployeeSelectComponent,
     SchoolSelectComponent,

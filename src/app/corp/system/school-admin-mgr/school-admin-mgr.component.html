@@ -13,7 +13,11 @@
       nzBordered
       nzShowSizeChanger
       [nzFrontPagination]="false"
-      [nzData]="userArray"
+      [nzData]="userArray$ | async"
+      [nzTotal]="total | async"
+      [(nzPageIndex)]="queryParams.pageNo"
+      [(nzPageSize)]="queryParams.pageSize"
+      (nzPageIndexChange)="onPageChange($event)"
     >
       <thead >
       <tr>
@@ -27,11 +31,11 @@
       <tr *ngFor="let data of ajaxTable.data ;let no=index">
         <td>{{no+1}}</td>
         <td>{{data.account}}</td>
-        <td>{{data.manageSchool?.schoolName}}</td>
+        <td>{{data.schoolName}}</td>
         <td>
-          <a href="javaScript:;" *ngIf="user.supperAdmin " (click)="onEdit(data)">修改</a>
+          <a href="javaScript:;" *ngIf="user.isSupperAdmin " (click)="onEdit(data)">修改</a>
           <nz-divider nzType="vertical"></nz-divider>
-          <a href="javaScript:;" *ngIf="user.supperAdmin" (click)="onDelete(data)">删除</a>
+          <a href="javaScript:;" *ngIf="user.isSupperAdmin" (click)="onDelete(data)">删除</a>
         </td>
       </tr>
       </tbody>
@@ -62,7 +66,7 @@
       <nz-form-item>
         <nz-form-label [nzSpan]="6">所属学校</nz-form-label>
         <nz-form-control [nzSpan]="17">
-           <app-school-select  [(ngModel)]="currentUser.manageSchool.schoolId"></app-school-select>
+           <app-school-select  [(ngModel)]="currentUser.schoolId"></app-school-select>
         </nz-form-control>
       </nz-form-item>
     </div>
