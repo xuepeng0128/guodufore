@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Observable, Subject} from 'rxjs';
+import {Observable, of, Subject} from 'rxjs';
 import {Employee} from '../../../entity/Employee';
 import {EmployeeService} from '../../../shared/service/system/employee.service';
 import {flatMap, map} from 'rxjs/operators';
@@ -18,8 +18,7 @@ export class EmployeeMgrComponent implements OnInit {
   queryParams = {
     employeeName : ''
   };
-  employeeArray$: Observable<Array<Employee>> = new Observable<Array<Employee>>();
-  total = 0;
+  employeeArray$: Observable<Array<Employee>> = of([]);
   constructor(private employeesvr: EmployeeService , private usersvr: UserService,
               private modalService: NzModalService, private message: NzMessageService) { }
 

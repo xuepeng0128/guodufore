@@ -7,13 +7,14 @@ export class Employee {
   tel: string;
   corpDutyId: string ;
   corpDutyName: string;
+  address: string;
   enterDate: Date;
   leaveDate: Date;
   wxcode: string;
 
 
   constructor(options: {employeeId?: string, paperId?: string, employeeName?: string,
-                        tel?: string, corpDutyId?: string, corpDutyName?: string,
+                        tel?: string, corpDutyId?: string, corpDutyName?: string, address?: string,
                          enterDate?: Date, leaveDate?: Date, wxcode?: string}= {}) {
     this.employeeId = options.employeeId || '';
     this.paperId = options.paperId || '';
@@ -21,6 +22,7 @@ export class Employee {
     this.tel = options.tel || '';
     this.corpDutyId = options.corpDutyId || '';
     this.corpDutyName = options.corpDutyName || '';
+    this.address = options.address || '';
     this.enterDate = options.enterDate || new Date();
     this.leaveDate = options.leaveDate;
     this.wxcode = options.wxcode || '';

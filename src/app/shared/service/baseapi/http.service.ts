@@ -57,7 +57,7 @@ export class HttpService {
     return this.httpclient.post<any>( url, queryParams, httpOptions) // globalParams.serverBaseUrl +
       .pipe(
         map(re => {
-          this.pageLoading$.next(false);
+         // this.pageLoading$.next(false);
           return re;
         }),
         catchError(this.handleError)
