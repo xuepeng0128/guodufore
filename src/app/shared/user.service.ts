@@ -29,7 +29,6 @@ export class UserService {
  }
 
  onvalidateLogin = (user: User): Observable<User> => {
-
      return this.httpsvr.onHttpPost('/api/system/user/validateUser', user);
  }
 
@@ -43,11 +42,11 @@ userList = (queryParams: any): Observable<Array<IUserList>> => {
       map(re =>  re as Array<IUserList>)
     );
   }
-insertUser = (user: User ): Observable<User> => {
+insertUser = (user: User ): Observable<string> => {
   return this.httpsvr.onHttpPost('/api/system/user/insertUser', user);
 }
 
-  updateUser = (user: User ): Observable<User> => {
+  updateUser = (user: User ): Observable<string> => {
     return this.httpsvr.onHttpPost('/api/system/user/updateUser', user);
   }
 

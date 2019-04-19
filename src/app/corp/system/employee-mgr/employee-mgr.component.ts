@@ -42,9 +42,7 @@ export class EmployeeMgrComponent implements OnInit {
     this.employeeWinOrder$.next({nowState: 'edit', employee});
   }
   onSaved = (employee: Employee) => {
-    this.employeeArray$ = this.employeesvr.employeeList(this.queryParams).pipe(
-      map( re => re.list)
-    );
+    this.employeeArray$ = this.employeesvr.employeeList(this.queryParams);
   }
   onDelete = (employee: Employee) => {
     this.modalService.confirm({

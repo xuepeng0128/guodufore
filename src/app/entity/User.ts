@@ -11,14 +11,14 @@ export class User {
   schoolId: string;
   employeeId: string; // 员工用户(为空，非员工用户)
   teacherPaperId: string ;  // 老师用户
-  supperAdmin: number; // 是否超级管理员
-  schoolAdmin: number; // 是否学校，机构管理员
+  supperAdmin: boolean; // 是否超级管理员
+  schoolAdmin: boolean; // 是否学校，机构管理员
   addTime : Date;
   kind : number;
 
   constructor(options :{userId?: string, account?: string, passWord?: string, schoolId?: string,
-                        employeeId?: string, teacherPaperId?: string, supperAdmin?: number,
-                        schoolAdmin?: number, addTime?: Date, kind?: number}={}) {
+                        employeeId?: string, teacherPaperId?: string, supperAdmin?: boolean,
+                        schoolAdmin?: boolean, addTime?: Date, kind?: number}={}) {
     this.userId = options.userId;
     this.account = options.account;
     this.passWord = options.passWord;

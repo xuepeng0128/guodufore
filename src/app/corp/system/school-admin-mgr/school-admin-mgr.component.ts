@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import {User} from '../../../entity/User';
-import {StudySubject} from '../../../entity/StudySubject';
 import {UserService} from '../../../shared/user.service';
-import {StudySubjectService} from '../../../shared/service/dic/study-subject.service';
+
 import {iif} from 'rxjs';
 import {switchMap} from 'rxjs/operators';
 import {School} from '../../../entity/School';
-import {ClassesService} from '../../../shared/service/basemsg/classes.service';
 import {NzMessageService} from 'ng-zorro-antd';
 import {IUserList} from '../../../shared/interface/IUserList';
-import {LoginUser} from "../../../entity/LoginUser";
+import {LoginUser} from '../../../entity/LoginUser';
+
 
 @Component({
   selector: 'app-school-admin-mgr',
@@ -34,7 +33,7 @@ export class SchoolAdminMgrComponent implements OnInit {
   onAdd = () => {
     this.editState = 'add';
     this.currentUser = new User();
-    this.currentUser.manageSchool = new School();
+    this.currentUser.schoolId = '';
     this.isUserModalShow = true;
   }
   onEdit = (user: User) => {

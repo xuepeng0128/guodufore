@@ -26,7 +26,7 @@ export class SchoolCircleComponent implements OnInit {
   total = 0;
   queryParams = {
     circleName : '',
-    schoolId : this.user.manageSchool.schoolId,
+    schoolId : this.user.school.schoolId,
     teacherPaperId : this.user.teacher ? '' : this.user.teacher.paperId,
     teacharName : '',
     studentName : '',
@@ -106,7 +106,7 @@ export class SchoolCircleComponent implements OnInit {
       nzTitle: '<i>提示</i>',
       nzContent: '<b>确定关闭圈子吗?</b>',
       nzOnOk: () => {
-        circle.closeMan = this.user.account;
+        circle.closeMan = this.user.user.userId;
         this.circlesvr.updateCircle(circle).subscribe(
           re => {
             if (re) {

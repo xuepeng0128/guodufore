@@ -6,7 +6,8 @@ import {User} from '../../../entity/User';
 import {UserService} from '../../../shared/user.service';
 import {isNullOrUndefined} from 'util';
 import {MSG_DELETE_ERROR, MSG_SAVE_SUCCESS} from '../../../shared/SysMessage';
-import {LoginUser} from "../../../entity/LoginUser";
+import {LoginUser} from '../../../entity/LoginUser';
+
 
 @Component({
   selector: 'app-change-password',
@@ -18,7 +19,7 @@ export class ChangePasswordComponent implements OnInit {
   newPassWord: string; // 新密码
   newPassWordAgain: string; // 确认新密码
   msg: string; // 提示
-  user: LoginUser = this.usersvr.getUserStorage();
+  user: User = this.usersvr.getUserStorage().user;
 
   constructor(private usersvr: UserService, private message: NzMessageService) { }
 
@@ -36,7 +37,7 @@ export class ChangePasswordComponent implements OnInit {
    this.usersvr.onvalidateLogin(this.user).pipe(
      flatMap(re => {
           if (re) {
-              return this.usersvr.updateUser(this.user).pipe(map(re => isNullOrUndefined(re) ? MSG_DELETE_ERROR : MSG_SAVE_SUCCESS));
+              return this.usersvr.updateUser(this.user);
           } else {
              return of('用户原密码验证错误!');
           }

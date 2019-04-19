@@ -10,7 +10,7 @@
           <span title><i class="anticon anticon-profile" [routerLink]="menu.url"></i>{{menu.menuName}}</span>
           <ul>
             <!--<li nz-menu-item *ngFor="let submenu of menu.subMenus" [routerLink]="submenu.url" [queryParams]="{power : submenu.opPower}"  [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" (click)="pareMenuName=menu.menuName;subMenuName=submenu.menuName;">{{submenu.menuName}}</li>-->
-            <li nz-menu-item *ngFor="let submenu of menu.subMenu"  >
+            <li nz-menu-item *ngFor="let submenu of menu.subMenus"  >
               <a [routerLink]="submenu.url" [queryParams]="{power : submenu.powers}"  [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" (click)="pareMenuName=menu.menuName;subMenuName=submenu.menuName;">{{submenu.menuName}}</a>
             </li>
           </ul>

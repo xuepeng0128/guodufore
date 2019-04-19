@@ -4,7 +4,8 @@ import {Observable} from 'rxjs';
 import {Menu} from '../../../entity/Menu';
 import {isNullOrUndefined} from 'util';
 import {map} from 'rxjs/operators';
-import {NzTreeNode} from 'ng-zorro-antd';
+import {NzTreeNode} from '../../../entity/NzTreeNode';
+
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,12 @@ export class MenuService {
 
   loadSupperAdminMenu = (): Observable<Array<Menu>> => {
     return this.httpsvr.onHttpGet('/api/system/menu/menuList', {kind: 1 }).pipe(
-      map( re => this.toTreeMenu(re, '0'))
+      map( re => {
+         const m = this.toTreeMenu(re, '0');
+         return m;
+      }
+
+      )
     );
   }
  loadEmployeeMenu = (): Observable<Array<Menu>> => {
@@ -29,7 +35,9 @@ export class MenuService {
  }
 loadSchoolAdminMenu = (): Observable<Array<Menu>> => {
   return this.httpsvr.onHttpGet('/api/system/menu/menuList', {kind: 2}).pipe(
-    map( re => this.toTreeMenu(re, '0'))
+    map( re =>
+      this.toTreeMenu(re, '0')
+    )
   );
 }
  loadTeacherMenu = () => {
@@ -37,7 +45,9 @@ loadSchoolAdminMenu = (): Observable<Array<Menu>> => {
       map( (re: Array<Menu>) =>
         re.filter(o => o.menuId.substring(0, 2) !== '08' && o.menuId.substring(0, 2) !== '09')
       ),
-      map( re => this.toTreeMenu(re, '0'))
+      map( re =>
+        this.toTreeMenu(re, '0')
+      )
     );
   }
 
@@ -48,6 +58,7 @@ loadSchoolAdminMenu = (): Observable<Array<Menu>> => {
     const menuArray =  menuList.filter(o => o.pareMenuId === topMenuId);
     menuArray.forEach(v => {
       v.subMenus = this.toTreeMenu(menuList, v.menuId);
+      console.log(v.subMenus);
     });
     return menuArray;
   }

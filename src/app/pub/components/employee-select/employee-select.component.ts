@@ -51,7 +51,7 @@ export class EmployeeSelectComponent implements OnInit {
 
   ngOnInit() {
      this.employeeArray$ = this.employeesvr.employeeList({pageSize : 1000, pageNo: 1, getTotal : '0'}).pipe(
-       map(re => [new Employee({paperId : '0', employeeName : this.defaultShow})].concat(re.list))
+       map(re => [new Employee({paperId : '0', employeeName : this.defaultShow})].concat(re))
      );
   }
   onValueSelected = () => {

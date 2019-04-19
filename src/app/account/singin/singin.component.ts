@@ -47,11 +47,11 @@ export class SinginComponent implements OnInit {
     this.loading = true;
     this.usersvr.onvalidateLogin(this.user).pipe(
       map(
-        user => {
+        userlist => {
           this.pro += 50;
-          if (user) {
-            this.user = user;
-            this.loginUser.user = user;
+          if (userlist) {
+            this.user = userlist[0];
+            this.loginUser.user = this.user;
             return true;
           } else {
             this.loading = false;
@@ -64,7 +64,10 @@ export class SinginComponent implements OnInit {
     ) .subscribe(res => {
         if (res) {
               this.getOtherMsg().subscribe(
-                re =>    this.router.navigate(['/'])
+                re => {
+                  this.usersvr.setUserStorage(this.loginUser);
+                  this.router.navigate(['/']);
+                }
               );
         }
       }
@@ -73,10 +76,10 @@ export class SinginComponent implements OnInit {
 
 
   getOtherMsg = (): Observable<string>  => {
-      if (this.loginUser.user.supperAdmin === 1) {
+      if (this.loginUser.user.supperAdmin) {
         this.loginUser.isSupperAdmin = true;
         return of('ok');
-      } else if (this.loginUser.user.schoolAdmin === 1) {
+      } else if (this.loginUser.user.schoolAdmin ) {
         this.loginUser.isSchoolAdmin = true;
         this.schoolQueryParams.schoolId = this.loginUser.user.schoolId;
         return this.schoolsvr.schoolList(this.schoolQueryParams).pipe(

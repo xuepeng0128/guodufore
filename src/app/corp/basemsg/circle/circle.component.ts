@@ -7,7 +7,7 @@ import {flatMap, map} from 'rxjs/operators';
 import {CircleService} from '../../../shared/service/business/circle.service';
 import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {CommonService} from '../../../shared/common.service';
-import {LoginUser} from "../../../entity/LoginUser";
+import {LoginUser} from '../../../entity/LoginUser';
 
 @Component({
   selector: 'app-circle',
@@ -22,7 +22,7 @@ export class CircleComponent implements OnInit {
     circleName : '',
     buildDateBegin : '',
     buildDateEnd : '',
-    queryPaperId : this.user.supperAdmin ?  '' : (this.user.employee.duty.master ?  '' : this.user.employee.paperId) ,
+    queryPaperId : this.user.isSupperAdmin ?  '' : (this.user.employee ?  '' : this.user.employee.paperId) ,
     pageSize : 20,
     pageNo : 1,
     getTotal : '1'
@@ -59,7 +59,7 @@ export class CircleComponent implements OnInit {
       nzTitle: '<i>提示</i>',
       nzContent: '<b>确定关闭圈子吗?</b>',
       nzOnOk: () => {
-        circle.closeMan = this.user.account;
+        circle.closeMan = this.user.user.userId;
         this.circlesvr.updateCircle(circle).subscribe(
            re => {
              if (re) {

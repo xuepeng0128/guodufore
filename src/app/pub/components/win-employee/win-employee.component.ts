@@ -14,8 +14,8 @@ import {CorpDuty} from '../../../entity/CorpDuty';
 })
 export class WinEmployeeComponent implements OnInit {
   @Input() employeeWinOrder$: Subject<{nowState: string , employee: Employee}> ;
-  @Output() onEmployeeSaved: EventEmitter<Employee> = new EventEmitter<Employee>();
-  currentEmployee: Employee = new Employee({duty : new CorpDuty({})});
+  @Output() onEmployeeSaved: EventEmitter<string> = new EventEmitter<string>();
+  currentEmployee: Employee = new Employee({});
   isEmployeeModalShow = false;
   nowState = 'browse';
   constructor( private message: NzMessageService,
@@ -24,7 +24,7 @@ export class WinEmployeeComponent implements OnInit {
   ngOnInit() {
     this.employeeWinOrder$.subscribe(re => {
       if (re.nowState === 'add') {
-        this.currentEmployee = new Employee({duty : new CorpDuty({})});
+        this.currentEmployee = new Employee({});
       } else if (re.nowState === 'edit') {
         this.currentEmployee = re.employee;
       }

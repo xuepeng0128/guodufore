@@ -6,6 +6,7 @@ import {map} from 'rxjs/operators';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
 import {School} from '../../../entity/School';
 import {SchoolService} from '../../../shared/service/basemsg/school.service';
+import {ISchoolQueryParams} from '../../../shared/interface/queryparams/ISchoolQueryParams';
 
 @Component({
   selector: 'app-school-select',
@@ -52,8 +53,12 @@ export class SchoolSelectComponent implements OnInit {
   constructor(private schoolsvr: SchoolService) { }
 
   ngOnInit() {
-    this.schoolArray$ = this.schoolsvr.schoolList({pageSize : 1000, pageNo: 1, getTotal : '0'}).pipe(
-      map(re => [ new School({schoolId : '0', schoolName: this.defaultShow})].concat( re.list) )
+    const queryParams: ISchoolQueryParams = {
+      pageSize : 1000,
+      pageBegin: 0
+    };
+    this.schoolArray$ = this.schoolsvr.schoolList(queryParams).pipe(
+      map(re => [ new School({schoolId : '0', schoolName: this.defaultShow})].concat( re as Array<School>) )
     );
   }
   onValueSelected = () => {

@@ -3,8 +3,8 @@ import {Observable, Subject} from 'rxjs';
 import {Teacher} from '../../../entity/Teacher';
 import {TeacherService} from '../../../shared/service/basemsg/teacher.service';
 import {UserService} from '../../../shared/user.service';
-import {User} from '../../../entity/User';
 import {map} from 'rxjs/operators';
+import {LoginUser} from '../../../entity/LoginUser';
 
 @Component({
   selector: 'app-teacher-choose',
@@ -23,7 +23,7 @@ export class TeacherChooseComponent implements OnInit {
   total = 0;
   entFilter = '';
   queryParams = {
-    schoolId : this.user.manageSchool.schoolId,
+    schoolId : this.user.user.schoolId,
      pageSize : 1000,
      pageNo : 1,
     getTotal : '0'
@@ -46,7 +46,7 @@ export class TeacherChooseComponent implements OnInit {
   onQuery = () => {
      this.teachersvr.teacherList(this.queryParams).pipe(
       map(re => {
-        return re.list as Array<MultiChooseTeacher>;
+        return re as Array<MultiChooseTeacher>;
       })
     ).subscribe( re => this.teacherList = re);
   }
