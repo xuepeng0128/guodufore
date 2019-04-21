@@ -1,6 +1,6 @@
 export interface ITeacherQueryResult {
     id?: number;
-    paperId?: string;
+    teacherPaperId?: string;
     teacherName?: string;
     tel?: string;
     address?: string;

@@ -21,7 +21,7 @@ export class SchoolTeacherComponent implements OnInit {
   total = 0;
 
 queryParams = {
-    paperId : '',
+    teacherPaperId : '',
     teacherName : '',
     schoolName : '',
     duty : '',

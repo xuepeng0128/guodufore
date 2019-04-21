@@ -4,7 +4,7 @@
     <nz-form-item>
       <nz-form-label [nzSpan]="6">账号</nz-form-label>
       <nz-form-control [nzSpan]="15">
-        <input nz-input [(ngModel)]="queryParams.paperId">
+        <input nz-input [(ngModel)]="queryParams.account">
       </nz-form-control>
     </nz-form-item>
   </div>
@@ -52,12 +52,12 @@
         <td>{{no+1}}</td>
         <td>{{data.account}}</td>
         <td>{{data.employee.employeeName}}</td>
-        <td>{{data.employee.paperId}}</td>
+        <td>{{data.employee.employeePaperId}}</td>
         <td>{{data.employee.duty.corpDutyName}}</td>
         <td>
-          <a href="javaScript:;" *ngIf="user.supperAdmin " (click)="onEdit(data)">修改</a>
+          <a href="javaScript:;" *ngIf="user.isSupperAdmin " (click)="onEdit(data)">修改</a>
           <nz-divider nzType="vertical"></nz-divider>
-          <a href="javaScript:;" *ngIf="user.supperAdmin" (click)="onDelete(data)">删除</a>
+          <a href="javaScript:;" *ngIf="user.isSupperAdmin" (click)="onDelete(data)">删除</a>
         </td>
       </tr>
       </tbody>

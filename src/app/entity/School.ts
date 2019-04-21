@@ -15,16 +15,16 @@ export class School {
     schoolStyle: number; // 1.小学，2.初中
   saleManId: string; // 业务员
     regTime: Date; // 注册时间
-   train: number;
+   train: boolean;
 
 
   constructor(options: { schoolId?: string, schoolName?: string, cityId?: string, districtId?: string,
                          longitude?: number, latitude?: number, tel?: string, linkMan?: string, address?: string,
-                          schoolStyle?: number, saleManId?: string, regTime?: Date, train?: number} = {}) {
+                          schoolStyle?: number, saleManId?: string, regTime?: Date, train?: boolean} = {}) {
     this.schoolId = options.schoolId || '';
     this.schoolName = options.schoolName || '';
-    this.cityId = options.cityId || '';
-    this.districtId = options.districtId || '';
+    this.cityId = options.cityId || '0';
+    this.districtId = options.districtId || '0';
     this.longitude = options.longitude || 0;
     this.latitude = options.latitude || 0;
     this.tel = options.tel || '';
@@ -33,6 +33,6 @@ export class School {
     this.schoolStyle = options.schoolStyle || 1;
     this.saleManId = options.saleManId || '';
     this.regTime = options.regTime ;
-    this.train = options.train || 0;
+    this.train = options.train || false;
   }
 }

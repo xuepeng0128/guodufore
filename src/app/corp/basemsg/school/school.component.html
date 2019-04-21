@@ -46,7 +46,7 @@
       <nz-form-item>
         <nz-form-label [nzSpan]="6">业务员</nz-form-label>
         <nz-form-control [nzSpan]="15" >
-
+            <app-employee-select [(ngModel)]="queryParams.saleManId" [defaultShow]="'--全部--'" [filterSaleManId]="loginUser.user.employeeId" ></app-employee-select>
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -57,7 +57,7 @@
     <div nz-col [nzSpan]="24" class="text-center">
       <a href="javaScript:;" class="ant-btn ant-btn-primary" (click)="onQuery()">查询</a>
       <a href="javaScript:;" class="ant-btn ant-btn-primary" (click)="onRegist()">新注册</a>
-      <a class="ant-btn ant-btn-primary m-l-xs" download="学校资源.xls" *ngIf="user.supperAdmin "  >excel导出</a>
+      <a class="ant-btn ant-btn-primary m-l-xs" download="学校资源.xls" *ngIf="loginUser.isSupperAdmin "  >excel导出</a>
     </div>
   </div>
   <div class="m-t-sm" nz-row>
@@ -68,7 +68,7 @@
         nzShowSizeChanger
         [nzFrontPagination]="false"
         [nzData]="schoolList$| async "
-        [nzTotal]="total | async"
+        [nzTotal]="total$ | async"
         [(nzPageIndex)]="queryParams.pageNo"
         [(nzPageSize)]="queryParams.pageSize"
         (nzPageIndexChange)="onPageChange($event)"
@@ -97,12 +97,12 @@
         <tbody>
         <tr *ngFor="let data of ajaxTable.data ;let no=index">
           <td>{{no+1}}</td>
-          <td>{{data.schoolId}}</td>
+          <td class="line-limit-length">{{data.schoolId}}</td>
           <td>{{data.schoolName}}</td>
           <td>{{data.cityName}}</td>
           <td>{{data.districtName}}</td>
           <td>{{data.address | cutSizePipe:18}}</td>
-          <td>{{data.schoolStyle==='1' ? '小学' :'初中'}}</td>
+          <td>{{data.schoolStyle=== 1 ? '小学' :'初中'}}</td>
           <td>{{data.saleManName}}</td>
           <td>{{data.regTime | date: 'yyyy-MM-dd' }}</td>
           <td>{{data.tel}}</td>
@@ -112,9 +112,9 @@
           <td>{{data.studentNum}}</td>
           <td>{{data.teacherNum}}</td>
           <td>
-            <a href="javaScript:;" *ngIf="user.supperAdmin " (click)="onEdit(data)">修改</a>
+            <a href="javaScript:;" *ngIf="loginUser.isSupperAdmin" (click)="onEdit(data)">修改</a>
             <nz-divider nzType="vertical"></nz-divider>
-            <a href="javaScript:;" *ngIf="user.supperAdmin" (click)="onDelete(data)">删除</a>
+            <a href="javaScript:;" *ngIf="loginUser.isSupperAdmin" (click)="onDelete(data)">删除</a>
           </td>
         </tr>
         </tbody>

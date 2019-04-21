@@ -27,7 +27,7 @@ export class SchoolCircleComponent implements OnInit {
   queryParams = {
     circleName : '',
     schoolId : this.user.school.schoolId,
-    teacherPaperId : this.user.teacher ? '' : this.user.teacher.paperId,
+    teacherPaperId : this.user.teacher ? '' : this.user.teacher.teacherPaperId,
     teacharName : '',
     studentName : '',
     buildDateBegin : new Date() ,

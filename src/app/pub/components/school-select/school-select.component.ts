@@ -21,8 +21,6 @@ import {ISchoolQueryParams} from '../../../shared/interface/queryparams/ISchoolQ
 export class SchoolSelectComponent implements OnInit {
   // 默認顯示
   @Input() defaultShow: string;
-  // 当选择的值发生变化，激发事件
-  @Output() onValueChanged: EventEmitter<any> = new EventEmitter<any>();
   schoolArray$: Observable<Array<School>>;
   private _CURRENTVALUE = '0'; // 市州选择 ngModel
   private onValueChangeCallBack: any = {};
@@ -58,10 +56,11 @@ export class SchoolSelectComponent implements OnInit {
       pageBegin: 0
     };
     this.schoolArray$ = this.schoolsvr.schoolList(queryParams).pipe(
-      map(re => [ new School({schoolId : '0', schoolName: this.defaultShow})].concat( re as Array<School>) )
+      map(re => [ new School({schoolId : '0', schoolName: this.defaultShow})].concat( 
+             re.map( m => new School({schoolId : m.schoolId ,schoolName : m.schoolName}))
+          )
+      )
     );
   }
-  onValueSelected = () => {
-    this.onValueChanged.emit(this._CURRENTVALUE);
-  }
+
 }

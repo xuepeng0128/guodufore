@@ -1,6 +1,6 @@
 export class Teacher {
           id: number;
-    paperId: string; // 身份证
+    teacherPaperId: string; // 身份证
     tel: string ; // 电话
     teacherName: string ; // 老师姓名
   teacherDutyId: string ; // 当前职务
@@ -9,10 +9,10 @@ export class Teacher {
    schoolId: string;
    regTime: Date;
 
-  constructor(options: {id?: number, paperId?: string, tel?: string, teacherName?: string, teacherDutyId?: string,
+  constructor(options: {id?: number, teacherPaperId?: string, tel?: string, teacherName?: string, teacherDutyId?: string,
                           teacherDutyName?: string, address?: string, schoolId?: string, regTime?: Date}= {}) {
     this.id = options.id;
-    this.paperId = options.paperId || '';
+    this.teacherPaperId = options.teacherPaperId || '';
     this.tel = options.tel || '';
     this.teacherName = options.teacherName || '';
     this.teacherDutyId = options.teacherDutyId || '';

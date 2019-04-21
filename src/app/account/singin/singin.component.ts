@@ -33,7 +33,7 @@ export class SinginComponent implements OnInit {
     schoolId : ''
   };
   teacherQueryParams: ITeacherQueryParams = {
-    paperId: ''
+    teacherPaperId: ''
   };
   loginUser: LoginUser = new LoginUser();
   constructor(private message: NzMessageService, private usersvr: UserService,
@@ -95,7 +95,7 @@ export class SinginComponent implements OnInit {
         );
       } else if (!isNullOrUndefined(this.user.teacherPaperId) && this.user.teacherPaperId !== '') {
           this.loginUser.isTeacher = true;
-          this.teacherQueryParams.paperId = this.user.teacherPaperId;
+          this.teacherQueryParams.teacherPaperId = this.user.teacherPaperId;
           this.schoolQueryParams.schoolId = this.user.schoolId;
           return combineLatest(
                      this.teachersvr.teacherList(this.teacherQueryParams).pipe(
@@ -103,7 +103,7 @@ export class SinginComponent implements OnInit {
                          const result: ITeacherQueryResult = re[0];
                          this.loginUser.teacher = new Teacher({
                            id: result.id,
-                           paperId: result.paperId,
+                           teacherPaperId: result.teacherPaperId,
                            tel: result.tel,
                            teacherName: result.teacherName,
                            teacherDutyId: result.teacherDutyId,

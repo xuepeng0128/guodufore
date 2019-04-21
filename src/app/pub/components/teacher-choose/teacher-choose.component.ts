@@ -37,7 +37,7 @@ export class TeacherChooseComponent implements OnInit {
       this.singleChoose = re.singleChoose;
       if (!this.singleChoose) {
          re.haveChoosedTeacher.forEach(t => {
-           this.teacherList.filter(o => o.paperId === t.paperId)[0].choosed = true;
+           this.teacherList.filter(o => o.teacherPaperId === t.teacherPaperId)[0].choosed = true;
          });
       }
     });

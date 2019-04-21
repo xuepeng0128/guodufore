@@ -15,18 +15,15 @@ import {CommonService} from '../../../shared/common.service';
   styleUrls: ['./school.component.css']
 })
 export class SchoolComponent implements OnInit {
-  user = this.usersvr.getUserStorage();
+  loginUser = this.usersvr.getUserStorage();
   schoolWinOrder$: Subject<{nowState: string , school: School}> = new Subject<{nowState: string , school: School}>() ;
-  schoolList$: Observable<Array<ISchoolQueryResult>> = of([]);
+  schoolList$: Observable<Array<ISchoolQueryResult>> = of(new Array<ISchoolQueryResult>());
   total$: Observable<number> = of(0);
   queryParams: ISchoolQueryParams = {
             schoolName : '',
             cityId : '0',
             districtId : '0',
             schoolStyle: '0',
-            regTimeBegin : this.commonsvr.yearBegin(),
-            regTimeEnd: new Date(),
-            train : 0,
             saleManId : '',
             pageSize : 20 ,
             pageNo : 1,

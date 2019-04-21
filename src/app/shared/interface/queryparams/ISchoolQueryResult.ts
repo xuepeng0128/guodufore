@@ -12,7 +12,7 @@ export interface ISchoolQueryResult {
   saleManId?: string ;
   saleManName?: string;
   regTime?: Date ;
-  train?: number ;
+  train?: boolean ;
   tel?: string ;
   linkMan?: string;
    classesNum ?: number ;

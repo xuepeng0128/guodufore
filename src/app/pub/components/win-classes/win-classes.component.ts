@@ -42,7 +42,7 @@ export class WinClassesComponent implements OnInit {
 
 
   onRemoveAssTeacher = (t: Teacher) => {
-   this.currentClasses.assTeachers = this.currentClasses.assTeachers.filter(o => o.paperId !== t.paperId);
+   this.currentClasses.assTeachers = this.currentClasses.assTeachers.filter(o => o.teacherPaperId !== t.teacherPaperId);
   }
   onTeacherChoosed = (t: Teacher | Array<Teacher>) => {
      if (t instanceof Array ) { // 代课老师

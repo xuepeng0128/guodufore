@@ -4,7 +4,7 @@
     <nz-form-item>
       <nz-form-label [nzSpan]="6">身份证号</nz-form-label>
       <nz-form-control [nzSpan]="15">
-        <input nz-input [(ngModel)]="queryParams.paperId">
+        <input nz-input [(ngModel)]="queryParams.teacherPaperId">
       </nz-form-control>
     </nz-form-item>
   </div>
@@ -12,7 +12,7 @@
     <nz-form-item>
       <nz-form-label [nzSpan]="6">姓名</nz-form-label>
       <nz-form-control [nzSpan]="15">
-        <input nz-input [(ngModel)]="queryParams.studentName">
+        <input nz-input [(ngModel)]="queryParams.teacherName">
       </nz-form-control>
     </nz-form-item>
   </div>
@@ -60,7 +60,7 @@
       <tbody>
       <tr *ngFor="let data of ajaxTable.data ;let no=index">
         <td>{{no+1}}</td>
-        <td>{{data.paperId}}</td>
+        <td>{{data.teacherPaperId}}</td>
         <td>{{data.teacherName}}</td>
         <td>{{data.teacherDutyName}}</td>
         <td>{{data.tel}}</td>

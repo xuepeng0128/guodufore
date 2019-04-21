@@ -13,20 +13,20 @@ export class SchoolService {
   constructor(private httpsvr: HttpService) { }
 
   schoolList = (queryparam: ISchoolQueryParams): Observable<Array<ISchoolQueryResult>> => {
-         return this.httpsvr.onHttpGet('/api/corp/basemsg/school/schoolList', queryparam);
+         return this.httpsvr.onHttpGet('/api/basemsg/school/schoolList', queryparam);
   }
  schoolListTotal = (queryparam: ISchoolQueryParams): Observable<number> => {
-   return this.httpsvr.onHttpGet('/api/corp/basemsg/school/schoolListTotal', queryparam);
+   return this.httpsvr.onHttpGet('/api/basemsg/school/schoolListTotal', queryparam);
  }
   insertSchool = (school: School): Observable<School> => {
-        return this.httpsvr.onHttpPost('/api/corp/basemsg/school/insertSchool', school);
+        return this.httpsvr.onHttpPost('/api/basemsg/school/insertSchool', school);
   }
 
   updateSchool = (school: School): Observable<School> => {
-        return this.httpsvr.onHttpPost('/api/corp/basemsg/school/updateSchool', school);
+        return this.httpsvr.onHttpPost('/api/basemsg/school/updateSchool', school);
   }
 
   deleteSchool = (schoolId: string): Observable<string> => {
-    return this.httpsvr.onHttpGet('/api/corp/basemsg/school/deleteSchool', {schoolId});
+    return this.httpsvr.onHttpGet('/api/basemsg/school/deleteSchool', {schoolId});
   }
 }

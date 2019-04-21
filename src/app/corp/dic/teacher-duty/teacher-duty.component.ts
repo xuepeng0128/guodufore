@@ -3,7 +3,7 @@ import {User} from '../../../entity/User';
 import {TeacherDuty} from '../../../entity/TeacherDuty';
 import {UserService} from '../../../shared/user.service';
 import {TeacherdutyService} from '../../../shared/service/dic/teacherduty.service';
-import {iif} from 'rxjs';
+import {iif, Observable, of} from 'rxjs';
 import {switchMap} from 'rxjs/operators';
 import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {MSG_SAVE_ERROR, MSG_SAVE_SUCCESS} from '../../../shared/SysMessage';
@@ -15,9 +15,9 @@ import {LoginUser} from "../../../entity/LoginUser";
   styleUrls: ['./teacher-duty.component.css']
 })
 export class TeacherDutyComponent implements OnInit {
-  user: LoginUser = this.usersvr.getUserStorage();
+  loginUser: LoginUser = this.usersvr.getUserStorage();
   isTeacherDutyModalShow = false;
-  teacherdutyArray: Array<TeacherDuty> = new Array<TeacherDuty>();
+  teacherdutyArray$: Observable<Array<TeacherDuty>> = of(new Array<TeacherDuty>());
   currentTeacherDuty: TeacherDuty = new TeacherDuty({});
   editState = 'browse';
   constructor(private usersvr: UserService, private teacherdutysvr: TeacherdutyService,
@@ -27,9 +27,7 @@ export class TeacherDutyComponent implements OnInit {
     this.onQuery();
   }
   onQuery = () => {
-    this.teacherdutysvr.teacherDutyList().subscribe(re => {
-      this.teacherdutyArray = re;
-    });
+    this.teacherdutyArray$= this.teacherdutysvr.teacherDutyList();
   }
   onAdd = () => {
     this.editState = 'add';
@@ -62,11 +60,9 @@ export class TeacherDutyComponent implements OnInit {
       nzTitle: '<i>提示</i>',
       nzContent: '<b>确定删除该数据吗?</b>',
       nzOnOk: () => {
-        this.teacherdutysvr.deleteTeacherDuty(teacherDuty).pipe(
+      this.teacherdutyArray$=   this.teacherdutysvr.deleteTeacherDuty(teacherDuty).pipe(
           switchMap(() => this.teacherdutysvr.teacherDutyList())
-        ).subscribe( re => {
-          this.teacherdutyArray = re ;
-        });
+        );
       }
     });
   }

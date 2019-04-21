@@ -4,6 +4,7 @@ import {EmployeeService} from '../../../shared/service/system/employee.service';
 import {Observable} from 'rxjs';
 import {Employee} from '../../../entity/Employee';
 import {map} from 'rxjs/operators';
+import {isNullOrUndefined} from "util";
 
 @Component({
   selector: 'app-employee-select',
@@ -18,8 +19,7 @@ import {map} from 'rxjs/operators';
 export class EmployeeSelectComponent implements OnInit {
   // 默認顯示
   @Input() defaultShow: string;
-  // 当选择的值发生变化，激发事件
-  @Output() onValueChanged: EventEmitter<any> = new EventEmitter<any>();
+  @Input() filterSaleManId : string;
   employeeArray$: Observable<Array<Employee>>;
   private _CURRENTVALUE = '0'; // 市州选择 ngModel
   private onValueChangeCallBack: any = {};
@@ -50,11 +50,11 @@ export class EmployeeSelectComponent implements OnInit {
   constructor(private employeesvr: EmployeeService) { }
 
   ngOnInit() {
-     this.employeeArray$ = this.employeesvr.employeeList({pageSize : 1000, pageNo: 1, getTotal : '0'}).pipe(
-       map(re => [new Employee({paperId : '0', employeeName : this.defaultShow})].concat(re))
+
+     this.employeeArray$ = this.employeesvr.employeeList({employeeId : isNullOrUndefined(this.filterSaleManId) ?  '': this.filterSaleManId }).pipe(
+       map(re => [new Employee({employeeId : '0', employeeName : this.defaultShow})].concat(
+         re.map( e => new Employee({employeeId : e.employeeId , employeeName : e.employeeName}))
+       ))
      );
-  }
-  onValueSelected = () => {
-    this.onValueChanged.emit(this._CURRENTVALUE);
   }
 }

@@ -22,7 +22,7 @@ export class StudentComponent implements OnInit {
   studentList$: Observable<Array<IStudentQueryResult>> = of([]);
   total$ = of(0);
   queryParams: IStudentQueryParams = {
-        paperId : '',
+        studentPaperId : '',
         studentName: '',
         schoolName: '',
         pageSize : 20,

@@ -14,7 +14,7 @@
       nzShowSizeChanger
       [nzFrontPagination]="false"
       [nzData]="userArray$ | async"
-      [nzTotal]="total | async"
+      [nzTotal]="total$ | async"
       [(nzPageIndex)]="queryParams.pageNo"
       [(nzPageSize)]="queryParams.pageSize"
       (nzPageIndexChange)="onPageChange($event)"
@@ -33,9 +33,9 @@
         <td>{{data.account}}</td>
         <td>{{data.schoolName}}</td>
         <td>
-          <a href="javaScript:;" *ngIf="user.isSupperAdmin " (click)="onEdit(data)">修改</a>
+          <a href="javaScript:;" *ngIf="loginUser.isSupperAdmin " (click)="onEdit(data)">修改</a>
           <nz-divider nzType="vertical"></nz-divider>
-          <a href="javaScript:;" *ngIf="user.isSupperAdmin" (click)="onDelete(data)">删除</a>
+          <a href="javaScript:;" *ngIf="loginUser.isSupperAdmin" (click)="onDelete(data)">删除</a>
         </td>
       </tr>
       </tbody>
@@ -43,10 +43,10 @@
   </div>
 </div>
 
-<nz-modal [(nzVisible)]="isUserModalShow"
-          [nzTitle]="'科目'"
+<nz-modal [(nzVisible)]="isSchoolAdminModalShow"
+          [nzTitle]="'学校管理员'"
           [nzCancelText]="'关闭'"
-          (nzOnCancel)="isUserModalShow=false"
+          (nzOnCancel)="isSchoolAdminModalShow=false"
           [nzOkText]="'保存'"
           (nzOnOk)="onSave()"
           [nzMaskClosable]="false"
@@ -54,19 +54,20 @@
 >
 
   <div nz-row>
-    <div nz-col [nzSpan]="8">
+    <div nz-col [nzSpan]="12">
       <nz-form-item>
         <nz-form-label [nzSpan]="6">账号</nz-form-label>
         <nz-form-control [nzSpan]="17">
           <input nz-input [(ngModel)]="currentUser.account"  >
         </nz-form-control>
+
       </nz-form-item>
     </div>
-    <div nz-col [nzSpan]="8">
+    <div nz-col [nzSpan]="12">
       <nz-form-item>
         <nz-form-label [nzSpan]="6">所属学校</nz-form-label>
         <nz-form-control [nzSpan]="17">
-           <app-school-select  [(ngModel)]="currentUser.schoolId"></app-school-select>
+           <app-school-select  [(ngModel)]="currentUser.schoolId" [defaultShow]="'--请选择--'"></app-school-select>
         </nz-form-control>
       </nz-form-item>
     </div>

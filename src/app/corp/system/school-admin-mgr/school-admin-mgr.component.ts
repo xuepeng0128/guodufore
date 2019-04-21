@@ -16,8 +16,8 @@ import {IUserQueryParams} from '../../../shared/interface/queryparams/IUserQuery
   styleUrls: ['./school-admin-mgr.component.css']
 })
 export class SchoolAdminMgrComponent implements OnInit {
-  user: LoginUser = this.usersvr.getUserStorage();
-  isUserModalShow = false;
+  loginUser: LoginUser = this.usersvr.getUserStorage();
+  isSchoolAdminModalShow = false;
   userArray$: Observable<Array<IUserQueryResult>> = of([]);
   total$ = of(0);
   currentUser: User = new User({});
@@ -46,17 +46,17 @@ export class SchoolAdminMgrComponent implements OnInit {
   }
   onAdd = () => {
     this.editState = 'add';
-    this.currentUser = new User();
+    this.currentUser = new User({schoolAdmin :true});
     this.currentUser.schoolId = '';
-    this.isUserModalShow = true;
+    this.isSchoolAdminModalShow = true;
   }
   onEdit = (user: User) => {
     this.currentUser = user;
     this.editState = 'edit';
-    this.isUserModalShow = true;
+    this.isSchoolAdminModalShow = true;
   }
   onSave = () => {
-    this.isUserModalShow = false;
+    this.isSchoolAdminModalShow = false;
     this.userArray$ = iif(
       () => this.editState === 'add',
       this.usersvr.insertUser(this.currentUser),

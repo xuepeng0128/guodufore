@@ -2,7 +2,7 @@ import {CorpDuty} from './CorpDuty';
 
 export class Employee {
   employeeId: string;
-  paperId: string;
+  employeePaperId: string;
   employeeName: string;
   tel: string;
   corpDutyId: string ;
@@ -13,11 +13,11 @@ export class Employee {
   wxcode: string;
 
 
-  constructor(options: {employeeId?: string, paperId?: string, employeeName?: string,
+  constructor(options: {employeeId?: string, employeePaperId?: string, employeeName?: string,
                         tel?: string, corpDutyId?: string, corpDutyName?: string, address?: string,
                          enterDate?: Date, leaveDate?: Date, wxcode?: string}= {}) {
     this.employeeId = options.employeeId || '';
-    this.paperId = options.paperId || '';
+    this.employeePaperId = options.employeePaperId || '';
     this.employeeName = options.employeeName || '';
     this.tel = options.tel || '';
     this.corpDutyId = options.corpDutyId || '';

@@ -7,6 +7,8 @@ import {isNullOrUndefined} from 'util';
 import {MSG_DELETE_ERROR, MSG_SAVE_ERROR, MSG_SAVE_SUCCESS} from '../../../shared/SysMessage';
 import {EmployeeService} from '../../../shared/service/system/employee.service';
 import {flatMap, map} from 'rxjs/operators';
+import {LoginUser} from "../../../entity/LoginUser";
+import {UserService} from "../../../shared/user.service";
 
 @Component({
   selector: 'app-win-school',
@@ -19,16 +21,18 @@ export class WinSchoolComponent implements OnInit {
   currentSchool: School = new School({});
   isSchoolModalShow = false;
   nowState = 'browse';
-  constructor(private schoolsvr: SchoolService, private message: NzMessageService) { }
+  loginUser : LoginUser= this.usersvr.getUserStorage();
+  constructor(private schoolsvr: SchoolService, private message: NzMessageService,private usersvr : UserService) { }
 
   ngOnInit() {
     this.schoolWinOrder$.subscribe(re => {
          if (re.nowState === 'add') {
-            this.currentSchool = new School({});
+            this.currentSchool = new School({ cityId:'0' , districtId : '0', saleManId:'0', train : false});
          } else if (re.nowState === 'edit') {
             this.currentSchool = re.school;
          }
          this.isSchoolModalShow = true;
+         this.nowState=re.nowState;
     });
   }
 
