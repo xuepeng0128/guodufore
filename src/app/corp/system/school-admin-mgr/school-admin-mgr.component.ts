@@ -47,7 +47,9 @@ export class SchoolAdminMgrComponent implements OnInit {
   onAdd = () => {
     this.editState = 'add';
     this.currentUser = new User({schoolAdmin :true});
-    this.currentUser.schoolId = '';
+    this.currentUser.schoolId = '0';
+    this.currentUser.account='';
+    this.currentUser.kind=2;
     this.isSchoolAdminModalShow = true;
   }
   onEdit = (user: User) => {

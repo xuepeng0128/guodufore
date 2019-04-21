@@ -30,7 +30,10 @@ export class SinginComponent implements OnInit {
   loading = false;
   pro = 0;
   schoolQueryParams: ISchoolQueryParams = {
-    schoolId : ''
+    schoolId : '',
+    pageSize :1000,
+    pageNo :1,
+    pageBegin:0
   };
   teacherQueryParams: ITeacherQueryParams = {
     teacherPaperId: ''
