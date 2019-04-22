@@ -14,7 +14,11 @@
         <nz-form-item>
           <nz-form-label [nzSpan]="6">学籍</nz-form-label>
           <nz-form-control [nzSpan]="17">
-           <app-year-select [(ngModel)]="currentClasses.grade"></app-year-select>
+           <app-year-select [(ngModel)]="currentClasses.grade" ></app-year-select>
+            {{ loginUser.school.schoolStyle===1 ?  commonsvr.calculateSchoolYearPrimarySchool(currentClasses.grade) :
+            (
+            loginUser.school.schoolStyle===2 ? commonsvr.calculateSchoolYearMiddleSchool(currentClasses.grade) :''
+            ) }} 年级
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -30,13 +34,13 @@
         <nz-form-item>
           <nz-form-label [nzSpan]="6">班主任</nz-form-label>
           <nz-form-control [nzSpan]="17">
-            <input nz-input [value]="currentClasses.headmaster.teacherName" [readonly]="true" >
+            <input nz-input [value]="currentClasses.headMasterName" [readonly]="true" >
             <i nz-icon type="minus-circle-o" class="dynamic-add-button" (click)="chooseTeacher()"></i>
           </nz-form-control>
         </nz-form-item>
       </div>
     </div>
-    <div nz-row>
+    <div nz-row *ngIf="showDetail">
       <div nz-col [nzSpan]="24">
         <nz-form-item>
           <nz-form-label [nzSpan]="6">代课老师</nz-form-label>
@@ -46,7 +50,7 @@
         </nz-form-item>
       </div>
     </div>
-  <div nz-row>
+  <div nz-row  *ngIf="showDetail">
     <div nz-col [nzSpan]="24">
       <a [href]="templateFilePath" > [模板下载]</a>
       <nz-upload nzAction="/api/school/basemsg/student/importStudent"   (nzChange)="handleDataChange($event)">
@@ -54,7 +58,7 @@
       </nz-upload>
     </div>
   </div>
-  <div nz-row>
+  <div nz-row  *ngIf="showDetail">
     <div nz-col [nzSpan]="24">
       <nz-form-item>
         <nz-form-label [nzSpan]="6">学生</nz-form-label>

@@ -50,8 +50,8 @@ export class CommonService {
   }
 
 
-  // 计算小学
-  calculateGradePrimarySchool = (gradeyear: number): string => {
+  // 计算小学年级
+  calculateSchoolYearPrimarySchool = (gradeyear: number): string => {
       const nowDate = new Date();
       let nj = 0;
       if (nowDate.getMonth() + 1 >= 9) {
@@ -67,8 +67,20 @@ export class CommonService {
       }
   }
 
+  // 计算学籍
+  calculateGradeSchool = (schoolyear: number): number => {
+       const nowDate = new Date();
+       if (nowDate.getMonth() + 1 >= 9) {
+          return nowDate.getFullYear() + schoolyear - 1;
+       } else {
+          return nowDate.getFullYear() + schoolyear - 1 - 1;
+       }
+  }
+
+
+
   // 计算初中
-  calculateGradeMiddleSchool = (gradeyear: number): string => {
+  calculateSchoolYearMiddleSchool = (gradeyear: number): string => {
     const nowDate = new Date();
     let nj = 0;
     if (nowDate.getMonth() + 1 >= 9) {

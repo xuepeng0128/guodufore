@@ -10,6 +10,7 @@ import {Classes} from '../../../entity/Classes';
 import {ClassesService} from '../../../shared/service/basemsg/classes.service';
 import {Teacher} from '../../../entity/Teacher';
 import {DOWNLOAD_TEMPLATE_PATH} from '../../../shared/const';
+import {CommonService} from '../../../shared/common.service';
 
 @Component({
   selector: 'app-win-classes',
@@ -17,8 +18,10 @@ import {DOWNLOAD_TEMPLATE_PATH} from '../../../shared/const';
   styleUrls: ['./win-classes.component.css']
 })
 export class WinClassesComponent implements OnInit {
-  @Input() classesWinOrder$: Subject<{nowState: string , classes: Classes}> ;
+  @Input() classesWinOrder$: Subject<{nowState: string , classesId: string}> ;
+  @Input() showDetail: boolean;
   @Output() onClassesSaved: EventEmitter<Classes> = new EventEmitter<Classes>();
+
 
   teacherChooseSign$: Subject<{ singleChoose: boolean, haveChoosedTeacher: Array<Teacher>}>
     = new Subject<{ singleChoose: boolean, haveChoosedTeacher: Array<Teacher>}>();
@@ -26,7 +29,7 @@ export class WinClassesComponent implements OnInit {
   currentClasses: Classes = new Classes({});
   isClassesModalShow = false;
   nowState = 'browse';
-  constructor(private classessvr: ClassesService, private message: NzMessageService) { }
+  constructor(private classessvr: ClassesService, private message: NzMessageService, public commonsvr: CommonService) { }
 
 
   ngOnInit() {
@@ -34,6 +37,7 @@ export class WinClassesComponent implements OnInit {
       if (re.nowState === 'add') {
         this.currentClasses = new Classes({});
       } else if (re.nowState === 'edit') {
+        this.classessvr.classesList({classes})
         this.currentClasses = re.classes;
       }
       this.isClassesModalShow = true;

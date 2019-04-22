@@ -30,7 +30,7 @@
       <tr *ngFor="let data of ajaxTable.data ;let no=index">
         <td>{{no+1}}</td>
         <td>{{data.grade}}</td>
-        <td>{{commonsvr.calculateGradeMiddleSchool(data.grade)}}</td>
+        <td>{{commonsvr.calculateSchoolYearMiddleSchool(data.grade)}}</td>
         <td>{{data.classes}}</td>
         <td>{{data.headmaster.teacherName}}</td>
         <td>{{data.assTeachers.length}}</td>

@@ -96,7 +96,7 @@
       <tr *ngFor="let data of ajaxTable.data ;let no=index">
         <td>{{no+1}}</td>
         <td>{{data.school.schoolName}}</td>
-        <td>{{ commonsvr.calculateGradePrimarySchool(data.classes.grade) +'年级' + data.classes.classes +'班'}}</td>
+        <td>{{ commonsvr.calculateSchoolYearPrimarySchool(data.classes.grade) +'年级' + data.classes.classes +'班'}}</td>
         <td>{{data.circleName}}</td>
         <td>{{data.buildMan.teacherName}}</td>
         <td>{{data.buildDate | date :'yyyy-MM-dd'}}</td>

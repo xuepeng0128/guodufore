@@ -1,11 +1,12 @@
 export class StudySubject {
-     studySubjectId: string;
+     studySubjectId: number;
      studySubjectName: string;
-     habitClass: string ;
-
-  constructor(studySubjectId?: string, studySubjectName?: string, habitClass?: string) {
-    this.studySubjectId = studySubjectId || '';
+     habitClass: number ;
+     bSchool: number;
+  constructor(studySubjectId?: number, studySubjectName?: string, habitClass?: number, bSchool?: number) {
+    this.studySubjectId = studySubjectId || 0;
     this.studySubjectName = studySubjectName || '';
-    this.habitClass = habitClass || '1';
+    this.habitClass = habitClass || 0;
+    this.bSchool = bSchool || 0;
   }
 }

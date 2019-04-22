@@ -1,24 +1,35 @@
 import {School} from './School';
 import {Student} from './Student';
 import {Teacher} from './Teacher';
+import {ClassesTeacher} from './ClassesTeacher';
+import {ClassesStudent} from './ClassesStudent';
 
 export class Classes {
-  id: string ;
-  grade: number;  // 年纪
+  classesId: string;
+  grade: number;  // 年纪 学籍 2013 级
   classes: number; // 班级
-  headmaster: Teacher; // 班主任
-  assTeachers: Array<Teacher> ; // 代课老师
-  school: School; // 所属学校
-  students: Array<Student>; // 班级学生
+  classesName: string;
+  headMaster: string ; // 班主任
+  headMasterName: string;
+  schoolId: string; // 所属学校
+  regTime: Date;
+  endTime: Date;
+  students: Array<ClassesStudent>; // 班级学生
+  teachers: Array<ClassesTeacher>;
 
-
-  constructor(options: {id?: string, grade?: number, classes?: number, headmaster?: Teacher, assTeachers?: Array<Teacher>, school?: School, students?: Array<Student>}= {}) {
-    this.id = options.id || '';
-    this.grade = options.grade;
-    this.classes = options.classes;
-    this.headmaster = options.headmaster ;
-    this.assTeachers = options.assTeachers;
-    this.school = options.school || null;
-    this.students = options.students;
+  constructor(options: { classesId ?: string, grade?: number, classes?: number, classesName?: string,
+                          headMaster?: string, headMasterName ?: string, schoolId?: string, regTime?: Date, endTime?: Date,
+                          students?: Array<ClassesStudent>, teachers?: Array<ClassesTeacher>}= {}) {
+    this.classesId = options.classesId;
+    this.grade = options.grade || (new Date()).getFullYear();
+    this.classes = options.classes || 1;
+    this.classesName = options.classesName || '';
+    this.headMaster = options.headMaster || '';
+    this.headMasterName = options.headMasterName || '';
+    this.schoolId = options.schoolId || '';
+    this.regTime = options.regTime || new Date();
+    this.endTime = options.endTime;
+    this.students = options.students || new Array<ClassesStudent>();
+    this.teachers = options.teachers || new Array<ClassesTeacher>();
   }
 }

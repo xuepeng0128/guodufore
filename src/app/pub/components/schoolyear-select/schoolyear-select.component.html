@@ -1,0 +1,9 @@
+<nz-select [(ngModel)]="currentValue" class="form-input fullWidth">
+  <nz-option [nzValue]="0" [nzLabel]="defaultShow"></nz-option>
+  <nz-option [nzValue]="1" nzLabel="1年级"></nz-option>
+  <nz-option [nzValue]="2" nzLabel="2年级"></nz-option>
+  <nz-option [nzValue]="3" nzLabel="3年级"></nz-option>
+  <nz-option *ngIf="schoolStyle===1" [nzValue]="4" nzLabel="4年级"></nz-option>
+  <nz-option *ngIf="schoolStyle===1" [nzValue]="5" nzLabel="5年级"></nz-option>
+  <nz-option *ngIf="schoolStyle===1" [nzValue]="6" nzLabel="6年级"></nz-option>
+</nz-select>

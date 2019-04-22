@@ -1,18 +1,20 @@
 import {Component, forwardRef, Input, OnInit} from '@angular/core';
-import {NG_VALUE_ACCESSOR} from "@angular/forms";
+import {NG_VALUE_ACCESSOR} from '@angular/forms';
 
 @Component({
-  selector: 'app-year-select',
-  templateUrl: './year-select.component.html',
-  styleUrls: ['./year-select.component.css'],
+  selector: 'app-schoolyear-select',
+  templateUrl: './schoolyear-select.component.html',
+  styleUrls: ['./schoolyear-select.component.css'],
   providers: [{
     provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => YearSelectComponent),
+    useExisting: forwardRef(() => SchoolyearSelectComponent),
     multi: true
   }]
 })
-export class YearSelectComponent implements OnInit {
-  private _CURRENTVALUE: string; //选择 ngModel 绑定
+export class SchoolyearSelectComponent implements OnInit {
+  @Input() schoolStyle: number;
+  @Input() defaultShow: string;
+  private _CURRENTVALUE: string; // 选择 ngModel 绑定
   private onValueChangeCallBack: any = {};
 
 
@@ -32,8 +34,7 @@ export class YearSelectComponent implements OnInit {
   }
 
   writeValue(obj: any): void {
-    if (obj)
-    {
+    if (obj) {
       this._CURRENTVALUE = obj;
     }
   }
@@ -43,5 +44,6 @@ export class YearSelectComponent implements OnInit {
   }
   registerOnTouched(fn: any): void {
   }
+
 
 }

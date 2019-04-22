@@ -19,6 +19,8 @@ import {WinEmployeeComponent} from './components/win-employee/win-employee.compo
 import { StudySubjectSelectComponent } from './components/study-subject-select/study-subject-select.component';
 import { SchoolSelectComponent } from './components/school-select/school-select.component';
 import { CorpDutySelectComponent } from './components/corp-duty-select/corp-duty-select.component';
+import { SchoolyearSelectComponent } from './components/schoolyear-select/schoolyear-select.component';
+import { SchoolclassesSelectComponent } from './components/schoolclasses-select/schoolclasses-select.component';
 
 
 
@@ -27,7 +29,9 @@ import { CorpDutySelectComponent } from './components/corp-duty-select/corp-duty
     EmployeeSelectComponent, CutSizePipe, ArrayTextFilterPipe, WinEmployeeComponent,  HabitClassSelectComponent,
     WinHabitComponent, WinClassesComponent, YearSelectComponent, TeacherChooseComponent, StudySubjectSelectComponent,
     SchoolSelectComponent,
-    CorpDutySelectComponent],
+    CorpDutySelectComponent,
+    SchoolyearSelectComponent,
+    SchoolclassesSelectComponent],
   imports: [
     CommonModule,
     FormsModule,
