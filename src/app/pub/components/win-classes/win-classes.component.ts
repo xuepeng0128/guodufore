@@ -11,6 +11,9 @@ import {ClassesService} from '../../../shared/service/basemsg/classes.service';
 import {Teacher} from '../../../entity/Teacher';
 import {DOWNLOAD_TEMPLATE_PATH} from '../../../shared/const';
 import {CommonService} from '../../../shared/common.service';
+import {IClassQueryResult} from "../../../shared/interface/queryparams/IClassQueryResult";
+import {ClassesStudent} from "../../../entity/ClassesStudent";
+import {ClassesTeacher} from "../../../entity/ClassesTeacher";
 
 @Component({
   selector: 'app-win-classes',
@@ -37,8 +40,16 @@ export class WinClassesComponent implements OnInit {
       if (re.nowState === 'add') {
         this.currentClasses = new Classes({});
       } else if (re.nowState === 'edit') {
-        this.classessvr.classesList({classes})
-        this.currentClasses = re.classes;
+        this.classessvr.classesList({classesId : re.classesId ,pageBegin :0 ,pageSize :1 ,pageNo:1}).subscribe(
+          (re : Array<IClassQueryResult>) => this.currentClasses =
+            new Classes({classesId: re[0].classesId, grade : re[0].grade,
+                                     classes: re[0].classes, classesName: re[0].classesName,
+                                  headMaster: re[0].headMaster, headMasterName: re[0].headMasterName,
+                                    schoolId: re[0].schoolId , schoolName : re[0].schoolName,
+                                     regTime:null, endTime: null,students: null, teachers: null
+            })
+        )
+
       }
       this.isClassesModalShow = true;
     });

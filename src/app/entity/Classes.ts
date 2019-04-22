@@ -12,13 +12,15 @@ export class Classes {
   headMaster: string ; // 班主任
   headMasterName: string;
   schoolId: string; // 所属学校
+  schoolName : string;
   regTime: Date;
   endTime: Date;
   students: Array<ClassesStudent>; // 班级学生
   teachers: Array<ClassesTeacher>;
 
   constructor(options: { classesId ?: string, grade?: number, classes?: number, classesName?: string,
-                          headMaster?: string, headMasterName ?: string, schoolId?: string, regTime?: Date, endTime?: Date,
+                          headMaster?: string, headMasterName ?: string, schoolId?: string,schoolName? : string,
+                          regTime?: Date, endTime?: Date,
                           students?: Array<ClassesStudent>, teachers?: Array<ClassesTeacher>}= {}) {
     this.classesId = options.classesId;
     this.grade = options.grade || (new Date()).getFullYear();
@@ -27,6 +29,7 @@ export class Classes {
     this.headMaster = options.headMaster || '';
     this.headMasterName = options.headMasterName || '';
     this.schoolId = options.schoolId || '';
+    this.schoolName = options.schoolName ||'';
     this.regTime = options.regTime || new Date();
     this.endTime = options.endTime;
     this.students = options.students || new Array<ClassesStudent>();
