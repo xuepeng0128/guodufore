@@ -77,7 +77,7 @@
 
         <tr>
           <th>序号</th>
-          <th>学校编号</th>
+          <th [nzWidth]="50">学校编号</th>
           <th>学校名称</th>
           <th>市</th>
           <th>区</th>
@@ -97,7 +97,7 @@
         <tbody>
         <tr *ngFor="let data of ajaxTable.data  ;let no=index">
           <td>{{no+1}}</td>
-          <td class="line-limit-length">{{data.schoolId}}</td>
+          <td >{{data.schoolId}}</td>
           <td>{{data.schoolName}}</td>
           <td>{{data.cityName}}</td>
           <td>{{data.districtName}}</td>

@@ -34,6 +34,7 @@ export class SchoolComponent implements OnInit {
               public commonsvr: CommonService) { }
 
   ngOnInit() {
+    this.onQuery();
   }
 
   onQuery = () => {

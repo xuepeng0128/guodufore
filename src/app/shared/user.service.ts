@@ -27,7 +27,7 @@ export class UserService {
    }
  }
 
- onvalidateLogin = (user: User): Observable<User> => {
+ onvalidateLogin = (user: User): Observable<Array<User>> => {
      return this.httpsvr.onHttpPost('/api/system/user/validateUser', user);
  }
 

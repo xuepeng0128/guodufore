@@ -52,12 +52,13 @@ export class SinginComponent implements OnInit {
       map(
         userlist => {
           this.pro += 50;
-          if (userlist) {
+          if (! isNullOrUndefined(userlist) && userlist.length !==0 ) {
             this.user = userlist[0];
             this.loginUser.user = this.user;
             return true;
           } else {
             this.loading = false;
+            this.pro -= 50;
             this.message.create('error', '用户名或密码错误!');
             return false;
           }
