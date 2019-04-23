@@ -58,7 +58,6 @@ loadSchoolAdminMenu = (): Observable<Array<Menu>> => {
     const menuArray =  menuList.filter(o => o.pareMenuId === topMenuId);
     menuArray.forEach(v => {
       v.subMenus = this.toTreeMenu(menuList, v.menuId);
-      console.log(v.subMenus);
     });
     return menuArray;
   }

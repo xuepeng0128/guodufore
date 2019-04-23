@@ -11,15 +11,15 @@ export class HabitService {
   constructor(private httpsvr: HttpService) { }
 
   habitTemplateList = (queryParams: any): Observable<Array<Habit>> => {
-    return this.httpsvr.onHttpGet('/api/dic/habittemplate/habitList', queryParams);
+    return this.httpsvr.onHttpGet('/api/dic/habit/habitList', queryParams);
   }
   insertTemplateHabit = (habit: Habit): Observable<Habit> => {
-    return this.httpsvr.onHttpPost('/api/dic/habittemplate/insertHabit', habit);
+    return this.httpsvr.onHttpPost('/api/dic/habit/insertHabit', habit);
   }
   updateTemplateHabit = (habit: Habit): Observable<Habit> => {
-    return this.httpsvr.onHttpPost('/api/dic/habittemplate/updateHabit', habit);
+    return this.httpsvr.onHttpPost('/api/dic/habit/updateHabit', habit);
   }
   deleteTemplateHabit = (habit: Habit): Observable<string> => {
-    return this.httpsvr.onHttpGet('/api/dic/habittemplate/deleteHabit', habit);
+    return this.httpsvr.onHttpGet('/api/dic/habit/deleteHabit', habit);
   }
 }

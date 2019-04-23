@@ -13,11 +13,11 @@ export class StudentService {
   constructor(private httpsvr: HttpService) { }
   // 学生列表
   studentList = (queryparams: IStudentQueryParams): Observable<Array<IStudentQueryResult>> => {
-     return this.httpsvr.onHttpGet('/api/corp/basemsg/student/studentList', queryparams);
+     return this.httpsvr.onHttpGet('/api/basemsg/student/studentList', queryparams);
   }
 
   studentListTotal = (queryparams: IStudentQueryParams): Observable<number> => {
-    return this.httpsvr.onHttpGet('/api/corp/basemsg/student/studentListTotal', queryparams);
+    return this.httpsvr.onHttpGet('/api/basemsg/student/studentListTotal', queryparams);
   }
 
 }

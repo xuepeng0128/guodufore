@@ -67,7 +67,7 @@
         nzBordered
         nzShowSizeChanger
         [nzFrontPagination]="false"
-        [nzData]="schoolList$| async "
+        [nzData]="schoolList$ | async"
         [nzTotal]="total$ | async"
         [(nzPageIndex)]="queryParams.pageNo"
         [(nzPageSize)]="queryParams.pageSize"
@@ -95,7 +95,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let data of ajaxTable.data ;let no=index">
+        <tr *ngFor="let data of ajaxTable.data  ;let no=index">
           <td>{{no+1}}</td>
           <td class="line-limit-length">{{data.schoolId}}</td>
           <td>{{data.schoolName}}</td>

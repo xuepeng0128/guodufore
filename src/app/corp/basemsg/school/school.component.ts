@@ -3,7 +3,7 @@ import {iif, Observable, of, Subject} from 'rxjs';
 import {School} from '../../../entity/School';
 import {SchoolService} from '../../../shared/service/basemsg/school.service';
 import {UserService} from '../../../shared/user.service';
-import {flatMap, map} from 'rxjs/operators';
+import {delay, flatMap, map} from 'rxjs/operators';
 import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {ISchoolQueryResult} from '../../../shared/interface/queryparams/ISchoolQueryResult';
 import {ISchoolQueryParams} from '../../../shared/interface/queryparams/ISchoolQueryParams';
@@ -37,9 +37,12 @@ export class SchoolComponent implements OnInit {
   }
 
   onQuery = () => {
+
     this.queryParams.pageNo = 1;
     this.queryParams.pageBegin = 0;
-    this.schoolList$ = this.schoolsvr.schoolList(this.queryParams);
+    this.schoolList$ = this.schoolsvr.schoolList(this.queryParams).pipe(
+      delay(100)
+    );
     this.total$ = this.schoolsvr.schoolListTotal(this.queryParams);
   }
   onPageChange = (e) => {

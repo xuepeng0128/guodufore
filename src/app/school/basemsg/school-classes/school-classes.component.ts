@@ -19,7 +19,7 @@ import {LoginUser} from '../../../entity/LoginUser';
 export class SchoolClassesComponent implements OnInit {
   loginUser: LoginUser = this.usersvr.getUserStorage();
   classesWinOrder$: Subject<{nowState: string , classesId: string}> = new Subject<{nowState: string , classesId: string}>() ;
-  classesArray$: Observable<Array<IClassQueryResult>> = of(new Array<IClassQueryResult>());
+  classesArray$: Observable<Array<IClassQueryResult>> = of([]);
   total$ = of(0);
   queryParams: IClassQueryParams = {
     grade : 0,
@@ -55,7 +55,7 @@ export class SchoolClassesComponent implements OnInit {
     this.classesWinOrder$.next({nowState: 'edit', classesId : classes.classesId});
   }
   onSaved = (classes: Classes) => {
-    this.classesArray$ = this.classessvr.schoolClassesList(this.queryParams);
+    this.classesArray$ = this.classessvr.classesList(this.queryParams);
   }
   onDelete = (classes: Classes) => {
     this.modalService.confirm({
@@ -63,11 +63,15 @@ export class SchoolClassesComponent implements OnInit {
       nzContent: '<b>确定删除该数据吗?</b>',
       nzOnOk: () => {
         this.classesArray$ =  this.classessvr.deleteClasses(classes).pipe(
-          switchMap(() => this.classessvr.schoolClassesList(this.queryParams))
+          map(re => {
+              this.total$ = this.total$.pipe(
+                map( total => total - 1)
+              );
+              return re;
+          }),
+          switchMap(() => this.classessvr.classesList(this.queryParams))
         );
       }
     });
   }
-
-
 }

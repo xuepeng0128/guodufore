@@ -9,13 +9,15 @@ import { StudySubjectComponent } from './study-subject/study-subject.component';
 import {PubModule} from '../../pub/pub.module';
 import { SubjectExamClassComponent } from './subject-exam-class/subject-exam-class.component';
 import { CircleClassComponent } from './circle-class/circle-class.component';
+import { HabitClassComponent } from './habit-class/habit-class.component';
 
 
 @NgModule({
   declarations: [HabitTemplateComponent, TeacherDutyComponent, CorpDutyComponent,
     StudySubjectComponent,
     SubjectExamClassComponent,
-    CircleClassComponent],
+    CircleClassComponent,
+    HabitClassComponent],
   imports: [
     CommonModule,
     PubModule,
