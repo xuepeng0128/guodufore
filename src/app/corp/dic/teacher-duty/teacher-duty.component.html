@@ -56,7 +56,7 @@
       <nz-form-item>
         <nz-form-label [nzSpan]="6">编号</nz-form-label>
         <nz-form-control [nzSpan]="17">
-          <input nz-input [(ngModel)]="currentTeacherDuty.teacherDutyId"  >
+          <input nz-input [(ngModel)]="currentTeacherDuty.teacherDutyId"  [readonly]="true" placeholder="系统生成">
         </nz-form-control>
       </nz-form-item>
     </div>
