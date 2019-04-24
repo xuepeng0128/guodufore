@@ -24,14 +24,13 @@ export class SchoolAdminMgrComponent implements OnInit {
   editState = 'browse';
   queryParams: IUserQueryParams = {
     schoolAdmin : true,
-    pageSize: 1000,
+    pageSize: 10,
     pageNo: 1,
     pageBegin : 0
   };
   constructor(private usersvr: UserService, private message: NzMessageService) { }
 
   ngOnInit() {
-    this.onQuery();
   }
   onQuery = () => {
     this.queryParams.pageNo = 1;
@@ -46,10 +45,10 @@ export class SchoolAdminMgrComponent implements OnInit {
   }
   onAdd = () => {
     this.editState = 'add';
-    this.currentUser = new User({schoolAdmin :true});
+    this.currentUser = new User({schoolAdmin : true});
     this.currentUser.schoolId = '0';
-    this.currentUser.account='';
-    this.currentUser.kind=2;
+    this.currentUser.account = '';
+    this.currentUser.kind = 2;
     this.isSchoolAdminModalShow = true;
   }
   onEdit = (user: User) => {

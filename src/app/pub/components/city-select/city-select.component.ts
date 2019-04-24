@@ -64,8 +64,5 @@ export class CitySelectComponent implements OnInit {
 
     );
   }
-  onValueSelected = () => {
-    this.onValueChanged.emit(this._CURRENTVALUE);
-  }
 
 }

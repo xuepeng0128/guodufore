@@ -18,30 +18,32 @@
       <thead >
       <tr>
         <th>序号</th>
-        <th>习惯大类</th>
+        <th>大类</th>
+        <th>小类</th>
         <th>学科编号</th>
         <th>学科名称</th>
+        <th>小学课程</th>
+        <th>初中课程</th>
         <th>操作</th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let data of ajaxTable.data ;let no=index">
         <td>{{no+1}}</td>
-        <td [ngSwitch]="data.habitClass">
-          <b *ngSwitchCase="1" > 德</b>
-          <b *ngSwitchCase="2" > 智</b>
-          <b *ngSwitchCase="3" > 体</b>
-          <b *ngSwitchCase="4" > 美</b>
-          <b *ngSwitchCase="5" > 劳</b>
-          <b *ngSwitchDefault> 劳</b>
+        <td >
+            {{data.habitClassName}}
+        </td>
+        <td >
+          {{data.subHabitClassName}}
         </td>
         <td>{{data.studySubjectId}}</td>
         <td>{{data.studySubjectName}}</td>
-
+        <td>{{data.primarySchool ? '是': '否'}}</td>
+        <td>{{data.middleSchool ? '是' : '否'}}</td>
         <td>
-          <a href="javaScript:;" *ngIf="user.supperAdmin " (click)="onEdit(data)">修改</a>
+          <a href="javaScript:;" *ngIf="user.isSupperAdmin " (click)="onEdit(data)">修改</a>
           <nz-divider nzType="vertical"></nz-divider>
-          <a href="javaScript:;" *ngIf="user.supperAdmin" (click)="onDelete(data)">删除</a>
+          <a href="javaScript:;" *ngIf="user.isSupperAdmin" (click)="onDelete(data)">删除</a>
         </td>
       </tr>
       </tbody>
@@ -64,7 +66,7 @@
       <nz-form-item>
         <nz-form-label [nzSpan]="6">编号</nz-form-label>
         <nz-form-control [nzSpan]="17">
-          <input nz-input [(ngModel)]="currentStudySubject.studySubjectId"  >
+          <input nz-input [(ngModel)]="currentStudySubject.studySubjectId"  [readonly]="true" placeholder="系统生成" >
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -78,9 +80,35 @@
     </div>
     <div nz-col [nzSpan]="8">
       <nz-form-item>
-        <nz-form-label [nzSpan]="8">习惯大类</nz-form-label>
+        <nz-form-label [nzSpan]="8">大类</nz-form-label>
         <nz-form-control [nzSpan]="12" [nzOffset]="4">
-          <app-habit-class-select [(ngModel)]="currentStudySubject.habitClass" ></app-habit-class-select>
+          <app-habit-class-select [(ngModel)]="currentStudySubject.habitClassId"  [defaultShow]="'请选择'"></app-habit-class-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row>
+    <div nz-col [nzSpan]="8">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">类别</nz-form-label>
+        <nz-form-control [nzSpan]="17">
+          <app-subhabit-class-select [(ngModel)]="currentStudySubject.subHabitClassId" [defaultShow]="'请选择'" [pareHabitClassId]="currentStudySubject.habitClassId"></app-subhabit-class-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="8">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6"></nz-form-label>
+        <nz-form-control [nzSpan]="17">
+          <label nz-checkbox [(ngModel)]="currentStudySubject.primarySchool">小学课程</label>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="8">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="8"></nz-form-label>
+        <nz-form-control [nzSpan]="12" [nzOffset]="4">
+          <label nz-checkbox [(ngModel)]="currentStudySubject.middleSchool">初中课程</label>
         </nz-form-control>
       </nz-form-item>
     </div>

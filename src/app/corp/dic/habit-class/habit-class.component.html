@@ -1,3 +1,81 @@
-<p>
-  habit-class works!
-</p>
+
+
+<div class="m-t-sm text-center" nz-row>
+  <div nz-col [nzSpan]="24" class="text-center">
+    <a href="javaScript:;" class="ant-btn ant-btn-primary" (click)="onQuery()">查询</a>
+    <a href="javaScript:;" class="ant-btn ant-btn-primary" (click)="onAdd()">新增加</a>
+  </div>
+</div>
+<div class="m-t-sm" nz-row>
+  <div nz-col [nzSpan]="24">
+    <nz-table
+      #ajaxTable
+      nzBordered
+      nzShowSizeChanger
+      [nzFrontPagination]="false"
+      [nzData]="habitclassArray"
+    >
+      <thead >
+      <tr>
+        <th>序号</th>
+        <th>编号</th>
+        <th>名称</th>
+        <th>大类</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of ajaxTable.data ;let no=index">
+        <td>{{no+1}}</td>
+        <td>{{data.habitClassId}}</td>
+        <td>{{data.habitClassName}}</td>
+        <td>{{data.pareHabitClassName}}</td>
+
+        <td>
+          <a href="javaScript:;" *ngIf="user.isSupperAdmin " (click)="onEdit(data)">修改</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a href="javaScript:;" *ngIf="user.isSupperAdmin" (click)="onDelete(data)">删除</a>
+        </td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+
+<nz-modal [(nzVisible)]="isHabitClassModalShow"
+          [nzTitle]="'公司职务'"
+          [nzCancelText]="'关闭'"
+          (nzOnCancel)="isHabitClassModalShow=false"
+          [nzOkText]="'保存'"
+          (nzOnOk)="onSave()"
+          [nzMaskClosable]="false"
+          [nzWidth]="500"
+>
+
+  <div nz-row>
+    <div nz-col [nzSpan]="8">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">编号</nz-form-label>
+        <nz-form-control [nzSpan]="17">
+          <input nz-input [(ngModel)]="currentHabitClass.habitClassId"  >
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="8">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">名称</nz-form-label>
+        <nz-form-control [nzSpan]="17">
+          <input nz-input [(ngModel)]="currentHabitClass.habitClassName" >
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="8">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="8">管理层</nz-form-label>
+        <nz-form-control [nzSpan]="12" [nzOffset]="4">
+          <label nz-checkbox [(ngModel)]="currentHabitClass.master"></label>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</nz-modal>

@@ -1,5 +1,10 @@
-import {Component, forwardRef, OnInit} from '@angular/core';
+import {Component, EventEmitter, forwardRef, Input, OnInit, Output} from '@angular/core';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
+import {Observable} from 'rxjs';
+import {Nation} from '../../../entity/Nation';
+import {HabitClass} from '../../../entity/HabitClass';
+import {HabitClassService} from '../../../shared/service/dic/habit-class.service';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-habit-class-select',
@@ -13,7 +18,12 @@ import {NG_VALUE_ACCESSOR} from '@angular/forms';
 })
 export class HabitClassSelectComponent implements OnInit {
 
-  private _CURRENTVALUE : string;
+  @Input() defaultShow: string;
+
+
+  habitClassArray$: Observable<Array<HabitClass>>;
+
+  private _CURRENTVALUE: string;
   private onValueChangeCallBack: any = {};
 
 
@@ -27,15 +37,24 @@ export class HabitClassSelectComponent implements OnInit {
   }
 
 
-  constructor() { }
+  constructor(private  habitclasssvr: HabitClassService ) { }
 
   ngOnInit() {
-
+    this.habitClassArray$ = this.habitclasssvr.habitClassList().pipe(
+      map( re => {
+          return [new HabitClass({habitClassId: '0', habitClassName: this.defaultShow})].concat(
+            re.filter(o => o.pareHabitClassId === '0').map(
+               v => new HabitClass({
+                    habitClassId : v.habitClassId, habitClassName : v.habitClassName
+               })
+            )
+          );
+      })
+    );
   }
 
   writeValue(obj: any): void {
-    if (obj)
-    {
+    if (obj) {
       this._CURRENTVALUE = obj;
     }
   }

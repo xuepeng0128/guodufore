@@ -32,9 +32,9 @@
           <td>{{data.master ? '是' :'否'}}</td>
 
           <td>
-            <a href="javaScript:;" *ngIf="user.supperAdmin " (click)="onEdit(data)">修改</a>
+            <a href="javaScript:;" *ngIf="user.isSupperAdmin " (click)="onEdit(data)">修改</a>
             <nz-divider nzType="vertical"></nz-divider>
-            <a href="javaScript:;" *ngIf="user.supperAdmin" (click)="onDelete(data)">删除</a>
+            <a href="javaScript:;" *ngIf="user.isSupperAdmin" (click)="onDelete(data)">删除</a>
           </td>
         </tr>
         </tbody>

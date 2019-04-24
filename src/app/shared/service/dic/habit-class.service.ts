@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import {HttpService} from "../baseapi/http.service";
-import {Observable} from "rxjs";
-import {HabitClass} from "../../../entity/HabitClass";
+import {HttpService} from '../baseapi/http.service';
+import {Observable} from 'rxjs';
+import {HabitClass} from '../../../entity/HabitClass';
 
 @Injectable({
   providedIn: 'root'
@@ -9,11 +9,11 @@ import {HabitClass} from "../../../entity/HabitClass";
 export class HabitClassService {
   constructor(private httpsvr: HttpService) { }
 
-  HabitClassList = (): Observable<Array<HabitClass>> => {
+  habitClassList = (): Observable<Array<HabitClass>> => {
     return this.httpsvr.onHttpGet('/api/dic/habitclass/habitClassList', {});
   }
   insertHabitClass = (habitClass: HabitClass): Observable<string> => {
-    return this.httpsvr.onHttpPost('/api/dic/habitclass/insertHabitClass',habitClass);
+    return this.httpsvr.onHttpPost('/api/dic/habitclass/insertHabitClass', habitClass);
   }
   updateHabitClass = (habitClass: HabitClass): Observable<string> => {
     return this.httpsvr.onHttpPost('/api/dic/habitclass/updateHabitClass', habitClass);

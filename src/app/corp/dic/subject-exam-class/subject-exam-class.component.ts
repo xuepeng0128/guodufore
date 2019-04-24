@@ -10,7 +10,7 @@ import {SubjectExamClassService} from '../../../shared/service/dic/subject-exam-
 import {ClassesService} from '../../../shared/service/basemsg/classes.service';
 import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {MSG_SAVE_ERROR, MSG_SAVE_SUCCESS} from '../../../shared/SysMessage';
-import {LoginUser} from "../../../entity/LoginUser";
+import {LoginUser} from '../../../entity/LoginUser';
 
 @Component({
   selector: 'app-subject-exam-class',
@@ -21,7 +21,7 @@ export class SubjectExamClassComponent implements OnInit {
   user: LoginUser = this.usersvr.getUserStorage();
   isSubjectExamClassModalShow = false;
   subjectExamClassArray: Array<SubjectExamClass> = new Array<SubjectExamClass>();
-  currentSubjectExamClass: SubjectExamClass = new SubjectExamClass({studySubject : new StudySubject()});
+  currentSubjectExamClass: SubjectExamClass = new SubjectExamClass();
   editState = 'browse';
   constructor(private usersvr: UserService,
               private subjectexamclasssvr: SubjectExamClassService,
@@ -37,7 +37,7 @@ export class SubjectExamClassComponent implements OnInit {
   }
   onAdd = () => {
     this.editState = 'add';
-    this.currentSubjectExamClass = new SubjectExamClass({studySubject : new StudySubject()});
+    this.currentSubjectExamClass = new SubjectExamClass();
     this.isSubjectExamClassModalShow = true;
   }
   onEdit = (subjectExamClass: SubjectExamClass) => {

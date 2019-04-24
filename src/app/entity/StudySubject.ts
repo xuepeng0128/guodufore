@@ -1,12 +1,21 @@
 export class StudySubject {
-     studySubjectId: number;
+     studySubjectId: string;
      studySubjectName: string;
-     habitClass: number ;
-     bSchool: number;
-  constructor(studySubjectId?: number, studySubjectName?: string, habitClass?: number, bSchool?: number) {
-    this.studySubjectId = studySubjectId || 0;
-    this.studySubjectName = studySubjectName || '';
-    this.habitClass = habitClass || 0;
-    this.bSchool = bSchool || 0;
+     habitClassId: string ;
+     habitClassName: string;
+     subHabitClassId: string;
+     subHabitClassName: string;
+     primarySchool: boolean;
+     middleSchool: boolean;
+  constructor(options: {studySubjectId?: string, studySubjectName?: string, habitClassId?: string, habitClassName?: string,
+              subHabitClassId?: string , subHabitClassName ?: string, primarySchool?: boolean, middleSchool?: boolean}= {}) {
+    this.studySubjectId = options.studySubjectId || '';
+    this.studySubjectName = options.studySubjectName || '';
+    this.habitClassId = options.habitClassId || '1';
+    this.habitClassName = options.habitClassName || '';
+    this.subHabitClassId = options.subHabitClassId || '';
+    this.subHabitClassName = options.subHabitClassName || '';
+    this.primarySchool = options.primarySchool || true;
+    this.middleSchool = options.middleSchool || false;
   }
 }

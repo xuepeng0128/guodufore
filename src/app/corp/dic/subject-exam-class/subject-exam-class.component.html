@@ -18,8 +18,8 @@
       <thead >
       <tr>
         <th>序号</th>
-        <th>学科</th>
         <th>编号</th>
+        <th>学科</th>
         <th>题型</th>
         <th>操作</th>
       </tr>
@@ -27,13 +27,13 @@
       <tbody>
       <tr *ngFor="let data of ajaxTable.data ;let no=index">
         <td>{{no+1}}</td>
-        <td>{{data.studySubject.studySubjectName}}</td>
+        <td>{{data.studySubjectName}}</td>
         <td>{{data.subjectExamClassId}}</td>
         <td>{{data.subjectExamClassName}}</td>
         <td>
-          <a href="javaScript:;" *ngIf="user.supperAdmin " (click)="onEdit(data)">修改</a>
+          <a href="javaScript:;" *ngIf="user.isSupperAdmin " (click)="onEdit(data)">修改</a>
           <nz-divider nzType="vertical"></nz-divider>
-          <a href="javaScript:;" *ngIf="user.supperAdmin" (click)="onDelete(data)">删除</a>
+          <a href="javaScript:;" *ngIf="user.isSupperAdmin" (click)="onDelete(data)">删除</a>
         </td>
       </tr>
       </tbody>
@@ -56,7 +56,7 @@
       <nz-form-item>
         <nz-form-label [nzSpan]="6">编号</nz-form-label>
         <nz-form-control [nzSpan]="17">
-          <input nz-input [(ngModel)]="currentSubjectExamClass.subjectExamClassId"  >
+          <input nz-input [(ngModel)]="currentSubjectExamClass.subjectExamClassId"  [readonly]="true" placeholder="系统生成" >
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -72,7 +72,7 @@
       <nz-form-item>
         <nz-form-label [nzSpan]="8">学科</nz-form-label>
         <nz-form-control [nzSpan]="12" [nzOffset]="4">
-         <app-study-subject-select [(ngModel)]="currentSubjectExamClass.studySubject.studySubjectId" [defaultShow]="'请选择'"></app-study-subject-select>
+         <app-study-subject-select [(ngModel)]="currentSubjectExamClass.studySubjectId" [defaultShow]="'请选择'"></app-study-subject-select>
         </nz-form-control>
       </nz-form-item>
     </div>

@@ -6,6 +6,7 @@ import {TeacherDutyComponent} from './teacher-duty/teacher-duty.component';
 import {StudySubjectComponent} from './study-subject/study-subject.component';
 import {SubjectExamClassComponent} from './subject-exam-class/subject-exam-class.component';
 import {HabitClassComponent} from './habit-class/habit-class.component';
+import {CircleClassComponent} from './circle-class/circle-class.component';
 
 
 const routes: Routes = [
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'studysubject', component: StudySubjectComponent },
   { path: 'subjectexamclass', component: SubjectExamClassComponent },
   { path: 'habitclass', component: HabitClassComponent },
+  { path: 'circleclass', component: CircleClassComponent },
 ];
 
 @NgModule({

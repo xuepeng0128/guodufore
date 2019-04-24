@@ -8,7 +8,7 @@ import {StudySubjectService} from '../../../shared/service/dic/study-subject.ser
 import {ClassesService} from '../../../shared/service/basemsg/classes.service';
 import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {MSG_SAVE_ERROR, MSG_SAVE_SUCCESS} from '../../../shared/SysMessage';
-import {LoginUser} from "../../../entity/LoginUser";
+import {LoginUser} from '../../../entity/LoginUser';
 
 @Component({
   selector: 'app-study-subject',
@@ -22,7 +22,7 @@ export class StudySubjectComponent implements OnInit {
   currentStudySubject: StudySubject = new StudySubject();
   editState = 'browse';
   constructor(private usersvr: UserService, private studysubjectsvr: StudySubjectService,
-              private modalService: NzModalService,private message: NzMessageService) { }
+              private modalService: NzModalService, private message: NzMessageService) { }
 
   ngOnInit() {
     this.onQuery();

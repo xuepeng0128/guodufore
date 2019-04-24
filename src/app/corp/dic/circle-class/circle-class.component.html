@@ -1,3 +1,103 @@
-<p>
-  circle-class works!
-</p>
+
+
+<div class="m-t-sm text-center" nz-row>
+  <div nz-col [nzSpan]="24" class="text-center">
+    <a href="javaScript:;" class="ant-btn ant-btn-primary" (click)="onQuery()">查询</a>
+    <a href="javaScript:;" class="ant-btn ant-btn-primary" (click)="onAdd()">新增加</a>
+  </div>
+</div>
+<div class="m-t-sm" nz-row>
+  <div nz-col [nzSpan]="24">
+    <nz-table
+      #ajaxTable
+      nzBordered
+      nzShowSizeChanger
+      [nzFrontPagination]="false"
+      [nzData]="circleclassArray"
+    >
+      <thead >
+      <tr>
+        <th>序号</th>
+        <th>编号</th>
+        <th>名称</th>
+        <th>图标</th>
+        <th>描述</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of ajaxTable.data ;let no=index">
+        <td>{{no+1}}</td>
+        <td>{{data.circleClassId}}</td>
+        <td>{{data.circleClassName}}</td>
+        <td><img [src]="data.icon" /> </td>
+        <td>{{data.memo}}</td>
+        <td>
+          <a href="javaScript:;" *ngIf="user.isSupperAdmin " (click)="onEdit(data)">修改</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a href="javaScript:;" *ngIf="user.isSupperAdmin" (click)="onDelete(data)">删除</a>
+        </td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+
+<nz-modal [(nzVisible)]="isCircleClassModalShow"
+          [nzTitle]="'圈子类别'"
+          [nzCancelText]="'关闭'"
+          (nzOnCancel)="isCircleClassModalShow=false"
+          [nzOkText]="'保存'"
+          (nzOnOk)="onSave()"
+          [nzMaskClosable]="false"
+          [nzWidth]="500"
+>
+
+  <div nz-row>
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">编号</nz-form-label>
+        <nz-form-control [nzSpan]="17">
+          <input nz-input [(ngModel)]="currentCircleClass.circleClassId"  >
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">名称</nz-form-label>
+        <nz-form-control [nzSpan]="17">
+          <input nz-input [(ngModel)]="currentCircleClass.circleClassName" >
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row>
+    <div nz-col [nzSpan]="8">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">图标</nz-form-label>
+        <nz-form-control [nzSpan]="17">
+          <nz-upload
+               nzName="file"
+              [nzAction]="uploadFilePath"
+              nzListType="picture-card"
+              [nzShowUploadList]="false"
+               (nzChange)="handleChange($event)"
+          >
+            <ng-container *ngIf="!avatarUrl">
+              <i class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></i>
+              <div class="ant-upload-text">上传</div>
+            </ng-container>
+            <img *ngIf="avatarUrl" [src]="avatarUrl" class="avatar" />
+          </nz-upload>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="16">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="3">描述</nz-form-label>
+        <nz-form-control [nzSpan]="21">
+           <textarea [(ngModel)]="currentCircleClass.memo" style="width:99%; height:100px"></textarea>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</nz-modal>

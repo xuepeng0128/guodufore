@@ -4,12 +4,12 @@ import {StudySubject} from './StudySubject';
 export  class SubjectExamClass {
    subjectExamClassId: string;
    subjectExamClassName: string;
-     studySubject: StudySubject;
-
-
-  constructor(options: {subjectExamClassId?: string, subjectExamClassName?: string, studySubject?: StudySubject}= {}) {
-    this.subjectExamClassId = options.subjectExamClassId;
-    this.subjectExamClassName = options.subjectExamClassName;
-    this.studySubject = options.studySubject;
+   studySubjectId: string;
+   studySubjectName : string;
+  constructor(options: {subjectExamClassId?: string, subjectExamClassName?: string, studySubjectId?: string,studySubjectName ? : string}= {}) {
+    this.subjectExamClassId = options.subjectExamClassId || '';
+    this.subjectExamClassName = options.subjectExamClassName || '';
+    this.studySubjectId = options.studySubjectId || '';
+    this.studySubjectName = options.studySubjectName || '';
   }
 }

@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import {LoginUser} from "../../../entity/LoginUser";
-import {CorpDuty} from "../../../entity/CorpDuty";
-import {UserService} from "../../../shared/user.service";
-import {CorpdutyService} from "../../../shared/service/dic/corpduty.service";
-import {NzMessageService, NzModalService} from "ng-zorro-antd";
-import {iif} from "rxjs";
-import {MSG_SAVE_ERROR, MSG_SAVE_SUCCESS} from "../../../shared/SysMessage";
-import {switchMap} from "rxjs/operators";
-import {HabitClass} from "../../../entity/HabitClass";
-import {HabitClassService} from "../../../shared/service/dic/habit-class.service";
+import {LoginUser} from '../../../entity/LoginUser';
+import {CorpDuty} from '../../../entity/CorpDuty';
+import {UserService} from '../../../shared/user.service';
+import {CorpdutyService} from '../../../shared/service/dic/corpduty.service';
+import {NzMessageService, NzModalService} from 'ng-zorro-antd';
+import {iif} from 'rxjs';
+import {MSG_SAVE_ERROR, MSG_SAVE_SUCCESS} from '../../../shared/SysMessage';
+import {switchMap} from 'rxjs/operators';
+import {HabitClass} from '../../../entity/HabitClass';
+import {HabitClassService} from '../../../shared/service/dic/habit-class.service';
 
 @Component({
   selector: 'app-habit-class',
@@ -19,7 +19,7 @@ export class HabitClassComponent implements OnInit {
   user: LoginUser = this.usersvr.getUserStorage();
   isHabitClassModalShow = false;
   habitclassArray: Array<HabitClass> = new Array<HabitClass>();
-  currentHabitClass : HabitClass = new HabitClass({});
+  currentHabitClass: HabitClass = new HabitClass({});
   editState = 'browse';
   constructor(private usersvr: UserService, private habitclasssvr: HabitClassService,
               private modalService: NzModalService, private message: NzMessageService) { }
@@ -28,7 +28,7 @@ export class HabitClassComponent implements OnInit {
     this.onQuery();
   }
   onQuery = () => {
-    this.habitclasssvr.HabitClassList().subscribe(re => {
+    this.habitclasssvr.habitClassList().subscribe(re => {
       this.habitclassArray = re;
     });
   }
@@ -66,7 +66,7 @@ export class HabitClassComponent implements OnInit {
       nzContent: '<b>确定删除该数据吗?</b>',
       nzOnOk: () => {
         this.habitclasssvr.deleteHabitClass(habitClass).pipe(
-          switchMap(() => this.habitclasssvr.HabitClassList())
+          switchMap(() => this.habitclasssvr.habitClassList())
         ).subscribe( re => {
           this.habitclassArray = re ;
         });
