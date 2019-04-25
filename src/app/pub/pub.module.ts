@@ -22,6 +22,7 @@ import { CorpDutySelectComponent } from './components/corp-duty-select/corp-duty
 import { SchoolyearSelectComponent } from './components/schoolyear-select/schoolyear-select.component';
 import { SchoolclassesSelectComponent } from './components/schoolclasses-select/schoolclasses-select.component';
 import { SubhabitClassSelectComponent } from './components/subhabit-class-select/subhabit-class-select.component';
+import { TeacherdutySelectComponent } from './components/teacherduty-select/teacherduty-select.component';
 
 
 
@@ -33,7 +34,8 @@ import { SubhabitClassSelectComponent } from './components/subhabit-class-select
     CorpDutySelectComponent,
     SchoolyearSelectComponent,
     SchoolclassesSelectComponent,
-    SubhabitClassSelectComponent],
+    SubhabitClassSelectComponent,
+    TeacherdutySelectComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -61,6 +63,7 @@ import { SubhabitClassSelectComponent } from './components/subhabit-class-select
     HabitClassSelectComponent,
     StudySubjectSelectComponent,
     SubhabitClassSelectComponent,
+    TeacherdutySelectComponent,
     CutSizePipe,
     ArrayTextFilterPipe
     ]

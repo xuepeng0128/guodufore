@@ -12,15 +12,7 @@
     <nz-form-item>
       <nz-form-label [nzSpan]="6">姓名</nz-form-label>
       <nz-form-control [nzSpan]="15">
-        <input nz-input [(ngModel)]="queryParams.studentName">
-      </nz-form-control>
-    </nz-form-item>
-  </div>
-  <div nz-col [nzSpan]="8">
-    <nz-form-item>
-      <nz-form-label [nzSpan]="6">职务</nz-form-label>
-      <nz-form-control [nzSpan]="15">
-        <input nz-input [(ngModel)]="queryParams.duty">
+        <input nz-input [(ngModel)]="queryParams.teacherName">
       </nz-form-control>
     </nz-form-item>
   </div>
@@ -30,11 +22,11 @@
 <div class="m-t-sm text-center" nz-row>
   <div nz-col [nzSpan]="24" class="text-center">
     <a href="javaScript:;" class="ant-btn ant-btn-primary" (click)="onQuery()">查询</a>
-    <a href="/backfiles/excelTemplate/teacherTemplate.xls" class="ant-btn ant-btn-primary m-l-xs"  >excel导出模板下载</a>
-    <nz-upload nzAction="/backfiles/excelImport" (nzChange)="handleExcelChange($event)">
+    <a [href]="downloadTemplateExcel" class="ant-btn ant-btn-primary m-l-xs"  >excel导出模板下载</a>
+    <nz-upload [nzAction]="uploadExcelpath" (nzChange)="handleExcelChange($event)" [nzData]="getSchoolId">
       <button nz-button><i nz-icon type="upload"></i><span>excel导入</span></button>
     </nz-upload>
-    <a href="javaScript:;" class="ant-btn ant-btn-primary m-l-xs"  *ngIf="user.supperAdmin " (click)="onExcelExport()" >excel导出</a>
+    <a href="javaScript:;" class="ant-btn ant-btn-primary m-l-xs"  *ngIf="loginUser.isSchoolAdmin" (click)="onExcelExport()" >excel导出</a>
   </div>
 </div>
 <div class="m-t-sm" nz-row>
@@ -44,7 +36,7 @@
       nzBordered
       nzShowSizeChanger
       [nzFrontPagination]="false"
-      [nzData]="teacherList$ | async"
+      [nzData]="teacherList"
       [nzTotal]="total"
       [(nzPageIndex)]="queryParams.pageNo"
       [(nzPageSize)]="queryParams.pageSize"
@@ -57,7 +49,7 @@
         <th>姓名</th>
         <th>当前职务</th>
         <th>联系电话</th>
-        <th>当前所在学校</th>
+        <th>操作</th>
       </tr>
       </thead>
       <tbody>
@@ -65,11 +57,64 @@
         <td>{{no+1}}</td>
         <td>{{data.teacherPaperId}}</td>
         <td>{{data.teacherName}}</td>
-        <td>{{data.duty}}</td>
+        <td>{{data.teacherDutyName}}</td>
         <td>{{data.tel}}</td>
-        <td>{{data.onserve.school.schoolName}}</td>
+        <td>
+               <a href="javaScript:;" *ngIf="loginUser.isSchoolAdmin" (click)="onEdit(data)" title="修改教师信息">修改</a>
+               <nz-divider nzType="vertical"></nz-divider>
+               <a href="javaScript:;" *ngIf="loginUser.isSchoolAdmin" (click)="onQuitDuty(data)" title="教师调走，辞职等">离职</a>
+               <nz-divider nzType="vertical"></nz-divider>
+              <a href="javaScript:;" *ngIf="loginUser.isSchoolAdmin" (click)="onDelete(data)" title="教师录入信息错误，删除信息">>删除</a>
+        </td>
       </tr>
       </tbody>
     </nz-table>
   </div>
 </div>
+
+
+<nz-modal [(nzVisible)]="isTeacherExcelImpModalShow"
+          [nzTitle]="'导入教师'"
+          [nzCancelText]="'关闭'"
+          (nzOnCancel)="isTeacherExcelImpModalShow=false"
+          [nzOkText]="'确定导入'"
+          (nzOnOk)="onToImportTeachers()"
+          [nzMaskClosable]="false"
+          [nzWidth]="800"
+>
+  <nz-table
+    #ajaxTable
+    nzBordered
+    nzShowSizeChanger
+    [nzFrontPagination]="false"
+    [nzData]="teacherList"
+    [nzTotal]="total"
+    [(nzPageIndex)]="queryParams.pageNo"
+    [(nzPageSize)]="queryParams.pageSize"
+    (nzPageIndexChange)="onPageChange($event)"
+  >
+    <thead >
+    <tr>
+      <th>序号</th>
+      <th>身份证</th>
+      <th>姓名</th>
+      <th>当前职务</th>
+      <th>联系电话</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of ajaxTable.data ;let no=index">
+      <td>{{no+1}}</td>
+      <td>{{data.teacherPaperId}}</td>
+      <td>{{data.teacherName}}</td>
+      <td><app-teacherduty-select [(ngModel)]="data.teacherDutyId" [defaultShow]="'请选择'"></app-teacherduty-select></td>
+      <td>{{data.tel}}</td>
+    </tr>
+    </tbody>
+  </nz-table>
+
+</nz-modal>
+
+
+

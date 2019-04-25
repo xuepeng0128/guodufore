@@ -15,15 +15,20 @@ export class TeacherService {
   teacherList = (queryParams: ITeacherQueryParams): Observable<Array<ITeacherQueryResult>> => {
     return this.httpsvr.onHttpGet('/api/basemsg/teacher/teacherList', queryParams);
   }
- teacherListTotal =(queryParams: ITeacherQueryParams): Observable<number> => {
+ teacherListTotal = (queryParams: ITeacherQueryParams): Observable<number> => {
    return this.httpsvr.onHttpGet('/api/basemsg/teacher/teacherListTotal', queryParams);
  }
+
+ onGroupSaveTeacher = (teachers: Array<Teacher>): Observable<string> => {
+   return  this.httpsvr.onHttpPost('/api/basemsg/teacher/teacherExcel', teachers);
+ }
+
 
   /**
    * 导出
    */
   onExport = (queryParams: any): Observable<string> => {
-    return  this.httpsvr.onHttpGet('/api/corp/basemsg/teacher/teacherExcel', queryParams);
+    return  this.httpsvr.onHttpGet('/api/basemsg/teacher/teacherExcel', queryParams);
   }
 
 }

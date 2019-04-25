@@ -1,49 +1,102 @@
-<form nz-form>
-  <div nz-row>
-    <div nz-col [nzSpan]="12">
-      <nz-form-item>
-        <nz-form-label [nzSpan]="6">学校编号</nz-form-label>
-        <nz-form-control [nzSpan]="17">
-          <input nz-input [(ngModel)]="currentSchool.schoolId" [ngModelOptions]="{standalone: true}"  [readonly]="true">
-        </nz-form-control>
-      </nz-form-item>
-    </div>
-    <div nz-col [nzSpan]="12">
-      <nz-form-item>
-        <nz-form-label [nzSpan]="6">学校名称</nz-form-label>
-        <nz-form-control [nzSpan]="17">
-          <input nz-input [(ngModel)]="currentSchool.schoolName" [ngModelOptions]="{standalone: true}" >
-        </nz-form-control>
-      </nz-form-item>
-    </div>
-  </div>
-  <div nz-row>
-    <div nz-col [nzSpan]="12">
-      <nz-form-item>
-        <nz-form-label [nzSpan]="6">所在市</nz-form-label>
-        <nz-form-control [nzSpan]="17">
-          {{currentSchool.district?.city.cityName}}
-        </nz-form-control>
-      </nz-form-item>
-    </div>
-    <div nz-col [nzSpan]="12">
-      <nz-form-item>
-        <nz-form-label [nzSpan]="6">所在区</nz-form-label>
-        <nz-form-control [nzSpan]="17">
-          <app-district-select [(ngModel)]="currentSchool.district"></app-district-select>
-        </nz-form-control>
-      </nz-form-item>
-    </div>
-  </div>
-  <div nz-row>
-    <div nz-col [nzSpan]="12">
-      <nz-form-item>
-        <nz-form-label [nzSpan]="6">地址</nz-form-label>
-        <nz-form-control [nzSpan]="17">
-          <input nz-input [(ngModel)]="currentSchool.address" [ngModelOptions]="{standalone: true}" >
-        </nz-form-control>
-      </nz-form-item>
-    </div>
-  </div>
 
-</form>
+<div nz-row>
+    <div nz-col [nzOffset]="2" [nzSpan]="20">
+      <div nz-row>
+        <div nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6">学校编号</nz-form-label>
+            <nz-form-control [nzSpan]="17">
+              <input nz-input [(ngModel)]="currentSchool.schoolId" [readonly]="true" placeholder="系统生成" >
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6">学校名称</nz-form-label>
+            <nz-form-control [nzSpan]="17">
+              <input nz-input [(ngModel)]="currentSchool.schoolName" >
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6">所在市</nz-form-label>
+            <nz-form-control [nzSpan]="17">
+              <app-city-select [(ngModel)]="currentSchool.cityId" [defaultShow]="'--请选择--'"></app-city-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6">所在区</nz-form-label>
+            <nz-form-control [nzSpan]="17">
+              <app-district-select [(ngModel)]="currentSchool.districtId" [defaultShow]="'--请选择--'" [cityId]="currentSchool.cityId"></app-district-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6">地址</nz-form-label>
+            <nz-form-control [nzSpan]="17">
+              <input nz-input [(ngModel)]="currentSchool.address" >
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6">业务员</nz-form-label>
+            <nz-form-control [nzSpan]="17">
+              <app-employee-select [(ngModel)]="currentSchool.saleManId" [defaultShow]="'--请选择--'" ></app-employee-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6">联系电话</nz-form-label>
+            <nz-form-control [nzSpan]="17">
+              <input nz-input [(ngModel)]="currentSchool.tel" >
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6">联系人</nz-form-label>
+            <nz-form-control [nzSpan]="17">
+              <input nz-input [(ngModel)]="currentSchool.linkMan" >
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6">学校类型</nz-form-label>
+            <nz-form-control [nzSpan]="17">
+              <nz-select  [(ngModel)]="currentSchool.schoolStyle">
+                <nz-option [nzValue]="1" [nzLabel]="'小学'" ></nz-option>
+                <nz-option [nzValue]="2" [nzLabel]="'初中'" ></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6">是否培训机构</nz-form-label>
+            <nz-form-control [nzSpan]="17">
+              <label nz-checkbox [(ngModel)]="currentSchool.train"></label>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </div>
+  <div nz-col [nzOffset]="10" [nzSpan]="4">
+        <button nz-button nzType="primary">保存</button>
+  </div>
+</div>
+
