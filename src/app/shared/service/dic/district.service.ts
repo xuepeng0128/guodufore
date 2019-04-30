@@ -12,7 +12,7 @@ export class DistrictService {
   STORAGE_KEY = '_district';
   constructor(private httpsvr: HttpService) { }
   corpDistrictList = (): Observable<Array<District>> => {
-    return this.httpsvr.onHttpGet('/api/dic/district/districtList', {});
+    return this.httpsvr.onHttpGet('api/dic/district/districtList', {});
   }
 
   getDistrictsStorage = (): Array<District> => {

@@ -1,5 +1,5 @@
 export interface ITeacherQueryParams {
-   teacherPaperId?: string ;
+   teacherId?: string ;
    teacherName?: string ;
    schoolId?: string ;
    schoolName?: string ;

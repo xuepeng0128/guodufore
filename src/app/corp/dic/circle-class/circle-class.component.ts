@@ -19,11 +19,7 @@ export class CircleClassComponent implements OnInit {
   circleclassArray: Array<CircleClass> = new Array<CircleClass>();
   currentCircleClass: CircleClass = new CircleClass({});
   editState = 'browse';
-
-
-
   loading = false;
-  avatarUrl = '';
   constructor(private usersvr: UserService, private circleclasssvr: CircleClassService,
               private modalService: NzModalService, private message: NzMessageService) { }
 
@@ -41,9 +37,9 @@ export class CircleClassComponent implements OnInit {
     this.isCircleClassModalShow = true;
   }
   onEdit = (circleClass: CircleClass) => {
-    this.currentCircleClass = circleClass;
     this.editState = 'edit';
     this.isCircleClassModalShow = true;
+    this.currentCircleClass = circleClass;
   }
   onSave = () => {
     iif(
@@ -87,7 +83,7 @@ export class CircleClassComponent implements OnInit {
           break;
       case 'done':
           this.loading = false;
-          this.avatarUrl = info.file.filename;
+          this.currentCircleClass.icon = info.file.response.aliUrl;
           break;
       case 'error':
         this.message.error('网络错误');

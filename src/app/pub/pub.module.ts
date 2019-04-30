@@ -23,6 +23,7 @@ import { SchoolyearSelectComponent } from './components/schoolyear-select/school
 import { SchoolclassesSelectComponent } from './components/schoolclasses-select/schoolclasses-select.component';
 import { SubhabitClassSelectComponent } from './components/subhabit-class-select/subhabit-class-select.component';
 import { TeacherdutySelectComponent } from './components/teacherduty-select/teacherduty-select.component';
+import {UEditorModule} from 'ngx-ueditor';
 
 
 
@@ -41,7 +42,17 @@ import { TeacherdutySelectComponent } from './components/teacherduty-select/teac
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NgZorroAntdModule
+    NgZorroAntdModule,
+    UEditorModule.forRoot({
+      js: [
+        `./assets/ueditor/ueditor.config.js`,
+        `./assets/ueditor/ueditor.all.min.js`,
+      ],
+      // 默认前端配置项
+      options: {
+        UEDITOR_HOME_URL: './assets/ueditor/'
+      }
+    })
   ],
   exports: [
     CommonModule,
@@ -49,6 +60,7 @@ import { TeacherdutySelectComponent } from './components/teacherduty-select/teac
     ReactiveFormsModule,
     HttpClientModule,
     NgZorroAntdModule,
+    UEditorModule,
 
     WinSchoolComponent,
     WinEmployeeComponent,

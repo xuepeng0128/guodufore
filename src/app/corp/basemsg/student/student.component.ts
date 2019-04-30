@@ -19,8 +19,8 @@ import {IStudentQueryResult} from '../../../shared/interface/queryparams/IStuden
 })
 export class StudentComponent implements OnInit {
   user: LoginUser = this.usersvr.getUserStorage();
-  studentList$: Observable<Array<IStudentQueryResult>> = of([]);
-  total$ = of(0);
+  studentList: Array<IStudentQueryResult> = new Array<IStudentQueryResult>();
+  total = 0;
   queryParams: IStudentQueryParams = {
         studentPaperId : '',
         studentName: '',
@@ -38,13 +38,20 @@ export class StudentComponent implements OnInit {
   onQuery = () => {
     this.queryParams.pageBegin = (this.queryParams.pageNo - 1) * this.queryParams.pageSize;
     this.queryParams.pageNo = 1;
-    this.studentList$ = this.studentsvr.studentList(this.queryParams);
-    this.total$ = this.studentsvr.studentListTotal(this.queryParams);
+    this.studentsvr.studentList(this.queryParams).subscribe(
+      re => this.studentList = re
+    );
+
+    this.studentsvr.studentListTotal(this.queryParams).subscribe(
+      re => this.total = re
+    );
   }
 
   onPageChange = (e) => {
     this.queryParams.pageNo = e;
-    this.studentList$ = this.studentsvr.studentList(this.queryParams);
+    this.studentsvr.studentList(this.queryParams).subscribe(
+     re => this.studentList = re
+   );
   }
 
 }

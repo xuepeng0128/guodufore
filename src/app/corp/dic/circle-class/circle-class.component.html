@@ -22,6 +22,7 @@
         <th>名称</th>
         <th>图标</th>
         <th>描述</th>
+        <th>操作</th>
       </tr>
       </thead>
       <tbody>
@@ -29,7 +30,7 @@
         <td>{{no+1}}</td>
         <td>{{data.circleClassId}}</td>
         <td>{{data.circleClassName}}</td>
-        <td><img [src]="data.icon" /> </td>
+        <td><img [src]="data.icon" style="width:60px; height:60px" /> </td>
         <td>{{data.memo}}</td>
         <td>
           <a href="javaScript:;" *ngIf="user.isSupperAdmin " (click)="onEdit(data)">修改</a>
@@ -77,21 +78,21 @@
         <nz-form-control [nzSpan]="17">
           <nz-upload
                nzName="file"
-              [nzAction]="uploadFilePath"
+              [nzAction]="'uploadMediaFile'"
               nzListType="picture-card"
               [nzShowUploadList]="false"
                (nzChange)="handleChange($event)"
           >
-            <ng-container *ngIf="!avatarUrl">
+            <ng-container *ngIf="currentCircleClass.icon===''">
               <i class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></i>
               <div class="ant-upload-text">上传</div>
             </ng-container>
-            <img *ngIf="avatarUrl" [src]="avatarUrl" class="avatar" />
+            <img *ngIf="currentCircleClass.icon" [src]="currentCircleClass.icon" class="avatar" />
           </nz-upload>
         </nz-form-control>
       </nz-form-item>
     </div>
-    <div nz-col [nzSpan]="16">
+    <div nz-col [nzSpan]="14" [nzOffset]="2">
       <nz-form-item>
         <nz-form-label [nzSpan]="3">描述</nz-form-label>
         <nz-form-control [nzSpan]="21">

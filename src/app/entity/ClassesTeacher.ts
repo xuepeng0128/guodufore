@@ -1,7 +1,7 @@
 export class ClassesTeacher {
   id: number;
   classesId: string;
-  teacherPaperId: string;
+  teacherId: string;
   teacherName: string;
   studySubjectId: string;
   studySubjectName: string;
@@ -9,11 +9,11 @@ export class ClassesTeacher {
   endTime: Date;
 
 
-  constructor(options: {id?: number, classesId?: string, teacherPaperId?: string, teacherName?: string,
+  constructor(options: {id?: number, classesId?: string, teacherId?: string, teacherName?: string,
                        studySubjectId?: string, studySubjectName?: string, regTime?: Date, endTime?: Date } = {}) {
     this.id = options.id ;
     this.classesId = options.classesId || '';
-    this.teacherPaperId = options.teacherPaperId || '';
+    this.teacherId = options.teacherId || '';
     this.teacherName = options.teacherName || '';
     this.studySubjectId = options.studySubjectId || '';
     this.studySubjectName = options.studySubjectName || '';

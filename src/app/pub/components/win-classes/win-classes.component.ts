@@ -58,11 +58,11 @@ export class WinClassesComponent implements OnInit {
 
 
   onRemoveTeacher = (t: ClassesTeacher) => {
-   this.currentClasses.teachers = this.currentClasses.teachers.filter(o => o.teacherPaperId !== t.teacherPaperId);
+   this.currentClasses.teachers = this.currentClasses.teachers.filter(o => o.teacherId !== t.teacherId);
   }
   onTeacherChoosed = (t: ClassesTeacher | Array<ClassesTeacher>) => {
      if (this.toChooseTeacher === 'headMaster') {
-       this.currentClasses.headMaster = (t as ClassesTeacher).teacherPaperId;
+       this.currentClasses.headMaster = (t as ClassesTeacher).teacherId;
        this.currentClasses.headMasterName = (t as ClassesTeacher).teacherName;
      } else {
             this.currentClasses.teachers = new Array<ClassesTeacher> ();

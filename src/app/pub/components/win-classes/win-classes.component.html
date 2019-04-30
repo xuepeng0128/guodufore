@@ -53,7 +53,7 @@
   <div nz-row  *ngIf="showDetail">
     <div nz-col [nzSpan]="24">
       <a [href]="templateFilePath" > [模板下载]</a>
-      <nz-upload nzAction="/api/school/basemsg/student/importStudent"   (nzChange)="handleDataChange($event)">
+      <nz-upload nzAction="api/school/basemsg/student/importStudent"   (nzChange)="handleDataChange($event)">
         <button nz-button><i nz-icon type="upload"></i><span>导入</span></button>
       </nz-upload>
     </div>

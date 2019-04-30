@@ -67,8 +67,8 @@
         nzBordered
         nzShowSizeChanger
         [nzFrontPagination]="false"
-        [nzData]="schoolList$ | async"
-        [nzTotal]="total$ | async"
+        [nzData]="schoolList"
+        [nzTotal]="total"
         [(nzPageIndex)]="queryParams.pageNo"
         [(nzPageSize)]="queryParams.pageSize"
         (nzPageIndexChange)="onPageChange($event)"

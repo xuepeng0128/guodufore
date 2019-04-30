@@ -45,6 +45,7 @@
       <thead >
       <tr>
         <th>序号</th>
+        <th>编号</th>
         <th>身份证</th>
         <th>姓名</th>
         <th>当前职务</th>
@@ -55,6 +56,7 @@
       <tbody>
       <tr *ngFor="let data of ajaxTable.data ;let no=index">
         <td>{{no+1}}</td>
+        <td>{{data.teacherId}}</td>
         <td>{{data.teacherPaperId}}</td>
         <td>{{data.teacherName}}</td>
         <td>{{data.teacherDutyName}}</td>
@@ -96,7 +98,7 @@
     <thead >
     <tr>
       <th>序号</th>
-      <th>身份证</th>
+      <th>编号</th>
       <th>姓名</th>
       <th>当前职务</th>
       <th>联系电话</th>
@@ -106,7 +108,7 @@
     <tbody>
     <tr *ngFor="let data of ajaxTable.data ;let no=index">
       <td>{{no+1}}</td>
-      <td>{{data.teacherPaperId}}</td>
+      <td>{{data.teacherId}}</td>
       <td>{{data.teacherName}}</td>
       <td><app-teacherduty-select [(ngModel)]="data.teacherDutyId" [defaultShow]="'请选择'"></app-teacherduty-select></td>
       <td>{{data.tel}}</td>

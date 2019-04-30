@@ -16,7 +16,7 @@ export class MenuService {
 
 
   loadSupperAdminMenu = (): Observable<Array<Menu>> => {
-    return this.httpsvr.onHttpGet('/api/system/menu/menuList', {kind: 1 }).pipe(
+    return this.httpsvr.onHttpGet('api/system/menu/menuList', {kind: 1 }).pipe(
       map( re => {
          const m = this.toTreeMenu(re, '0');
          return m;
@@ -26,7 +26,7 @@ export class MenuService {
     );
   }
  loadEmployeeMenu = (): Observable<Array<Menu>> => {
-   return this.httpsvr.onHttpGet('/api/system/menu/menuList', {kind: 1 }).pipe(
+   return this.httpsvr.onHttpGet('api/system/menu/menuList', {kind: 1 }).pipe(
      map( (re: Array<Menu>) =>
          re.filter(o => o.menuId.substring(0, 2) !== '08' && o.menuId.substring(0, 2) !== '09')
      ),
@@ -34,14 +34,14 @@ export class MenuService {
    );
  }
 loadSchoolAdminMenu = (): Observable<Array<Menu>> => {
-  return this.httpsvr.onHttpGet('/api/system/menu/menuList', {kind: 2}).pipe(
+  return this.httpsvr.onHttpGet('api/system/menu/menuList', {kind: 2}).pipe(
     map( re =>
       this.toTreeMenu(re, '0')
     )
   );
 }
  loadTeacherMenu = () => {
-    return this.httpsvr.onHttpGet('/api/system/menu/menuList', {kind: 2}).pipe(
+    return this.httpsvr.onHttpGet('api/system/menu/menuList', {kind: 2}).pipe(
       map( (re: Array<Menu>) =>
         re.filter(o => o.menuId.substring(0, 2) !== '08' && o.menuId.substring(0, 2) !== '09')
       ),

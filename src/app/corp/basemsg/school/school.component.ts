@@ -17,8 +17,8 @@ import {CommonService} from '../../../shared/common.service';
 export class SchoolComponent implements OnInit {
   loginUser = this.usersvr.getUserStorage();
   schoolWinOrder$: Subject<{nowState: string , school: School}> = new Subject<{nowState: string , school: School}>() ;
-  schoolList$: Observable<Array<ISchoolQueryResult>> = of(new Array<ISchoolQueryResult>());
-  total$: Observable<number> = of(0);
+  schoolList: Array<ISchoolQueryResult> =  Array<ISchoolQueryResult>();
+  total = 0;
   queryParams: ISchoolQueryParams = {
             schoolName : '',
             cityId : '0',
@@ -41,15 +41,19 @@ export class SchoolComponent implements OnInit {
 
     this.queryParams.pageNo = 1;
     this.queryParams.pageBegin = 0;
-    this.schoolList$ = this.schoolsvr.schoolList(this.queryParams).pipe(
-      delay(100)
+    this.schoolsvr.schoolList(this.queryParams).subscribe(
+        re => this.schoolList = re
     );
-    this.total$ = this.schoolsvr.schoolListTotal(this.queryParams);
+    this.schoolsvr.schoolListTotal(this.queryParams).subscribe(
+        re => this.total = re
+    );
   }
   onPageChange = (e) => {
     this.queryParams.pageNo = e;
     this.queryParams.pageBegin = (this.queryParams.pageNo - 1) * this.queryParams.pageSize;
-    this.schoolList$ = this.schoolsvr.schoolList(this.queryParams);
+    this.schoolsvr.schoolList(this.queryParams).subscribe(
+      re => this.schoolList = re
+    );
   }
 
 onRegist = () => {
@@ -60,25 +64,28 @@ onRegist = () => {
 
   }
 onSaved = (editstate: string) => {
-    this.schoolList$ = this.schoolsvr.schoolList(this.queryParams);
-    this.total$ = iif( () => editstate === 'add',
-                         this.total$.pipe(map(total => total + 1)),
-                         this.total$
-      );
+  this.schoolsvr.schoolList(this.queryParams).subscribe(
+    re => this.schoolList = re
+  );
+  if ( editstate === 'add') {
+         this.total += 1;
+  }
   }
 onDelete = (school: ISchoolQueryResult) => {
     this.modalService.confirm({
       nzTitle: '<i>提示</i>',
       nzContent: '<b>确定删除该数据吗?</b>',
       nzOnOk: () => {
-       this.schoolList$ =  this.schoolsvr.deleteSchool(school.schoolId).pipe(
-          flatMap(re => {
-                this.queryParams.pageBegin = (this.queryParams.pageNo - 1) * this.queryParams.pageSize;
-                return  this.schoolsvr.schoolList(this.queryParams);
-          })
-        );
-       this.total$ = this.total$.pipe(map(total => total - 1));
+
+     this.schoolsvr.deleteSchool(school.schoolId).subscribe(re => {
+          this.queryParams.pageBegin = (this.queryParams.pageNo - 1) * this.queryParams.pageSize;
+          this.schoolsvr.schoolList(this.queryParams).subscribe(
+            res => this.schoolList = res
+          );
+          this.total -= 1;
+        });
       }
     });
+
   }
 }

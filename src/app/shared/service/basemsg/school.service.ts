@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {School} from '../../../entity/School';
 import {ISchoolQueryParams} from '../../interface/queryparams/ISchoolQueryParams';
 import {ISchoolQueryResult} from '../../interface/queryparams/ISchoolQueryResult';
+import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -13,20 +14,26 @@ export class SchoolService {
   constructor(private httpsvr: HttpService) { }
 
   schoolList = (queryparam: ISchoolQueryParams): Observable<Array<ISchoolQueryResult>> => {
-         return this.httpsvr.onHttpGet('/api/basemsg/school/schoolList', queryparam);
+         return this.httpsvr.onHttpGet('api/basemsg/school/schoolList', queryparam);
   }
  schoolListTotal = (queryparam: ISchoolQueryParams): Observable<number> => {
-   return this.httpsvr.onHttpGet('/api/basemsg/school/schoolListTotal', queryparam);
+   return this.httpsvr.onHttpGet('api/basemsg/school/schoolListTotal', queryparam);
  }
-  insertSchool = (school: School): Observable<School> => {
-        return this.httpsvr.onHttpPost('/api/basemsg/school/insertSchool', school);
+  insertSchool = (school: School): Observable<string> => {
+        return this.httpsvr.onHttpPost('api/basemsg/school/insertSchool', school).pipe(
+          map( re => re.result)
+        );
   }
 
-  updateSchool = (school: School): Observable<School> => {
-        return this.httpsvr.onHttpPost('/api/basemsg/school/updateSchool', school);
+  updateSchool = (school: School): Observable<string> => {
+        return this.httpsvr.onHttpPost('api/basemsg/school/updateSchool', school).pipe(
+          map( re => re.result)
+        );
   }
 
   deleteSchool = (schoolId: string): Observable<string> => {
-    return this.httpsvr.onHttpGet('/api/basemsg/school/deleteSchool', {schoolId});
+    return this.httpsvr.onHttpGet('api/basemsg/school/deleteSchool', {schoolId}).pipe(
+      map( re => re.result)
+    );
   }
 }

@@ -12,21 +12,24 @@ export class EmployeeService {
   constructor(private  httpsvr: HttpService) { }
 
   employeeList = (queryparams: any): Observable<Array<Employee>> => {
-     return this.httpsvr.onHttpGet('/api/system/employee/employeeList', queryparams);
+     return this.httpsvr.onHttpGet('api/system/employee/employeeList', queryparams);
   }
 
 
   insertEmployee = (employee: Employee): Observable<string> => {
-     return this.httpsvr.onHttpPost('/api/system/employee/insertEmployee', employee).pipe(map(re =>{
-       console.log(re);
-       return re;
-     }));
+     return this.httpsvr.onHttpPost('api/system/employee/insertEmployee', employee).pipe(
+       map( re => re.result)
+     );
   }
   updateEmployee = (employee: Employee): Observable<string> => {
-    return this.httpsvr.onHttpPost('/api/system/employee/updateEmployee', employee);
+    return this.httpsvr.onHttpPost('api/system/employee/updateEmployee', employee).pipe(
+      map( re => re.result)
+    );
   }
   deleteEmployee = (employee: Employee): Observable<string> => {
-    return this.httpsvr.onHttpPost('/api/system/employee/updateEmployee', employee);
+    return this.httpsvr.onHttpPost('api/system/employee/updateEmployee', employee).pipe(
+      map( re => re.result)
+    );
   }
 
 

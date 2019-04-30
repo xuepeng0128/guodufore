@@ -18,8 +18,8 @@ import {ITeacherQueryResult} from '../../../shared/interface/queryparams/ITeache
 })
 export class TeacherComponent implements OnInit {
   user: LoginUser = this.usersvr.getUserStorage();
-  teacherList$: Observable<Array<ITeacherQueryResult>> = of([]);
-  total$ = of(0);
+  teacherList: Array<ITeacherQueryResult> = new Array<ITeacherQueryResult>();
+  total = 0;
   queryParams: ITeacherQueryParams = {
         teacherName : '' ,
         schoolName : '' ,
@@ -34,13 +34,19 @@ export class TeacherComponent implements OnInit {
   onQuery = () => {
     this.queryParams.pageNo = 1;
     this.queryParams.pageBegin = (this.queryParams.pageNo - 1) * this.queryParams.pageSize;
-    this.teacherList$ = this.teachersvr.teacherList(this.queryParams);
-    this.total$ = this.teachersvr.teacherListTotal(this.queryParams);
+    this.teachersvr.teacherList(this.queryParams).subscribe(
+         re => this.teacherList = re
+    );
+    this.teachersvr.teacherListTotal(this.queryParams).subscribe(
+        re => this.total = re
+    );
   }
 
   onPageChange = (e) => {
     this.queryParams.pageNo = e;
-    this.teacherList$ = this.teachersvr.teacherList(this.queryParams);
+    this.teachersvr.teacherList(this.queryParams).subscribe(
+         re => this.teacherList = re
+    );
   }
   onExcelExport = () => {
     this.teachersvr.onExport(this.queryParams).subscribe();

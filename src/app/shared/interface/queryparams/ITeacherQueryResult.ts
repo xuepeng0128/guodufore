@@ -1,5 +1,5 @@
 export interface ITeacherQueryResult {
-    id?: number;
+    teacherId?: string;
     teacherPaperId?: string;
     teacherName?: string;
     tel?: string;

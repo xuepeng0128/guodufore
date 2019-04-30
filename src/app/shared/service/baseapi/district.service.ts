@@ -10,11 +10,11 @@ export class DistrictService {
 
   constructor(private httpsvr: HttpService) { }
   districtList = (): Observable<Array<District>> => {
-     return this.httpsvr.onHttpGet('/api/dic/district/districtList', null);
+     return this.httpsvr.onHttpGet('api/dic/district/districtList', null);
   }
 
   singleDistrict = (districtId: string): Observable<District> => {
-    return this.httpsvr.onHttpGet('/api/dic/district/singleDistrict', {districtId});
+    return this.httpsvr.onHttpGet('api/dic/district/singleDistrict', {districtId});
   }
   cityDistrictList = (): Observable<Array<{cityName: string , districts: Array<District>}>> => {
     return null;

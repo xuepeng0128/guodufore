@@ -28,26 +28,31 @@ export class UserService {
  }
 
  onvalidateLogin = (user: User): Observable<Array<User>> => {
-     return this.httpsvr.onHttpPost('/api/system/user/validateUser', user);
+     return this.httpsvr.onHttpPost('api/system/user/validateUser', user);
  }
 
 userList = (queryParams: any): Observable<Array<IUserQueryResult>> => {
-  return this.httpsvr.onHttpGet('/api/system/user/userList', queryParams);
+  return this.httpsvr.onHttpGet('api/system/user/userList', queryParams);
 }
   userListTotal = (queryParams: any): Observable<number> => {
-    return this.httpsvr.onHttpGet('/api/system/user/userListTotal', queryParams);
+    return this.httpsvr.onHttpGet('api/system/user/userListTotal', queryParams);
   }
 insertUser = (user: User ): Observable<string> => {
-  return this.httpsvr.onHttpPost('/api/system/user/insertUser', user);
+  return this.httpsvr.onHttpPost('api/system/user/insertUser', user).pipe(
+    map( re => re.result)
+  );
 }
 
   updateUser = (user: User ): Observable<string> => {
-    return this.httpsvr.onHttpPost('/api/system/user/updateUser', user);
+    return this.httpsvr.onHttpPost('api/system/user/updateUser', user).pipe(
+      map( re => re.result)
+    );
   }
 
   deleteUser = (account: string): Observable<string> => {
-    return this.httpsvr.onHttpGet('/api/system/user/deleteUser', {account});
-
+    return this.httpsvr.onHttpGet('api/system/user/deleteUser', {account}).pipe(
+      map( re => re.result)
+    );
   }
 
 }

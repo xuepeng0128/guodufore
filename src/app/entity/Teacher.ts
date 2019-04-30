@@ -1,5 +1,5 @@
 export class Teacher {
-          id: number;
+          teacherId: string; // 老师编号
     teacherPaperId: string; // 身份证
     tel: string ; // 电话
     teacherName: string ; // 老师姓名
@@ -9,9 +9,9 @@ export class Teacher {
    schoolId: string;
    regTime: Date;
 
-  constructor(options: {id?: number, teacherPaperId?: string, tel?: string, teacherName?: string, teacherDutyId?: string,
+  constructor(options: { teacherId?: string, teacherPaperId?: string, tel?: string, teacherName?: string, teacherDutyId?: string,
                           teacherDutyName?: string, address?: string, schoolId?: string, regTime?: Date}= {}) {
-    this.id = options.id;
+    this.teacherId = options.teacherId || '';
     this.teacherPaperId = options.teacherPaperId || '';
     this.tel = options.tel || '';
     this.teacherName = options.teacherName || '';

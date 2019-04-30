@@ -20,7 +20,7 @@
         <th>序号</th>
         <th>编号</th>
         <th>名称</th>
-        <th>大类</th>
+        <th>上级类别</th>
         <th>操作</th>
       </tr>
       </thead>
@@ -29,7 +29,7 @@
         <td>{{no+1}}</td>
         <td>{{data.habitClassId}}</td>
         <td>{{data.habitClassName}}</td>
-        <td>{{data.pareHabitClassName}}</td>
+        <td>{{data.pareHabitClassName ==='' ? '无' : data.pareHabitClassName}}</td>
 
         <td>
           <a href="javaScript:;" *ngIf="user.isSupperAdmin " (click)="onEdit(data)">修改</a>
@@ -43,7 +43,7 @@
 </div>
 
 <nz-modal [(nzVisible)]="isHabitClassModalShow"
-          [nzTitle]="'公司职务'"
+          [nzTitle]="'习惯类别'"
           [nzCancelText]="'关闭'"
           (nzOnCancel)="isHabitClassModalShow=false"
           [nzOkText]="'保存'"
@@ -71,9 +71,9 @@
     </div>
     <div nz-col [nzSpan]="8">
       <nz-form-item>
-        <nz-form-label [nzSpan]="8">管理层</nz-form-label>
+        <nz-form-label [nzSpan]="8">上级类别</nz-form-label>
         <nz-form-control [nzSpan]="12" [nzOffset]="4">
-          <label nz-checkbox [(ngModel)]="currentHabitClass.master"></label>
+         <app-habit-class-select [defaultShow]="'请选择'" [(ngModel)]="currentHabitClass.pareHabitClassId"></app-habit-class-select>
         </nz-form-control>
       </nz-form-item>
     </div>
