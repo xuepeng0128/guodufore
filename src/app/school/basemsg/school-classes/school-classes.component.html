@@ -21,9 +21,6 @@
         <th>年级</th>
         <th>班级</th>
         <th>班主任</th>
-        <th>任课老师</th>
-        <th>学生</th>
-        <th>操作</th>
       </tr>
       </thead>
       <tbody>
@@ -32,14 +29,7 @@
         <td>{{data.grade}}</td>
         <td>{{commonsvr.calculateSchoolYearMiddleSchool(data.grade)}}</td>
         <td>{{data.classes}}</td>
-        <td>{{data.headmaster.teacherName}}</td>
-        <td>{{data.assTeachers.length}}</td>
-        <td>{{data.students.length}}</td>
-        <td>
-          <a href="javaScript:;" *ngIf="user.supperAdmin " (click)="onEdit(data)">修改</a>
-          <nz-divider nzType="vertical"></nz-divider>
-          <a href="javaScript:;" *ngIf="user.supperAdmin" (click)="onDelete(data)">删除</a>
-        </td>
+        <td>{{data.headerMasterName}}</td>
       </tr>
       </tbody>
     </nz-table>

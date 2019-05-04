@@ -1,13 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {User} from '../../../entity/User';
-import {StudySubject} from '../../../entity/StudySubject';
 import {UserService} from '../../../shared/user.service';
-import {StudySubjectService} from '../../../shared/service/dic/study-subject.service';
 import {iif} from 'rxjs';
 import {switchMap} from 'rxjs/operators';
 import {SubjectExamClass} from '../../../entity/SubjectExamClass';
 import {SubjectExamClassService} from '../../../shared/service/dic/subject-exam-class.service';
-import {ClassesService} from '../../../shared/service/basemsg/classes.service';
 import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {MSG_SAVE_ERROR, MSG_SAVE_SUCCESS} from '../../../shared/SysMessage';
 import {LoginUser} from '../../../entity/LoginUser';
@@ -37,7 +33,7 @@ export class SubjectExamClassComponent implements OnInit {
   }
   onAdd = () => {
     this.editState = 'add';
-    this.currentSubjectExamClass = new SubjectExamClass();
+    this.currentSubjectExamClass = new SubjectExamClass({});
     this.isSubjectExamClassModalShow = true;
   }
   onEdit = (subjectExamClass: SubjectExamClass) => {

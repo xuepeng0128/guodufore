@@ -15,7 +15,7 @@ import {ISupUploadfiles} from '../../../shared/interface/ISupUploadfiles';
 })
 export class WinHabitComponent implements OnInit {
   @Input() habitWinOrder$: Subject<{nowState: string , habit: Habit}> = new Subject<{nowState: string , habit: Habit}>();
-  @Output() onHabitSaved: EventEmitter<Habit> = new EventEmitter<Habit>();
+  @Output() onHabitSaved: EventEmitter<string> = new EventEmitter<string>();
 
   uploadFilePath = '';
 
@@ -61,6 +61,7 @@ export class WinHabitComponent implements OnInit {
 
   ngOnInit() {
     this.habitWinOrder$.subscribe(re => {
+      this.nowState =re.nowState;
       if (re.nowState === 'add') {
         this.currentHabit = new Habit({});
       } else if (re.nowState === 'edit') {

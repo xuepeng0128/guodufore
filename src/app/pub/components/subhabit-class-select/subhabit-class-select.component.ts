@@ -1,5 +1,5 @@
 import {Component, forwardRef, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {HabitClass} from '../../../entity/HabitClass';
 import {HabitClassService} from '../../../shared/service/dic/habit-class.service';
 import {map} from 'rxjs/operators';
@@ -54,17 +54,22 @@ export class SubhabitClassSelectComponent implements OnInit  , OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.habitClassArray$ = this.habitclasssvr.habitClassList().pipe(
-      map( re => {
-        return [new HabitClass({habitClassId: '0', habitClassName: this.defaultShow})].concat(
-          re.filter(o => o.pareHabitClassId === this.pareHabitClassId).map(
-            v => new HabitClass({
-              habitClassId : v.habitClassId, habitClassName : v.habitClassName
-            })
-          )
-        );
-      })
-    );
+    if (this.pareHabitClassId==='0'){
+      this.habitClassArray$ = of ( [new HabitClass({habitClassId: '0', habitClassName: this.defaultShow})]);
+    }else {
+      this.habitClassArray$ = this.habitclasssvr.habitClassList().pipe(
+        map( re => {
+          return [new HabitClass({habitClassId: '0', habitClassName: this.defaultShow})].concat(
+            re.filter(o => o.pareHabitClassId === this.pareHabitClassId).map(
+              v => new HabitClass({
+                habitClassId : v.habitClassId, habitClassName : v.habitClassName
+              })
+            )
+          );
+        })
+      );
+    }
+
 
     this._CURRENTVALUE = '0';
   }

@@ -27,8 +27,8 @@
       <tbody>
       <tr *ngFor="let data of ajaxTable.data ;let no=index">
         <td>{{no+1}}</td>
-        <td>{{data.studySubjectName}}</td>
         <td>{{data.subjectExamClassId}}</td>
+        <td>{{data.studySubjectName}}</td>
         <td>{{data.subjectExamClassName}}</td>
         <td>
           <a href="javaScript:;" *ngIf="user.isSupperAdmin " (click)="onEdit(data)">修改</a>

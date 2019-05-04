@@ -9,7 +9,7 @@ export  class SubjectExamClass {
   constructor(options: {subjectExamClassId?: string, subjectExamClassName?: string, studySubjectId?: string,studySubjectName ? : string}= {}) {
     this.subjectExamClassId = options.subjectExamClassId || '';
     this.subjectExamClassName = options.subjectExamClassName || '';
-    this.studySubjectId = options.studySubjectId || '';
+    this.studySubjectId = options.studySubjectId || '0';
     this.studySubjectName = options.studySubjectName || '';
   }
 }

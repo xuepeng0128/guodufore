@@ -11,7 +11,7 @@ import {ClassesService} from '../../../shared/service/basemsg/classes.service';
 import {Teacher} from '../../../entity/Teacher';
 import {DOWNLOAD_TEMPLATE_PATH} from '../../../shared/const';
 import {CommonService} from '../../../shared/common.service';
-import {IClassQueryResult} from '../../../shared/interface/queryparams/IClassQueryResult';
+import {IClassesQueryResult} from '../../../shared/interface/queryparams/IClassQueryResult';
 import {ClassesStudent} from '../../../entity/ClassesStudent';
 import {ClassesTeacher} from '../../../entity/ClassesTeacher';
 
@@ -23,7 +23,7 @@ import {ClassesTeacher} from '../../../entity/ClassesTeacher';
 export class WinClassesComponent implements OnInit {
   @Input() classesWinOrder$: Subject<{nowState: string , classesId: string}> ;
   @Input() showDetail: boolean;
-  @Output() onClassesSaved: EventEmitter<Classes> = new EventEmitter<Classes>();
+  @Output() onClassesSaved: EventEmitter<string> = new EventEmitter<string>();
 
 
   teacherChooseSign$: Subject<{ singleChoose: boolean, haveChoosedTeacher: Array<Teacher>}>
@@ -42,7 +42,7 @@ export class WinClassesComponent implements OnInit {
         this.currentClasses = new Classes({});
       } else if (re.nowState === 'edit') {
         this.classessvr.classesList({classesId : re.classesId , pageBegin : 0 , pageSize : 1 , pageNo: 1}).subscribe(
-          (re: Array<IClassQueryResult>) => this.currentClasses =
+          (re: Array<IClassesQueryResult>) => this.currentClasses =
             new Classes({classesId: re[0].classesId, grade : re[0].grade,
                                      classes: re[0].classes, classesName: re[0].classesName,
                                   headMaster: re[0].headMaster, headMasterName: re[0].headMasterName,

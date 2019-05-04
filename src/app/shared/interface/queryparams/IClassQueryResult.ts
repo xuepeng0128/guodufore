@@ -1,4 +1,4 @@
-export interface IClassQueryResult {
+export interface IClassesQueryResult {
   classesId?: string;
   classes?: number;
   grade?: number;

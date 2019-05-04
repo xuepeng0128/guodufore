@@ -14,7 +14,7 @@ export class Habit {
                          subHabitClassId?: string, subHabitClassName ?: string, memo?: string, picUrl?: string} = {}) {
     this.habitId = options.habitId || '';
     this.habitName = options.habitName || '';
-    this.habitClassId = options.habitClassId || '1';
+    this.habitClassId = options.habitClassId || '0';
     this.habitClassName = options.habitClassName || '';
     this.subHabitClassId = options.subHabitClassId || '0';
     this.subHabitClassName = options.subHabitClassName || '';

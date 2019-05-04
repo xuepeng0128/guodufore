@@ -20,7 +20,7 @@ export class TeacherService {
  }
 
  onGroupSaveTeacher = (teachers: Array<Teacher>): Observable<string> => {
-   return  this.httpsvr.onHttpPost('api/basemsg/teacher/teacherExcel', teachers);
+   return  this.httpsvr.onHttpPost('api/basemsg/teacher/groupInsertTeachers', teachers);
  }
 
 

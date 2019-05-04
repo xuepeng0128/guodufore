@@ -2,7 +2,7 @@ import {Component, forwardRef, Input, OnChanges, OnInit, SimpleChanges} from '@a
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
 import {iif, Observable, of} from 'rxjs';
 import {IClassQueryParams} from '../../../shared/interface/queryparams/IClassQueryParams';
-import {IClassQueryResult} from '../../../shared/interface/queryparams/IClassQueryResult';
+import {IClassesQueryResult} from '../../../shared/interface/queryparams/IClassQueryResult';
 import {ClassesService} from '../../../shared/service/basemsg/classes.service';
 import {CommonService} from '../../../shared/common.service';
 import {LoginUser} from '../../../entity/LoginUser';
@@ -34,7 +34,7 @@ export class SchoolclassesSelectComponent implements OnInit, OnChanges {
     pageBegin : 0
   };
   // 班级列表
-  public   classesArray$: Observable<Array<IClassQueryResult>> = of (new Array<IClassQueryResult>());
+  public   classesArray$: Observable<Array<IClassesQueryResult>> = of (new Array<IClassesQueryResult>());
 
   get currentValue(): string {
     return this._CURRENTVALUE;

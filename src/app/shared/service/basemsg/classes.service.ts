@@ -3,7 +3,7 @@ import {HttpService} from '../baseapi/http.service';
 import {Observable} from 'rxjs';
 import {Classes} from '../../../entity/Classes';
 import {IClassQueryParams} from '../../interface/queryparams/IClassQueryParams';
-import {IClassQueryResult} from '../../interface/queryparams/IClassQueryResult';
+import {IClassesQueryResult} from '../../interface/queryparams/IClassQueryResult';
 import {map} from 'rxjs/operators';
 
 @Injectable({
@@ -13,12 +13,14 @@ export class ClassesService {
 
   constructor(private httpsvr: HttpService) { }
 
-  classesList = (queryparams: IClassQueryParams): Observable<Array<IClassQueryResult>> => {
+  classesList = (queryparams: IClassQueryParams): Observable<Array<IClassesQueryResult>> => {
      return this.httpsvr.onHttpGet('api/basemsg/classes/classesList', queryparams);
   }
 
   classListTotal = (queryparams: IClassQueryParams): Observable<number> => {
-    return this.httpsvr.onHttpGet('api/basemsg/classes/classesListTotal', queryparams);
+    return this.httpsvr.onHttpGet('api/basemsg/classes/classesListTotal', queryparams).pipe(
+       map(re => parseInt(re.total))
+    );
   }
 
 

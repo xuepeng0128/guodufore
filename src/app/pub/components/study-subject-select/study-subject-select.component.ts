@@ -3,6 +3,8 @@ import {NG_VALUE_ACCESSOR} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {StudySubject} from '../../../entity/StudySubject';
 import {StudySubjectService} from '../../../shared/service/dic/study-subject.service';
+import {map} from "rxjs/operators";
+import {School} from "../../../entity/School";
 
 @Component({
   selector: 'app-study-subject-select',
@@ -49,7 +51,12 @@ export class StudySubjectSelectComponent implements OnInit {
   constructor(private studysubjectsvr: StudySubjectService) { }
 
   ngOnInit() {
-    this.studySubjectArray$ = this.studysubjectsvr.studySubjectList();
+    this.studySubjectArray$ = this.studysubjectsvr.studySubjectList().pipe(
+      map(re => [ new StudySubject({studySubjectId : '0', studySubjectName: this.defaultShow})].concat(
+        re.map( m => new StudySubject({studySubjectId : m.studySubjectId ,studySubjectName : m.studySubjectName}))
+      )
+      )
+   );
   }
   onValueSelected = () => {
     this.onValueChanged.emit(this._CURRENTVALUE);

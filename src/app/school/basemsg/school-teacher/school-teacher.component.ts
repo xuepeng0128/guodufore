@@ -8,6 +8,7 @@ import {ITeacherQueryResult} from '../../../shared/interface/queryparams/ITeache
 import {ITeacherQueryParams} from '../../../shared/interface/queryparams/ITeacherQueryParams';
 import {DOWNLOAD_TEMPLATE_PATH, UPLOAD_TEACHER_TEMPLATE_PATH} from '../../../shared/const';
 import {Teacher} from '../../../entity/Teacher';
+import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-school-teacher',
@@ -18,7 +19,11 @@ export class SchoolTeacherComponent implements OnInit {
   loginUser: LoginUser = this.usersvr.getUserStorage();
   teacherList: Array<ITeacherQueryResult> = new Array<ITeacherQueryResult>() ;
   total = 0;
-
+   test =`
+      <div style="color : red;
+  font-size: large;"><img src ="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1557391212&di=13ebd07768877176a9a9c4fd6d8fb1ce&imgtype=jpg&er=1&src=http%3A%2F%2Finternetke.com%2Fuploads%2Fallimg%2F160405%2F1-1604052229440-L.jpg" style="width:200px;height:200px" />></div>
+   `;
+   aa : SafeHtml;
   queryParams: ITeacherQueryParams = {
     schoolId : this.loginUser.school.schoolId,
     teacherName : '' ,
@@ -31,10 +36,12 @@ export class SchoolTeacherComponent implements OnInit {
   uploadExcelpath = UPLOAD_TEACHER_TEMPLATE_PATH;
   isTeacherExcelImpModalShow = false;
   prepareImportTeachers: Array<Teacher> = new Array<Teacher>();
-constructor(private teachersvr: TeacherService, private  usersvr: UserService, private message: NzMessageService ) { }
+constructor(private teachersvr: TeacherService, private  usersvr: UserService,
+            private message: NzMessageService,private sanitizer: DomSanitizer ) { }
 
 ngOnInit() {
   this.onQuery();
+  this.aa = this.sanitizer.bypassSecurityTrustHtml(this.test);
   }
 onQuery = () => {
   this.queryParams.pageNo = 1;
@@ -61,14 +68,21 @@ onExcelExport = () => {
 
   }
 handleExcelChange = (file: UploadFile) => {
-  if (file.response) {
+  if (file.file.response !== null) {
     this.isTeacherExcelImpModalShow = true;
-    this.prepareImportTeachers = JSON.parse(file.response);
+    this.prepareImportTeachers=new Array<Teacher>();
+    (file.file.response as Array<Teacher>).forEach( v =>
+       this.prepareImportTeachers.push( new Teacher({teacherId:'',teacherPaperId : v.teacherPaperId, schoolId : this.loginUser.school.schoolId
+       , tel : v.tel, teacherName : v.teacherName , teacherDutyId :'02' , address : v.address  }))
+    );
+    file.file.response=null;
   }
 
 }
 
+  removeUploadedfile=()=>{
 
+  }
   onToImportTeachers = () => {
     this.teachersvr.onGroupSaveTeacher(this.prepareImportTeachers).subscribe(
       re => {

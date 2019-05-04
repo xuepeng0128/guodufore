@@ -31,6 +31,7 @@ export class SchoolAdminMgrComponent implements OnInit {
   constructor(private usersvr: UserService, private message: NzMessageService) { }
 
   ngOnInit() {
+    this.onQuery();
   }
   onQuery = () => {
     this.queryParams.pageNo = 1;
@@ -64,7 +65,7 @@ export class SchoolAdminMgrComponent implements OnInit {
       this.usersvr.updateUser(this.currentUser)
     ).pipe(
        switchMap(() =>
-         this.usersvr.userList(this.queryParams)
+        this.usersvr.userList(this.queryParams)
         )
     );
     this.total$ = this.editState === 'add' ? this.total$.pipe(map(re => re + 1)) : this.total$;

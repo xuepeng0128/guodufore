@@ -7,7 +7,7 @@ import {ClassesService} from '../../../shared/service/basemsg/classes.service';
 import {CommonService} from '../../../shared/common.service';
 import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {flatMap, map, switchMap} from 'rxjs/operators';
-import {IClassQueryResult} from '../../../shared/interface/queryparams/IClassQueryResult';
+import {IClassesQueryResult} from '../../../shared/interface/queryparams/IClassQueryResult';
 import {IClassQueryParams} from '../../../shared/interface/queryparams/IClassQueryParams';
 import {LoginUser} from '../../../entity/LoginUser';
 
@@ -19,14 +19,14 @@ import {LoginUser} from '../../../entity/LoginUser';
 export class SchoolClassesComponent implements OnInit {
   loginUser: LoginUser = this.usersvr.getUserStorage();
   classesWinOrder$: Subject<{nowState: string , classesId: string}> = new Subject<{nowState: string , classesId: string}>() ;
-  classesArray$: Observable<Array<IClassQueryResult>> = of([]);
-  total$ = of(0);
+  classesArray : Array<IClassesQueryResult> = new Array<IClassesQueryResult>();
+  total = 0 ;
   queryParams: IClassQueryParams = {
     grade : 0,
   classes : 0 ,
   schoolId : this.loginUser.school.schoolId,
   schoolName : '',
-  pageSize : 10,
+  pageSize : 15,
   pageNo  : 1,
   pageBegin : 0
   };
@@ -40,34 +40,41 @@ export class SchoolClassesComponent implements OnInit {
   onQuery = () => {
     this.queryParams.pageNo = 1;
     this.queryParams.pageBegin = 0;
-    this.classesArray$ = this.classessvr.classesList(this.queryParams);
-    this.total$ = this.classessvr.classListTotal(this.queryParams);
+    this.classessvr.classesList(this.queryParams).subscribe(
+      re => this.classesArray=re
+
+    );
+   this.classessvr.classListTotal(this.queryParams).subscribe(
+     re => this.total=re
+   );
   }
   onPageChange = (e) => {
     this.queryParams.pageNo = e;
     this.queryParams.pageBegin = (this.queryParams.pageNo - 1) * this.queryParams.pageSize;
-    this.classesArray$ = this.classessvr.classesList(this.queryParams);
+    this.classessvr.classesList(this.queryParams).subscribe(
+        re => this.classesArray=re
+    );
   }
   onAdd = () => {
     this.classesWinOrder$.next({nowState: 'add', classesId : null});
   }
-  onEdit = (classes: IClassQueryResult) => {
+  onEdit = (classes: IClassesQueryResult) => {
     this.classesWinOrder$.next({nowState: 'edit', classesId : classes.classesId});
   }
   onSaved = (classes: Classes) => {
-    this.classesArray$ = this.classessvr.classesList(this.queryParams);
+    this.classessvr.classesList(this.queryParams).subscribe(
+      re => this.classesArray=re
+    );
   }
   onDelete = (classes: Classes) => {
     this.modalService.confirm({
       nzTitle: '<i>提示</i>',
       nzContent: '<b>确定删除该数据吗?</b>',
       nzOnOk: () => {
-        this.classesArray$ =  this.classessvr.deleteClasses(classes).pipe(
+        this.classessvr.deleteClasses(classes).pipe(
+
           map(re => {
-              this.total$ = this.total$.pipe(
-                map( total => total - 1)
-              );
-              return re;
+
           }),
           switchMap(() => this.classessvr.classesList(this.queryParams))
         );

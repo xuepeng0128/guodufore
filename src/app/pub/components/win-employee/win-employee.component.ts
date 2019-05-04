@@ -35,21 +35,18 @@ export class WinEmployeeComponent implements OnInit {
 
   onSave = () => {
     // 补全school区，employee
-    this.emloyeesvr.insertEmployee(this.currentEmployee).subscribe(
-      re => console.log(re)
-    );
-      //     iif (() => this.nowState === 'add',
-      //                     this.emloyeesvr.insertEmployee(this.currentEmployee),
-      //                     this.emloyeesvr.updateEmployee(this.currentEmployee)
-      //     ).subscribe(
-      // re => {
-      //   if (!isNullOrUndefined(re)) {
-      //     this.message.create('success', MSG_SAVE_SUCCESS);
-      //     this.onEmployeeSaved.emit(re);
-      //     this.isEmployeeModalShow = false;
-      //   } else {
-      //     this.message.create('error', MSG_SAVE_ERROR);
-      //   }
-      // });
+          iif (() => this.nowState === 'add',
+                          this.emloyeesvr.insertEmployee(this.currentEmployee),
+                          this.emloyeesvr.updateEmployee(this.currentEmployee)
+          ).subscribe(
+      re => {
+        if (re==='ok') {
+          this.message.create('success', MSG_SAVE_SUCCESS);
+          this.onEmployeeSaved.emit(re);
+          this.isEmployeeModalShow = false;
+        } else {
+          this.message.create('error', MSG_SAVE_ERROR);
+        }
+      });
   }
 }

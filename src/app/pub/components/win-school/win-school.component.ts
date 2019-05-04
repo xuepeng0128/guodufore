@@ -15,7 +15,7 @@ import {UserService} from '../../../shared/user.service';
 })
 export class WinSchoolComponent implements OnInit {
   @Input() schoolWinOrder$: Subject<{nowState: string , school: School}> = new Subject<{nowState: string , school: School}>() ;
-  @Output() onSchoolSaved: EventEmitter<School> = new EventEmitter<School>();
+  @Output() onSchoolSaved: EventEmitter<string> = new EventEmitter<string>();
   currentSchool: School = new School({});
   isSchoolModalShow = false;
   nowState = 'browse';

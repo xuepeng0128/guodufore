@@ -7,6 +7,7 @@ import {MSG_SAVE_ERROR, MSG_SAVE_SUCCESS} from '../../../shared/SysMessage';
 import {switchMap} from 'rxjs/operators';
 import {CircleClass} from '../../../entity/CircleClass';
 import {CircleClassService} from '../../../shared/service/dic/circle-class.service';
+import {UPLOAD_MEDIA_PATH} from "../../../shared/const";
 
 @Component({
   selector: 'app-circle-class',
@@ -20,6 +21,7 @@ export class CircleClassComponent implements OnInit {
   currentCircleClass: CircleClass = new CircleClass({});
   editState = 'browse';
   loading = false;
+  uploadMediaFile=UPLOAD_MEDIA_PATH;
   constructor(private usersvr: UserService, private circleclasssvr: CircleClassService,
               private modalService: NzModalService, private message: NzMessageService) { }
 

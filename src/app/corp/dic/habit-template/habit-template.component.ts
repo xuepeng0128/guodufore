@@ -43,7 +43,6 @@ export class HabitTemplateComponent implements OnInit {
   }
   onSaved = (habit: Habit) => {
     this.habitsvr.habitTemplateList(this.queryParams).subscribe(re =>
-
       this.habitArray = re
     );
   }

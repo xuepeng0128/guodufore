@@ -1,4 +1,6 @@
+<div [innerHtml]="aa">
 
+</div>
 <div nz-row>
   <div nz-col [nzSpan]="8">
     <nz-form-item>
@@ -20,19 +22,21 @@
 
 
 <div class="m-t-sm text-center" nz-row>
-  <div nz-col [nzSpan]="24" class="text-center">
+  <div nz-col [nzSpan]="6" [nzOffset]="6" >
     <a href="javaScript:;" class="ant-btn ant-btn-primary" (click)="onQuery()">查询</a>
     <a [href]="downloadTemplateExcel" class="ant-btn ant-btn-primary m-l-xs"  >excel导出模板下载</a>
-    <nz-upload [nzAction]="uploadExcelpath" (nzChange)="handleExcelChange($event)" [nzData]="getSchoolId">
+  </div>
+  <div nz-col [nzSpan]="3">
+    <nz-upload [nzAction]="uploadExcelpath" (nzChange)="handleExcelChange($event)"
+    >
       <button nz-button><i nz-icon type="upload"></i><span>excel导入</span></button>
     </nz-upload>
-    <a href="javaScript:;" class="ant-btn ant-btn-primary m-l-xs"  *ngIf="loginUser.isSchoolAdmin" (click)="onExcelExport()" >excel导出</a>
   </div>
 </div>
 <div class="m-t-sm" nz-row>
   <div nz-col [nzSpan]="24">
     <nz-table
-      #ajaxTable
+      #ajaxTabletl
       nzBordered
       nzShowSizeChanger
       [nzFrontPagination]="false"
@@ -54,7 +58,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let data of ajaxTable.data ;let no=index">
+      <tr *ngFor="let data of ajaxTabletl.data ;let no=index">
         <td>{{no+1}}</td>
         <td>{{data.teacherId}}</td>
         <td>{{data.teacherPaperId}}</td>
@@ -89,27 +93,23 @@
     nzBordered
     nzShowSizeChanger
     [nzFrontPagination]="false"
-    [nzData]="teacherList"
-    [nzTotal]="total"
-    [(nzPageIndex)]="queryParams.pageNo"
-    [(nzPageSize)]="queryParams.pageSize"
-    (nzPageIndexChange)="onPageChange($event)"
+    [nzData]="prepareImportTeachers"
   >
     <thead >
     <tr>
       <th>序号</th>
-      <th>编号</th>
       <th>姓名</th>
+      <th>身份证</th>
       <th>当前职务</th>
       <th>联系电话</th>
-      <th>操作</th>
+
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let data of ajaxTable.data ;let no=index">
       <td>{{no+1}}</td>
-      <td>{{data.teacherId}}</td>
       <td>{{data.teacherName}}</td>
+      <td>{{data.teacherPaperId}}</td>
       <td><app-teacherduty-select [(ngModel)]="data.teacherDutyId" [defaultShow]="'请选择'"></app-teacherduty-select></td>
       <td>{{data.tel}}</td>
     </tr>
