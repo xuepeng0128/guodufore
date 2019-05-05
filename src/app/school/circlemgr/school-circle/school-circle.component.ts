@@ -1,15 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {Circle} from '../../../entity/Circle';
 import {UserService} from '../../../shared/user.service';
-import {StudySubjectService} from '../../../shared/service/dic/study-subject.service';
-import {StudySubject} from '../../../entity/StudySubject';
 import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {User} from '../../../entity/User';
 import {MSG_SAVE_ERROR, MSG_SAVE_SUCCESS} from '../../../shared/SysMessage';
 import {map, switchMap} from 'rxjs/operators';
 import {iif} from 'rxjs/index';
 import {CircleService} from '../../../shared/service/business/circle.service';
-import {LoginUser} from "../../../entity/LoginUser";
+import {LoginUser} from '../../../entity/LoginUser';
 
 @Component({
   selector: 'app-school-circle',

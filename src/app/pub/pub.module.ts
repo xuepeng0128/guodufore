@@ -24,6 +24,7 @@ import { SchoolclassesSelectComponent } from './components/schoolclasses-select/
 import { SubhabitClassSelectComponent } from './components/subhabit-class-select/subhabit-class-select.component';
 import { TeacherdutySelectComponent } from './components/teacherduty-select/teacherduty-select.component';
 import {UEditorModule} from 'ngx-ueditor';
+import { WinTeacherComponent } from './components/win-teacher/win-teacher.component';
 
 
 
@@ -36,7 +37,8 @@ import {UEditorModule} from 'ngx-ueditor';
     SchoolyearSelectComponent,
     SchoolclassesSelectComponent,
     SubhabitClassSelectComponent,
-    TeacherdutySelectComponent],
+    TeacherdutySelectComponent,
+    WinTeacherComponent],
   imports: [
     CommonModule,
     FormsModule,

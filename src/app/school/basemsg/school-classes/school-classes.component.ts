@@ -19,7 +19,7 @@ import {LoginUser} from '../../../entity/LoginUser';
 export class SchoolClassesComponent implements OnInit {
   loginUser: LoginUser = this.usersvr.getUserStorage();
   classesWinOrder$: Subject<{nowState: string , classesId: string}> = new Subject<{nowState: string , classesId: string}>() ;
-  classesArray : Array<IClassesQueryResult> = new Array<IClassesQueryResult>();
+  classesArray: Array<IClassesQueryResult> = new Array<IClassesQueryResult>();
   total = 0 ;
   queryParams: IClassQueryParams = {
     grade : 0,
@@ -41,18 +41,18 @@ export class SchoolClassesComponent implements OnInit {
     this.queryParams.pageNo = 1;
     this.queryParams.pageBegin = 0;
     this.classessvr.classesList(this.queryParams).subscribe(
-      re => this.classesArray=re
+      re => this.classesArray = re
 
     );
-   this.classessvr.classListTotal(this.queryParams).subscribe(
-     re => this.total=re
+    this.classessvr.classListTotal(this.queryParams).subscribe(
+     re => this.total = re
    );
   }
   onPageChange = (e) => {
     this.queryParams.pageNo = e;
     this.queryParams.pageBegin = (this.queryParams.pageNo - 1) * this.queryParams.pageSize;
     this.classessvr.classesList(this.queryParams).subscribe(
-        re => this.classesArray=re
+        re => this.classesArray = re
     );
   }
   onAdd = () => {
@@ -63,7 +63,7 @@ export class SchoolClassesComponent implements OnInit {
   }
   onSaved = (classes: Classes) => {
     this.classessvr.classesList(this.queryParams).subscribe(
-      re => this.classesArray=re
+      re => this.classesArray = re
     );
   }
   onDelete = (classes: Classes) => {

@@ -22,8 +22,13 @@
 
 
 <div class="m-t-sm text-center" nz-row>
-  <div nz-col [nzSpan]="6" [nzOffset]="6" >
-    <a href="javaScript:;" class="ant-btn ant-btn-primary" (click)="onQuery()">查询</a>
+  <div nz-col [nzSpan]="3" [nzOffset]="6" >
+       <a href="javaScript:;" class="ant-btn ant-btn-primary" (click)="onQuery()">查询</a>
+  </div>
+  <div nz-col [nzSpan]="3" >
+    <a href="javaScript:;" class="ant-btn ant-btn-primary m-l-xs" (click)="onAdd()" >添加</a>
+  </div>
+  <div nz-col [nzSpan]="3" >
     <a [href]="downloadTemplateExcel" class="ant-btn ant-btn-primary m-l-xs"  >excel导出模板下载</a>
   </div>
   <div nz-col [nzSpan]="3">
@@ -118,5 +123,5 @@
 
 </nz-modal>
 
-
+<app-win-teacher ></app-win-teacher>
 
