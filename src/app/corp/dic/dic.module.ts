@@ -10,6 +10,7 @@ import {PubModule} from '../../pub/pub.module';
 import { SubjectExamClassComponent } from './subject-exam-class/subject-exam-class.component';
 import { CircleClassComponent } from './circle-class/circle-class.component';
 import { HabitClassComponent } from './habit-class/habit-class.component';
+import { HabitUnitComponent } from './habit-unit/habit-unit.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { HabitClassComponent } from './habit-class/habit-class.component';
     StudySubjectComponent,
     SubjectExamClassComponent,
     CircleClassComponent,
-    HabitClassComponent],
+    HabitClassComponent,
+    HabitUnitComponent],
   imports: [
     CommonModule,
     PubModule,

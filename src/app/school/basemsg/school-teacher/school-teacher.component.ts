@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {combineLatest, Observable, of, Subject} from 'rxjs';
 import {TeacherService} from '../../../shared/service/basemsg/teacher.service';
 import {UserService} from '../../../shared/user.service';
-import {NzMessageService, UploadFile} from 'ng-zorro-antd';
+import {NzMessageService, NzModalService, UploadFile} from 'ng-zorro-antd';
 import {LoginUser} from '../../../entity/LoginUser';
 import {ITeacherQueryResult} from '../../../shared/interface/queryparams/ITeacherQueryResult';
 import {ITeacherQueryParams} from '../../../shared/interface/queryparams/ITeacherQueryParams';
@@ -39,7 +39,8 @@ export class SchoolTeacherComponent implements OnInit {
   isTeacherExcelImpModalShow = false;
   prepareImportTeachers: Array<Teacher> = new Array<Teacher>();
 constructor(private teachersvr: TeacherService, private  usersvr: UserService,
-            private message: NzMessageService, private sanitizer: DomSanitizer ) { }
+            private message: NzMessageService,private modalService: NzModalService,
+            private sanitizer: DomSanitizer ) { }
 
 ngOnInit() {
   this.onQuery();
@@ -64,7 +65,7 @@ onPageChange = (e) => {
   }
 
 onAdd = () => {
-  teacherWinOrder$.next({nowState: 'add', teacher: null});
+  this.teacherWinOrder$.next({nowState: 'add', teacher: null});
 }
 onEdit = (teacher: ITeacherQueryResult) => {
   teacherWinOrder$.next({nowState: 'add', teacher: new Teacher({teacherId : teacher.teacherId,

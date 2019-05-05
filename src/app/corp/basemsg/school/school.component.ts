@@ -3,7 +3,6 @@ import {iif, Observable, of, Subject} from 'rxjs';
 import {School} from '../../../entity/School';
 import {SchoolService} from '../../../shared/service/basemsg/school.service';
 import {UserService} from '../../../shared/user.service';
-import {delay, flatMap, map} from 'rxjs/operators';
 import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {ISchoolQueryResult} from '../../../shared/interface/queryparams/ISchoolQueryResult';
 import {ISchoolQueryParams} from '../../../shared/interface/queryparams/ISchoolQueryParams';
