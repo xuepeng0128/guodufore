@@ -68,7 +68,7 @@ onAdd = () => {
   this.teacherWinOrder$.next({nowState: 'add', teacher: null});
 }
 onEdit = (teacher: ITeacherQueryResult) => {
-  teacherWinOrder$.next({nowState: 'add', teacher: new Teacher({teacherId : teacher.teacherId,
+  this.teacherWinOrder$.next({nowState: 'add', teacher: new Teacher({teacherId : teacher.teacherId,
       teacherPaperId : teacher.teacherPaperId, tel : teacher.tel,     teacherName: teacher.teacherName,
       teacherDutyId: teacher.teacherDutyId, address: teacher.address, schoolId : teacher.schoolId})});
 }

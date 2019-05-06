@@ -18,7 +18,7 @@ import {NG_VALUE_ACCESSOR} from '@angular/forms';
 export class SubhabitClassSelectComponent implements OnInit  , OnChanges {
   @Input() defaultShow: string;
   @Input() pareHabitClassId: string;
-  habitClassArray$: Observable<Array<HabitClass>>;
+  habitClassArray$: Observable<Array<HabitClass>> = new Observable<Array<HabitClass>>();
 
   private _CURRENTVALUE: string;
   private onValueChangeCallBack: any = {};

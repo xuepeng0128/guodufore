@@ -8,7 +8,7 @@ import { DistrictSelectComponent } from './components/district-select/district-s
 import {CutSizePipe} from './pipe/cutSize.pipe';
 import { WinSchoolComponent } from './components/win-school/win-school.component';
 import { EmployeeSelectComponent } from './components/employee-select/employee-select.component';
-
+import { ColorPickerModule } from 'ngx-color-picker';
 import { HabitClassSelectComponent } from './components/habit-class-select/habit-class-select.component';
 import { WinHabitComponent } from './components/win-habit/win-habit.component';
 import { WinClassesComponent } from './components/win-classes/win-classes.component';
@@ -45,6 +45,7 @@ import { WinTeacherComponent } from './components/win-teacher/win-teacher.compon
     ReactiveFormsModule,
     HttpClientModule,
     NgZorroAntdModule,
+    ColorPickerModule,
     UEditorModule.forRoot({
       js: [
         `./assets/ueditor/ueditor.config.js`,
@@ -63,7 +64,7 @@ import { WinTeacherComponent } from './components/win-teacher/win-teacher.compon
     HttpClientModule,
     NgZorroAntdModule,
     UEditorModule,
-
+    ColorPickerModule,
     WinSchoolComponent,
     WinEmployeeComponent,
     WinHabitComponent,

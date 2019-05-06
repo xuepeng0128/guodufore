@@ -8,23 +8,43 @@
           [nzMaskClosable]="false"
           [nzWidth]="800"
 >
-    <div nz-row>
+
+  <div nz-row>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">编号</nz-form-label>
+        <nz-form-control [nzSpan]="17">
+          <input nz-input [(ngModel)]="currentHabit.habitId"  [readonly]="true" placeholder="系统生成" >
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="18">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="4">名称</nz-form-label>
+        <nz-form-control [nzSpan]="17">
+          <input nz-input [(ngModel)]="currentHabit.habitName" >
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+
+  <div nz-row>
       <div nz-col [nzSpan]="12">
         <nz-form-item>
           <nz-form-label [nzSpan]="6">类别</nz-form-label>
           <nz-form-control [nzSpan]="8">
-           <app-habit-class-select [ngModel]="currentHabit.habitClassId" [defaultShow]="'请选择'"></app-habit-class-select>
+           <app-habit-class-select [(ngModel)]="currentHabit.habitClassId" [defaultShow]="'请选择'"></app-habit-class-select>
           </nz-form-control>
           <nz-form-control [nzSpan]="9">
-            <app-subhabit-class-select [ngModel]="currentHabit.subHabitClassId" [defaultShow]="'请选择'" [pareHabitClassId]="currentHabit.habitClassId"></app-subhabit-class-select>
+            <app-subhabit-class-select [(ngModel)]="currentHabit.subHabitClassId" [defaultShow]="'请选择'" [pareHabitClassId]="currentHabit.habitClassId"></app-subhabit-class-select>
           </nz-form-control>
         </nz-form-item>
       </div>
       <div nz-col [nzSpan]="6">
         <nz-form-item>
-          <nz-form-label [nzSpan]="6">编号</nz-form-label>
+          <nz-form-label [nzSpan]="6">颜色</nz-form-label>
           <nz-form-control [nzSpan]="17">
-            <input nz-input [(ngModel)]="currentHabit.habitId"  [readonly]="true" placeholder="系统生成" >
+            <input [style.background]="currentHabit.color" [(colorPicker)]="currentHabit.color" />
           </nz-form-control>
         </nz-form-item>
       </div>
