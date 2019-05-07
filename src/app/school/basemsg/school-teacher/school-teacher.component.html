@@ -32,7 +32,7 @@
     <a [href]="downloadTemplateExcel" class="ant-btn ant-btn-primary m-l-xs"  >excel导出模板下载</a>
   </div>
   <div nz-col [nzSpan]="3">
-    <nz-upload [nzAction]="uploadExcelpath" (nzChange)="handleExcelChange($event)"
+    <nz-upload [nzAction]="uploadExcelpath"  [nzShowUploadList]="false" (nzChange)="handleExcelChange($event)"
     >
       <button nz-button><i nz-icon type="upload"></i><span>excel导入</span></button>
     </nz-upload>

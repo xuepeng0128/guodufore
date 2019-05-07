@@ -11,6 +11,7 @@ import { SubjectExamClassComponent } from './subject-exam-class/subject-exam-cla
 import { CircleClassComponent } from './circle-class/circle-class.component';
 import { HabitClassComponent } from './habit-class/habit-class.component';
 import { HabitUnitComponent } from './habit-unit/habit-unit.component';
+import { IconsComponent } from './icons/icons.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { HabitUnitComponent } from './habit-unit/habit-unit.component';
     SubjectExamClassComponent,
     CircleClassComponent,
     HabitClassComponent,
-    HabitUnitComponent],
+    HabitUnitComponent,
+    IconsComponent],
   imports: [
     CommonModule,
     PubModule,

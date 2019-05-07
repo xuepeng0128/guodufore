@@ -1,0 +1,18 @@
+<div nz-row>
+  <div nz-col [nzSpan]="4" ngFor="let icon of iconArray">
+    <nz-upload
+      class="avatar-uploader"
+      nzAction="uploadMediaPath"
+      nzName="avatar"
+      nzListType="picture-card"
+      [nzShowUploadList]="false"
+      (nzChange)="handleChange($event)"
+    >
+      <ng-container *ngIf="icon.iconUrl===''">
+        <i class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></i>
+        <div class="ant-upload-text">上传</div>
+      </ng-container>
+      <img *ngIf="icon.iconUrl!==''" [src]="icon.iconUrl" class="avatar" />
+    </nz-upload>
+  </div>
+</div>
