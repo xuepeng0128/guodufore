@@ -107,7 +107,7 @@
       <th>身份证</th>
       <th>当前职务</th>
       <th>联系电话</th>
-
+      <th>操作</th>
     </tr>
     </thead>
     <tbody>
@@ -117,11 +117,16 @@
       <td>{{data.teacherPaperId}}</td>
       <td><app-teacherduty-select [(ngModel)]="data.teacherDutyId" [defaultShow]="'请选择'"></app-teacherduty-select></td>
       <td>{{data.tel}}</td>
+      <td>
+          <a href="javaScript:;" *ngIf="loginUser.isSchoolAdmin" (click)="onEdit(data)">修改</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a href="javaScript:;" *ngIf="loginUser.isSchoolAdmin" (click)="onDelete(data)">删除</a>
+      </td>
     </tr>
     </tbody>
   </nz-table>
 
 </nz-modal>
 
-<app-win-teacher ></app-win-teacher>
+<app-win-teacher  [teacherWinOrder$]="teacherWinOrder$" (onTeacherSaved)="onTeacherSaved($event)"></app-win-teacher>
 

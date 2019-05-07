@@ -14,6 +14,8 @@ import {CommonService} from '../../../shared/common.service';
 import {IClassesQueryResult} from '../../../shared/interface/queryparams/IClassQueryResult';
 import {ClassesStudent} from '../../../entity/ClassesStudent';
 import {ClassesTeacher} from '../../../entity/ClassesTeacher';
+import {LoginUser} from '../../../entity/LoginUser';
+import {UserService} from '../../../shared/user.service';
 
 @Component({
   selector: 'app-win-classes',
@@ -21,6 +23,7 @@ import {ClassesTeacher} from '../../../entity/ClassesTeacher';
   styleUrls: ['./win-classes.component.css']
 })
 export class WinClassesComponent implements OnInit {
+  loginUser: LoginUser = this.usersvr.getUserStorage();
   @Input() classesWinOrder$: Subject<{nowState: string , classesId: string}> ;
   @Input() showDetail: boolean;
   @Output() onClassesSaved: EventEmitter<string> = new EventEmitter<string>();
@@ -33,13 +36,17 @@ export class WinClassesComponent implements OnInit {
   isClassesModalShow = false;
   nowState = 'browse';
   toChooseTeacher = 'headMaster';
-  constructor(private classessvr: ClassesService, private message: NzMessageService, public commonsvr: CommonService) { }
+  constructor(private classessvr: ClassesService, private message: NzMessageService, private usersvr: UserService,
+              public commonsvr: CommonService) { }
 
 
   ngOnInit() {
     this.classesWinOrder$.subscribe(re => {
+      this.nowState = re.nowState;
       if (re.nowState === 'add') {
-        this.currentClasses = new Classes({});
+        this.currentClasses = new Classes({
+          schoolId: this.loginUser.school.schoolId
+        });
       } else if (re.nowState === 'edit') {
         this.classessvr.classesList({classesId : re.classesId , pageBegin : 0 , pageSize : 1 , pageNo: 1}).subscribe(
           (re: Array<IClassesQueryResult>) => this.currentClasses =
@@ -60,6 +67,12 @@ export class WinClassesComponent implements OnInit {
   onRemoveTeacher = (t: ClassesTeacher) => {
    this.currentClasses.teachers = this.currentClasses.teachers.filter(o => o.teacherId !== t.teacherId);
   }
+
+  chooseTeacher = () => {
+    this.teacherChooseSign$.next({singleChoose: true, haveChoosedTeacher: null});
+  }
+
+
   onTeacherChoosed = (t: ClassesTeacher | Array<ClassesTeacher>) => {
      if (this.toChooseTeacher === 'headMaster') {
        this.currentClasses.headMaster = (t as ClassesTeacher).teacherId;

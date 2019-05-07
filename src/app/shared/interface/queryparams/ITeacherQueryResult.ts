@@ -6,6 +6,7 @@ export interface ITeacherQueryResult {
     address?: string;
     teacherDutyId?: string  ;
    teacherDutyName?: string;
+   master?: boolean;
    schoolId?: string;
    schoolName?: string;
 }

@@ -36,7 +36,10 @@ export class SinginComponent implements OnInit {
     pageBegin: 0
   };
   teacherQueryParams: ITeacherQueryParams = {
-    teacherId: ''
+    teacherId: '',
+    pageSize: 1,
+    pageNo: 1,
+    pageBegin : 0
   };
   loginUser: LoginUser = new LoginUser();
   constructor(private message: NzMessageService, private usersvr: UserService,
@@ -111,6 +114,7 @@ export class SinginComponent implements OnInit {
                            tel: result.tel,
                            teacherName: result.teacherName,
                            teacherDutyId: result.teacherDutyId,
+                           master : result.master,
                            teacherDutyName: result.teacherDutyName,
                            address: result.address,
                            schoolId: result.schoolId

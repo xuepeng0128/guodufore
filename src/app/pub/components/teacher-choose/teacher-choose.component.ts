@@ -26,7 +26,7 @@ export class TeacherChooseComponent implements OnInit {
     schoolId : this.user.user.schoolId,
      pageSize : 1000,
      pageNo : 1,
-    getTotal : '0'
+    pageBegin :0
   };
   constructor(private teachersvr: TeacherService, private usersvr: UserService) { }
 

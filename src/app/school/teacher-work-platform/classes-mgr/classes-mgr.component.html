@@ -1,3 +1,75 @@
-<p>
-  classes-mgr works!
-</p>
+<nz-radio-group [(ngModel)]="choosedGrade">
+  <label nz-radio-button [nzValue]="1">一年级</label>
+  <label nz-radio-button [nzValue]="2" [nzDisabled]="true">二年级</label>
+  <label nz-radio-button [nzValue]="3" [nzDisabled]="true">三年级</label>
+  <label nz-radio-button [nzValue]="4" *ngIf="loginUser.school.schoolStyle===1 ">四年级</label>
+  <label nz-radio-button [nzValue]="5" *ngIf="loginUser.school.schoolStyle===1 ">五年级</label>
+  <label nz-radio-button [nzValue]="6" *ngIf="loginUser.school.schoolStyle===1 ">六年级</label>
+</nz-radio-group>
+
+
+<nz-tabset
+  style="height:420px; "
+  [nzTabPosition]="nzTabPosition"
+  [(nzSelectedIndex)]="selectedIndex"
+>
+  <nz-tab
+    *ngFor="let cla of teacherClasses"
+    [nzTitle]=" (loginUser.school.schoolStyle===1 ? commonsvr.calculateSchoolYearPrimarySchool(cla.grade) :
+    commonsvr.calculateSchoolYearMiddleSchool(cla.grade))
+    +'年级' +  cla.classes +'班'"
+    style=" overflow-y: scroll"
+  >
+    <div style="background: #ECECEC;padding:30px;">
+      <div nz-row [nzGutter]="8">
+        <div nz-col [nzSpan]="8">
+          <nz-card nzTitle="Card title" [nzExtra]="extraTemplate"  [nzActions]="[actionSetting, actionEdit, actionEllipsis]" >
+            <div style="height: 300px ">
+              <p>Card content</p>
+              <b>dfdfdfd</b>
+              <img src="assets/images/loginBg.jpg" style="width:100%;" />
+            </div>
+
+          </nz-card>
+          <ng-template #extraTemplate>
+            <a (click)="alert(0)">detail</a>
+            <button (click)="show(0)">ddddd</button>
+          </ng-template>
+
+          <ng-template #actionSetting>
+            <i nz-icon type="setting"></i>
+          </ng-template>
+          <ng-template #actionEdit>
+            <i nz-icon type="edit"></i>
+          </ng-template>
+          <ng-template #actionEllipsis>
+            <i nz-icon type="ellipsis"></i>
+          </ng-template>
+
+
+
+        </div>
+        <div nz-col [nzSpan]="8">
+          <nz-card nzTitle="Card title"  [nzExtra]="extraTemplate">
+            <p>Card content</p>
+            <ng-template #extraTemplate>
+              <a (click)="alert(1)">detail</a>
+              <button (click)="show(1)">ddddd</button>
+            </ng-template>
+          </nz-card>
+        </div>
+        <div nz-col [nzSpan]="8">
+          <nz-card nzTitle="Card title">
+            <p>Card content</p>
+          </nz-card>
+        </div>
+      </div>
+    </div>
+  </nz-tab>
+</nz-tabset>
+
+
+
+
+
+

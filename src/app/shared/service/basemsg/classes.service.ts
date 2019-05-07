@@ -19,7 +19,7 @@ export class ClassesService {
 
   classListTotal = (queryparams: IClassQueryParams): Observable<number> => {
     return this.httpsvr.onHttpGet('api/basemsg/classes/classesListTotal', queryparams).pipe(
-       map(re => parseInt(re.total))
+       map(re => parseInt(re.total , 10))
     );
   }
 
@@ -40,6 +40,10 @@ export class ClassesService {
     return this.httpsvr.onHttpPost('api/basemsg/classes/updateClasses', classes).pipe(
       map( re => re.result)
     );
+  }
+
+  teacherAtClasses = (teacherId: string): Observable<Array<Classes>> => {
+    return this.httpsvr.onHttpGet('api/basemsg/classes/teacherAtClasses', {teacherId});
   }
 
 

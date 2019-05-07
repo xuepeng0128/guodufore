@@ -35,6 +35,9 @@ export class MenuService {
  }
 loadSchoolAdminMenu = (): Observable<Array<Menu>> => {
   return this.httpsvr.onHttpGet('api/system/menu/menuList', {kind: 2}).pipe(
+    map( (re: Array<Menu>) =>
+      re.filter(o => o.menuId.substring(0, 3) === '201' )
+    ),
     map( re =>
       this.toTreeMenu(re, '0')
     )
@@ -43,7 +46,7 @@ loadSchoolAdminMenu = (): Observable<Array<Menu>> => {
  loadTeacherMenu = () => {
     return this.httpsvr.onHttpGet('api/system/menu/menuList', {kind: 2}).pipe(
       map( (re: Array<Menu>) =>
-        re.filter(o => o.menuId.substring(0, 2) !== '08' && o.menuId.substring(0, 2) !== '09')
+        re.filter(o => o.menuId.substring(0, 3) === '202' )
       ),
       map( re =>
         this.toTreeMenu(re, '0')

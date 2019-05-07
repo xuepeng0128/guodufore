@@ -39,7 +39,7 @@ export class SchoolTeacherComponent implements OnInit {
   isTeacherExcelImpModalShow = false;
   prepareImportTeachers: Array<Teacher> = new Array<Teacher>();
 constructor(private teachersvr: TeacherService, private  usersvr: UserService,
-            private message: NzMessageService,private modalService: NzModalService,
+            private message: NzMessageService, private modalService: NzModalService,
             private sanitizer: DomSanitizer ) { }
 
 ngOnInit() {
@@ -72,7 +72,9 @@ onEdit = (teacher: ITeacherQueryResult) => {
       teacherPaperId : teacher.teacherPaperId, tel : teacher.tel,     teacherName: teacher.teacherName,
       teacherDutyId: teacher.teacherDutyId, address: teacher.address, schoolId : teacher.schoolId})});
 }
-
+onTeacherSaved = (e) => {
+   this.onQuery();
+}
 onQuitDuty = (teacher: ITeacherQueryResult) => {
   this.modalService.confirm({
     nzTitle: '<i>提示</i>',
@@ -89,6 +91,9 @@ onQuitDuty = (teacher: ITeacherQueryResult) => {
     }
   });
 }
+
+
+
 onDelete = (teacher: ITeacherQueryResult) => {
   this.modalService.confirm({
     nzTitle: '<i>提示</i>',
@@ -118,9 +123,7 @@ handleExcelChange = (file: UploadFile) => {
 
 }
 
-  removeUploadedfile = () => {
 
-  }
   onToImportTeachers = () => {
     this.teachersvr.onGroupSaveTeacher(this.prepareImportTeachers).subscribe(
       re => {

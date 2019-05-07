@@ -4,6 +4,8 @@ import {Teacher} from '../../../entity/Teacher';
 import {NzMessageService} from 'ng-zorro-antd';
 import {MSG_SAVE_ERROR, MSG_SAVE_SUCCESS} from '../../../shared/SysMessage';
 import {TeacherService} from '../../../shared/service/basemsg/teacher.service';
+import {LoginUser} from '../../../entity/LoginUser';
+import {UserService} from '../../../shared/user.service';
 
 @Component({
   selector: 'app-win-teacher',
@@ -11,18 +13,23 @@ import {TeacherService} from '../../../shared/service/basemsg/teacher.service';
   styleUrls: ['./win-teacher.component.css']
 })
 export class WinTeacherComponent implements OnInit {
+  loginUser: LoginUser = this.usersvr.getUserStorage();
   @Input() teacherWinOrder$: Subject<{nowState: string , teacher: Teacher}> ;
   @Output() onTeacherSaved: EventEmitter<string> = new EventEmitter<string>();
   currentTeacher: Teacher = new Teacher({});
   isTeacherModalShow = false;
   nowState = 'browse';
   constructor( private message: NzMessageService,
-               private teachersvr: TeacherService) { }
+               private teachersvr: TeacherService, private usersvr: UserService) { }
 
   ngOnInit() {
+
     this.teacherWinOrder$.subscribe(re => {
+      this.nowState = re.nowState;
       if (re.nowState === 'add') {
-        this.currentTeacher = new Teacher({});
+        this.currentTeacher = new Teacher({
+          schoolId : this.loginUser.school.schoolId
+        });
       } else if (re.nowState === 'edit') {
         this.currentTeacher = re.teacher;
       }

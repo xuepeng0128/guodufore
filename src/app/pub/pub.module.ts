@@ -25,6 +25,7 @@ import { SubhabitClassSelectComponent } from './components/subhabit-class-select
 import { TeacherdutySelectComponent } from './components/teacherduty-select/teacherduty-select.component';
 import {UEditorModule} from 'ngx-ueditor';
 import { WinTeacherComponent } from './components/win-teacher/win-teacher.component';
+import { StudentCardComponent } from './components/student-card/student-card.component';
 
 
 
@@ -38,7 +39,8 @@ import { WinTeacherComponent } from './components/win-teacher/win-teacher.compon
     SchoolclassesSelectComponent,
     SubhabitClassSelectComponent,
     TeacherdutySelectComponent,
-    WinTeacherComponent],
+    WinTeacherComponent,
+    StudentCardComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -69,6 +71,7 @@ import { WinTeacherComponent } from './components/win-teacher/win-teacher.compon
     WinEmployeeComponent,
     WinHabitComponent,
     WinClassesComponent,
+    WinTeacherComponent,
     YearSelectComponent,
     CitySelectComponent,
     DistrictSelectComponent,
@@ -79,6 +82,7 @@ import { WinTeacherComponent } from './components/win-teacher/win-teacher.compon
     StudySubjectSelectComponent,
     SubhabitClassSelectComponent,
     TeacherdutySelectComponent,
+    StudentCardComponent,
     CutSizePipe,
     ArrayTextFilterPipe
     ]

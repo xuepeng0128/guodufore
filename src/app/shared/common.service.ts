@@ -62,6 +62,8 @@ export class CommonService {
 
       if (nj > 6) {
          return '小学毕业';
+      } else if (nj <= 0) {
+        return '未入学';
       } else {
         return nj.toString();
       }
@@ -91,6 +93,8 @@ export class CommonService {
 
     if (nj > 3) {
       return '初中毕业';
+    } else if (nj <= 0) {
+       return '未升初中';
     } else {
       return nj.toString();
     }
