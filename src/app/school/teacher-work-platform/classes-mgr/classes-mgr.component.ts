@@ -2,12 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import {LoginUser} from '../../../entity/LoginUser';
 import {UserService} from '../../../shared/user.service';
 import {CircleService} from '../../../shared/service/business/circle.service';
-import {NzMessageService, NzModalService} from 'ng-zorro-antd';
+import {NzMessageService, NzModalService, UploadFile} from 'ng-zorro-antd';
 import {Classes} from '../../../entity/Classes';
 import {ClassesService} from '../../../shared/service/basemsg/classes.service';
 import {CommonService} from '../../../shared/common.service';
 import {from, of} from 'rxjs';
 import {distinct, distinctUntilChanged, map, mergeScan, scan} from 'rxjs/operators';
+import {IClassStudentQueryResult} from '../../../shared/interface/queryparams/IClassStudentQueryResult';
+import {Teacher} from '../../../entity/Teacher';
 
 @Component({
   selector: 'app-classes-mgr',
@@ -19,7 +21,7 @@ export class ClassesMgrComponent implements OnInit {
   allGrades = [];
   choosedGrade = 1;
   teacherClasses: Array<Classes> = new Array<Classes>();
-
+  classesStudentArray: Array<IClassStudentQueryResult> = new Array<IClassStudentQueryResult>();
   constructor(private usersvr: UserService, private classessvr: ClassesService,
               public commonsvr: CommonService,
               private modalService: NzModalService, private message: NzMessageService) { }
@@ -43,5 +45,24 @@ export class ClassesMgrComponent implements OnInit {
     }
 
   }
+  onAdd = () => {
+
+  }
+
+  handleExcelChange = (file: UploadFile) => {
+    if (file.file.response !== null) {
+      // this.isTeacherExcelImpModalShow = true;
+      // this.prepareImportTeachers = new Array<Teacher>();
+      // (file.file.response as Array<Teacher>).forEach( v =>
+      //   this.prepareImportTeachers.push( new Teacher({teacherId: '', teacherPaperId : v.teacherPaperId, schoolId : this.loginUser.school.schoolId
+      //     , tel : v.tel, teacherName : v.teacherName , teacherDutyId : '02' , address : v.address  }))
+      // );
+      // file.file.response = null;
+    }
+
+  }
+
+
+
 
 }

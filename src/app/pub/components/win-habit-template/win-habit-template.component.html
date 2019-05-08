@@ -1,0 +1,143 @@
+
+<nz-modal [(nzVisible)]="isHabitModalShow"
+          [nzTitle]="'习惯资源'"
+          [nzCancelText]="'关闭'"
+          (nzOnCancel)="isHabitModalShow=false"
+          [nzOkText]="'保存'"
+          (nzOnOk)="onSave()"
+          [nzMaskClosable]="false"
+          [nzWidth]="800"
+>
+
+  <div nz-row>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">编号</nz-form-label>
+        <nz-form-control [nzSpan]="17">
+          <input nz-input [(ngModel)]="currentHabit.habitId"  [readonly]="true" placeholder="系统生成" >
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="18">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="4">名称</nz-form-label>
+        <nz-form-control [nzSpan]="17">
+          <input nz-input [(ngModel)]="currentHabit.habitName" >
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+
+  <div nz-row>
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">类别</nz-form-label>
+        <nz-form-control [nzSpan]="8">
+          <app-habit-class-select [(ngModel)]="currentHabit.habitClassId" [defaultShow]="'请选择'"></app-habit-class-select>
+        </nz-form-control>
+        <nz-form-control [nzSpan]="9">
+          <app-subhabit-class-select [(ngModel)]="currentHabit.subHabitClassId" [defaultShow]="'请选择'" [pareHabitClassId]="currentHabit.habitClassId"></app-subhabit-class-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">颜色</nz-form-label>
+        <nz-form-control [nzSpan]="17">
+          <input [style.background]="currentHabit.color" [(colorPicker)]="currentHabit.color" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">名称</nz-form-label>
+        <nz-form-control [nzSpan]="17">
+          <input nz-input [(ngModel)]="currentHabit.habitName" >
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row>
+    <div nz-col [nzSpan]="24">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="2">描述</nz-form-label>
+        <nz-form-control [nzSpan]="22">
+          <textarea style="width:98%;height:100px" [(ngModel)]="currentHabit.memo"></textarea>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <!--<div nz-row>-->
+  <!--<div nz-col [nzSpan]="8">-->
+  <!--<nz-form-item>-->
+  <!--<nz-form-label [nzSpan]="6">图片</nz-form-label>-->
+  <!--<nz-form-control [nzSpan]="17">-->
+  <!--<nz-form-control [nzSpan]="17">-->
+  <!--<nz-upload-->
+  <!--[nzAction]="uploadFilePath"-->
+  <!--nzListType="picture-card"-->
+  <!--[(nzFileList)]="picFileList"-->
+  <!--[nzShowButton]="picFileList.length < 1"-->
+  <!--[nzPreview]="handleImgPreview">-->
+  <!--<i nz-icon type="plus"></i>-->
+  <!--<div class="ant-upload-text">上传图片</div>-->
+  <!--</nz-upload>-->
+  <!--<nz-modal  [nzVisible]="previewImgVisible" [nzContent]="modalPicContent" [nzFooter]="null" (nzOnCancel)="previewImgVisible=false;">-->
+  <!--<ng-template #modalPicContent>-->
+  <!--<img [src]="previewImage" [ngStyle]="{ 'width': '100%' }"  />-->
+  <!--</ng-template>-->
+  <!--</nz-modal>-->
+  <!--</nz-form-control>-->
+  <!--</nz-form-control>-->
+  <!--</nz-form-item>-->
+  <!--</div>-->
+  <!--<div nz-col [nzSpan]="8">-->
+  <!--<nz-form-item>-->
+  <!--<nz-form-label [nzSpan]="6">视频</nz-form-label>-->
+  <!--<nz-form-control [nzSpan]="17">-->
+  <!--<nz-form-control [nzSpan]="17">-->
+  <!--<nz-upload-->
+  <!--[nzAction]="uploadFilePath"-->
+  <!--nzListType="picture-card"-->
+  <!--[(nzFileList)]="videoFileList"-->
+  <!--[nzShowButton]="videoFileList.length < 1"-->
+  <!--[nzPreview]="handleVideoPreview"-->
+  <!--&gt;-->
+  <!--<i nz-icon type="plus"></i>-->
+  <!--<div class="ant-upload-text">上传视频</div>-->
+  <!--</nz-upload>-->
+  <!--<nz-modal [nzVisible]="previewVideoVisible" [nzContent]="modalVideoContent" [nzFooter]="null" (nzOnCancel)="previewVideoVisible=false; ">-->
+  <!--<ng-template #modalVideoContent>-->
+  <!--<video [src]="previewVideo" [ngStyle]="{ 'width': '100%' }" controls="controls"></video>-->
+  <!--</ng-template>-->
+  <!--</nz-modal>-->
+  <!--</nz-form-control>-->
+  <!--</nz-form-control>-->
+  <!--</nz-form-item>-->
+  <!--</div>-->
+  <!--<div nz-col [nzSpan]="8">-->
+  <!--<nz-form-item>-->
+  <!--<nz-form-label [nzSpan]="6">音频</nz-form-label>-->
+  <!--<nz-form-control [nzSpan]="17">-->
+  <!--<nz-form-control [nzSpan]="17">-->
+  <!--<nz-upload-->
+  <!--[nzAction]="uploadFilePath"-->
+  <!--nzListType="picture-card"-->
+  <!--[(nzFileList)]="audioFileList"-->
+  <!--[nzShowButton]="audioFileList.length < 1"-->
+  <!--[nzPreview]="handleAudioPreview"-->
+  <!--&gt;-->
+  <!--<i nz-icon type="plus"></i>-->
+  <!--<div class="ant-upload-text">上传音频</div>-->
+  <!--</nz-upload>-->
+  <!--<nz-modal [nzVisible]="previewAudioVisible" [nzContent]="modalAudioContent" [nzFooter]="null" (nzOnCancel)="previewAudioVisible=false; ">-->
+  <!--<ng-template #modalAudioContent>-->
+  <!--<audio [src]="previewAudio" [ngStyle]="{ 'width': '100%' }" controls="controls"></audio>-->
+  <!--</ng-template>-->
+  <!--</nz-modal>-->
+  <!--</nz-form-control>-->
+  <!--</nz-form-control>-->
+  <!--</nz-form-item>-->
+  <!--</div>-->
+  <!--</div>-->
+</nz-modal>

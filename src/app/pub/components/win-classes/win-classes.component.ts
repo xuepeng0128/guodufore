@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {iif, Subject} from 'rxjs';
-import {Habit} from '../../../entity/Habit';
+import {HabitTemplate} from '../../../entity/HabitTemplate';
 import {HabitService} from '../../../shared/service/basemsg/habit.service';
 import {NzMessageService, UploadFile} from 'ng-zorro-antd';
 import {ISupUploadfiles} from '../../../shared/interface/ISupUploadfiles';

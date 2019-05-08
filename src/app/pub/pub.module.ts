@@ -26,6 +26,8 @@ import { TeacherdutySelectComponent } from './components/teacherduty-select/teac
 import {UEditorModule} from 'ngx-ueditor';
 import { WinTeacherComponent } from './components/win-teacher/win-teacher.component';
 import { StudentCardComponent } from './components/student-card/student-card.component';
+import { WinTeacherArticleComponent } from './components/win-teacher-article/win-teacher-article.component';
+import { WinHabitTemplateComponent } from './components/win-habit-template/win-habit-template.component';
 
 
 
@@ -40,7 +42,9 @@ import { StudentCardComponent } from './components/student-card/student-card.com
     SubhabitClassSelectComponent,
     TeacherdutySelectComponent,
     WinTeacherComponent,
-    StudentCardComponent],
+    StudentCardComponent,
+    WinTeacherArticleComponent,
+    WinHabitTemplateComponent],
   imports: [
     CommonModule,
     FormsModule,

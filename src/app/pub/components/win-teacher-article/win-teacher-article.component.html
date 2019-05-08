@@ -1,0 +1,36 @@
+
+<nz-modal [(nzVisible)]="isTeacherArticleModalShow"
+          [nzTitle]="'文章写作'"
+          [nzCancelText]="'关闭'"
+          (nzOnCancel)="isTeacherArticleModalShow=false"
+          [nzOkText]="'保存'"
+          (nzOnOk)="onSave()"
+          [nzMaskClosable]="false"
+          [nzWidth]="800"
+>
+
+  <div nz-row>
+    <div nz-col [nzSpan]="24">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">文章标题</nz-form-label>
+        <nz-form-control [nzSpan]="17">
+          <input nz-input [(ngModel)]="currentArticle.articleTitle"  >
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+  </div>
+  <div nz-row>
+    <div nz-col [nzSpan]="24">
+      <ueditor [(ngModel)]="currentArticle.articleContent"
+               [config]="{ wordCount: true }"
+               [loadingTip]="'加载中……'"
+               (onReady)="_ready($event)"
+               (onDestroy)="_destroy()"
+               (ngModelChange)="_change($event)"></ueditor>
+    </div>
+
+  </div>
+
+
+</nz-modal>

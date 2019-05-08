@@ -3,7 +3,7 @@ import {Observable, Subject} from 'rxjs';
 import {UserService} from '../../../shared/user.service';
 import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {flatMap, map} from 'rxjs/operators';
-import {Habit} from '../../../entity/Habit';
+import {HabitTemplate} from '../../../entity/HabitTemplate';
 import {HabitService} from '../../../shared/service/basemsg/habit.service';
 import {ClassesService} from '../../../shared/service/basemsg/classes.service';
 
@@ -13,9 +13,9 @@ import {ClassesService} from '../../../shared/service/basemsg/classes.service';
   styleUrls: ['./habit-template.component.css']
 })
 export class HabitTemplateComponent implements OnInit {
-  habitWinOrder$: Subject<{nowState: string , habit: Habit}> = new Subject<{nowState: string , habit: Habit}>() ;
+  habitWinOrder$: Subject<{nowState: string , habit: HabitTemplate}> = new Subject<{nowState: string , habit: HabitTemplate}>() ;
   user = this.usersvr.getUserStorage();
-  habitArray: Array<Habit> = new Array<Habit>();
+  habitArray: Array<HabitTemplate> = new Array<HabitTemplate>();
 
   queryParams = {
     habitName : '',
@@ -38,15 +38,15 @@ export class HabitTemplateComponent implements OnInit {
   onAdd = () => {
     this.habitWinOrder$.next({nowState: 'add', habit: null});
   }
-  onEdit = (habit: Habit) => {
+  onEdit = (habit: HabitTemplate) => {
     this.habitWinOrder$.next({nowState: 'edit', habit});
   }
-  onSaved = (habit: Habit) => {
+  onSaved = (habit: HabitTemplate) => {
     this.habitsvr.habitTemplateList(this.queryParams).subscribe(re =>
       this.habitArray = re
     );
   }
-  onDelete = (habit: Habit) => {
+  onDelete = (habit: HabitTemplate) => {
     this.modalService.confirm({
       nzTitle: '<i>提示</i>',
       nzContent: '<b>确定删除该数据吗?</b>',

@@ -23,7 +23,7 @@ export class SchoolTeacherComponent implements OnInit {
   total = 0;
    test = `
       <div style="color : red;
-  font-size: large;"><img src ="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1557391212&di=13ebd07768877176a9a9c4fd6d8fb1ce&imgtype=jpg&er=1&src=http%3A%2F%2Finternetke.com%2Fuploads%2Fallimg%2F160405%2F1-1604052229440-L.jpg" style="width:200px;height:200px" />></div>
+  font-size: large;"><img src ="" style="width:200px;height:200px" /></div>
    `;
    aa: SafeHtml;
   queryParams: ITeacherQueryParams = {

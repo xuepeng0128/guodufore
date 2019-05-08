@@ -1,0 +1,45 @@
+
+<div nz-row>
+  <div nz-col [nzSpan]="24">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6">身份证号</nz-form-label>
+      <nz-form-control [nzSpan]="15">
+        <input nz-input [(ngModel)]="queryParams.employeePaperId">
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  <div nz-col [nzSpan]="6">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6">姓名</nz-form-label>
+      <nz-form-control [nzSpan]="15">
+        <input nz-input [(ngModel)]="queryParams.employeeName">
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  <div nz-col [nzSpan]="6">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6">电话</nz-form-label>
+      <nz-form-control [nzSpan]="15">
+        <input nz-input [(ngModel)]="queryParams.tel">
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  <div nz-col [nzSpan]="6">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6">职务</nz-form-label>
+      <nz-form-control [nzSpan]="15">
+        <input nz-input [(ngModel)]="queryParams.dutyName">
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+</div>
+
+
+<ueditor [(ngModel)]="html"
+         [config]="{ wordCount: true }"
+         [loadingTip]="'加载中……'"
+         (onReady)="_ready($event)"
+         (onDestroy)="_destroy()"
+         (ngModelChange)="_change($event)"
+
+></ueditor>

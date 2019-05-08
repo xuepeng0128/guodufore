@@ -22,6 +22,19 @@
   >
     <div style="background: #ECECEC;padding:30px;">
       <div nz-row [nzGutter]="8">
+         <div nz-col [nzSpan]="6" [nzOffset]="18">
+           <a href="javaScript:;" class="ant-btn ant-btn-primary m-l-xs" (click)="onAdd()" >添加</a>
+          <a [href]="downloadTemplateExcel" class="ant-btn ant-btn-primary m-l-xs"  >excel导出模板下载</a>
+          <nz-upload [nzAction]="uploadExcelpath"  [nzShowUploadList]="false" (nzChange)="handleExcelChange($event)"
+          >
+            <button nz-button><i nz-icon type="upload"></i><span>excel导入</span></button>
+          </nz-upload>
+
+
+
+         </div>
+      </div>
+      <div nz-row [nzGutter]="8">
         <div nz-col [nzSpan]="8">
           <nz-card nzTitle="Card title" [nzExtra]="extraTemplate"  [nzActions]="[actionSetting, actionEdit, actionEllipsis]" >
             <div style="height: 300px ">
