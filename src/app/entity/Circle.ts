@@ -6,7 +6,7 @@ import {Classes} from './Classes';
 
 export class Circle {
     circleId: string ;
-   circleName: string;
+   circleTitle: string;
      school: School;
      trainSchool: TrainSchool;
       classes: Classes;
@@ -19,11 +19,11 @@ export class Circle {
      closeMan: string;
 
 
-  constructor(options: {circleId?: string, circleName?: string, school?: School, trainSchool?: TrainSchool,
+  constructor(options: {circleId?: string, circleTitle?: string, school?: School, trainSchool?: TrainSchool,
                       classes?: Classes, buildMan?: Teacher, buildDate?: Date, teachers?: Array<Teacher>,
                       students?: Array<Student>, endDate?: Date, closeReason?: string, closeMan?: string}= {}) {
     this.circleId = options.circleId;
-    this.circleName = options.circleName;
+    this.circleTitle = options.circleTitle;
     this.school = options.school;
     this.trainSchool = options.trainSchool;
     this.classes = options.classes;

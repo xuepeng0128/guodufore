@@ -7,6 +7,7 @@ import {MSG_SAVE_ERROR, MSG_SAVE_SUCCESS} from '../../../shared/SysMessage';
 import {HabitTemplate} from '../../../entity/HabitTemplate';
 import {HabitService} from '../../../shared/service/basemsg/habit.service';
 import {ISupUploadfiles} from '../../../shared/interface/ISupUploadfiles';
+import {Habit} from "../../../entity/Habit";
 
 @Component({
   selector: 'app-win-habit',
@@ -14,13 +15,13 @@ import {ISupUploadfiles} from '../../../shared/interface/ISupUploadfiles';
   styleUrls: ['./win-habit.component.css']
 })
 export class WinHabitComponent implements OnInit {
-  @Input() habitWinOrder$: Subject<{nowState: string , habit: HabitTemplate}> = new Subject<{nowState: string , habit: HabitTemplate}>();
+  @Input() habitWinOrder$: Subject<{nowState: string , habit: Habit}> = new Subject<{nowState: string , habit: Habit}>();
   @Output() onHabitSaved: EventEmitter<string> = new EventEmitter<string>();
 
   uploadFilePath = '';
 
 
-  currentHabitTemplate: HabitTemplate = new HabitTemplate({});
+  currentHabit: Habit = new Habit({});
   isHabitModalShow = false;
   nowState = 'browse';
 

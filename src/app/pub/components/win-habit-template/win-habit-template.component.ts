@@ -59,12 +59,12 @@ export class WinHabitTemplateComponent implements OnInit {
 
 
   ngOnInit() {
-    this.habitWinOrder$.subscribe(re => {
+    this.habitTemplateWinOrder$.subscribe(re => {
       this.nowState = re.nowState;
       if (re.nowState === 'add') {
-        this.currentHabit = new HabitTemplate({});
+        this.currentHabitTemplate = new HabitTemplate({});
       } else if (re.nowState === 'edit') {
-        this.currentHabit = re.habit;
+        this.currentHabitTemplate = re.habitTemplate;
       }
       this.isHabitModalShow = true;
     });
@@ -73,8 +73,8 @@ export class WinHabitTemplateComponent implements OnInit {
   onSave = () => {
 
     iif (  () => this.nowState === 'add' ,
-      this.habitsvr.insertTemplateHabit(this.currentHabit),
-      this.habitsvr.updateTemplateHabit(this.currentHabit)
+      this.habitsvr.insertTemplateHabit(this.currentHabitTemplate),
+      this.habitsvr.updateTemplateHabit(this.currentHabitTemplate)
     ).subscribe(
       re => {
         if (!isNullOrUndefined(re)) {
