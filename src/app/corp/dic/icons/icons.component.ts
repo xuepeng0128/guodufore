@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {LoginUser} from "../../../entity/LoginUser";
-import {UserService} from "../../../shared/user.service";
-import {Icon} from "../../../entity/Icon";
-import {UPLOAD_MEDIA_PATH} from "../../../shared/const";
-import {NzMessageService, UploadFile} from "ng-zorro-antd";
-import {IconService} from "../../../shared/service/dic/icon.service";
+import {LoginUser} from '../../../entity/LoginUser';
+import {UserService} from '../../../shared/user.service';
+import {Icon} from '../../../entity/Icon';
+import {UPLOAD_MEDIA_PATH} from '../../../shared/const';
+import {NzMessageService, UploadFile} from 'ng-zorro-antd';
+import {IconService} from '../../../shared/service/dic/icon.service';
 
 @Component({
   selector: 'app-icons',
@@ -13,14 +13,21 @@ import {IconService} from "../../../shared/service/dic/icon.service";
 })
 export class IconsComponent implements OnInit {
   loginUser: LoginUser = this.usersvr.getUserStorage();
-  iconArray : Array<Icon> = new Array<Icon>();
-  uploadMediaPath=UPLOAD_MEDIA_PATH;
+  iconArray: Array<Icon> = new Array<Icon>();
+  uploadMediaPath = UPLOAD_MEDIA_PATH;
   loading = false;
-  constructor(private usersvr : UserService,private iconsvr : IconService,private message: NzMessageService) { }
+  constructor(private usersvr: UserService, private iconsvr: IconService, private message: NzMessageService) { }
 
   ngOnInit() {
+    this.onQuery();
   }
-
+  onQuery = () => {
+      this.iconsvr.iconList().subscribe(
+         re => {this.iconArray = re;
+                this.iconArray.push( new Icon({iconUrl: ''}));
+         }
+      );
+  }
 
   handleChange = (info: { file: UploadFile }) => {
     switch (info.file.status) {
@@ -28,11 +35,11 @@ export class IconsComponent implements OnInit {
         this.loading = true;
         break;
       case 'done':
-        const ticon : Icon = new Icon({iconUrl : info.file.response.aliUrl});
+        const ticon: Icon = new Icon({iconUrl : info.file.response.aliUrl});
         this.iconsvr.insertIcon(ticon).subscribe(
           re => this.iconArray.push(ticon)
-        )
-        this.loading=false;
+        );
+        this.loading = false;
         break;
       case 'error':
         this.message.error('网络错误');
@@ -40,7 +47,7 @@ export class IconsComponent implements OnInit {
     }
   }
 
-  insertIcon =() =>{
+  insertIcon = () => {
 
   }
 
