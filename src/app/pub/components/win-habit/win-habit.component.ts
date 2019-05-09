@@ -64,7 +64,7 @@ export class WinHabitComponent implements OnInit {
     this.habitWinOrder$.subscribe(re => {
       this.nowState =re.nowState;
       if (re.nowState === 'add') {
-        this.currentHabit = new HabitTemplate({});
+        this.currentHabit = new Habit({});
       } else if (re.nowState === 'edit') {
         this.currentHabit = re.habit;
       }
@@ -75,13 +75,13 @@ export class WinHabitComponent implements OnInit {
   onSave = () => {
 
           iif (  () => this.nowState === 'add' ,
-                            this.habitsvr.insertTemplateHabit(this.currentHabit),
-                            this.habitsvr.updateTemplateHabit(this.currentHabit)
+                            // this.habitsvr.insertTemplateHabit(this.currentHabit),
+                            // this.habitsvr.updateTemplateHabit(this.currentHabit)
               ).subscribe(
                         re => {
                                 if (!isNullOrUndefined(re)) {
                                   this.message.create('success', MSG_SAVE_SUCCESS);
-                                  this.onHabitSaved.emit(re);
+                                  this.onHabitSaved.emit('');
                                   this.isHabitModalShow = false;
                                 } else {
                                   this.message.create('error', MSG_SAVE_ERROR);
