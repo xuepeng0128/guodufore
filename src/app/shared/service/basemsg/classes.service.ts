@@ -5,6 +5,8 @@ import {Classes} from '../../../entity/Classes';
 import {IClassQueryParams} from '../../interface/queryparams/IClassQueryParams';
 import {IClassesQueryResult} from '../../interface/queryparams/IClassQueryResult';
 import {map} from 'rxjs/operators';
+import {IClassStudentQueryResult} from '../../interface/queryparams/IClassStudentQueryResult';
+import {ClassesTeacher} from '../../../entity/ClassesTeacher';
 
 @Injectable({
   providedIn: 'root'
@@ -42,9 +44,23 @@ export class ClassesService {
     );
   }
 
-  teacherAtClasses = (teacherId: string): Observable<Array<Classes>> => {
-    return this.httpsvr.onHttpGet('api/basemsg/classes/teacherAtClasses', {teacherId});
+  teacherTeachedClasses = (teacherId: string): Observable<Array<Classes>> => {
+    return this.httpsvr.onHttpGet('api/basemsg/classes/teacherTeachedClasses', {teacherId});
+  }
+
+  subjectTeachersAtClasses = (classesId: string, schoolId: string): Observable<Array<ClassesTeacher>> => {
+    return this.httpsvr.onHttpGet('api/basemsg/classes/subjectTeachersAtClasses', {classesId, schoolId});
+  }
+  saveTeacherAtClasses = (classesTeacher: ClassesTeacher): Observable<string> => {
+    return this.httpsvr.onHttpPost('api/basemsg/classes/saveClassesTeacher', classesTeacher).pipe(
+        map( re => re.result)
+    );
   }
 
 
+
+
+  studentAtClasses = (classesId: string, schoolId: string): Observable<Array<IClassStudentQueryResult>> => {
+     return this.httpsvr.onHttpGet('api/basemsg/classes/studentAtClasses', {classesId, schoolId});
+  }
 }

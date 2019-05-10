@@ -1,10 +1,10 @@
-<nz-radio-group [(ngModel)]="choosedGrade">
-  <label nz-radio-button [nzValue]="1">一年级</label>
-  <label nz-radio-button [nzValue]="2" [nzDisabled]="true">二年级</label>
-  <label nz-radio-button [nzValue]="3" [nzDisabled]="true">三年级</label>
-  <label nz-radio-button [nzValue]="4" *ngIf="loginUser.school.schoolStyle===1 ">四年级</label>
-  <label nz-radio-button [nzValue]="5" *ngIf="loginUser.school.schoolStyle===1 ">五年级</label>
-  <label nz-radio-button [nzValue]="6" *ngIf="loginUser.school.schoolStyle===1 ">六年级</label>
+<nz-radio-group [(ngModel)]="choosedGrade" (ngModelChange)="choosedGrade()" >
+  <label nz-radio-button [nzValue]="1"  *ngIf="allGrades.indexOf(1) !==-1">一年级</label>
+  <label nz-radio-button [nzValue]="2"  *ngIf="allGrades.indexOf(2) !==-1">二年级</label>
+  <label nz-radio-button [nzValue]="3"  *ngIf="allGrades.indexOf(3) !==-1">三年级</label>
+  <label nz-radio-button [nzValue]="4" *ngIf="loginUser.school.schoolStyle===1 &&  allGrades.indexOf(4) !==-1 ">四年级</label>
+  <label nz-radio-button [nzValue]="5" *ngIf="loginUser.school.schoolStyle===1 &&  allGrades.indexOf(5) !==-1  ">五年级</label>
+  <label nz-radio-button [nzValue]="6" *ngIf="loginUser.school.schoolStyle===1 &&  allGrades.indexOf(6) !==-1 ">六年级</label>
 </nz-radio-group>
 
 
@@ -19,12 +19,13 @@
     commonsvr.calculateSchoolYearMiddleSchool(cla.grade))
     +'年级' +  cla.classes +'班'"
     style=" overflow-y: scroll"
+
   >
     <div style="background: #ECECEC;padding:30px;">
       <div nz-row [nzGutter]="8">
          <div nz-col [nzSpan]="6" [nzOffset]="18">
            <a href="javaScript:;" class="ant-btn ant-btn-primary m-l-xs" (click)="onAdd()" >添加</a>
-          <a [href]="downloadTemplateExcel" class="ant-btn ant-btn-primary m-l-xs"  >excel导出模板下载</a>
+           <a [href]="downloadTemplateExcel" class="ant-btn ant-btn-primary m-l-xs"  >excel导出模板下载</a>
           <nz-upload [nzAction]="uploadExcelpath"  [nzShowUploadList]="false" (nzChange)="handleExcelChange($event)"
           >
             <button nz-button><i nz-icon type="upload"></i><span>excel导入</span></button>
@@ -35,7 +36,7 @@
          </div>
       </div>
       <div nz-row [nzGutter]="8">
-        <div nz-col [nzSpan]="8">
+        <div nz-col [nzSpan]="24">
           <nz-card nzTitle="Card title" [nzExtra]="extraTemplate"  [nzActions]="[actionSetting, actionEdit, actionEllipsis]" >
             <div style="height: 300px ">
               <p>Card content</p>
@@ -62,20 +63,7 @@
 
 
         </div>
-        <div nz-col [nzSpan]="8">
-          <nz-card nzTitle="Card title"  [nzExtra]="extraTemplate">
-            <p>Card content</p>
-            <ng-template #extraTemplate>
-              <a (click)="alert(1)">detail</a>
-              <button (click)="show(1)">ddddd</button>
-            </ng-template>
-          </nz-card>
-        </div>
-        <div nz-col [nzSpan]="8">
-          <nz-card nzTitle="Card title">
-            <p>Card content</p>
-          </nz-card>
-        </div>
+
       </div>
     </div>
   </nz-tab>

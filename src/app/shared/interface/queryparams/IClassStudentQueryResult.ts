@@ -4,4 +4,6 @@ export interface IClassStudentQueryResult {
   studentName?: string;
   sex?: number;
   birthday?: Date;
+  tel?: string;
+  address?: string;
 }
