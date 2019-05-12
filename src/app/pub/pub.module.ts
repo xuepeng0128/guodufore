@@ -23,11 +23,17 @@ import { SchoolyearSelectComponent } from './components/schoolyear-select/school
 import { SchoolclassesSelectComponent } from './components/schoolclasses-select/schoolclasses-select.component';
 import { SubhabitClassSelectComponent } from './components/subhabit-class-select/subhabit-class-select.component';
 import { TeacherdutySelectComponent } from './components/teacherduty-select/teacherduty-select.component';
-import {UEditorModule} from 'ngx-ueditor';
+
 import { WinTeacherComponent } from './components/win-teacher/win-teacher.component';
 import { StudentCardComponent } from './components/student-card/student-card.component';
 import { WinTeacherArticleComponent } from './components/win-teacher-article/win-teacher-article.component';
 import { WinHabitTemplateComponent } from './components/win-habit-template/win-habit-template.component';
+import { HabitUnitSelectComponent } from './components/habit-unit-select/habit-unit-select.component';
+import { WinIconChooseComponent } from './components/win-icon-choose/win-icon-choose.component';
+import { HabitModeSelectComponent } from './components/habit-mode-select/habit-mode-select.component';
+import { HabitTimeUnitSelectComponent } from './components/habit-time-unit-select/habit-time-unit-select.component';
+import {NgxLoadingModule} from "ngx-loading";
+import { KindEditComponent } from './components/kind-edit/kind-edit.component';
 
 
 
@@ -44,7 +50,14 @@ import { WinHabitTemplateComponent } from './components/win-habit-template/win-h
     WinTeacherComponent,
     StudentCardComponent,
     WinTeacherArticleComponent,
-    WinHabitTemplateComponent],
+    WinHabitTemplateComponent,
+    HabitUnitSelectComponent,
+    WinIconChooseComponent,
+    HabitModeSelectComponent,
+    HabitTimeUnitSelectComponent,
+    KindEditComponent
+
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -52,16 +65,7 @@ import { WinHabitTemplateComponent } from './components/win-habit-template/win-h
     HttpClientModule,
     NgZorroAntdModule,
     ColorPickerModule,
-    UEditorModule.forRoot({
-      js: [
-        `./assets/ueditor/ueditor.config.js`,
-        `./assets/ueditor/ueditor.all.min.js`,
-      ],
-      // 默认前端配置项
-      options: {
-        UEDITOR_HOME_URL: './assets/ueditor/'
-      }
-    })
+    NgxLoadingModule.forRoot({})
   ],
   exports: [
     CommonModule,
@@ -69,10 +73,10 @@ import { WinHabitTemplateComponent } from './components/win-habit-template/win-h
     ReactiveFormsModule,
     HttpClientModule,
     NgZorroAntdModule,
-    UEditorModule,
     ColorPickerModule,
     WinSchoolComponent,
     WinEmployeeComponent,
+    NgxLoadingModule,
     WinHabitComponent,
     WinClassesComponent,
     WinTeacherComponent,
@@ -88,7 +92,14 @@ import { WinHabitTemplateComponent } from './components/win-habit-template/win-h
     TeacherdutySelectComponent,
     StudentCardComponent,
     CutSizePipe,
-    ArrayTextFilterPipe
-    ]
+    ArrayTextFilterPipe,
+    WinHabitTemplateComponent,
+    HabitUnitSelectComponent,
+    WinIconChooseComponent,
+    HabitModeSelectComponent,
+    HabitTimeUnitSelectComponent,
+    KindEditComponent
+
+  ]
 })
 export class PubModule { }

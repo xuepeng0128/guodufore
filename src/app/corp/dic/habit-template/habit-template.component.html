@@ -1,8 +1,6 @@
 
-
 <div class="m-t-sm text-center" nz-row>
   <div nz-col [nzSpan]="24" class="text-center">
-    <a href="javaScript:;" class="ant-btn ant-btn-primary" (click)="onQuery()">查询</a>
     <a href="javaScript:;" class="ant-btn ant-btn-primary" (click)="onAdd()">添加</a>
   </div>
 </div>
@@ -13,16 +11,26 @@
       nzBordered
       nzShowSizeChanger
       [nzFrontPagination]="false"
-      [nzData]="habitArray"
+      [nzData]="habitTemplateArray"
+      [nzTotal]="total"
+      [(nzPageIndex)]="pageNo"
+      [(nzPageSize)]="pageSize"
+      (nzPageIndexChange)="onPageChange($event)"
     >
       <thead >
       <tr>
         <th>序号</th>
+        <th>标题</th>
         <th>大类</th>
         <th>小类</th>
-        <th>习惯编号</th>
-        <th>习惯名称</th>
-        <th>描述</th>
+        <th>图标</th>
+        <th>主色</th>
+        <th>打卡周期</th>
+        <th>执行方式</th>
+        <th>时间限制</th>
+        <th>完成次数</th>
+        <th>完成数量</th>
+        <th>单位</th>
         <th>操作</th>
       </tr>
       </thead>
@@ -30,19 +38,38 @@
       <tr *ngFor="let data of ajaxTable.data ;let no=index">
         <td>{{no+1}}</td>
         <td >
+          {{data.habitTemplateName}}
+        </td>
+        <td >
           {{data.habitClassName}}
         </td>
         <td >
           {{data.subHabitClassName}}
         </td>
-        <td>{{data.habitId}}</td>
-        <td>{{data.habitName}}</td>
-        <td>{{data.memo}}</td>
-
+        <td >
+           <img [src]="data.icon" style="width: 40px; height : 40px" />
+        </td>
+        <td [ngStyle]="{'background-color': data.color }"></td>
+        <td> 每{{data.perTime + data.timeUnit}} 打卡一次</td>
+        <td>{{data.mode ===1 ? '时间模式' :
+          ( data.mode ===2 ? '次数模式' : '数量模式')
+          }}</td>
+        <td >
+          {{data.mode ===1 ? data.timeModeNum :''}}
+        </td>
+        <td >
+          {{data.mode ===2 ? data.countModeNum : ''}}
+        </td>
+        <td >
+          {{data.mode ===3 ? data.valueModeNum : ''}}
+        </td>
+        <td >
+          {{data.mode ===3 ? data.unitName : ''}}
+        </td>
         <td>
-          <a href="javaScript:;" *ngIf="user.supperAdmin " (click)="onEdit(data)">修改</a>
+          <a href="javaScript:;" *ngIf="user.isSupperAdmin " (click)="onEdit(data)">修改</a>
           <nz-divider nzType="vertical"></nz-divider>
-          <a href="javaScript:;" *ngIf="user.supperAdmin" (click)="onDelete(data)">删除</a>
+          <a href="javaScript:;" *ngIf="user.isSupperAdmin" (click)="onDelete(data)">删除</a>
         </td>
       </tr>
       </tbody>
@@ -50,5 +77,5 @@
   </div>
 </div>
 
-<app-win-habit [habitWinOrder$]="habitWinOrder$" (onHabitSaved)="onSaved($event)"></app-win-habit>
+<app-win-habit-template [habitTemplateWinOrder$]="habitTemplateWinOrder$" (onHabitTemplateSaved)="onSaved($event)"></app-win-habit-template>
 

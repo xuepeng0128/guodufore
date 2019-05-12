@@ -3,8 +3,9 @@ import { Routes, RouterModule } from '@angular/router';
 import {ClassesMgrComponent} from './classes-mgr/classes-mgr.component';
 import {ClassesCircleComponent} from './classes-circle/classes-circle.component';
 import {ExamMgrComponent} from './exam-mgr/exam-mgr.component';
-import {TeacherArticleComponent} from '../circlemgr/teacher-article/teacher-article.component';
 import {TeacherLessonsComponent} from './teacher-lessons/teacher-lessons.component';
+import {TeacherArticleComponent} from "./teacher-article/teacher-article.component";
+import {TeacherNoticeComponent} from "./teacher-notice/teacher-notice.component";
 
 const routes: Routes = [
   { path : '' , redirectTo : 'classesmgr', pathMatch: 'full'},
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'teacherarticle', component: TeacherArticleComponent},
   { path: 'teacherlessons', component: TeacherLessonsComponent},
   { path: 'exammgr', component: ExamMgrComponent},
+  { path: 'teachernotice', component: TeacherNoticeComponent},
 ];
 
 @NgModule({

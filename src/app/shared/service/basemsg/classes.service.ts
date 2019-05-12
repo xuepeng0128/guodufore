@@ -4,7 +4,7 @@ import {Observable} from 'rxjs';
 import {Classes} from '../../../entity/Classes';
 import {IClassQueryParams} from '../../interface/queryparams/IClassQueryParams';
 import {IClassesQueryResult} from '../../interface/queryparams/IClassQueryResult';
-import {map} from 'rxjs/operators';
+import {flatMap, map} from 'rxjs/operators';
 import {IClassStudentQueryResult} from '../../interface/queryparams/IClassStudentQueryResult';
 import {ClassesTeacher} from '../../../entity/ClassesTeacher';
 
@@ -44,7 +44,7 @@ export class ClassesService {
     );
   }
 
-  teacherTeachedClasses = (teacherId: string): Observable<Array<Classes>> => {
+  teacherTeachedClasses = (teacherId: string,schoolId : string): Observable<Array<Classes>> => {
     return this.httpsvr.onHttpGet('api/basemsg/classes/teacherTeachedClasses', {teacherId});
   }
 

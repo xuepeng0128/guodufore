@@ -7,7 +7,7 @@ import {Classes} from '../../../entity/Classes';
 import {ClassesService} from '../../../shared/service/basemsg/classes.service';
 import {CommonService} from '../../../shared/common.service';
 import {from, of} from 'rxjs';
-import {distinct, distinctUntilChanged, map, mergeScan, scan} from 'rxjs/operators';
+import {distinct, distinctUntilChanged, map, mergeScan, scan, takeLast} from 'rxjs/operators';
 import {IClassStudentQueryResult} from '../../../shared/interface/queryparams/IClassStudentQueryResult';
 import {Teacher} from '../../../entity/Teacher';
 import {ClassesTeacher} from '../../../entity/ClassesTeacher';
@@ -41,18 +41,16 @@ export class ClassesMgrComponent implements OnInit {
     if (this.loginUser.teacher.master) {
        this.allGrades = [1, 2, 3, 4, 5, 6];
     } else {
-      this.classessvr.teacherTeachedClasses(this.loginUser.teacher.teacherId).subscribe(
+      this.classessvr.teacherTeachedClasses(this.loginUser.teacher.teacherId,this.loginUser.school.schoolId).subscribe(
         re => {
           this.teacherClasses = re;
-          this.currentChoosedClasses.classesId = this.teacherClasses[0].classesId;
-          this.currentChoosedClasses.classes = this.teacherClasses[0].classes;
-
           from(this.teacherClasses).pipe(
-              map( (rec: Classes) => this.loginUser.school.schoolStyle === 1 ? this.commonsvr.calculateSchoolYearPrimarySchool(rec.grade) :
-                                               this.commonsvr.calculateSchoolYearMiddleSchool(rec.grade)
+              map( (rec: Classes) => this.loginUser.school.schoolStyle === 1 ? parseInt( this.commonsvr.calculateSchoolYearPrimarySchool(rec.grade),10) :
+                                               parseInt(this.commonsvr.calculateSchoolYearMiddleSchool(rec.grade),10)
               ),
               distinctUntilChanged(),
-              mergeScan((acc, one) => of([...acc, one]), new Array<number>() )
+              mergeScan(( acc: Array<number>,one:number) =>of([...acc, one]), new Array<number>() ),
+            takeLast(1)
           ).subscribe(
              res => {
                this.allGrades = res;
@@ -63,13 +61,13 @@ export class ClassesMgrComponent implements OnInit {
     }
   }
   // 选择年级
-  choosedGrade = () => {
+  onChooseGrade = () => {
       const tempClassId: string =  this.teacherClasses.filter(o => o.grade === this.choosedGrade)[0].classesId;
-      this.choosedClasses(tempClassId);
+      this.onChooseClasses(tempClassId);
   }
 
   // 选择班级
- choosedClasses = (classesId: string) => {
+ onChooseClasses = (classesId: string) => {
    const tempClass: Classes =  this.teacherClasses.filter(o => o.classesId === classesId)[0];
    this.currentChoosedClasses.classesId = tempClass.classesId;
    this.currentChoosedClasses.classes = tempClass.classes;
@@ -103,8 +101,4 @@ export class ClassesMgrComponent implements OnInit {
     }
 
   }
-
-
-
-
 }

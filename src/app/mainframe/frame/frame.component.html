@@ -3,7 +3,9 @@
   <nz-header style="background: #2A6FA8;position:fixed; width:100%;z-index:999">
     <span class="logo text-left" style="width:70%"> 管 理 平 台</span>
     <div style="float:right;margin-top:20px;margin-right:10px;font-size: 14px">
-      <span style="color:yellow">欢迎</span>&nbsp;&nbsp;
+      <span style="color:yellow">欢迎</span>{{ (user.isSupperAdmin || user.isSchoolAdmin) ? user.user.account :
+                                          user.teacher.teacherName
+      }}
       <a href="javascript:void(0)" style="color:white" ><b style="color:black">[首页]</b> </a>
       <a href="javascript:void(0)"  style="color:white"><b style="color:black">[修改密码]</b></a> &nbsp;&nbsp;
       <a href="javascript:void(0)"  style="color:white"><b style="color:black">[退出登录]</b></a> &nbsp;&nbsp;<span style="color:white"><b style="color:black">版本号： V 1.0.0</b></span>
@@ -39,7 +41,7 @@
   </nz-layout>
   <nz-footer style="text-align: center;">一果度有限公司 © www.xxxx.com  400-8888-666</nz-footer>
 </nz-layout>
-
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" ></ngx-loading>
 
 
 

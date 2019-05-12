@@ -1,6 +1,7 @@
 <div nz-row>
   <div nz-col [nzSpan]="4" *ngFor="let icon of iconArray">
     <nz-upload
+      class="avatar"
       name="file"
       [nzAction]="uploadMediaPath"
       nzListType="picture-card"

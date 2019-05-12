@@ -1,3 +1,36 @@
-<p>
-  habit-unit works!
-</p>
+
+
+<div class="m-t-sm text-center" nz-row>
+  <div nz-col [nzSpan]="2" class="text-center" *ngFor="let unit of habitUnitList" (click)="onEdit(unit)">
+    <ng-container *ngIf=" unit.unitName===''">
+      <i class="upload-icon" nz-icon [nzType]="'plus'"></i>
+    </ng-container>
+    <span style="font-size:18px" *ngIf=" unit.unitName!==''">{{unit.unitName}}</span>
+  </div>
+</div>
+
+
+
+<nz-modal [(nzVisible)]="isHabitUnitModalShow"
+          [nzTitle]="'习惯计量单位'"
+          [nzCancelText]="'关闭'"
+          (nzOnCancel)="isHabitUnitModalShow=false"
+          [nzOkText]="'保存'"
+          (nzOnOk)="onSave()"
+          [nzMaskClosable]="false"
+          [nzWidth]="200"
+>
+
+  <div nz-row>
+    <div nz-col [nzSpan]="24">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">输入单位</nz-form-label>
+        <nz-form-control [nzSpan]="17">
+          <input nz-input [(ngModel)]="currentUnit.unitName" >
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+  </div>
+</nz-modal>
+

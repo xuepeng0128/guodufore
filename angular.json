@@ -33,7 +33,8 @@
               "src/assets/css/main.css",
               "src/assets/css/public.css"
             ],
-            "scripts": [],
+            "scripts": [
+            ],
             "es5BrowserSupport": true
           },
           "configurations": {

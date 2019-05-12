@@ -7,10 +7,11 @@ import { ClassesCircleComponent } from './classes-circle/classes-circle.componen
 import { ExamMgrComponent } from './exam-mgr/exam-mgr.component';
 import {PubModule} from '../../pub/pub.module';
 import { TeacherLessonsComponent } from './teacher-lessons/teacher-lessons.component';
-import {TeacherArticleComponent} from '../circlemgr/teacher-article/teacher-article.component';
+import {TeacherArticleComponent} from "./teacher-article/teacher-article.component";
+import { TeacherNoticeComponent } from './teacher-notice/teacher-notice.component';
 
 @NgModule({
-  declarations: [ClassesMgrComponent, ClassesCircleComponent,  ExamMgrComponent, TeacherLessonsComponent, TeacherArticleComponent],
+  declarations: [ClassesMgrComponent, ClassesCircleComponent,  ExamMgrComponent, TeacherLessonsComponent, TeacherArticleComponent, TeacherNoticeComponent],
   imports: [
     CommonModule,
     PubModule,

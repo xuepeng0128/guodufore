@@ -6,6 +6,7 @@ import {NzMessageService, UploadFile} from 'ng-zorro-antd';
 import {ISupUploadfiles} from '../../../shared/interface/ISupUploadfiles';
 import {isNullOrUndefined} from 'util';
 import {MSG_SAVE_ERROR, MSG_SAVE_SUCCESS} from '../../../shared/SysMessage';
+import {HabitTemplateService} from "../../../shared/service/dic/habit-template.service";
 
 @Component({
   selector: 'app-win-habit-template',
@@ -13,50 +14,21 @@ import {MSG_SAVE_ERROR, MSG_SAVE_SUCCESS} from '../../../shared/SysMessage';
   styleUrls: ['./win-habit-template.component.css']
 })
 export class WinHabitTemplateComponent implements OnInit {
-  @Input() habitTemplateWinOrder$: Subject<{nowState: string , habitTemplate: HabitTemplate}> = new Subject<{nowState: string , habitTemplate: HabitTemplate}>();
-  @Output() onHabitSaved: EventEmitter<string> = new EventEmitter<string>();
+  iconWinOrder$: Subject<string> = new Subject<string>();
+  @Input() habitTemplateWinOrder$: Subject<{nowState: string , habitTemplate: HabitTemplate}>
+    = new Subject<{nowState: string , habitTemplate: HabitTemplate}>() ;
+
+  @Output() onHabitTemplateSaved: EventEmitter<string> = new EventEmitter<string>();
 
   uploadFilePath = '';
 
 
   currentHabitTemplate: HabitTemplate = new HabitTemplate({});
-  isHabitModalShow = false;
+  isHabitTemplateModalShow = false;
   nowState = 'browse';
 
-  picFileList = [];
-  videoFileList = [];
-  audioFileList = [];
-
-  previewImage = '';
-  previewVideo = '';
-  previewAudio = '';
-
-  previewImgVisible = false;
-  previewVideoVisible = false;
-  previewAudioVisible = false;
-
-  constructor(private habitsvr: HabitService, private message: NzMessageService) { }
-
-
-  handleImgPreview = (file: UploadFile) => {
-    this.previewImage = file.url || file.thumbUrl;
-    this.previewImgVisible = true;
-    //  this.currentHabit.picUrl = this.previewImage;
-  }
-
-  handleVideoPreview = (file: ISupUploadfiles) => {
-    this.previewVideo = file.url || file.thumbUrl ||  file.base64Data;
-    this.previewVideoVisible = true;
-    //   this.currentHabit.videoUrl = this.previewVideo;
-  }
-
-  handleAudioPreview = (file: ISupUploadfiles) => {
-    this.previewAudio = file.url || file.thumbUrl ||  file.base64Data;
-    this.previewAudioVisible = true;
-    // this.currentHabit.audioUrl = this.previewAudio;
-  }
-
-
+  limitTime = new Date('2001-01-01 00:30:00');
+  constructor(private habittemplatesvr: HabitTemplateService, private message: NzMessageService) { }
 
   ngOnInit() {
     this.habitTemplateWinOrder$.subscribe(re => {
@@ -66,24 +38,32 @@ export class WinHabitTemplateComponent implements OnInit {
       } else if (re.nowState === 'edit') {
         this.currentHabitTemplate = re.habitTemplate;
       }
-      this.isHabitModalShow = true;
+      this.isHabitTemplateModalShow = true;
     });
   }
 
   onSave = () => {
 
     iif (  () => this.nowState === 'add' ,
-      this.habitsvr.insertTemplateHabit(this.currentHabitTemplate),
-      this.habitsvr.updateTemplateHabit(this.currentHabitTemplate)
+      this.habittemplatesvr.insertHabitTemplate(this.currentHabitTemplate),
+      this.habittemplatesvr.updateHabitTemplate(this.currentHabitTemplate)
     ).subscribe(
       re => {
         if (!isNullOrUndefined(re)) {
           this.message.create('success', MSG_SAVE_SUCCESS);
-          this.onHabitSaved.emit(re);
-          this.isHabitModalShow = false;
+          this.onHabitTemplateSaved.emit(this.nowState);
+          this.isHabitTemplateModalShow = false;
         } else {
           this.message.create('error', MSG_SAVE_ERROR);
         }
       });
+  }
+
+
+  showIconChoose=()=>{
+      this.iconWinOrder$.next('open');
+  }
+  iconHavechoosed=(iconUrl : string) =>{
+    this.currentHabitTemplate.icon=iconUrl;
   }
 }

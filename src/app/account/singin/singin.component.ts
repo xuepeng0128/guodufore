@@ -26,6 +26,7 @@ import {Employee} from '../../entity/Employee';
   styleUrls: ['./singin.component.css']
 })
 export class SinginComponent implements OnInit {
+
   user: User = new User();
   loading = false;
   pro = 0;
@@ -48,6 +49,9 @@ export class SinginComponent implements OnInit {
               private router: Router ) { }
 
   ngOnInit() {
+
+
+
   }
   onLogin = () => {
     this.loading = true;

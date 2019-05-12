@@ -22,12 +22,7 @@
   </div>
   <div nz-row>
     <div nz-col [nzSpan]="24">
-      <ueditor [(ngModel)]="currentArticle.articleContent"
-               [config]="{ wordCount: true }"
-               [loadingTip]="'加载中……'"
-               (onReady)="_ready($event)"
-               (onDestroy)="_destroy()"
-               (ngModelChange)="_change($event)"></ueditor>
+
     </div>
 
   </div>

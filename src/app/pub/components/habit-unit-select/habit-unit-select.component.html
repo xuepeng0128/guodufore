@@ -1,0 +1,3 @@
+<nz-select [nzSize]="'default'" [(ngModel)]="currentValue" >
+  <nz-option *ngFor="let item of habitUnitArray$ | async " [nzLabel]="item.unitName" [nzValue]="item.unitName"></nz-option>
+</nz-select>

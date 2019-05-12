@@ -1,6 +1,7 @@
 export class ClassesStudent {
   classesId: string;
   studentId: string;
+  studentName : string;
   regTime: Date;
   endTime: Date;
 

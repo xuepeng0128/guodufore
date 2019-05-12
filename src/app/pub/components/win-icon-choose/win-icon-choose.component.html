@@ -1,0 +1,18 @@
+
+<nz-modal [(nzVisible)]="isWinIconModalShow"
+          [nzTitle]="'选择图标'"
+          [nzCancelText]="'关闭'"
+          (nzOnCancel)="isWinIconModalShow=false"
+          [nzOkText]="'保存'"
+          (nzOnOk)="onSave()"
+          [nzMaskClosable]="false"
+          [nzWidth]="500"
+>
+
+  <div nz-row>
+    <div nz-col [nzSpan]="3" *ngFor="let icon of iconArray"  (dblclick)="onChooseIcon(icon)" >
+      <img  [src]="icon.iconUrl" style="width: 80px;height:80px" />
+    </div>
+
+  </div>
+</nz-modal>

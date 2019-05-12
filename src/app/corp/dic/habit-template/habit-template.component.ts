@@ -6,6 +6,7 @@ import {flatMap, map} from 'rxjs/operators';
 import {HabitTemplate} from '../../../entity/HabitTemplate';
 import {HabitService} from '../../../shared/service/basemsg/habit.service';
 import {ClassesService} from '../../../shared/service/basemsg/classes.service';
+import {HabitTemplateService} from "../../../shared/service/dic/habit-template.service";
 
 @Component({
   selector: 'app-habit-template',
@@ -13,15 +14,14 @@ import {ClassesService} from '../../../shared/service/basemsg/classes.service';
   styleUrls: ['./habit-template.component.css']
 })
 export class HabitTemplateComponent implements OnInit {
-  habitWinOrder$: Subject<{nowState: string , habit: HabitTemplate}> = new Subject<{nowState: string , habit: HabitTemplate}>() ;
+  habitTemplateWinOrder$: Subject<{nowState: string , habitTemplate: HabitTemplate}> = new Subject<{nowState: string , habitTemplate: HabitTemplate}>() ;
   user = this.usersvr.getUserStorage();
-  habitArray: Array<HabitTemplate> = new Array<HabitTemplate>();
-
-  queryParams = {
-    habitName : '',
-    habitClass : ''
-  };
-  constructor(private habitsvr: HabitService, private usersvr: UserService,
+  habitTemplateArray: Array<HabitTemplate> = new Array<HabitTemplate>();
+  pageBegin =0;
+  pageNo=1;
+  pageSize =10;
+  total=0;
+  constructor(private habittemplatesvr: HabitTemplateService, private usersvr: UserService,
               private modalService: NzModalService, private message: NzMessageService) { }
 
   ngOnInit() {
@@ -29,32 +29,54 @@ export class HabitTemplateComponent implements OnInit {
   }
 
   onQuery = () => {
-     this.habitsvr.habitTemplateList(this.queryParams).subscribe(
-      re => this.habitArray = re
+     this.habittemplatesvr.habitTemplateList(this.pageBegin,this.pageSize).subscribe(
+      re => this.habitTemplateArray = re
     );
+     this.habittemplatesvr.habitTemplateListTotal().subscribe(
+        re => this.total=re
+     );
   }
 
-
+  onPageChange = (e) => {
+    this.pageBegin = (e - 1) * this.pageSize;
+    this.habittemplatesvr.habitTemplateList(this.pageBegin,this.pageSize).subscribe(
+      re => this.habitTemplateArray = re
+    );
+  }
   onAdd = () => {
-    this.habitWinOrder$.next({nowState: 'add', habit: null});
+    this.habitTemplateWinOrder$.next({nowState: 'add', habitTemplate: null});
   }
-  onEdit = (habit: HabitTemplate) => {
-    this.habitWinOrder$.next({nowState: 'edit', habit});
+  onEdit = (habitTemplate: HabitTemplate) => {
+    this.habitTemplateWinOrder$.next({nowState: 'edit', habitTemplate: habitTemplate});
   }
-  onSaved = (habit: HabitTemplate) => {
-    this.habitsvr.habitTemplateList(this.queryParams).subscribe(re =>
-      this.habitArray = re
+  onSaved = (nowState: string) => {
+    this.pageBegin = 0;
+    this.habittemplatesvr.habitTemplateList(this.pageBegin,this.pageSize).subscribe(
+      re => this.habitTemplateArray = re
     );
+    this.total +=1;
   }
-  onDelete = (habit: HabitTemplate) => {
+  onDelete = (habitTemplate: HabitTemplate) => {
     this.modalService.confirm({
       nzTitle: '<i>提示</i>',
       nzContent: '<b>确定删除该数据吗?</b>',
       nzOnOk: () => {
-         this.habitsvr.deleteTemplateHabit(habit).pipe(
-          flatMap(re => this.habitsvr.habitTemplateList(this.queryParams))
-        ).subscribe(re => this.habitArray = re );
+         this.pageBegin = 0;
+         this.habittemplatesvr.deleteHabitTemplate(habitTemplate.habitTemplateId).pipe(
+          flatMap(re => this.habittemplatesvr.habitTemplateList(this.pageBegin,this.pageSize))
+        ).subscribe(re => {
+          this.habitTemplateArray = re;
+          this.total -=1;
+        });
       }
     });
+  }
+
+
+
+  ondel=() =>{
+    this.habittemplatesvr.deleteHabitTemplate('ddfghhhj').subscribe(
+      re => console.log(re)
+    )
   }
 }
