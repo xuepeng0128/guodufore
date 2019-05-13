@@ -1,8 +1,9 @@
 
-<div [hidden]="true">
-  <app-kind-edit></app-kind-edit>
+<div [hidden]="false">
+  <app-kind-edit [editOrder$]="editOrder$" (onHtmlTextChanged)="getit($event)"></app-kind-edit>
 </div>
-
+<button (click)="testit()" >ddddd</button>
+<button (click)="togetit()" >getit</button>
 <div id="loginWrap">
   <div class="loginHeader text-center">
 

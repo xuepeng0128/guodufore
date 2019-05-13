@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {User} from '../../entity/User';
 import {UserService} from '../../shared/user.service';
 import {NzMessageService} from 'ng-zorro-antd';
 import {map, switchMap} from 'rxjs/operators';
 import {isNullOrUndefined} from 'util';
-import {combineLatest, Observable, of} from 'rxjs';
+import {combineLatest, Observable, of, Subject} from 'rxjs';
 import {TeacherService} from '../../shared/service/basemsg/teacher.service';
 import {EmployeeService} from '../../shared/service/system/employee.service';
 import {SchoolService} from '../../shared/service/basemsg/school.service';
@@ -26,7 +26,8 @@ import {Employee} from '../../entity/Employee';
   styleUrls: ['./singin.component.css']
 })
 export class SinginComponent implements OnInit {
-
+  html = 'hello ';
+  editOrder$: Subject<{order: string; htmlContent: string}> = new Subject<{order: string; htmlContent: string}>();
   user: User = new User();
   loading = false;
   pro = 0;
@@ -52,6 +53,16 @@ export class SinginComponent implements OnInit {
 
 
 
+  }
+  testit = () => {
+     this.editOrder$.next({order: 'setHtml', htmlContent: 'sdfsdsdfdsfdsfdsf'});
+
+  }
+  togetit = () => {
+    this.editOrder$.next({order: 'getHtml', htmlContent: ''});
+  }
+  getit = (e) => {
+     console.log(e);
   }
   onLogin = () => {
     this.loading = true;

@@ -44,12 +44,12 @@ export class ClassesService {
     );
   }
 
-  teacherTeachedClasses = (teacherId: string,schoolId : string): Observable<Array<Classes>> => {
-    return this.httpsvr.onHttpGet('api/basemsg/classes/teacherTeachedClasses', {teacherId});
+  teacherTeachedClasses = (teacherId: string, schoolId: string, schoolStyle: number ): Observable<Array<Classes>> => {
+    return this.httpsvr.onHttpGet('api/basemsg/classes/teacherTeachedClasses', {teacherId, schoolId, schoolStyle});
   }
 
-  subjectTeachersAtClasses = (classesId: string, schoolId: string): Observable<Array<ClassesTeacher>> => {
-    return this.httpsvr.onHttpGet('api/basemsg/classes/subjectTeachersAtClasses', {classesId, schoolId});
+  subjectTeachersAtClasses = (classesId: string, schoolId: string , schoolStyle: number ): Observable<Array<ClassesTeacher>> => {
+    return this.httpsvr.onHttpGet('api/basemsg/classes/subjectTeachersAtClasses', {classesId, schoolId , schoolStyle});
   }
   saveTeacherAtClasses = (classesTeacher: ClassesTeacher): Observable<string> => {
     return this.httpsvr.onHttpPost('api/basemsg/classes/saveClassesTeacher', classesTeacher).pipe(

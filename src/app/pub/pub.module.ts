@@ -34,6 +34,7 @@ import { HabitModeSelectComponent } from './components/habit-mode-select/habit-m
 import { HabitTimeUnitSelectComponent } from './components/habit-time-unit-select/habit-time-unit-select.component';
 import {NgxLoadingModule} from "ngx-loading";
 import { KindEditComponent } from './components/kind-edit/kind-edit.component';
+import { WinArticleComponent } from './components/win-article/win-article.component';
 
 
 
@@ -55,7 +56,8 @@ import { KindEditComponent } from './components/kind-edit/kind-edit.component';
     WinIconChooseComponent,
     HabitModeSelectComponent,
     HabitTimeUnitSelectComponent,
-    KindEditComponent
+    KindEditComponent,
+    WinArticleComponent
 
   ],
   imports: [

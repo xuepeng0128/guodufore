@@ -1,4 +1,4 @@
-<nz-radio-group [(ngModel)]="choosedGrade" (ngModelChange)="choosedGrade()" >
+<nz-radio-group [(ngModel)]="choosedGrade" (ngModelChange)="onChooseGrade()" >
   <label nz-radio-button [nzValue]="1"  *ngIf="allGrades.indexOf(1) !==-1">一年级</label>
   <label nz-radio-button [nzValue]="2"  *ngIf="allGrades.indexOf(2) !==-1">二年级</label>
   <label nz-radio-button [nzValue]="3"  *ngIf="allGrades.indexOf(3) !==-1">三年级</label>
@@ -21,56 +21,124 @@
     style=" overflow-y: scroll"
 
   >
-    <div style="background: #ECECEC;padding:30px;">
-      <div nz-row [nzGutter]="8">
-         <div nz-col [nzSpan]="6" [nzOffset]="18">
-           <a href="javaScript:;" class="ant-btn ant-btn-primary m-l-xs" (click)="onAdd()" >添加</a>
-           <a [href]="downloadTemplateExcel" class="ant-btn ant-btn-primary m-l-xs"  >excel导出模板下载</a>
-          <nz-upload [nzAction]="uploadExcelpath"  [nzShowUploadList]="false" (nzChange)="handleExcelChange($event)"
-          >
-            <button nz-button><i nz-icon type="upload"></i><span>excel导入</span></button>
-          </nz-upload>
-
-
-
-         </div>
-      </div>
-      <div nz-row [nzGutter]="8">
-        <div nz-col [nzSpan]="24">
-          <nz-card nzTitle="Card title" [nzExtra]="extraTemplate"  [nzActions]="[actionSetting, actionEdit, actionEllipsis]" >
-            <div style="height: 300px ">
-              <p>Card content</p>
-              <b>dfdfdfd</b>
-              <img src="assets/images/loginBg.jpg" style="width:100%;" />
+    <div class="m-t-sm text-center" nz-row>
+            <div nz-col [nzSpan]="3" >
+              <a href="javaScript:;" class="ant-btn ant-btn-primary m-l-xs" (click)="onAdd()" >添加</a>
             </div>
-
-          </nz-card>
-          <ng-template #extraTemplate>
-            <a (click)="alert(0)">detail</a>
-            <button (click)="show(0)">ddddd</button>
-          </ng-template>
-
-          <ng-template #actionSetting>
-            <i nz-icon type="setting"></i>
-          </ng-template>
-          <ng-template #actionEdit>
-            <i nz-icon type="edit"></i>
-          </ng-template>
-          <ng-template #actionEllipsis>
-            <i nz-icon type="ellipsis"></i>
-          </ng-template>
-
-
-
-        </div>
-
-      </div>
+            <div nz-col [nzSpan]="3" >
+              <a [href]="downloadTemplateExcel" class="ant-btn ant-btn-primary m-l-xs"  >excel导出模板下载</a>
+            </div>
+            <div nz-col [nzSpan]="3">
+              <nz-upload [nzAction]="uploadExcelpath"  [nzShowUploadList]="false" (nzChange)="handleExcelChange($event)"
+              >
+                <button nz-button><i nz-icon type="upload"></i><span>excel导入</span></button>
+              </nz-upload>
+            </div>
     </div>
   </nz-tab>
+
+  <div class="m-t-sm" nz-row>
+    <div nz-col [nzSpan]="4" *ngFor="let clteacher of currentChoosedClasses.subjectTeachersAtClasses ">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="12"> {{clteacher.studySubjectName +'任课老师'}}</nz-form-label>
+        <nz-form-control [nzSpan]="12">
+          <input nz-input [(ngModel)]="clteacher.teacherName" >
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div class="m-t-sm" nz-row>
+    <div nz-col [nzSpan]="24">
+      <nz-table
+        #ajaxTable
+        nzBordered
+        nzShowSizeChanger
+        [nzFrontPagination]="true"
+        [nzData]="currentChoosedClasses.studentAtClasses"
+      >
+        <thead >
+        <tr>
+          <th>序号</th>
+          <th>学号</th>
+          <th>身份证</th>
+          <th>名称</th>
+          <th>性别</th>
+          <th>出生日期</th>
+          <th>联系电话</th>
+          <th>家庭住址</th>
+          <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let data of ajaxTable.data ;let no=index">
+          <td>{{no+1}}</td>
+          <td>{{data.studentId}}</td>
+          <td >{{data.studentPaperId}}</td>
+          <td>{{data.studentName}}</td>
+          <td>{{ data.sex === 1 ? '男' : '女'}}</td>
+          <td>{{ data.birthday}}</td>
+          <td>{{ data.tel}}</td>
+          <td>{{ data.address}}</td>
+          <th>
+            <a href="javaScript:;"  (click)="onEdit(data)" title="修改学生信息">修改</a>
+            <nz-divider nzType="vertical"></nz-divider>
+            <a href="javaScript:;"  (click)="onQuitDuty(data)" title="学生转学，休学等">转学</a>
+            <nz-divider nzType="vertical"></nz-divider>
+            <a href="javaScript:;"  (click)="onDelete(data)" title="学生录入信息错误，删除信息">>删除</a>
+          </th>
+        </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+
 </nz-tabset>
 
 
 
+<nz-modal [(nzVisible)]="isStudentExcelImpModalShow"
+          [nzTitle]="'导入学生'"
+          [nzCancelText]="'关闭'"
+          (nzOnCancel)="isStudentExcelImpModalShow=false"
+          [nzOkText]="'确定导入'"
+          (nzOnOk)="onToImportStudent()"
+          [nzMaskClosable]="false"
+          [nzWidth]="800"
+>
+  <nz-table
+    #ajaxTable
+    nzBordered
+    nzShowSizeChanger
+    [nzFrontPagination]="false"
+    [nzData]="prepareImportTeachers"
+  >
+    <thead >
+    <tr>
+      <th>序号</th>
+      <th>姓名</th>
+      <th>身份证</th>
+      <th>当前职务</th>
+      <th>联系电话</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of ajaxTable.data ;let no=index">
+      <td>{{no+1}}</td>
+      <td>{{data.teacherName}}</td>
+      <td>{{data.teacherPaperId}}</td>
+      <td><app-teacherduty-select [(ngModel)]="data.teacherDutyId" [defaultShow]="'请选择'"></app-teacherduty-select></td>
+      <td>{{data.tel}}</td>
+      <td>
+        <a href="javaScript:;" *ngIf="loginUser.isSchoolAdmin" (click)="onEdit(data)">修改</a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a href="javaScript:;" *ngIf="loginUser.isSchoolAdmin" (click)="onDelete(data)">删除</a>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+
+</nz-modal>
 
 
 

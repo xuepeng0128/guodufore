@@ -18,13 +18,15 @@ export class WinTeacherArticleComponent implements OnInit {
   loginUser: LoginUser = this.usersvr.getUserStorage();
   @Input() teacherArticleWinOrder$: Subject<{nowState: string , teacherArticle: TeacherArticle}> ;
   @Output() onArticleSaved: EventEmitter<string> = new EventEmitter<string>();
+
+  editOrder$: Subject<{order: string; htmlContent: string}> = new Subject<{order: string; htmlContent: string}>();
   currentArticle: TeacherArticle = new TeacherArticle({
 
   });
   isTeacherArticleModalShow = false;
   nowState = 'browse';
   constructor( private message: NzMessageService,
-               private teacherarticlesvr : TeacherArticleService, private usersvr: UserService) { }
+               private teacherarticlesvr: TeacherArticleService, private usersvr: UserService) { }
 
   ngOnInit() {
 
@@ -44,19 +46,28 @@ export class WinTeacherArticleComponent implements OnInit {
   }
 
   onSave = () => {
-    // 补全school区，teacher
-    iif (() => this.nowState === 'add',
-      this.teacherarticlesvr.insertTeacherArticle(this.currentArticle),
-      this.teacherarticlesvr.updateTeacherArticle(this.currentArticle)
-    ).subscribe(
-      re => {
-        if (re === 'ok') {
-          this.message.create('success', MSG_SAVE_SUCCESS);
-          this.onArticleSaved.emit(re);
-          this.isTeacherArticleModalShow = false;
-        } else {
-          this.message.create('error', MSG_SAVE_ERROR);
-        }
-      });
+     this.editOrder$.next({order: 'getHtml', htmlContent: ''});
+     setTimeout(() => {
+       // 补全school区，teacher
+       iif (() => this.nowState === 'add',
+         this.teacherarticlesvr.insertTeacherArticle(this.currentArticle),
+         this.teacherarticlesvr.updateTeacherArticle(this.currentArticle)
+       ).subscribe(
+         re => {
+           if (re === 'ok') {
+             this.message.create('success', MSG_SAVE_SUCCESS);
+             this.onArticleSaved.emit(re);
+             this.isTeacherArticleModalShow = false;
+           } else {
+             this.message.create('error', MSG_SAVE_ERROR);
+           }
+         });
+
+     }, 500);
+
+  }
+
+  htmlTextChanged = (e) => {
+     this.currentArticle.articleContent = e;
   }
 }

@@ -3,6 +3,7 @@ export interface ITeacherArticleQueryParams {
   teacherName?: string;
   schoolId?: string;
   schoolName?: string;
+  pageNo? : number;
   pageBegin? : number;
   pageSize? : number;
 }

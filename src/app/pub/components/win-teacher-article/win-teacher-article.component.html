@@ -22,7 +22,7 @@
   </div>
   <div nz-row>
     <div nz-col [nzSpan]="24">
-
+          <app-kind-edit [editOrder$]="editOrder$" (onHtmlTextChanged)="htmlTextChanged($event)"></app-kind-edit>
     </div>
 
   </div>

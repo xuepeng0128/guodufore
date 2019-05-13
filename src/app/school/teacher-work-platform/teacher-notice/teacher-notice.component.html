@@ -4,23 +4,7 @@
     <nz-form-item>
       <nz-form-label [nzSpan]="6">通知内容</nz-form-label>
       <nz-form-control [nzSpan]="15">
-        <input nz-input [(ngModel)]="queryParams.studentPaperId">
-      </nz-form-control>
-    </nz-form-item>
-  </div>
-  <div nz-col [nzSpan]="8">
-    <nz-form-item>
-      <nz-form-label [nzSpan]="6">姓名</nz-form-label>
-      <nz-form-control [nzSpan]="15">
-        <input nz-input [(ngModel)]="queryParams.studentName">
-      </nz-form-control>
-    </nz-form-item>
-  </div>
-  <div nz-col [nzSpan]="8">
-    <nz-form-item>
-      <nz-form-label [nzSpan]="6">学校</nz-form-label>
-      <nz-form-control [nzSpan]="15">
-        <input nz-input [(ngModel)]="queryParams.schoolName">
+        <input nz-input [(ngModel)]="queryParams.noticeContent">
       </nz-form-control>
     </nz-form-item>
   </div>
@@ -30,7 +14,7 @@
 <div class="m-t-sm text-center" nz-row>
   <div nz-col [nzSpan]="24" class="text-center">
     <a href="javaScript:;" class="ant-btn ant-btn-primary" (click)="onQuery()">查询</a>
-    <a class="ant-btn ant-btn-primary m-l-xs" download="学生资源.xls" *ngIf="user.supperAdmin "  >excel导出</a>
+    <a class="ant-btn ant-btn-primary m-l-xs"   >添加</a>
   </div>
 </div>
 <div class="m-t-sm" nz-row>
@@ -40,7 +24,7 @@
       nzBordered
       nzShowSizeChanger
       [nzFrontPagination]="false"
-      [nzData]="studentList"
+      [nzData]="noticeList"
       [nzTotal]="total"
       [(nzPageIndex)]="queryParams.pageNo"
       [(nzPageSize)]="queryParams.pageSize"
@@ -49,43 +33,60 @@
       <thead >
       <tr>
         <th>序号</th>
-        <th>学号</th>
-        <th>身份证</th>
-        <th>姓名</th>
-        <th>年龄</th>
-        <th>性别</th>
-        <th>地址</th>
-        <th>联系电话</th>
-        <th>学校</th>
-        <th>学籍</th>
-        <th>年级</th>
-        <th>班级</th>
-        <th>班级名称</th>
+        <th>编号</th>
+        <th>内容</th>
+        <th>发布时间</th>
+        <th>发送学生</th>
+        <th>已查看学生</th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let data of ajaxTable.data ;let no=index">
         <td>{{no+1}}</td>
-        <td>{{data.studentId}}</td>
-        <td>{{data.studentPaperId}}</td>
-        <td>{{data.studentName}}</td>
-        <td>{{commonsvr.paperIdMsg(data.studentPaperId,3)}}</td>
-        <td>{{commonsvr.paperIdMsg(data.studentPaperId,2)}}</td>
-        <td>{{data.address }}</td>
-        <td>{{data.tel}}</td>
-        <td>{{data.schoolName}}</td>
-        <td>{{ data.train === 1 ?  '' : data.grade}} 级</td>
-        <td>{{
-          data.train === 1 ? '' :(
-          data.schoolStyle === 1 ? commonsvr.calculateSchoolYearPrimarySchool(data.grade) : commonsvr.calculateSchoolYearMiddleSchool(data.grade)
-          )
-          }}</td>
-        <td>{{ data.train === 1 ? '' : data.classes}}</td>
-        <td>{{ data.train === 0 ?  '' :data.classesName}}</td>
+        <td>{{data.noticeId}}</td>
+        <td [title]="data.noticeContent">{{data.noticeContent}}</td>
+        <td>{{data.sendTime}}</td>
+        <td>{{ data.receiveStudentNums}}</td>
+        <td>{{ data.haveReadStudentNums}}</td>
       </tr>
       </tbody>
     </nz-table>
   </div>
 </div>
 
+
+<nz-modal [(nzVisible)]="isNoticeModalShow"
+          [nzTitle]="'通知通告'"
+          [nzCancelText]="'关闭'"
+          (nzOnCancel)="isNoticeModalShow=false"
+          [nzOkText]="'发送'"
+          (nzOnOk)="onSend()"
+          [nzMaskClosable]="false"
+          [nzWidth]="600"
+>
+
+  <div nz-row>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">编号</nz-form-label>
+        <nz-form-control [nzSpan]="17">
+          <input nz-input [(ngModel)]="currentNotice.noticeId"  [readonly]="true" placeholder="系统生成" >
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="18">
+      <nz-checkbox-group [(ngModel)]="checkeClasses"></nz-checkbox-group>
+    </div>
+  </div>
+  <div nz-row>
+    <div nz-col [nzSpan]="24">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">内容</nz-form-label>
+        <nz-form-control [nzSpan]="17">
+           <textarea [(ngModel)]="currentNotice.noticeContent" style="width: 100%;height:200px"></textarea>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</nz-modal>
 
