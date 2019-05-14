@@ -1,0 +1,67 @@
+
+<nz-modal [(nzVisible)]="isStudentModalShow"
+          [nzTitle]="'学校学生'"
+          [nzCancelText]="'关闭'"
+          (nzOnCancel)="isStudentModalShow=false"
+          [nzOkText]="'保存'"
+          (nzOnOk)="onSave()"
+          [nzMaskClosable]="false"
+          [nzWidth]="800"
+>
+
+  <div nz-row>
+    <div nz-col [nzSpan]="8">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">学号</nz-form-label>
+        <nz-form-control [nzSpan]="17">
+          <input nz-input [(ngModel)]="currentStudent.studentId" placeholder="系统生成" [readonly]="true" >
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="8">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">名称</nz-form-label>
+        <nz-form-control [nzSpan]="17">
+          <input nz-input [(ngModel)]="currentStudent.studentName"  >
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="8">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">身份证</nz-form-label>
+        <nz-form-control [nzSpan]="17">
+          <input nz-input [(ngModel)]="currentStudent.studentPaperId"  >
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row>
+    <div nz-col [nzSpan]="8">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">联系电话</nz-form-label>
+        <nz-form-control [nzSpan]="17">
+          <input nz-input [(ngModel)]="currentStudent.tel" >
+
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="8">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">性别</nz-form-label>
+        <nz-form-control [nzSpan]="17">
+                   <app-sex-select [(ngModel)]="currentStudent.sex"></app-sex-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="8">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">住址</nz-form-label>
+        <nz-form-control [nzSpan]="17">
+          <input nz-input [(ngModel)]="currentStudent.address" >
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+
+
+</nz-modal>

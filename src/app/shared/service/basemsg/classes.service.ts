@@ -7,6 +7,8 @@ import {IClassesQueryResult} from '../../interface/queryparams/IClassQueryResult
 import {flatMap, map} from 'rxjs/operators';
 import {IClassStudentQueryResult} from '../../interface/queryparams/IClassStudentQueryResult';
 import {ClassesTeacher} from '../../../entity/ClassesTeacher';
+import {Student} from '../../../entity/Student';
+import {ClassesStudent} from '../../../entity/ClassesStudent';
 
 @Injectable({
   providedIn: 'root'
@@ -43,7 +45,9 @@ export class ClassesService {
       map( re => re.result)
     );
   }
-
+  gradeClasses = (grade: string , schoolId: string ): Observable<Array<Classes>> => {
+    return this.httpsvr.onHttpGet('api/basemsg/classes/gradeClasses', {grade, schoolId});
+  }
   teacherTeachedClasses = (teacherId: string, schoolId: string, schoolStyle: number ): Observable<Array<Classes>> => {
     return this.httpsvr.onHttpGet('api/basemsg/classes/teacherTeachedClasses', {teacherId, schoolId, schoolStyle});
   }
@@ -57,10 +61,36 @@ export class ClassesService {
     );
   }
 
-
-
-
   studentAtClasses = (classesId: string, schoolId: string): Observable<Array<IClassStudentQueryResult>> => {
      return this.httpsvr.onHttpGet('api/basemsg/classes/studentAtClasses', {classesId, schoolId});
+  }
+
+
+  groupAddStudents = (params: {classesId: string , studentList: Array<Student>}): Observable<string> => {
+    return this.httpsvr.onHttpPost('api/basemsg/classes/groupInsertClassesStudent', params).pipe(
+       map(re => re.result)
+    );
+  }
+
+  insertClassesStudent = (classesStudent: ClassesStudent): Observable<string> => {
+   return this.httpsvr.onHttpPost('api/basemsg/classes/insertClassesStudent', classesStudent).pipe(
+      map(re => re.result)
+   );
+  }
+
+  updateClassesStudent = (classesStudent: ClassesStudent): Observable<string> => {
+    return this.httpsvr.onHttpPost('api/basemsg/classes/updateClassesStudent', classesStudent).pipe(
+      map(re => re.result)
+    );
+  }
+  classesStudentLeave = (classesStudent: ClassesStudent): Observable<string> => {
+    return this.httpsvr.onHttpPost('api/basemsg/classes/classesStudentLeave', classesStudent).pipe(
+      map(re => re.result)
+    );
+  }
+  deleteClassesStudent = (classesId: string, studentId: string): Observable<string> => {
+    return this.httpsvr.onHttpGet('api/basemsg/classes/deleteClassesStudent', {classesId, studentId}).pipe(
+      map(re => re.result)
+    );
   }
 }

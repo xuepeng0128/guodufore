@@ -32,9 +32,10 @@ import { HabitUnitSelectComponent } from './components/habit-unit-select/habit-u
 import { WinIconChooseComponent } from './components/win-icon-choose/win-icon-choose.component';
 import { HabitModeSelectComponent } from './components/habit-mode-select/habit-mode-select.component';
 import { HabitTimeUnitSelectComponent } from './components/habit-time-unit-select/habit-time-unit-select.component';
-import {NgxLoadingModule} from "ngx-loading";
+import {NgxLoadingModule} from 'ngx-loading';
 import { KindEditComponent } from './components/kind-edit/kind-edit.component';
-import { WinArticleComponent } from './components/win-article/win-article.component';
+import { WinStudentComponent } from './components/win-student/win-student.component';
+import { SexSelectComponent } from './components/sex-select/sex-select.component';
 
 
 
@@ -57,7 +58,8 @@ import { WinArticleComponent } from './components/win-article/win-article.compon
     HabitModeSelectComponent,
     HabitTimeUnitSelectComponent,
     KindEditComponent,
-    WinArticleComponent
+    WinStudentComponent,
+    SexSelectComponent
 
   ],
   imports: [
@@ -95,13 +97,15 @@ import { WinArticleComponent } from './components/win-article/win-article.compon
     StudentCardComponent,
     CutSizePipe,
     ArrayTextFilterPipe,
+    WinTeacherArticleComponent,
     WinHabitTemplateComponent,
     HabitUnitSelectComponent,
     WinIconChooseComponent,
     HabitModeSelectComponent,
     HabitTimeUnitSelectComponent,
-    KindEditComponent
-
+    KindEditComponent,
+    WinStudentComponent,
+    SexSelectComponent
   ]
 })
 export class PubModule { }

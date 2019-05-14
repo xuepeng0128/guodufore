@@ -7,6 +7,7 @@ import {TeacherArticleService} from '../../../shared/service/business/teacher-ar
 import {Subject} from 'rxjs';
 import {School} from '../../../entity/School';
 import {TeacherArticle} from '../../../entity/TeacherArticle';
+import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-teacher-article',
@@ -30,7 +31,8 @@ export class TeacherArticleComponent implements OnInit {
   };
   articleArray: Array<ITeacherArticleQueryResult> = new Array<ITeacherArticleQueryResult>();
   total = 0;
-  constructor(private usersvr: UserService , private  teacherarticlesvr: TeacherArticleService) { }
+  constructor(private usersvr: UserService , private  teacherarticlesvr: TeacherArticleService,
+              private modalService: NzModalService, private message: NzMessageService) { }
 
   ngOnInit() {
   }
@@ -59,7 +61,15 @@ export class TeacherArticleComponent implements OnInit {
    this.teacherArticleWinOrder$.next({nowState : 'add', teacherArticle});
  }
 onDelete = (teacherArticle: TeacherArticle) => {
-
+  this.modalService.confirm({
+    nzTitle: '<i>提示</i>',
+    nzContent: '<b>确定删除该文章吗?</b>',
+    nzOnOk: () => {
+      this.teacherarticlesvr.deleteTeacherArticle(teacherArticle.articleId).subscribe(
+         re =>  this.onQuery()
+      );
+    }
+  });
 }
 onPublish = (teacherArticle: TeacherArticle) => {
 

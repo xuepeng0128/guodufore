@@ -1,18 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import {LoginUser} from '../../../entity/LoginUser';
 import {UserService} from '../../../shared/user.service';
-import {CircleService} from '../../../shared/service/business/circle.service';
 import {NzMessageService, NzModalService, UploadFile} from 'ng-zorro-antd';
 import {Classes} from '../../../entity/Classes';
 import {ClassesService} from '../../../shared/service/basemsg/classes.service';
 import {CommonService} from '../../../shared/common.service';
-import {from, of} from 'rxjs';
+import {from, iif, of, Subject} from 'rxjs';
 import {distinct, distinctUntilChanged, map, mergeScan, scan, takeLast} from 'rxjs/operators';
-import {IClassStudentQueryResult} from '../../../shared/interface/queryparams/IClassStudentQueryResult';
-import {Teacher} from '../../../entity/Teacher';
-import {ClassesTeacher} from '../../../entity/ClassesTeacher';
 import {ClassesStudent} from '../../../entity/ClassesStudent';
-import {DOWNLOAD_TEMPLATE_PATH, UPLOAD_TEACHER_TEMPLATE_PATH} from '../../../shared/const';
+import {DOWNLOAD_TEMPLATE_PATH, UPLOAD_STUDENT_TEMPLATE_PATH} from '../../../shared/const';
+import {Student} from '../../../entity/Student';
+import {ClassesTeacher} from '../../../entity/ClassesTeacher';
+import {Teacher} from '../../../entity/Teacher';
 
 @Component({
   selector: 'app-classes-mgr',
@@ -20,18 +19,19 @@ import {DOWNLOAD_TEMPLATE_PATH, UPLOAD_TEACHER_TEMPLATE_PATH} from '../../../sha
   styleUrls: ['./classes-mgr.component.css']
 })
 export class ClassesMgrComponent implements OnInit {
+  teacherChooseSign$: Subject<{ singleChoose: boolean, haveChoosedTeacher: Array<Teacher>}> =
+     new Subject<{singleChoose: boolean, haveChoosedTeacher: Array<Teacher>}>();
+  choosedStudySubjectId = '';
+
+  classStudentWinOrder$: Subject<{nowState: string , classesStudent: ClassesStudent, classesId: string}> =
+    new Subject<{nowState: string, classesStudent: ClassesStudent, classesId: string}>();
+
   loginUser: LoginUser = this.usersvr.getUserStorage();
   allGrades = [];
   choosedGrade = 1;
 
-  currentChoosedClasses = {
-       classesId : '',
-       classes : 1,
-       headMaster : '',
-       headMasterName : '',
-       subjectTeachersAtClasses : new  Array<ClassesTeacher>(),
-       studentAtClasses : new Array<IClassStudentQueryResult>()
-  };
+  gradeChoosedClasses: Array<Classes> = new Array<Classes>();
+  currentChoosedClasses: Classes = new Classes({});
   teacherClasses: Array<Classes> = new Array<Classes>();
 
 
@@ -41,7 +41,8 @@ export class ClassesMgrComponent implements OnInit {
 
   isStudentExcelImpModalShow = false;
   downloadTemplateExcel = DOWNLOAD_TEMPLATE_PATH + 'studentTemplate.xls';
-  uploadExcelpath = UPLOAD_TEACHER_TEMPLATE_PATH;
+  uploadExcelpath = UPLOAD_STUDENT_TEMPLATE_PATH;
+  prepareImportStudents: Array<Student> = new Array<Student>();
   constructor(private usersvr: UserService, private classessvr: ClassesService,
               public commonsvr: CommonService,
               private modalService: NzModalService, private message: NzMessageService) { }
@@ -70,56 +71,96 @@ export class ClassesMgrComponent implements OnInit {
     }
   }
   // 选择年级
-  onChooseGrade = () => {
-      const tempClassId: string =  this.teacherClasses.filter(o => o.grade === this.choosedGrade)[0].classesId;
-      this.onChooseClasses(tempClassId);
+  onChooseGrade = (grade) => {
+      const tempClassId = '';
+      iif(
+        () =>  this.loginUser.teacher.master,
+                          this.classessvr.gradeClasses(this.commonsvr.calculateGradeSchool(grade).toString(), this.loginUser.school.schoolId),
+                          of(this.teacherClasses.filter(o => o.grade === this.commonsvr.calculateGradeSchool(grade)))
+      ).subscribe(
+        re => {
+          this.gradeChoosedClasses = re;
+          if (this.gradeChoosedClasses.length > 0) {
+             this.currentChoosedClasses = this.gradeChoosedClasses[0];
+          }
+        }
+      );
+  }
+  onSelectClasses = (classesId: string) => {
+       this.currentChoosedClasses = this.gradeChoosedClasses.filter(o => o.classesId = classesId)[0];
+  }
+  onToImportStudent = () => {
+    this.classessvr.groupAddStudents({ classesId: this.currentChoosedClasses.classesId, studentList: this.prepareImportStudents}).subscribe(
+      re => {
+        this.prepareImportStudents.forEach(v => {
+          this.gradeChoosedClasses.filter(s => s.classesId === this.currentChoosedClasses.classesId)[0].students
+          .push(new ClassesStudent({classesId: this.currentChoosedClasses.classesId,
+                                                 studentId : v.studentId,  studentPaperId : v.studentPaperId,
+                                                 sex : v.sex, birthday : v.birthday, schoolId : v.schoolId, address : v.address ,
+                                                 tel : v.tel }));
+        });
+        this.isStudentExcelImpModalShow = false;
+      }
+    );
   }
 
-  // 选择班级
- onChooseClasses = (classesId: string) => {
-   const tempClass: Classes =  this.teacherClasses.filter(o => o.classesId === classesId)[0];
-   this.currentChoosedClasses.classesId = tempClass.classesId;
-   this.currentChoosedClasses.classes = tempClass.classes;
-   this.classessvr.subjectTeachersAtClasses(tempClass.classesId, this.loginUser.school.schoolId, this.loginUser.school.schoolStyle).subscribe(
-     re =>  this.currentChoosedClasses.subjectTeachersAtClasses = re
-   );
-   this.classessvr.studentAtClasses(tempClass.classesId, this.loginUser.school.schoolId).subscribe(
-     re => this.currentChoosedClasses.studentAtClasses = re
-   );
- }
 
 
 
-
-
-
-  onToImportStudent=()=>{
-
+  toChooseTeacher = (studySubjectId: string ) => {
+    this.choosedStudySubjectId = studySubjectId;
+    this.teacherChooseSign$.next({singleChoose: true, haveChoosedTeacher : null});
   }
+  choosedStudySubjectTeacher = (teacher: Teacher) => {
+        const cteacher: ClassesTeacher = new ClassesTeacher({ classesId: this.currentChoosedClasses.classesId,
+          teacherId: teacher.teacherId, teacherName: teacher.teacherName,
+          studySubjectId: this.choosedStudySubjectId, studySubjectName: '',
+          schoolStyle: this.loginUser.school.schoolStyle
+        });
+        this.classessvr.saveTeacherAtClasses(cteacher).subscribe(
+               re = this.currentChoosedClasses.teachers.push(cteacher)
+        );
+  }
+
   onAdd = () => {
-
+      this.classStudentWinOrder$.next({nowState: 'add', classesStudent: null, classesId: this.currentChoosedClasses.classesId});
   }
 
-  onEdit = () => {
-
+  onEdit = (classesStudent: ClassesStudent) => {
+      this.classStudentWinOrder$.next({nowState: 'edit', classesStudent, classesId: this.currentChoosedClasses.classesId});
   }
-  onTranSchool = () => {
-
+  onTranSchool = (classesStudent: ClassesStudent) => {
+    this.modalService.confirm({
+      nzTitle: '<i>提示</i>',
+      nzContent: '<b>确定该学生转学离开本校吗?</b>',
+      nzOnOk: () => {
+        this.classessvr.classesStudentLeave(classesStudent).subscribe(
+          re =>   this.currentChoosedClasses.students = this.currentChoosedClasses.students.filter(o => o.studentId !== classesStudent.studentId)
+        );
+      }
+    });
   }
-  onDelete = () => {
-
+  onDelete = (classesStudent: ClassesStudent) => {
+    this.modalService.confirm({
+      nzTitle: '<i>提示</i>',
+      nzContent: '<b>确定该学生信息为录入错误吗（如已就读本校，删除将可能造成信息丢失）?</b>',
+      nzOnOk: () => {
+        this.classessvr.deleteClassesStudent(classesStudent.classesId, classesStudent.studentId).subscribe(
+          re =>   this.currentChoosedClasses.students = this.currentChoosedClasses.students.filter(o => o.studentId !== classesStudent.studentId)
+        );
+      }
+    });
   }
 
 
   handleExcelChange = (file: UploadFile) => {
     if (file.file.response !== null) {
-      // this.isTeacherExcelImpModalShow = true;
-      // this.prepareImportTeachers = new Array<Teacher>();
-      // (file.file.response as Array<Teacher>).forEach( v =>
-      //   this.prepareImportTeachers.push( new Teacher({teacherId: '', teacherPaperId : v.teacherPaperId, schoolId : this.loginUser.school.schoolId
-      //     , tel : v.tel, teacherName : v.teacherName , teacherDutyId : '02' , address : v.address  }))
-      // );
-      // file.file.response = null;
+      this.isStudentExcelImpModalShow = true;
+      this.prepareImportStudents = new Array<Student>();
+      (file.file.response as Array<Student>).forEach( v =>
+        this.prepareImportStudents.push(  JSON.parse(JSON.stringify(v)) as Student )
+      );
+      file.file.response = null;
     }
 
   }

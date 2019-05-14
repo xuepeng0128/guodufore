@@ -14,12 +14,12 @@
   [(nzSelectedIndex)]="selectedIndex"
 >
   <nz-tab
-    *ngFor="let cla of teacherClasses"
+    *ngFor="let cla of gradeChoosedClasses"
     [nzTitle]=" (loginUser.school.schoolStyle===1 ? commonsvr.calculateSchoolYearPrimarySchool(cla.grade) :
     commonsvr.calculateSchoolYearMiddleSchool(cla.grade))
     +'年级' +  cla.classes +'班'"
     style=" overflow-y: scroll"
-
+    (nzSelect)="onSelectClasses(cla.classesId)"
   >
     <div class="m-t-sm text-center" nz-row>
             <div nz-col [nzSpan]="3" >
@@ -38,11 +38,11 @@
   </nz-tab>
 
   <div class="m-t-sm" nz-row>
-    <div nz-col [nzSpan]="4" *ngFor="let clteacher of currentChoosedClasses.subjectTeachersAtClasses ">
+    <div nz-col [nzSpan]="4" *ngFor="let clteacher of currentChoosedClasses.teachers ">
       <nz-form-item>
         <nz-form-label [nzSpan]="12"> {{clteacher.studySubjectName +'任课老师'}}</nz-form-label>
         <nz-form-control [nzSpan]="12">
-          <input nz-input [(ngModel)]="clteacher.teacherName" >
+          <input nz-input [(ngModel)]="clteacher.teacherName" (click)="chooseStudySubjectTeacher(clteacher.studySubjectId)" >
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -54,7 +54,7 @@
         nzBordered
         nzShowSizeChanger
         [nzFrontPagination]="true"
-        [nzData]="currentChoosedClasses.studentAtClasses"
+        [nzData]="currentChoosedClasses.students"
       >
         <thead >
         <tr>
@@ -93,7 +93,7 @@
   </div>
 
 </nz-tabset>
-
+<app-teacher-choose [teacherChooseSign$]="teacherChooseSign$" (onTeacherChoosed)="choosedStudySubjectTeacher($event)"></app-teacher-choose>
 
 
 <nz-modal [(nzVisible)]="isStudentExcelImpModalShow"
@@ -106,34 +106,34 @@
           [nzWidth]="800"
 >
   <nz-table
-    #ajaxTable
+    #ajaxTableimpStudent
     nzBordered
     nzShowSizeChanger
     [nzFrontPagination]="false"
-    [nzData]="prepareImportTeachers"
+    [nzData]="prepareImportStudents"
   >
     <thead >
     <tr>
       <th>序号</th>
+      <th>学号</th>
       <th>姓名</th>
       <th>身份证</th>
-      <th>当前职务</th>
+      <th>出生日期</th>
+      <th>性别</th>
       <th>联系电话</th>
-      <th>操作</th>
+      <th>家庭住址</th>
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let data of ajaxTable.data ;let no=index">
+    <tr *ngFor="let data of ajaxTableimpStudent.data ;let no=index">
       <td>{{no+1}}</td>
-      <td>{{data.teacherName}}</td>
-      <td>{{data.teacherPaperId}}</td>
-      <td><app-teacherduty-select [(ngModel)]="data.teacherDutyId" [defaultShow]="'请选择'"></app-teacherduty-select></td>
+      <td>{{data.studentId}}</td>
+      <td>{{data.studentName}}</td>
+      <td>{{data.studentPaperId}}</td>
+      <td>{{data.birthday}}</td>
+      <td>{{data.sex}}</td>
       <td>{{data.tel}}</td>
-      <td>
-        <a href="javaScript:;" *ngIf="loginUser.isSchoolAdmin" (click)="onEdit(data)">修改</a>
-        <nz-divider nzType="vertical"></nz-divider>
-        <a href="javaScript:;" *ngIf="loginUser.isSchoolAdmin" (click)="onDelete(data)">删除</a>
-      </td>
+      <td>{{data.tel}}</td>
     </tr>
     </tbody>
   </nz-table>

@@ -71,11 +71,11 @@
         <td>{{data.teacherDutyName}}</td>
         <td>{{data.tel}}</td>
         <td>
-               <a href="javaScript:;" *ngIf="loginUser.isSchoolAdmin" (click)="onEdit(data)" title="修改教师信息">修改</a>
-               <nz-divider nzType="vertical"></nz-divider>
-               <a href="javaScript:;" *ngIf="loginUser.isSchoolAdmin" (click)="onQuitDuty(data)" title="教师调走，辞职等">离职</a>
-               <nz-divider nzType="vertical"></nz-divider>
-              <a href="javaScript:;" *ngIf="loginUser.isSchoolAdmin" (click)="onDelete(data)" title="教师录入信息错误，删除信息">>删除</a>
+          <a href="javaScript:;" *ngIf="loginUser.isSchoolAdmin" (click)="onEdit(data)" title="修改教师信息">修改</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a href="javaScript:;" *ngIf="loginUser.isSchoolAdmin" (click)="onQuitDuty(data)" title="教师调走，辞职等">离职</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a href="javaScript:;" *ngIf="loginUser.isSchoolAdmin" (click)="onDelete(data)" title="教师录入信息错误，删除信息">>删除</a>
         </td>
       </tr>
       </tbody>

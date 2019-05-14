@@ -20,4 +20,7 @@ export class StudentService {
     return this.httpsvr.onHttpGet('api/basemsg/student/studentListTotal', queryparams);
   }
 
+
+
+
 }
