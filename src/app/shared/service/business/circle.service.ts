@@ -3,6 +3,7 @@ import {HttpService} from '../baseapi/http.service';
 import {Circle} from '../../../entity/Circle';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
+import {ICircleQueryParams} from '../../interface/queryparams/ICircleQueryParams';
 
 @Injectable({
   providedIn: 'root'
@@ -11,27 +12,29 @@ export class CircleService {
 
   constructor(private httpsvr: HttpService) { }
 
-  allCircleList = (queryparams: any): Observable<{list: Array<Circle>, total: number}> => {
-    return this.httpsvr.onHttpGet('api/buisness/circle/circleList', queryparams);
+  circleList = (queryparams: ICircleQueryParams): Observable<Array<Circle>> => {
+    return this.httpsvr.onHttpGet('api/business/circle/circleList', queryparams);
   }
- schoolCircleList =(queryParams : any) : Observable<{list: Array<Circle>, total: number}> => {
-   return this.httpsvr.onHttpGet('api/buisness/circle/schoolCircleList', queryParams);
- }
+
   insertCircle = (circle: Circle): Observable<string> => {
-    return this.httpsvr.onHttpPost('api/buisness/circle/insertCircle', circle).pipe(
+    return this.httpsvr.onHttpPost('api/business/circle/insertCircle', circle).pipe(
       map( re => re.result)
     );
   }
   updateCircle = (circle: Circle): Observable<string> => {
-    return this.httpsvr.onHttpPost('api/school/buisness/circle/updateCircle', circle).pipe(
+    return this.httpsvr.onHttpPost('api/business/circle/updateCircle', circle).pipe(
       map( re => re.result)
     );
   }
   deleteCircle = (circle: Circle): Observable<string> => {
-    return this.httpsvr.onHttpGet('api/school/buisness/circle/deleteCircle', circle).pipe(
+    return this.httpsvr.onHttpGet('api/business/circle/deleteCircle', circle).pipe(
       map( re => re.result)
     );
   }
-
+ closeCircle = (closeMan: string , closeReason: string ): Observable<string > => {
+   return this.httpsvr.onHttpGet('api/business/circle/closeCircle', {closeMan, closeReason}).pipe(
+     map( re => re.result)
+   );
+ }
 
 }
