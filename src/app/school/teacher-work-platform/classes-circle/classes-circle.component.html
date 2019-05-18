@@ -1,3 +1,68 @@
-<p>
-  classes-circle works!
-</p>
+
+<div nz-row>
+  <div nz-col [nzSpan]="8">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6">圈子标题</nz-form-label>
+      <nz-form-control [nzSpan]="15">
+        <input  nz-input [(ngModel)]="queryParams.circleTitle">
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+
+</div>
+
+
+<div class="m-t-sm text-center" nz-row>
+  <div nz-col [nzSpan]="24" class="text-center">
+    <a href="javaScript:;" class="ant-btn ant-btn-primary" (click)="onQuery()">查询</a>
+    <a href="javaScript:;" class="ant-btn ant-btn-primary m-l-xs"  (click)="onAdd()" >新增</a>
+  </div>
+</div>
+<div class="m-t-sm" nz-row>
+  <div nz-col [nzSpan]="24">
+    <nz-table
+      #ajaxTable
+      nzBordered
+      nzShowSizeChanger
+      [nzFrontPagination]="false"
+      [nzData]="circleArray"
+      [nzTotal]="total"
+      [(nzPageIndex)]="queryParams.pageNo"
+      [(nzPageSize)]="queryParams.pageSize"
+      (nzPageIndexChange)="onPageChange($event)"
+    >
+      <thead >
+      <tr>
+        <th>序号</th>
+        <th>班级</th>
+        <th>标题</th>
+        <th>创建人</th>
+        <th>创建日期</th>
+        <th>状态</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of ajaxTable.data ;let no=index">
+        <td>{{no+1}}</td>
+        <td>{{
+          ( user.school.schoolStyle ===1 ?
+               commonsvr.calculateSchoolYearPrimarySchool(data.classes.grade)
+               :    commonsvr.calculateSchoolYearMiddleSchool(data.classes.grade))
+          +'年级' + data.classes.classes +'班'}}</td>
+        <td>{{data.circleTitle}}</td>
+        <td>{{data.buildTeacherName}}</td>
+        <td>{{data.buildTime | date :'yyyy-MM-dd'}}</td>
+        <td>{{data.closeMan ? '已关闭' :'活跃' }}</td>
+        <td>
+          <a href="javaScript:;" *ngIf="data.buildTeacherId=== user.teacher.teacherId" (click)="onCloseCircle(data)">关闭</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a href="javaScript:;" （click）="onEdit(data)" >修改</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a href="javaScript:;"  (click)="onDelete(data)">删除</a>
+        </td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>

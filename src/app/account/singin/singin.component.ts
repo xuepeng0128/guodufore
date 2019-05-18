@@ -52,14 +52,6 @@ export class SinginComponent implements OnInit {
   ngOnInit() {
 
 
-
-  }
-  testit = () => {
-     this.editOrder$.next({order: 'setHtml', htmlContent: 'sdfsdsdfdsfdsfdsf'});
-
-  }
-  togetit = () => {
-    this.editOrder$.next({order: 'getHtml', htmlContent: ''});
   }
   getit = (e) => {
      console.log(e);

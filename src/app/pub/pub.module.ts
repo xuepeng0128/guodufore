@@ -105,7 +105,8 @@ import { SexSelectComponent } from './components/sex-select/sex-select.component
     HabitTimeUnitSelectComponent,
     KindEditComponent,
     WinStudentComponent,
-    SexSelectComponent
+    SexSelectComponent,
+    TeacherChooseComponent
   ]
 })
 export class PubModule { }

@@ -15,6 +15,11 @@ export class CircleService {
   circleList = (queryparams: ICircleQueryParams): Observable<Array<Circle>> => {
     return this.httpsvr.onHttpGet('api/business/circle/circleList', queryparams);
   }
+  circleListTotal = (queryparams: ICircleQueryParams): Observable<number> => {
+    return this.httpsvr.onHttpGet('api/business/circle/circleListTotal', queryparams).pipe(
+      map(re => parseInt( re.total , 10) )
+    );
+  }
 
   insertCircle = (circle: Circle): Observable<string> => {
     return this.httpsvr.onHttpPost('api/business/circle/insertCircle', circle).pipe(

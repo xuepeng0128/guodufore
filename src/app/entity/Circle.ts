@@ -29,11 +29,11 @@ circleTitle: string ; // 圈子标题
   circleProperty: number ; // 圈子性质 1.私有 2.公开
 
 
-  constructor(options: {circleId: string, circleTitle: string, subTitle: string, circleClassId: string,
-                         circleClassName: string, schoolId: string, schoolName: string, classesId: string,
-                         grade: number, classes: number, classesName: string, buildTeacherId: string,
-                        buildTeacherName: string, buildTime: Date, memo: string, picUrl: string, closeMan: string,
-                        closeTime: Date, closeReason: string, circleProperty: number} = {}) {
+  constructor(options: {circleId?: string, circleTitle?: string, subTitle?: string, circleClassId?: string,
+                         circleClassName?: string, schoolId?: string, schoolName?: string, classesId?: string,
+                         grade?: number, classes?: number, classesName?: string, buildTeacherId?: string,
+                        buildTeacherName?: string, buildTime?: Date, memo?: string, picUrl?: string, closeMan?: string,
+                        closeTime?: Date, closeReason?: string, circleProperty?: number} = {}) {
     this.circleId = options.circleId;
     this.circleTitle = options.circleTitle;
     this.subTitle = options.subTitle;

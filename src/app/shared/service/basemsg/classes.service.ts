@@ -66,8 +66,8 @@ export class ClassesService {
   }
 
 
-  groupAddStudents = (params: {classesId: string , studentList: Array<Student>}): Observable<string> => {
-    return this.httpsvr.onHttpPost('api/basemsg/classes/groupInsertClassesStudent', params).pipe(
+  groupAddStudents = (cstudent: {classesId: string , studentList: Array<Student>}): Observable<string> => {
+    return this.httpsvr.onHttpPost('api/basemsg/classes/groupInsertClassesStudent', cstudent).pipe(
        map(re => re.result)
     );
   }

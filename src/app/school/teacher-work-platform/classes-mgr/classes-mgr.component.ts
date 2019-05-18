@@ -34,9 +34,6 @@ export class ClassesMgrComponent implements OnInit {
   currentChoosedClasses: Classes = new Classes({});
   teacherClasses: Array<Classes> = new Array<Classes>();
 
-
-
-
   nowState = 'browse';
 
   isStudentExcelImpModalShow = false;
@@ -64,6 +61,10 @@ export class ClassesMgrComponent implements OnInit {
           ).subscribe(
              res => {
                this.allGrades = res;
+               if(this.allGrades.length>0){
+                   this.choosedGrade=this.allGrades[0];
+                  this.onChooseGrade();
+               }
              }
           );
         }
@@ -71,12 +72,12 @@ export class ClassesMgrComponent implements OnInit {
     }
   }
   // 选择年级
-  onChooseGrade = (grade) => {
+  onChooseGrade = () => {
       const tempClassId = '';
       iif(
         () =>  this.loginUser.teacher.master,
-                          this.classessvr.gradeClasses(this.commonsvr.calculateGradeSchool(grade).toString(), this.loginUser.school.schoolId),
-                          of(this.teacherClasses.filter(o => o.grade === this.commonsvr.calculateGradeSchool(grade)))
+                          of(null), //  this.classessvr.gradeClasses(this.commonsvr.calculateGradeSchool(this.choosedGrade).toString(), this.loginUser.school.schoolId),
+                          of(this.teacherClasses.filter(o => o.grade === this.commonsvr.calculateGradeSchool(this.choosedGrade)))
       ).subscribe(
         re => {
           this.gradeChoosedClasses = re;
@@ -118,7 +119,7 @@ export class ClassesMgrComponent implements OnInit {
           schoolStyle: this.loginUser.school.schoolStyle
         });
         this.classessvr.saveTeacherAtClasses(cteacher).subscribe(
-               re = this.currentChoosedClasses.teachers.push(cteacher)
+               re => this.currentChoosedClasses.teachers.push(cteacher)
         );
   }
 
@@ -154,11 +155,20 @@ export class ClassesMgrComponent implements OnInit {
 
 
   handleExcelChange = (file: UploadFile) => {
+
     if (file.file.response !== null) {
       this.isStudentExcelImpModalShow = true;
       this.prepareImportStudents = new Array<Student>();
-      (file.file.response as Array<Student>).forEach( v =>
-        this.prepareImportStudents.push(  JSON.parse(JSON.stringify(v)) as Student )
+      (file.file.response as Array<Student>).forEach( v =>{
+         v.id=0;
+         v.headimg=null;
+         v.nickname=null;
+         v.wxcode =null;
+         v.regTime=null;
+
+          this.prepareImportStudents.push(  JSON.parse(JSON.stringify(v)) as Student );
+      }
+
       );
       file.file.response = null;
     }

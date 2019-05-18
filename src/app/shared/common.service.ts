@@ -73,9 +73,9 @@ export class CommonService {
   calculateGradeSchool = (schoolyear: number): number => {
        const nowDate = new Date();
        if (nowDate.getMonth() + 1 >= 9) {
-          return nowDate.getFullYear() + schoolyear - 1;
+          return nowDate.getFullYear() - schoolyear + 1;
        } else {
-          return nowDate.getFullYear() + schoolyear - 1 - 1;
+          return nowDate.getFullYear() - schoolyear ;
        }
   }
 

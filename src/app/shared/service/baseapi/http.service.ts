@@ -57,7 +57,7 @@ export class HttpService {
     return this.httpclient.post<any>( url, queryParams, httpOptions) // globalParams.serverBaseUrl +
       .pipe(
         map(re => {
-         // this.pageLoading$.next(false);
+         this.pageLoading$.next(false);
           return re;
         }),
         catchError(this.handleError)
@@ -66,6 +66,7 @@ export class HttpService {
 
   // 错误处理
   private handleError(error: HttpErrorResponse) {
+    this.pageLoading$.next(false);
     if (error.error instanceof ErrorEvent) {
       // 客户端网络连接错误.
       console.error('错误发生:', error.error.message);
