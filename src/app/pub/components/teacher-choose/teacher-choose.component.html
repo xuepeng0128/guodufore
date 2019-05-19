@@ -22,7 +22,7 @@
       <thead>
       <tr>
         <th nzWidth="5%" *ngIf="!singleChoose" ></th>
-        <th>身份证号</th>
+
         <th>名称</th>
         <th>职务</th>
         <th *ngIf="singleChoose">选择</th>
@@ -31,7 +31,6 @@
       <tbody>
       <tr *ngFor="let data of ajaxTable_teacher.data  | arrayTextFilter: {keyName: 'teacherName', filterText: entFilter} ;let no=index   ">
         <td align="center" nzShowCheckbox [(nzChecked)]="data.choosed" (nzCheckedChange)="refreshStatus_usually()" *ngIf="!singleChoose"></td>
-        <td align="center">{{data.teacherId}}</td>
         <td align="center">{{data.teacherName}}</td>
         <td align="center">{{data.teacherDutyName}}</td>
         <td align="center" *ngIf="singleChoose"><a href="javascript:;"  (click)="onSingleChoose(data)">[选择]</a> </td>

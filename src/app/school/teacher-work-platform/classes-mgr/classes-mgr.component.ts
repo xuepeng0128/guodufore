@@ -119,7 +119,14 @@ export class ClassesMgrComponent implements OnInit {
           schoolStyle: this.loginUser.school.schoolStyle
         });
         this.classessvr.saveTeacherAtClasses(cteacher).subscribe(
-               re => this.currentChoosedClasses.teachers.push(cteacher)
+               re =>{
+                    const tc=this.currentChoosedClasses.teachers.
+                    filter(x=>x.studySubjectId=== cteacher.studySubjectId)[0];
+               tc.teacherId=cteacher.teacherId;
+               tc.teacherName =cteacher.teacherName;
+               }
+
+
         );
   }
 

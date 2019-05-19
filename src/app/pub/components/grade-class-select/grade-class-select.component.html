@@ -1,0 +1,5 @@
+<nz-select [(ngModel)]="currentValue" class="form-input fullWidth">
+  <nz-option *ngFor="let item of classesArray" [nzValue]="item.classesId"
+             [nzLabel]=" schoolStyle===1? commonsvr.calculateSchoolYearPrimarySchool(item.grade) +'年纪' + item.classes +'班'
+                        : commonsvr.calculateSchoolYearMiddleSchool(item.grade) +'年纪' + item.classes +'班'"></nz-option>
+</nz-select>

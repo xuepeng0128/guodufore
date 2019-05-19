@@ -1,8 +1,11 @@
 export class Habit {
   habitId: string;
   circleId: string;
+  circleTitle : string;
   habitClassId: string;
+  habitClassName : string;
   subHabitClassId: string;
+  subHabitClassName : string;
   icon: string;
   color: string;
   habitName: string;
@@ -23,15 +26,18 @@ export class Habit {
   buildStudentId: string;
 
 
-  constructor(options: { habitId?: string, circleId?: string, habitClassId?: string, subHabitClassId?: string,
-              icon?: string, color?: string, habitName?: string, memo?: string, picUrl?: string,
+  constructor(options: { habitId?: string, circleId?: string,circleName? : string, habitClassId?: string, habitClassName?: string,subHabitClassId?: string,
+              subHabitClassName? : string ,icon?: string, color?: string, habitName?: string, memo?: string, picUrl?: string,
               pirTime?: number, timeUnit?: string, mode?: number, timeModeNum?: string, countModeNum?: number,
               valueModeNum?: number, unitName?: string, guoduCoin?: number, score?: number, putCardExamId?: string,
               buildTime?: Date, buildTeacherId?: string, buildStudentId?: string } = {}) {
     this.habitId = options.habitId || '';
     this.circleId = options.circleId || '';
+    this.circleTitle=options.circleName || '';
     this.habitClassId = options.habitClassId || '';
+    this.habitClassName=options.habitClassName || '';
     this.subHabitClassId = options.subHabitClassId || '';
+    this.subHabitClassName =options.subHabitClassName || '';
     this.icon = options.icon || '';
     this.color = options.color || '';
     this.habitName = options.habitName || '';

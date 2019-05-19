@@ -1,0 +1,84 @@
+
+<nz-modal [(nzVisible)]="isCircleModalShow"
+          [nzTitle]="'圈子'"
+          [nzCancelText]="'关闭'"
+          (nzOnCancel)="isCircleModalShow=false"
+          [nzOkText]="'保存'"
+          (nzOnOk)="onSave()"
+          [nzMaskClosable]="false"
+          [nzWidth]="800"
+>
+
+  <div nz-row>
+    <div nz-col [nzSpan]="24">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="3">标题</nz-form-label>
+        <nz-form-control [nzSpan]="21">
+          <input nz-input [(ngModel)]="currentCircle.circleTitle" >
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row>
+    <div nz-col [nzSpan]="24">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="3">副标题</nz-form-label>
+        <nz-form-control [nzSpan]="21">
+          <input nz-input [(ngModel)]="currentCircle.subTitle">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+  </div>
+  <div nz-row>
+    <div nz-col [nzSpan]="8">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="8">类别</nz-form-label>
+        <nz-form-control [nzSpan]="16">
+          <app-circle-class-select [(ngModel)]="currentCircle.circleClassId" [defaultShow]="'请选择'"></app-circle-class-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="8">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="8">班级</nz-form-label>
+        <nz-form-control [nzSpan]="16">
+          <app-grade-class-select [classesArray]="teacherTeachedClasses"
+                                  [schoolStyle]="user.school.schoolStyle" [(ngModel)]="currentCircle.classesId" ></app-grade-class-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="8">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="8">宣传海报</nz-form-label>
+        <nz-form-control [nzSpan]="16">
+          <nz-upload
+            class="avatar"
+            name="file"
+            [nzAction]="uploadMediaPath"
+            nzListType="picture-card"
+            [nzShowUploadList]="false"
+            (nzChange)="handleChange($event)"
+          >
+            <ng-container *ngIf="currentCircle.picUrl===''">
+              <i class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></i>
+              <div class="ant-upload-text">上传</div>
+            </ng-container>
+            <img *ngIf="currentCircle.picUrl!==''" [src]="currentCircle.picUrl" class="avatar" />
+          </nz-upload>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row>
+    <div nz-col [nzSpan]="24">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="4">圈子简介</nz-form-label>
+        <nz-form-control [nzSpan]="20">
+          <textarea style="width:98%;height:100px" [(ngModel)]="currentCircle.memo"></textarea>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+
+</nz-modal>

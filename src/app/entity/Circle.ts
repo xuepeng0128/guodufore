@@ -37,7 +37,7 @@ circleTitle: string ; // 圈子标题
     this.circleId = options.circleId;
     this.circleTitle = options.circleTitle;
     this.subTitle = options.subTitle;
-    this.circleClassId = options.circleClassId;
+    this.circleClassId = options.circleClassId ||'0';
     this.circleClassName = options.circleClassName;
     this.schoolId = options.schoolId;
     this.schoolName = options.schoolName;

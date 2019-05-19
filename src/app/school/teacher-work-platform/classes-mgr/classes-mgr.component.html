@@ -42,7 +42,7 @@
     <nz-form-item>
       <nz-form-label [nzSpan]="12"> {{clteacher.studySubjectName +'课老师'}}</nz-form-label>
       <nz-form-control [nzSpan]="12">
-        <input nz-input [(ngModel)]="clteacher.teacherName" [readonly]="true" (click)="chooseStudySubjectTeacher(clteacher.studySubjectId)" >
+        <input nz-input [(ngModel)]="clteacher.teacherName" [readonly]="true" (click)="toChooseTeacher(clteacher.studySubjectId)" >
       </nz-form-control>
     </nz-form-item>
   </div>
@@ -76,16 +76,16 @@
         <td >{{data.studentPaperId}}</td>
         <td>{{data.studentName}}</td>
         <td>{{ data.sex === 1 ? '男' : '女'}}</td>
-        <td>{{ data.birthday}}</td>
+        <td>{{ data.birthday | date : 'yyyy-MM-dd'}}</td>
         <td>{{ data.tel}}</td>
         <td>{{ data.address}}</td>
-        <th>
+        <td>
           <a href="javaScript:;"  (click)="onEdit(data)" title="修改学生信息">修改</a>
           <nz-divider nzType="vertical"></nz-divider>
           <a href="javaScript:;"  (click)="onQuitDuty(data)" title="学生转学，休学等">转学</a>
           <nz-divider nzType="vertical"></nz-divider>
-          <a href="javaScript:;"  (click)="onDelete(data)" title="学生录入信息错误，删除信息">>删除</a>
-        </th>
+          <a href="javaScript:;"  (click)="onDelete(data)" title="学生录入信息错误，删除信息">删除</a>
+        </td>
       </tr>
       </tbody>
     </nz-table>

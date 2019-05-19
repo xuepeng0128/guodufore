@@ -1,0 +1,3 @@
+<nz-select [(ngModel)]="currentValue" class="form-input fullWidth">
+  <nz-option *ngFor="let item of circleClassArray$ | async" [nzValue]="item.circleClassId" [nzLabel]="item.circleClassName"></nz-option>
+</nz-select>

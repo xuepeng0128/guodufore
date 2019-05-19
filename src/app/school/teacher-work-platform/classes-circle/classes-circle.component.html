@@ -47,9 +47,9 @@
         <td>{{no+1}}</td>
         <td>{{
           ( user.school.schoolStyle ===1 ?
-               commonsvr.calculateSchoolYearPrimarySchool(data.classes.grade)
-               :    commonsvr.calculateSchoolYearMiddleSchool(data.classes.grade))
-          +'年级' + data.classes.classes +'班'}}</td>
+               commonsvr.calculateSchoolYearPrimarySchool(data.grade)
+               :    commonsvr.calculateSchoolYearMiddleSchool(data.grade))
+          +'年级' + data.classes +'班'}}</td>
         <td>{{data.circleTitle}}</td>
         <td>{{data.buildTeacherName}}</td>
         <td>{{data.buildTime | date :'yyyy-MM-dd'}}</td>
@@ -57,7 +57,7 @@
         <td>
           <a href="javaScript:;" *ngIf="data.buildTeacherId=== user.teacher.teacherId" (click)="onCloseCircle(data)">关闭</a>
           <nz-divider nzType="vertical"></nz-divider>
-          <a href="javaScript:;" （click）="onEdit(data)" >修改</a>
+          <a href="javaScript:;" (click)="onEdit(data)" >修改</a>
           <nz-divider nzType="vertical"></nz-divider>
           <a href="javaScript:;"  (click)="onDelete(data)">删除</a>
         </td>
@@ -66,3 +66,4 @@
     </nz-table>
   </div>
 </div>
+<app-win-circle  [circleWinOrder$]="circleWinOrder$" (onCircleSaved)="circleSaved($event)"></app-win-circle>

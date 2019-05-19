@@ -36,6 +36,9 @@ import {NgxLoadingModule} from 'ngx-loading';
 import { KindEditComponent } from './components/kind-edit/kind-edit.component';
 import { WinStudentComponent } from './components/win-student/win-student.component';
 import { SexSelectComponent } from './components/sex-select/sex-select.component';
+import { WinCircleComponent } from './components/win-circle/win-circle.component';
+import { CircleClassSelectComponent } from './components/circle-class-select/circle-class-select.component';
+import { GradeClassSelectComponent } from './components/grade-class-select/grade-class-select.component';
 
 
 
@@ -59,7 +62,10 @@ import { SexSelectComponent } from './components/sex-select/sex-select.component
     HabitTimeUnitSelectComponent,
     KindEditComponent,
     WinStudentComponent,
-    SexSelectComponent
+    SexSelectComponent,
+    WinCircleComponent,
+    CircleClassSelectComponent,
+    GradeClassSelectComponent
 
   ],
   imports: [
@@ -106,7 +112,10 @@ import { SexSelectComponent } from './components/sex-select/sex-select.component
     KindEditComponent,
     WinStudentComponent,
     SexSelectComponent,
-    TeacherChooseComponent
+    TeacherChooseComponent,
+    WinCircleComponent,
+    CircleClassSelectComponent,
+    GradeClassSelectComponent
   ]
 })
 export class PubModule { }

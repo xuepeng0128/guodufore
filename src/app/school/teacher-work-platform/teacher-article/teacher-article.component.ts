@@ -15,7 +15,7 @@ import {NzMessageService, NzModalService} from 'ng-zorro-antd';
   styleUrls: ['./teacher-article.component.css']
 })
 export class TeacherArticleComponent implements OnInit {
-  isTeacherArticleModalShow=true;
+  hhh=false;
   teacherArticleWinOrder$: Subject<{nowState: string , teacherArticle: TeacherArticle}>
    = new Subject<{nowState: string , teacherArticle: TeacherArticle}>() ;
 
