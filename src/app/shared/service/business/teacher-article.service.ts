@@ -15,37 +15,37 @@ export class TeacherArticleService {
 
 
   teacherArticleList = (queryParams: ITeacherArticleQueryParams): Observable<Array<ITeacherArticleQueryResult>> => {
-         return this.httpsvr.onHttpGet('api/buisness/teacherArticle/teacherArticleList', queryParams).pipe(
+         return this.httpsvr.onHttpGet('api/business/teacherArticle/teacherArticleList', queryParams).pipe(
              map( re => re as Array<ITeacherArticleQueryResult>)
          );
    }
 
    teacherArticleTotal = (queryParams: ITeacherArticleQueryParams): Observable<number> => {
-     return this.httpsvr.onHttpGet('api/buisness/teacherArticle/teacherArticleListTotal', queryParams).pipe(
+     return this.httpsvr.onHttpGet('api/business/teacherArticle/teacherArticleListTotal', queryParams).pipe(
        map( re => parseInt( re.result , 10) )
      );
    }
 
    insertTeacherArticle = (teacherArticle: TeacherArticle): Observable<string> => {
-       return this.httpsvr.onHttpPost('api/buisness/teacherArticle/insertArticle', teacherArticle).pipe(
+       return this.httpsvr.onHttpPost('api/business/teacherArticle/insertArticle', teacherArticle).pipe(
          map( re => re.result)
        );
    }
 
   updateTeacherArticle = (teacherArticle: TeacherArticle): Observable<string> => {
-    return this.httpsvr.onHttpPost('api/buisness/teacherArticle/updateArticle', teacherArticle).pipe(
+    return this.httpsvr.onHttpPost('api/business/teacherArticle/updateArticle', teacherArticle).pipe(
       map( re => re.result)
     );
   }
 
   publishTeacherArticle = (paras: {articleId: string , teacherHabitIds: Array<string>}): Observable<string> => {
-    return  this.httpsvr.onHttpPost('api/buisness/teacherArticle/publishTeacherArticle', paras).pipe(
+    return  this.httpsvr.onHttpPost('api/business/teacherArticle/publishTeacherArticle', paras).pipe(
       map( re => re.result)
     );
   }
 
   deleteTeacherArticle = (articleId: string): Observable<string> => {
-    return this.httpsvr.onHttpGet('api/buisness/teacherArticle/deleteTeacherArticle', {articleId}).pipe(
+    return this.httpsvr.onHttpGet('api/business/teacherArticle/deleteTeacherArticle', {articleId}).pipe(
       map( re =>  re.result)
     );
   }

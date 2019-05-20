@@ -1,7 +1,7 @@
-
+<div [hidden]="showKindEdit">
 <div class="m-t-sm text-center" nz-row>
   <div nz-col [nzSpan]="3" >
-       <a href="javaScript:;" class="ant-btn ant-btn-primary m-l-xs" (click)="hhh=!hhh" >添加</a>
+       <a href="javaScript:;" class="ant-btn ant-btn-primary m-l-xs" (click)="onAdd()" >添加</a>
   </div>
 </div>
 
@@ -37,20 +37,31 @@
         <td>{{data.teacherName}}</td>
         <td>{{data.habitNum}}</td>
         <td>
-          <a href="javaScript:;" *ngIf="data.teacheId === loginUser.teacher.teacherId && !data.published" (click)="onEdit(data)" title="修改文章">修改</a>
+          <a href="javaScript:;" *ngIf="data.teacherId === loginUser.teacher.teacherId && !data.published" (click)="onEdit(data)" title="修改文章">修改</a>
           <nz-divider nzType="vertical"></nz-divider>
-          <a href="javaScript:;" *ngIf="data.teacheId === loginUser.teacher.teacherId" (click)="onPublish(data)" title="发布该文章，发布后，该文章将不能修改及删除">发布</a>
+          <a href="javaScript:;" *ngIf="data.teacherId === loginUser.teacher.teacherId" (click)="onPublish(data)" title="发布该文章，发布后，该文章将不能修改及删除">发布</a>
           <nz-divider nzType="vertical"></nz-divider>
-          <a href="javaScript:;" *ngIf="data.teacheId === loginUser.teacher.teacherId && !data.published" (click)="onDelete(data)" title="删除该文章">>删除</a>
+          <a href="javaScript:;" *ngIf="data.teacherId === loginUser.teacher.teacherId && !data.published" (click)="onDelete(data)" title="删除该文章">>删除</a>
         </td>
       </tr>
       </tbody>
     </nz-table>
   </div>
 </div>
-
-<div [hidden]="hhh">
-  <app-kind-edit ></app-kind-edit>
+</div>
+<div [hidden]="!showKindEdit">
+  <div class="m-t-sm text-center" nz-row>
+    <div nz-col [nzSpan]="3" >
+      <a href="javaScript:;" class="ant-btn ant-btn-primary m-l-xs" (click)="onSave()" >保存</a>
+    </div>
+  </div>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="4"> 文章标题</nz-form-label>
+    <nz-form-control [nzSpan]="18">
+      <input nz-input [(ngModel)]="currentArticle.articleTitle" >
+    </nz-form-control>
+  </nz-form-item>
+  <app-kind-edit [editOrder$]="editOrder$"  (onHtmlTextChanged)="receiveHtml($event)"></app-kind-edit>
 </div>
 
 <!--<app-win-teacher-article [teacherArticleWinOrder$]="teacherArticleWinOrder$" (onArticleSaved)="onSaved($event)"></app-win-teacher-article>-->

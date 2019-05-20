@@ -15,11 +15,11 @@ import {NzMessageService, NzModalService} from 'ng-zorro-antd';
   styleUrls: ['./teacher-article.component.css']
 })
 export class TeacherArticleComponent implements OnInit {
-  hhh=false;
-  teacherArticleWinOrder$: Subject<{nowState: string , teacherArticle: TeacherArticle}>
-   = new Subject<{nowState: string , teacherArticle: TeacherArticle}>() ;
+  showKindEdit = false;
+  editOrder$: Subject<{order: string; htmlContent: string}> = new Subject<{order: string; htmlContent: string}>();
 
 
+  nowEdit = 'browse';
   loginUser: LoginUser = this.usersvr.getUserStorage();
   queryParams: ITeacherArticleQueryParams = {
     teacherId : this.loginUser.teacher.master ? '' : this.loginUser.teacher.teacherId,
@@ -31,11 +31,13 @@ export class TeacherArticleComponent implements OnInit {
     pageBegin : 0
   };
   articleArray: Array<ITeacherArticleQueryResult> = new Array<ITeacherArticleQueryResult>();
+  currentArticle: TeacherArticle = new TeacherArticle({});
   total = 0;
   constructor(private usersvr: UserService , private  teacherarticlesvr: TeacherArticleService,
               private modalService: NzModalService, private message: NzMessageService) { }
 
   ngOnInit() {
+    this.onQuery();
   }
   onQuery = () => {
     this.queryParams.pageNo = 1;
@@ -56,10 +58,17 @@ export class TeacherArticleComponent implements OnInit {
 
 
   onAdd = () => {
-     this.teacherArticleWinOrder$.next({nowState : 'add', teacherArticle : null});
+    this.nowEdit = 'add';
+    this.showKindEdit = true;
+    this.currentArticle = new TeacherArticle({  teacherId: this.loginUser.teacher.teacherId,
+                                                             schoolId: this.loginUser.school.schoolId});
+    this.editOrder$.next({order: 'setHtml', htmlContent: ''});
   }
- onEdit = (teacherArticle: TeacherArticle) => {
-   this.teacherArticleWinOrder$.next({nowState : 'add', teacherArticle});
+ onEdit = (teacherArticle: ITeacherArticleQueryResult) => {
+   this.nowEdit = 'edit';
+   this.showKindEdit = true;
+   this.currentArticle = new TeacherArticle({articleId: teacherArticle.articleId, articleTitle: teacherArticle.articleTitle, articleContent: teacherArticle.articleContent});
+   this.editOrder$.next({order: 'setHtml', htmlContent: this.currentArticle.articleContent});
  }
 onDelete = (teacherArticle: TeacherArticle) => {
   this.modalService.confirm({
@@ -76,10 +85,27 @@ onPublish = (teacherArticle: TeacherArticle) => {
 
 }
 
-onSaved = () => {
-      this.onQuery();
+onSave = () => {
+       this.editOrder$.next({order: 'getHtml', htmlContent: ''});
+
 }
 
+  receiveHtml = (html) => {
+    this.currentArticle.articleContent = html;
+    if (this.nowEdit === 'add') {
+      this.teacherarticlesvr.insertTeacherArticle(this.currentArticle).subscribe(
+         re =>   {
+           this.onQuery();
+           this.total += 1;
+         }
+      );
+    } else {
+      this.teacherarticlesvr.updateTeacherArticle(this.currentArticle).subscribe(
+        re =>     this.onQuery()
+      );
+    }
 
+    this.showKindEdit = false;
+  }
 
 }
