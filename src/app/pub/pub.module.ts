@@ -39,6 +39,10 @@ import { SexSelectComponent } from './components/sex-select/sex-select.component
 import { WinCircleComponent } from './components/win-circle/win-circle.component';
 import { CircleClassSelectComponent } from './components/circle-class-select/circle-class-select.component';
 import { GradeClassSelectComponent } from './components/grade-class-select/grade-class-select.component';
+import { WinNoExamHabitComponent } from './components/win-no-exam-habit/win-no-exam-habit.component';
+import { WinExamHabitComponent } from './components/win-exam-habit/win-exam-habit.component';
+import { CircleStudentChooseComponent } from './components/circle-student-choose/circle-student-choose.component';
+import { HabitTemplateChooseComponent } from './components/habit-template-choose/habit-template-choose.component';
 
 
 
@@ -65,7 +69,11 @@ import { GradeClassSelectComponent } from './components/grade-class-select/grade
     SexSelectComponent,
     WinCircleComponent,
     CircleClassSelectComponent,
-    GradeClassSelectComponent
+    GradeClassSelectComponent,
+    WinNoExamHabitComponent,
+    WinExamHabitComponent,
+    CircleStudentChooseComponent,
+    HabitTemplateChooseComponent
 
   ],
   imports: [
@@ -115,7 +123,11 @@ import { GradeClassSelectComponent } from './components/grade-class-select/grade
     TeacherChooseComponent,
     WinCircleComponent,
     CircleClassSelectComponent,
-    GradeClassSelectComponent
+    GradeClassSelectComponent,
+    WinNoExamHabitComponent,
+    WinExamHabitComponent,
+    CircleStudentChooseComponent,
+    HabitTemplateChooseComponent
   ]
 })
 export class PubModule { }

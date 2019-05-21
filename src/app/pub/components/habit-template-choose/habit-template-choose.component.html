@@ -1,0 +1,78 @@
+<nz-modal [(nzVisible)]="isHabitTemplateChooseModalShow"
+          [nzTitle]="'选择习惯资源'"
+          [nzCancelText]="'关闭'"
+          (nzOnCancel)="isHabitTemplateChooseModalShow=false"
+          [nzOkText]="''"
+          [nzMaskClosable]="false"
+          [nzWidth]="800"
+>
+  <div nz-col [nzSpan]="24">
+    <input nz-input  placeholder="输入名称" [(ngModel)]="entFilter" >
+  </div>
+  <div nz-col [nzSpan]="24">
+    <nz-table
+      #ajaxTable_habittemplate
+      nzBordered
+      [nzScroll]="{ y: '240px' }"
+      [nzHideOnSinglePage]="true"
+      [nzFrontPagination]="false"
+      [nzData]="habitTemplateList"
+    >
+
+      <thead >
+      <tr>
+        <th>序号</th>
+        <th>标题</th>
+        <th>大类</th>
+        <th>小类</th>
+        <th>图标</th>
+        <th>主色</th>
+        <th>打卡周期</th>
+        <th>执行方式</th>
+        <th>时间限制</th>
+        <th>完成次数</th>
+        <th>完成数量</th>
+        <th>单位</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of ajaxTable_habittemplate.data ;let no=index">
+        <td>{{no+1}}</td>
+        <td >
+          {{data.habitTemplateName}}
+        </td>
+        <td >
+          {{data.habitClassName}}
+        </td>
+        <td >
+          {{data.subHabitClassName}}
+        </td>
+        <td >
+          <img [src]="data.icon" style="width: 40px; height : 40px" />
+        </td>
+        <td [ngStyle]="{'background-color': data.color }"></td>
+        <td> 每{{data.perTime + data.timeUnit}} 打卡一次</td>
+        <td>{{data.mode ===1 ? '时间模式' :
+          ( data.mode ===2 ? '次数模式' : '数量模式')
+          }}</td>
+        <td >
+          {{data.mode ===1 ? data.timeModeNum :''}}
+        </td>
+        <td >
+          {{data.mode ===2 ? data.countModeNum : ''}}
+        </td>
+        <td >
+          {{data.mode ===3 ? data.valueModeNum : ''}}
+        </td>
+        <td >
+          {{data.mode ===3 ? data.unitName : ''}}
+        </td>
+
+        <td align="center" *ngIf="singleChoose"><a href="javascript:;"  (click)="onSingleChoose(data)">[选择]</a> </td>
+
+      </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</nz-modal>

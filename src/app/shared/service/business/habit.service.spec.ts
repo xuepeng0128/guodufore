@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { HabitService } from './habit.service';
 
-describe('HabitService', () => {
+describe('HabitTemplateService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {

@@ -4,9 +4,8 @@ import {UserService} from '../../../shared/user.service';
 import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {flatMap, map} from 'rxjs/operators';
 import {HabitTemplate} from '../../../entity/HabitTemplate';
-import {HabitService} from '../../../shared/service/basemsg/habit.service';
-import {ClassesService} from '../../../shared/service/basemsg/classes.service';
-import {HabitTemplateService} from "../../../shared/service/dic/habit-template.service";
+
+import {HabitTemplateService} from '../../../shared/service/dic/habit-template.service';
 
 @Component({
   selector: 'app-habit-template',
@@ -17,10 +16,10 @@ export class HabitTemplateComponent implements OnInit {
   habitTemplateWinOrder$: Subject<{nowState: string , habitTemplate: HabitTemplate}> = new Subject<{nowState: string , habitTemplate: HabitTemplate}>() ;
   user = this.usersvr.getUserStorage();
   habitTemplateArray: Array<HabitTemplate> = new Array<HabitTemplate>();
-  pageBegin =0;
-  pageNo=1;
-  pageSize =10;
-  total=0;
+  pageBegin = 0;
+  pageNo = 1;
+  pageSize = 10;
+  total = 0;
   constructor(private habittemplatesvr: HabitTemplateService, private usersvr: UserService,
               private modalService: NzModalService, private message: NzMessageService) { }
 
@@ -29,17 +28,17 @@ export class HabitTemplateComponent implements OnInit {
   }
 
   onQuery = () => {
-     this.habittemplatesvr.habitTemplateList(this.pageBegin,this.pageSize).subscribe(
+     this.habittemplatesvr.habitTemplateList(this.pageBegin, this.pageSize).subscribe(
       re => this.habitTemplateArray = re
     );
      this.habittemplatesvr.habitTemplateListTotal().subscribe(
-        re => this.total=re
+        re => this.total = re
      );
   }
 
   onPageChange = (e) => {
     this.pageBegin = (e - 1) * this.pageSize;
-    this.habittemplatesvr.habitTemplateList(this.pageBegin,this.pageSize).subscribe(
+    this.habittemplatesvr.habitTemplateList(this.pageBegin, this.pageSize).subscribe(
       re => this.habitTemplateArray = re
     );
   }
@@ -47,14 +46,14 @@ export class HabitTemplateComponent implements OnInit {
     this.habitTemplateWinOrder$.next({nowState: 'add', habitTemplate: null});
   }
   onEdit = (habitTemplate: HabitTemplate) => {
-    this.habitTemplateWinOrder$.next({nowState: 'edit', habitTemplate: habitTemplate});
+    this.habitTemplateWinOrder$.next({nowState: 'edit', habitTemplate});
   }
   onSaved = (nowState: string) => {
     this.pageBegin = 0;
-    this.habittemplatesvr.habitTemplateList(this.pageBegin,this.pageSize).subscribe(
+    this.habittemplatesvr.habitTemplateList(this.pageBegin, this.pageSize).subscribe(
       re => this.habitTemplateArray = re
     );
-    this.total +=1;
+    this.total += 1;
   }
   onDelete = (habitTemplate: HabitTemplate) => {
     this.modalService.confirm({
@@ -63,10 +62,10 @@ export class HabitTemplateComponent implements OnInit {
       nzOnOk: () => {
          this.pageBegin = 0;
          this.habittemplatesvr.deleteHabitTemplate(habitTemplate.habitTemplateId).pipe(
-          flatMap(re => this.habittemplatesvr.habitTemplateList(this.pageBegin,this.pageSize))
+          flatMap(re => this.habittemplatesvr.habitTemplateList(this.pageBegin, this.pageSize))
         ).subscribe(re => {
           this.habitTemplateArray = re;
-          this.total -=1;
+          this.total -= 1;
         });
       }
     });
@@ -74,9 +73,9 @@ export class HabitTemplateComponent implements OnInit {
 
 
 
-  ondel=() =>{
+  ondel = () => {
     this.habittemplatesvr.deleteHabitTemplate('ddfghhhj').subscribe(
       re => console.log(re)
-    )
+    );
   }
 }

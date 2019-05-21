@@ -1,0 +1,106 @@
+<nz-radio-group [(ngModel)]="habitStyle" >
+  <label nz-radio-button [nzValue]="'normal'">一般习惯</label>
+  <label nz-radio-button [nzValue]="'exam'">考核类习惯</label>
+</nz-radio-group>
+
+<div [hidden]="habitStyle==='exam'">
+  <div class="m-t-sm text-center" nz-row>
+    <div nz-col [nzSpan]="24" class="text-center">
+      <a href="javaScript:;" class="ant-btn ant-btn-primary m-l-xs"  (click)="onAdd()" >新增</a>
+    </div>
+  </div>
+  <div class="m-t-sm" nz-row>
+    <div nz-col [nzSpan]="24">
+      <nz-table
+        #ajaxTableNoexam
+        nzBordered
+        nzShowSizeChanger
+        [nzFrontPagination]="false"
+        [nzData]="noExamHabitArray"
+        [nzTotal]="noExamTotal"
+        [(nzPageIndex)]="noExamQueryParam.pageNo"
+        [(nzPageSize)]="noExamQueryParam.pageSize"
+        (nzPageIndexChange)="onPageChangeNoExam($event)"
+      >
+        <thead >
+        <tr>
+          <th>序号</th>
+          <th>班级</th>
+          <th>圈子</th>
+          <th>习惯</th>
+          <th>参与学生</th>
+          <th>创建日期</th>
+          <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let data of ajaxTableNoexam.data ;let no=index">
+          <td>{{no+1}}</td>
+          <td>{{
+            ( user.school.schoolStyle ===1 ?
+            commonsvr.calculateSchoolYearPrimarySchool(data.grade)
+            :    commonsvr.calculateSchoolYearMiddleSchool(data.grade))
+            +'年级' + data.classes +'班'}}</td>
+          <td>{{data.circleTitle}}</td>
+          <td>{{data.habitName}}</td>
+          <td>{{data.buildTime | date :'yyyy-MM-dd'}}</td>
+          <td>
+            <a href="javaScript:;" >详细</a>
+          </td>
+        </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+</div>
+<div [hidden]="habitStyle==='normal'">
+  <div class="m-t-sm text-center" nz-row>
+    <div nz-col [nzSpan]="24" class="text-center">
+      <a href="javaScript:;" class="ant-btn ant-btn-primary m-l-xs"  (click)="onAdd()" >新增</a>
+    </div>
+  </div>
+  <div class="m-t-sm" nz-row>
+    <div nz-col [nzSpan]="24">
+      <nz-table
+        #ajaxTableexam
+        nzBordered
+        nzShowSizeChanger
+        [nzFrontPagination]="false"
+        [nzData]="examHabitArray"
+        [nzTotal]="examTotal"
+        [(nzPageIndex)]="examQueryParam.pageNo"
+        [(nzPageSize)]="examQueryParam.pageSize"
+        (nzPageIndexChange)="onPageChangeExam($event)"
+      >
+        <thead >
+        <tr>
+          <th>序号</th>
+          <th>班级</th>
+          <th>圈子</th>
+          <th>考核</th>
+          <th>习惯</th>
+          <th>参与学生</th>
+          <th>创建日期</th>
+          <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let data of ajaxTableexam.data ;let no=index">
+          <td>{{no+1}}</td>
+          <td>{{
+            ( user.school.schoolStyle ===1 ?
+            commonsvr.calculateSchoolYearPrimarySchool(data.grade)
+            :    commonsvr.calculateSchoolYearMiddleSchool(data.grade))
+            +'年级' + data.classes +'班'}}</td>
+          <td>{{data.circleTitle}}</td>
+          <td>{{data.buildTeacherName}}</td>
+          <td>{{data.buildTime | date :'yyyy-MM-dd'}}</td>
+          <td>
+            <a href="javaScript:;" >详细</a>
+          </td>
+        </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+</div>

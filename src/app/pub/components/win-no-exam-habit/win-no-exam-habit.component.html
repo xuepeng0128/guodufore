@@ -1,0 +1,101 @@
+
+<nz-modal [(nzVisible)]="isNoExamHabitModalShow"
+          [nzTitle]="'一般习惯'"
+          [nzCancelText]="'关闭'"
+          (nzOnCancel)="isNoExamHabitModalShow=false"
+          [nzOkText]="'保存'"
+          (nzOnOk)="onSave()"
+          [nzMaskClosable]="false"
+          [nzWidth]="800"
+>
+
+  <div nz-row>
+    <div nz-col [nzSpan]="24">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="3">标题</nz-form-label>
+        <nz-form-control [nzSpan]="21">
+          <input nz-input [(ngModel)]="currentHabit.habitName"  >
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+
+  <div nz-row>
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">类别</nz-form-label>
+        <nz-form-control [nzSpan]="8">
+          <app-habit-class-select [(ngModel)]="currentHabit.habitClassId" [defaultShow]="'请选择'"></app-habit-class-select>
+        </nz-form-control>
+        <nz-form-control [nzSpan]="9">
+          <app-subhabit-class-select [(ngModel)]="currentHabit.subHabitClassId" [defaultShow]="'请选择'" [pareHabitClassId]="currentHabit.habitClassId"></app-subhabit-class-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">颜色</nz-form-label>
+        <nz-form-control [nzSpan]="17">
+          <input [style.background]="currentHabit.color" [(colorPicker)]="currentHabit.color" style="height :35px;width: 70px" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">模式</nz-form-label>
+        <nz-form-control [nzSpan]="17">
+          <app-habit-mode-select [(ngModel)]="currentHabit.mode" ></app-habit-mode-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row>
+    <div nz-col [nzSpan]="24">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="3">打卡要求</nz-form-label>
+        <nz-form-control [nzSpan]="4">
+          每 <nz-input-number [(ngModel)]="currentHabit.perTime" [nzMin]="1" [nzMax]="10" [nzStep]="1" style="width:70px"></nz-input-number>
+        </nz-form-control>
+        <nz-form-control [nzSpan]="3">
+          <app-habit-time-unit-select [(ngModel)]="currentHabit.timeUnit"  ></app-habit-time-unit-select>
+        </nz-form-control>
+        <nz-form-control [nzSpan]="3">
+          打卡一次,
+        </nz-form-control>
+        <nz-form-control [nzSpan]="8"  *ngIf="currentHabit.mode===1">
+          任务完成时间不超过   <nz-time-picker [(ngModel)]="limitTime" [nzDefaultOpenValue]="defaultOpenValue" style="width: 120px"></nz-time-picker>
+        </nz-form-control>
+        <nz-form-control [nzSpan]="8"  *ngIf="currentHabitTemplate.mode===2">
+          任务完成次数不少于    <nz-input-number [(ngModel)]="currentHabit.countModeNum" [nzMin]="1"  [nzStep]="1" style="width:70px"></nz-input-number>次
+        </nz-form-control>
+        <nz-form-control [nzSpan]="8"  *ngIf="currentHabitTemplate.mode===3">
+          任务完成量不少于    <nz-input-number [(ngModel)]="currentHabit.valueModeNum" [nzMin]="1"  [nzStep]="1" style="width:70px"></nz-input-number>
+        </nz-form-control>
+        <nz-form-control [nzSpan]="2"  *ngIf="currentHabit.mode===3">
+          <app-habit-unit-select [(ngModel)]="currentHabit.unitName" ></app-habit-unit-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+
+
+  <div nz-row>
+    <div nz-col [nzSpan]="8">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="8">图标</nz-form-label>
+        <nz-form-control [nzSpan]="16">
+          <img [src]="currentHabit.icon" style="height:100px;width:100px;" (click)="showIconChoose()" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="16">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="3">描述</nz-form-label>
+        <nz-form-control [nzSpan]="21">
+          <textarea style="width:98%;height:100px" [(ngModel)]="currentHabitTemplate.memo"></textarea>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</nz-modal>
+<app-win-icon-choose [iconWinOrder$]="iconWinOrder$" (onIconChoosed)="iconHavechoosed($event)"></app-win-icon-choose>

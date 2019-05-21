@@ -1,0 +1,38 @@
+<nz-modal [(nzVisible)]="isCircleStudentChooseModalShow"
+          [nzTitle]="'选择教师'"
+          [nzCancelText]="'关闭'"
+          (nzOnCancel)="isCircleStudentChooseModalShow=false"
+          [nzOkText]="'保存'"
+          (nzOnOk)="onMulChoose()"
+          [nzMaskClosable]="false"
+          [nzWidth]="800"
+>
+  <div nz-col [nzSpan]="24">
+    <input nz-input  placeholder="输入名称过滤学生" [(ngModel)]="entFilter" >
+  </div>
+  <div nz-col [nzSpan]="24">
+    <nz-table
+      #ajaxTable_student
+      nzBordered
+      [nzScroll]="{ y: '240px' }"
+      [nzHideOnSinglePage]="true"
+      [nzFrontPagination]="false"
+      [nzData]="studentList"
+    >
+      <thead>
+      <tr>
+        <th nzWidth="5%"></th>
+        <th>学号</th>
+        <th>名称</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of ajaxTable_student.data  | arrayTextFilter: {keyName: 'studentName', filterText: entFilter} ;let no=index   ">
+        <td align="center" nzShowCheckbox [(nzChecked)]="data.choosed" ></td>
+        <td align="center">{{data.studentId}}</td>
+        <td align="center">{{data.studentName}}</td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</nz-modal>

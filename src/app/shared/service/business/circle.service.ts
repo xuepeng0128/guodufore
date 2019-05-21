@@ -4,6 +4,7 @@ import {Circle} from '../../../entity/Circle';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {ICircleQueryParams} from '../../interface/queryparams/ICircleQueryParams';
+import {Student} from '../../../entity/Student';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,9 @@ export class CircleService {
       map(re => parseInt( re.total , 10) )
     );
   }
-
+ circleStudentList = (circleId: string): Observable<Array<Student>> => {
+   return this.httpsvr.onHttpGet('api/business/circle/circleStudentList',{circleId});
+ }
   insertCircle = (circle: Circle): Observable<string> => {
     return this.httpsvr.onHttpPost('api/business/circle/insertCircle', circle).pipe(
       map( re => re.result)

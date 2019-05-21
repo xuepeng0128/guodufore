@@ -1,9 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {iif, Subject} from 'rxjs';
-import {HabitTemplate} from '../../../entity/HabitTemplate';
-import {HabitService} from '../../../shared/service/basemsg/habit.service';
+
 import {NzMessageService, UploadFile} from 'ng-zorro-antd';
-import {ISupUploadfiles} from '../../../shared/interface/ISupUploadfiles';
+
 import {isNullOrUndefined} from 'util';
 import {MSG_SAVE_ERROR, MSG_SAVE_SUCCESS} from '../../../shared/SysMessage';
 import {Classes} from '../../../entity/Classes';
@@ -12,7 +11,6 @@ import {Teacher} from '../../../entity/Teacher';
 import {DOWNLOAD_TEMPLATE_PATH} from '../../../shared/const';
 import {CommonService} from '../../../shared/common.service';
 import {IClassesQueryResult} from '../../../shared/interface/queryparams/IClassQueryResult';
-import {ClassesStudent} from '../../../entity/ClassesStudent';
 import {ClassesTeacher} from '../../../entity/ClassesTeacher';
 import {LoginUser} from '../../../entity/LoginUser';
 import {UserService} from '../../../shared/user.service';

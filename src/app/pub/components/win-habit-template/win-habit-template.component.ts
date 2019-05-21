@@ -1,12 +1,11 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {iif, Subject} from 'rxjs';
 import {HabitTemplate} from '../../../entity/HabitTemplate';
-import {HabitService} from '../../../shared/service/basemsg/habit.service';
 import {NzMessageService, UploadFile} from 'ng-zorro-antd';
 import {ISupUploadfiles} from '../../../shared/interface/ISupUploadfiles';
 import {isNullOrUndefined} from 'util';
 import {MSG_SAVE_ERROR, MSG_SAVE_SUCCESS} from '../../../shared/SysMessage';
-import {HabitTemplateService} from "../../../shared/service/dic/habit-template.service";
+import {HabitTemplateService} from '../../../shared/service/dic/habit-template.service';
 
 @Component({
   selector: 'app-win-habit-template',
@@ -60,10 +59,10 @@ export class WinHabitTemplateComponent implements OnInit {
   }
 
 
-  showIconChoose=()=>{
+  showIconChoose = () => {
       this.iconWinOrder$.next('open');
   }
-  iconHavechoosed=(iconUrl : string) =>{
-    this.currentHabitTemplate.icon=iconUrl;
+  iconHavechoosed = (iconUrl: string) => {
+    this.currentHabitTemplate.icon = iconUrl;
   }
 }

@@ -9,9 +9,10 @@ import {PubModule} from '../../pub/pub.module';
 import { TeacherLessonsComponent } from './teacher-lessons/teacher-lessons.component';
 import {TeacherArticleComponent} from "./teacher-article/teacher-article.component";
 import { TeacherNoticeComponent } from './teacher-notice/teacher-notice.component';
+import { TeacherHabitComponent } from './teacher-habit/teacher-habit.component';
 
 @NgModule({
-  declarations: [ClassesMgrComponent, ClassesCircleComponent,  ExamMgrComponent, TeacherLessonsComponent, TeacherArticleComponent, TeacherNoticeComponent],
+  declarations: [ClassesMgrComponent, ClassesCircleComponent,  ExamMgrComponent, TeacherLessonsComponent, TeacherArticleComponent, TeacherNoticeComponent, TeacherHabitComponent],
   imports: [
     CommonModule,
     PubModule,
