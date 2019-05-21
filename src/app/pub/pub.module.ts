@@ -10,7 +10,6 @@ import { WinSchoolComponent } from './components/win-school/win-school.component
 import { EmployeeSelectComponent } from './components/employee-select/employee-select.component';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { HabitClassSelectComponent } from './components/habit-class-select/habit-class-select.component';
-import { WinHabitComponent } from './components/win-habit/win-habit.component';
 import { WinClassesComponent } from './components/win-classes/win-classes.component';
 import {YearSelectComponent} from './components/year-select/year-select.component';
 import { TeacherChooseComponent } from './components/teacher-choose/teacher-choose.component';
@@ -49,7 +48,7 @@ import { HabitTemplateChooseComponent } from './components/habit-template-choose
 @NgModule({
   declarations: [CitySelectComponent, DistrictSelectComponent, WinSchoolComponent,
     EmployeeSelectComponent, CutSizePipe, ArrayTextFilterPipe, WinEmployeeComponent,  HabitClassSelectComponent,
-    WinHabitComponent, WinClassesComponent, YearSelectComponent, TeacherChooseComponent, StudySubjectSelectComponent,
+    WinClassesComponent, YearSelectComponent, TeacherChooseComponent, StudySubjectSelectComponent,
     SchoolSelectComponent,
     CorpDutySelectComponent,
     SchoolyearSelectComponent,
@@ -95,7 +94,6 @@ import { HabitTemplateChooseComponent } from './components/habit-template-choose
     WinSchoolComponent,
     WinEmployeeComponent,
     NgxLoadingModule,
-    WinHabitComponent,
     WinClassesComponent,
     WinTeacherComponent,
     YearSelectComponent,

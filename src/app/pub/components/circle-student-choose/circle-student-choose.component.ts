@@ -26,8 +26,9 @@ export class CircleStudentChooseComponent implements OnInit {
   constructor(private circlesvr: CircleService, private usersvr: UserService) { }
 
   ngOnInit() {
-    this.onQuery();
+
     this.circleStudentChooseSign$.subscribe(re => {
+      this.onQuery(re.circleId);
       this.isCircleStudentChooseModalShow = true;
       re.haveChoosedStudent.forEach(t => {
           this.studentList.filter(o => o.studentId === t.studentId)[0].choosed = true;

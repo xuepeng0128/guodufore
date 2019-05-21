@@ -22,7 +22,7 @@ export class CircleService {
     );
   }
  circleStudentList = (circleId: string): Observable<Array<Student>> => {
-   return this.httpsvr.onHttpGet('api/business/circle/circleStudentList',{circleId});
+   return this.httpsvr.onHttpGet('api/business/circle/circleStudentList', {circleId});
  }
   insertCircle = (circle: Circle): Observable<string> => {
     return this.httpsvr.onHttpPost('api/business/circle/insertCircle', circle).pipe(
@@ -44,5 +44,11 @@ export class CircleService {
      map( re => re.result)
    );
  }
+
+ makeCircleId = (): string => {
+   const t = new Date().getTime();
+   return 'CIR' + t;
+ }
+
 
 }

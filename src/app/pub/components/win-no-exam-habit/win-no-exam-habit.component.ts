@@ -17,7 +17,7 @@ export class WinNoExamHabitComponent implements OnInit {
   @Input() noExamHabitWinOrder$: Subject<{nowState: string , habit: Habit, circleId: string}> =
     new Subject<{nowState: string , habit: Habit, circleId: string}>();
   @Output() onNoExamHabitSaved: EventEmitter<string> = new EventEmitter<string>();
-
+  iconWinOrder$: Subject<string> = new Subject<string>();
   currentHabit: Habit = new Habit({});
   isNoExamHabitModalShow = false;
   nowState = 'browse';
