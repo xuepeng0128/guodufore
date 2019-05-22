@@ -33,4 +33,13 @@ export class HabitService {
       map( re => re.result)
     );
   }
+
+
+  onMakeExamId = () => {
+    const t = new Date().getTime();
+    return 'HEXAM' + t;
+  }
+
+
+
 }

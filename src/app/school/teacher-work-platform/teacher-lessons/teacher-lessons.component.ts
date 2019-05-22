@@ -6,11 +6,12 @@ import {ITeacherArticleQueryResult} from '../../../shared/interface/queryparams/
 import {TeacherArticle} from '../../../entity/TeacherArticle';
 import {UserService} from '../../../shared/user.service';
 import {TeacherArticleService} from '../../../shared/service/business/teacher-article.service';
-import {NzMessageService, NzModalService} from 'ng-zorro-antd';
+import {NzMessageService, NzModalService, UploadFile} from 'ng-zorro-antd';
 import {ITeacherLessonQueryParams} from '../../../shared/interface/queryparams/ITeacherLessonQueryParams';
 import {TeacherLesson} from '../../../entity/TeacherLesson';
 import {TeacherLessonService} from '../../../shared/service/business/teacher-lesson.service';
 import {SubTeacherLesson} from '../../../entity/SubTeacherLesson';
+import {Icon} from '../../../entity/Icon';
 
 @Component({
   selector: 'app-teacher-lessons',
@@ -38,7 +39,9 @@ export class TeacherLessonsComponent implements OnInit {
   currentLesson: TeacherLesson = new TeacherLesson({});
   currentSubLessonArray: Array<SubTeacherLesson> = new Array<SubTeacherLesson>();
   nowEditSubLesson: SubTeacherLesson = new SubTeacherLesson({});
+  nowlessonNo = 1;
   total = 0;
+  loading = false;
   constructor(private usersvr: UserService , private  teacherlessonsvr: TeacherLessonService,
               private modalService: NzModalService, private message: NzMessageService) { }
 
@@ -96,7 +99,31 @@ export class TeacherLessonsComponent implements OnInit {
       }
     });
   }
-  onPublish = (teacherArticle: TeacherArticle) => {
+
+  onAddLesson = () => {
+     this.nowEditSubLesson = new SubTeacherLesson({lessonId : this.currentLesson.lessonId, lessonNo : this.currentSubLessonArray.length + 1, noPay: true });
+     this.currentSubLessonArray.push(this.nowEditSubLesson);
+     this.nowlessonNo = this.currentSubLessonArray.length;
+  }
+onRemoveLesson = () => {
+  this.modalService.confirm({
+    nzTitle: '<i>提示</i>',
+    nzContent: '<b>确定删除这一课时吗?</b>',
+    nzOnOk: () => {
+       this.currentSubLessonArray = this.currentSubLessonArray.filter(o => o.lessonNo !== this.nowEditSubLesson.lessonNo);
+       if (this.currentSubLessonArray.length === 0) {
+          this.onAddLesson();
+       } else {
+          this.nowEditSubLesson = this.currentSubLessonArray.filter(o => o.lessonNo === this.nowlessonNo--)[0];
+       }
+    }
+  });
+}
+
+onSelectLessonNoChange = () => {
+    this.nowEditSubLesson = this.currentSubLessonArray.filter(o => o.lessonNo === this.nowlessonNo)[0];
+}
+  onPublish = (teacherLesson: TeacherLesson) => {
 
   }
 
@@ -115,7 +142,33 @@ export class TeacherLessonsComponent implements OnInit {
     this.showKindEdit = false;
   }
 
-
-
+  handlevideoChange = (info: { file: UploadFile }) => {
+    switch (info.file.status) {
+      case 'uploading':
+        this.loading = true;
+        break;
+      case 'done':
+        this.nowEditSubLesson.videoUrl = info.file.response.aliUrl;
+        this.loading = false;
+        break;
+      case 'error':
+        this.message.error('网络错误');
+        break;
+    }
+  }
+  handleaudioChange = (info: { file: UploadFile }) => {
+    switch (info.file.status) {
+      case 'uploading':
+        this.loading = true;
+        break;
+      case 'done':
+        this.nowEditSubLesson.audioUrl = info.file.response.aliUrl;
+        this.loading = false;
+        break;
+      case 'error':
+        this.message.error('网络错误');
+        break;
+    }
+  }
 
 }

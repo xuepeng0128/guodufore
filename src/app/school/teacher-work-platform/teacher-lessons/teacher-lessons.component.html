@@ -9,11 +9,11 @@
   <div class="m-t-sm" nz-row>
     <div nz-col [nzSpan]="24">
       <nz-table
-        #ajaxTablearticle
+        #ajaxTablelesson
         nzBordered
         nzShowSizeChanger
         [nzFrontPagination]="false"
-        [nzData]="articleArray"
+        [nzData]="lessonArray"
         [nzTotal]="total"
         [(nzPageIndex)]="queryParams.pageNo"
         [(nzPageSize)]="queryParams.pageSize"
@@ -22,26 +22,29 @@
         <thead >
         <tr>
           <th>序号</th>
-          <th>标题</th>
+          <th>课程标题</th>
           <th>创作时间</th>
           <th>创作老师</th>
+          <th>果度币购买</th>
           <th>发布到习惯数</th>
+
           <th>操作</th>
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let data of ajaxTablearticle.data ;let no=index">
+        <tr *ngFor="let data of ajaxTablelesson.data ;let no=index">
           <td>{{no+1}}</td>
-          <td>{{data.articleTitle}}</td>
+          <td>{{data.lessonTitle}}</td>
           <td>{{data.makeDate}}</td>
           <td>{{data.teacherName}}</td>
+          <td>{{data.guoduCoin}}</td>
           <td>{{data.habitNum}}</td>
           <td>
-            <a href="javaScript:;" *ngIf="data.teacherId === loginUser.teacher.teacherId && !data.published" (click)="onEdit(data)" title="修改文章">修改</a>
+            <a href="javaScript:;" *ngIf="data.teacherId === loginUser.teacher.teacherId && !data.published" (click)="onEdit(data)" title="修改课程">修改</a>
             <nz-divider nzType="vertical"></nz-divider>
-            <a href="javaScript:;" *ngIf="data.teacherId === loginUser.teacher.teacherId" (click)="onPublish(data)" title="发布该文章，发布后，该文章将不能修改及删除">发布</a>
+            <a href="javaScript:;" *ngIf="data.teacherId === loginUser.teacher.teacherId" (click)="onPublish(data)" title="发布该课程，发布后，该课程将不能修改及删除">发布</a>
             <nz-divider nzType="vertical"></nz-divider>
-            <a href="javaScript:;" *ngIf="data.teacherId === loginUser.teacher.teacherId && !data.published" (click)="onDelete(data)" title="删除该文章">>删除</a>
+            <a href="javaScript:;" *ngIf="data.teacherId === loginUser.teacher.teacherId && !data.published" (click)="onDelete(data)" title="删除该课程">>删除</a>
           </td>
         </tr>
         </tbody>
@@ -55,13 +58,97 @@
       <a href="javaScript:;" class="ant-btn ant-btn-primary m-l-xs" (click)="onSave()" >保存</a>
     </div>
   </div>
+  <div nz-row>
+    <div nz-col [nzSpan]="18">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="4"> 课程标题</nz-form-label>
+              <nz-form-control [nzSpan]="18">
+                <input nz-input [(ngModel)]="currentLesson.lessonTitle" >
+              </nz-form-control>
+            </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="12"> 学习需花费果度币</nz-form-label>
+        <nz-form-control [nzSpan]="12">
+          <nz-input-number [(ngModel)]="currentLesson.guoduCoin" [nzMin]="1" [nzMax]="1000" [nzStep]="1"></nz-input-number>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
   <nz-form-item>
-    <nz-form-label [nzSpan]="4"> 课程名称</nz-form-label>
+    <nz-form-label [nzSpan]="4"> 课程简介</nz-form-label>
     <nz-form-control [nzSpan]="18">
-      <input nz-input [(ngModel)]="currentArticle.articleTitle" >
+      <input nz-input [(ngModel)]="currentLesson.memo" >
     </nz-form-control>
   </nz-form-item>
-  <app-kind-edit [editOrder$]="editOrder$"  (onHtmlTextChanged)="receiveHtml($event)"></app-kind-edit>
+  <div nz-row>
+    <div nz-col [nzSpan]="4">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="4">第</nz-form-label>
+        <nz-form-control [nzSpan]="4">
+          <nz-select [nzSize]="'default'" [(ngModel)]="nowlessonNo"  (ngModelChange)="onSelectLessonNoChange()" >
+            <nz-option *ngFor="let item of currentSubLessonArray" [nzLabel]="item.lessonNo" [nzValue]="item.lessonNo"></nz-option>
+          </nz-select>
+        </nz-form-control>
+        <nz-form-control [nzSpan]="4">
+          课 <label nz-checkbox [(ngModel)]="nowEditSubLesson.noPay" [hidden]="currentLesson.guoduCoin===0">免费试学</label>
+        </nz-form-control>
+        <nz-form-control [nzSpan]="4">
+          <nz-select [(ngModel)]="nowEditSubLesson.mode">
+               <nz-option [nzLabel]="'文字形式'" [nzValue]="1"></nz-option>
+               <nz-option [nzLabel]="'视频形式'" [nzValue]="2"></nz-option>
+               <nz-option [nzLabel]="'音频形式'" [nzValue]="3"></nz-option>
+          </nz-select>
+        </nz-form-control>
+        <nz-form-control [nzSpan]="8">
+          <a href="javaScript:;" class="ant-btn ant-btn-primary m-l-xs" (click)="onAddLesson()" >添加课程</a>
+          <a href="javaScript:;" class="ant-btn ant-btn-primary m-l-xs" (click)="onRemoveLesson()" >删除课程</a>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row>
+    <div nz-col [nzSpan]="24" [hidden]="nowEditSubLesson.mode !==1">
+      <app-kind-edit [editOrder$]="editOrder$"  (onHtmlTextChanged)="receiveHtml($event)"></app-kind-edit>
+    </div>
+    <div nz-col [nzSpan]="24" [hidden]="nowEditSubLesson.mode !==2">
+      <div nz-col [nzSpan]="4" *ngFor="let icon of iconArray">
+        <nz-upload
+          class="avatar"
+          name="file"
+          [nzAction]="uploadMediaPath"
+          nzListType="picture-card"
+          [nzShowUploadList]="false"
+          (nzChange)="handlevideoChange($event)"
+        >
+          <ng-container *ngIf="nowEditSubLesson.videoUrl===''">
+            <i class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></i>
+            <div class="ant-upload-text">上传</div>
+          </ng-container>
+          <video *ngIf="nowEditSubLesson.videoUrl!==''" [src]="nowEditSubLesson.videoUrl" class="avatar" />
+        </nz-upload>
+      </div>
+    </div>
+    <div nz-col [nzSpan]="24" [hidden]="nowEditSubLesson.mode !==3">
+      <div nz-col [nzSpan]="4" *ngFor="let icon of iconArray">
+        <nz-upload
+          class="avatar"
+          name="file"
+          [nzAction]="uploadMediaPath"
+          nzListType="picture-card"
+          [nzShowUploadList]="false"
+          (nzChange)="handleaudioChange($event)"
+        >
+          <ng-container *ngIf="nowEditSubLesson.audioUrl===''">
+            <i class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></i>
+            <div class="ant-upload-text">上传</div>
+          </ng-container>
+          <audio *ngIf="nowEditSubLesson.audioUrl!==''" [src]="nowEditSubLesson.audioUrl" class="avatar" />
+        </nz-upload>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!--<app-win-teacher-article [teacherArticleWinOrder$]="teacherArticleWinOrder$" (onArticleSaved)="onSaved($event)"></app-win-teacher-article>-->

@@ -7,6 +7,9 @@ import {isNullOrUndefined} from 'util';
 import {MSG_SAVE_ERROR, MSG_SAVE_SUCCESS} from '../../../shared/SysMessage';
 import {HabitService} from '../../../shared/service/business/habit.service';
 import {HabitExam} from '../../../entity/HabitExam';
+import {Circle} from '../../../entity/Circle';
+import {CircleService} from '../../../shared/service/business/circle.service';
+import {Student} from '../../../entity/Student';
 
 @Component({
   selector: 'app-win-no-exam-habit',
@@ -14,16 +17,21 @@ import {HabitExam} from '../../../entity/HabitExam';
   styleUrls: ['./win-no-exam-habit.component.css']
 })
 export class WinNoExamHabitComponent implements OnInit {
-  @Input() noExamHabitWinOrder$: Subject<{nowState: string , habit: Habit, circleId: string}> =
+  @Input() noExamHabitWinOrder$: Subject<{nowState: string , habit: Habit}> =
     new Subject<{nowState: string , habit: Habit, circleId: string}>();
   @Output() onNoExamHabitSaved: EventEmitter<string> = new EventEmitter<string>();
   iconWinOrder$: Subject<string> = new Subject<string>();
   currentHabit: Habit = new Habit({});
   isNoExamHabitModalShow = false;
   nowState = 'browse';
-  studentIds: Array<string> = new Array<string>();
+  choosedStudents: Array<Student> = new Array<Student>();
   limitTime = new Date('2001-01-01 00:30:00');
-  constructor(private habitsvr: HabitService, private message: NzMessageService) { }
+  circleStudentChooseSign$: Subject<{ circleId: string, haveChoosedStudent: Array<Student>}>
+    = new Subject<{ circleId: string, haveChoosedStudent: Array<Student>}>();
+
+  nowChooseCircleId = '';
+  teacherJoinedCircleArray: Array<Circle> = new Array<Circle>();
+  constructor(private habitsvr: HabitService, private message: NzMessageService,  private circlesvr: CircleService) { }
 
 
 
@@ -33,19 +41,29 @@ export class WinNoExamHabitComponent implements OnInit {
       this.nowState = re.nowState;
       if (re.nowState === 'add') {
         this.currentHabit = new Habit({
-          circleId : re.circleId
+          circleId : this.nowChooseCircleId
         });
       } else if (re.nowState === 'edit') {
         this.currentHabit = re.habit;
       }
       this.isNoExamHabitModalShow = true;
     });
+
+    this.circlesvr.teacherJoinedCircles(this.loginUser.teacher.teacherId).subscribe(
+      re => {
+        this.teacherJoinedCircleArray = re;
+        if (this.teacherJoinedCircleArray.length > 0) {
+          this.nowChooseCircleId = this.teacherJoinedCircleArray[0].circleId;
+        }
+      }
+    );
+
   }
 
   onSave = () => {
    const hlist: Array<Habit> = new Array<Habit>();
    hlist.push(this.currentHabit);
-   this.habitsvr.insertExamHabit({ habitExam: null, habits: hlist, studentIds: this.studentIds}).subscribe(
+   this.habitsvr.insertExamHabit({ habitExam: null, habits: hlist, studentIds: this.choosedStudents.map(v => v.studentId)}).subscribe(
       re => {
         if (!isNullOrUndefined(re)) {
           this.message.create('success', MSG_SAVE_SUCCESS);
@@ -56,8 +74,15 @@ export class WinNoExamHabitComponent implements OnInit {
         }
       });
   }
-
-
+  showStudentChoose = () => {
+    this.circleStudentChooseSign$.next({ circleId: this.nowChooseCircleId, haveChoosedStudent: this.choosedStudents});
+  }
+  studentChoosed = (students: Array<Student>) => {
+    this.choosedStudents = students;
+  }
+  removeChoosedStudent = (student: Student) => {
+    this.choosedStudents = this.choosedStudents.filter(o => o.studentId !== student.studentId);
+  }
   showIconChoose = () => {
     this.iconWinOrder$.next('open');
   }

@@ -49,6 +49,12 @@ export class CommonService {
     }
   }
 
+  // 获取当前日期+n天
+  dateAdd = (beginDate: Date,  n: number): Date => {
+    const date = beginDate; // 获取当前时间
+    date.setDate(date.getDate() + n); // 设置天数 -1 天
+    return date;
+  }
 
   // 计算小学年级
   calculateSchoolYearPrimarySchool = (gradeyear: number): string => {

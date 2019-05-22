@@ -1,3 +1,247 @@
-<p>
-  win-exam-habit works!
-</p>
+
+<nz-modal [(nzVisible)]="isExamHabitModalShow"
+          [nzTitle]="'考核类习惯'"
+          [nzCancelText]="'关闭'"
+          (nzOnCancel)="isExamHabitModalShow=false"
+          [nzOkText]="'发布'"
+          (nzOnOk)="onSave()"
+          [nzMaskClosable]="false"
+          [nzWidth]="800"
+>
+  <div nz-row>
+    <div nz-col [nzSpan]="24">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="3">选择圈子</nz-form-label>
+        <nz-form-control [nzSpan]="21">
+          <nz-select [nzSize]="'default'" [(ngModel)]="nowChooseCircleId" >
+            <nz-option *ngFor="let item of teacherJoinedCircleArray" [nzLabel]="item.circleTitle" [nzValue]="item.circleId"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row>
+    <div nz-col [nzSpan]="24">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="3">考核目标</nz-form-label>
+        <nz-form-control [nzSpan]="21">
+          <input nz-input [(ngModel)]="currentExam.examTitle"  >
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+
+  <div nz-row>
+    <div nz-col [nzSpan]="24">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">考核说明</nz-form-label>
+        <nz-form-control [nzSpan]="8">
+           <textarea [(ngModel)]="currentExam.examMemo"></textarea>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row>
+    <button nz-button [nzSize]="'small'" (click)="showStudentChoose()">添加学生</button>
+  </div>
+  <div nz-row>
+    <div nz-col [nzSpan]="24">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">参与学生</nz-form-label>
+        <nz-form-control [nzSpan]="8">
+          <nz-tag
+            *ngFor="let student of choosedStudents; let i = index"
+            [nzMode]="'closeable'"
+            (nzAfterClose)="removeChoosedStudent(student)"
+          >
+            {{ student.studentName }}
+          </nz-tag>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">总分</nz-form-label>
+        <nz-form-control [nzSpan]="17">
+          <nz-input-number [(ngModel)]="currentExam.totalScore" [nzMin]="1"  [nzStep]="1"></nz-input-number>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">考核开始日期</nz-form-label>
+        <nz-form-control [nzSpan]="17">
+          <nz-date-picker [(ngModel)]="currentExam.examBeginDate" ></nz-date-picker>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">考核结束日期</nz-form-label>
+        <nz-form-control [nzSpan]="17">
+          <nz-date-picker [(ngModel)]="currentExam.examEndDate" ></nz-date-picker>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row>
+    <button nz-button [nzSize]="'small'" (click)="onAddHabit()">添加习惯</button>
+  </div>
+  <div class="m-t-sm" nz-row>
+    <div nz-col [nzSpan]="24">
+      <nz-table
+        #ajaxTableshabit
+        nzBordered
+        nzShowSizeChanger
+        [nzFrontPagination]="false"
+        [nzData]="habitArray"
+      >
+        <thead >
+        <tr>
+          <th>序号</th>
+          <th>习惯</th>
+          <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let data of ajaxTableshabit.data ;let no=index">
+          <td>{{no+1}}</td>
+          <td>{{data.habitName}}</td>
+          <td>
+            <a href="javaScript:;" *ngIf="data.buildTeacherId === loginUser.teacher.teacherId && currentExam.examBeginDate> nowtime.getTime()" (click)="onEditHabit(data)" >修改</a>
+            <nz-divider nzType="vertical"></nz-divider>
+            <a href="javaScript:;" *ngIf="data.teacherId === loginUser.teacher.teacherId  && currentExam.examBeginDate> nowtime.getTime()" (click)="onRemoveHabit(data)" >>删除</a>
+          </td>
+        </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+</nz-modal>
+<app-circle-student-choose [circleStudentChooseSign$]="circleStudentChooseSign$" (onStudentChoosed)="studentChoosed($event)"></app-circle-student-choose>
+<app-win-icon-choose [iconWinOrder$]="iconWinOrder$" (onIconChoosed)="iconHavechoosed($event)"></app-win-icon-choose>
+<nz-modal [(nzVisible)]="iscurrentExamHabitModalShow"
+          [nzTitle]="'习惯'"
+          [nzCancelText]="'关闭'"
+          (nzOnCancel)="iscurrentExamHabitModalShow=false"
+          [nzOkText]="'加入'"
+          (nzOnOk)="onJoinedHabit()"
+          [nzMaskClosable]="false"
+          [nzWidth]="800"
+>
+
+  <div nz-row>
+    <div nz-col [nzSpan]="24">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="3">标题</nz-form-label>
+        <nz-form-control [nzSpan]="21">
+          <input nz-input [(ngModel)]="currentHabit.habitName"  >
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+
+  <div nz-row>
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">类别</nz-form-label>
+        <nz-form-control [nzSpan]="8">
+          <app-habit-class-select [(ngModel)]="currentHabit.habitClassId" [defaultShow]="'请选择'"></app-habit-class-select>
+        </nz-form-control>
+        <nz-form-control [nzSpan]="9">
+          <app-subhabit-class-select [(ngModel)]="currentHabit.subHabitClassId" [defaultShow]="'请选择'" [pareHabitClassId]="currentHabit.habitClassId"></app-subhabit-class-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">颜色</nz-form-label>
+        <nz-form-control [nzSpan]="17">
+          <input [style.background]="currentHabit.color" [(colorPicker)]="currentHabit.color" style="height :35px;width: 70px" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">模式</nz-form-label>
+        <nz-form-control [nzSpan]="17">
+          <app-habit-mode-select [(ngModel)]="currentHabit.mode" ></app-habit-mode-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row>
+    <div nz-col [nzSpan]="24">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="3">打卡要求</nz-form-label>
+        <nz-form-control [nzSpan]="4">
+          每 <nz-input-number [(ngModel)]="currentHabit.pirTime" [nzMin]="1" [nzMax]="10" [nzStep]="1" style="width:70px"></nz-input-number>
+        </nz-form-control>
+        <nz-form-control [nzSpan]="3">
+          <app-habit-time-unit-select [(ngModel)]="currentHabit.timeUnit"  ></app-habit-time-unit-select>
+        </nz-form-control>
+        <nz-form-control [nzSpan]="3">
+          打卡一次,
+        </nz-form-control>
+        <nz-form-control [nzSpan]="8"  *ngIf="currentHabit.mode===1">
+          任务完成时间不超过   <nz-time-picker [(ngModel)]="limitTime" [nzDefaultOpenValue]="defaultOpenValue" style="width: 120px"></nz-time-picker>
+        </nz-form-control>
+        <nz-form-control [nzSpan]="8"  *ngIf="currentHabitTemplate.mode===2">
+          任务完成次数不少于    <nz-input-number [(ngModel)]="currentHabit.countModeNum" [nzMin]="1"  [nzStep]="1" style="width:70px"></nz-input-number>次
+        </nz-form-control>
+        <nz-form-control [nzSpan]="8"  *ngIf="currentHabitTemplate.mode===3">
+          任务完成量不少于    <nz-input-number [(ngModel)]="currentHabit.valueModeNum" [nzMin]="1"  [nzStep]="1" style="width:70px"></nz-input-number>
+        </nz-form-control>
+        <nz-form-control [nzSpan]="2"  *ngIf="currentHabit.mode===3">
+          <app-habit-unit-select [(ngModel)]="currentHabit.unitName" ></app-habit-unit-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row>
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="8">打卡周期</nz-form-label>
+        <nz-form-control [nzSpan]="8">
+          <nz-date-picker [(ngModel)]="currentExam.examBeginDate"  nzDisabled ></nz-date-picker>
+        </nz-form-control>
+        <nz-form-control [nzSpan]="8">
+          <nz-date-picker [(ngModel)]="currentExam.examEndDate" nzDisabled ></nz-date-picker>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="4">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="16">完成任务获取果度币</nz-form-label>
+        <nz-form-control [nzSpan]="8">
+          <app-guodubi-select [(ngModel)]="currentHabit.guoduCoin"></app-guodubi-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+
+  <div nz-row>
+    <div nz-col [nzSpan]="8">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="8">图标</nz-form-label>
+        <nz-form-control [nzSpan]="16">
+          <img [src]="currentHabit.icon" style="height:100px;width:100px;" (click)="showIconChoose()" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="16">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="3">描述</nz-form-label>
+        <nz-form-control [nzSpan]="21">
+          <textarea style="width:98%;height:100px" [(ngModel)]="currentHabitTemplate.memo"></textarea>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+
+
+
+
+</nz-modal>

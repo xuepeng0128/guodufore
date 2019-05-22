@@ -1,0 +1,12 @@
+.avatar {
+  width: 600px;
+  height: 400px;
+}
+.upload-icon {
+  font-size: 32px;
+  color: #999;
+}
+.ant-upload-text {
+  margin-top: 8px;
+  color: #666;
+}

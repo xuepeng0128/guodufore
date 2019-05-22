@@ -1,3 +1,51 @@
-<p>
-  sys-params works!
-</p>
+<div nz-row>
+  <div nz-col [nzSpan]="6">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6">每日获取果度币上限</nz-form-label>
+      <nz-form-control [nzSpan]="15">
+        <nz-input-number [(ngModel)]="params.upperLimitGuodubi" [nzMin]="1" [nzMax]="1000" [nzStep]="1"></nz-input-number>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  <div nz-col [nzSpan]="9">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6">打卡一次获取果度币值</nz-form-label>
+      <nz-form-control [nzSpan]="3">
+        <nz-input-number [(ngModel)]="params.setPutCardGuodubiGrades[0]" [nzMin]="1" [nzMax]="100" [nzStep]="1"></nz-input-number>
+      </nz-form-control>
+      <nz-form-control [nzSpan]="3">
+        <nz-input-number [(ngModel)]="params.setPutCardGuodubiGrades[1]" [nzMin]="1" [nzMax]="100" [nzStep]="1"></nz-input-number>
+      </nz-form-control>
+      <nz-form-control [nzSpan]="3">
+        <nz-input-number [(ngModel)]="params.setPutCardGuodubiGrades[2]" [nzMin]="1" [nzMax]="100" [nzStep]="1"></nz-input-number>
+      </nz-form-control>
+      <nz-form-control [nzSpan]="3">
+        <nz-input-number [(ngModel)]="params.setPutCardGuodubiGrades[3]" [nzMin]="1" [nzMax]="100" [nzStep]="1"></nz-input-number>
+      </nz-form-control>
+      <nz-form-control [nzSpan]="3">
+        <nz-input-number [(ngModel)]="params.setPutCardGuodubiGrades[4]" [nzMin]="1" [nzMax]="100" [nzStep]="1"></nz-input-number>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  <div nz-col [nzSpan]="9">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6">等级</nz-form-label>
+      <nz-form-control [nzSpan]="3">
+        <nz-input-number [(ngModel)]="params.honerSet.bronze" [nzMin]="1" [nzMax]="100" [nzStep]="1"></nz-input-number>青铜
+      </nz-form-control>
+      <nz-form-control [nzSpan]="3">
+        <nz-input-number [(ngModel)]="params.honerSet.silver" [nzMin]="1" [nzMax]="100" [nzStep]="1"></nz-input-number>白银
+      </nz-form-control>
+      <nz-form-control [nzSpan]="3">
+        <nz-input-number [(ngModel)]="params.honerSet.gold" [nzMin]="1" [nzMax]="100" [nzStep]="1"></nz-input-number>黄金
+      </nz-form-control>
+      <nz-form-control [nzSpan]="3">
+        <nz-input-number [(ngModel)]="params.honerSet.diamond" [nzMin]="1" [nzMax]="100" [nzStep]="1"></nz-input-number>钻石
+      </nz-form-control>
+      <nz-form-control [nzSpan]="3">
+        <nz-input-number [(ngModel)]="params.honerSet.Supreme" [nzMin]="1" [nzMax]="100" [nzStep]="1"></nz-input-number>至尊
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+
+</div>

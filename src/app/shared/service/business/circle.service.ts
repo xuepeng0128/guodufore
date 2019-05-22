@@ -45,6 +45,11 @@ export class CircleService {
    );
  }
 
+  teacherJoinedCircles = (teacherId: string): Observable<Array<Circle>> => {
+     return  this.httpsvr.onHttpGet('api/business/circle/teacherJoinedCircles', {teacherId});
+  }
+
+
  makeCircleId = (): string => {
    const t = new Date().getTime();
    return 'CIR' + t;
