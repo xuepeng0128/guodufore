@@ -10,6 +10,8 @@ import {HabitExam} from '../../../entity/HabitExam';
 import {Circle} from '../../../entity/Circle';
 import {CircleService} from '../../../shared/service/business/circle.service';
 import {Student} from '../../../entity/Student';
+import {LoginUser} from "../../../entity/LoginUser";
+import {UserService} from "../../../shared/user.service";
 
 @Component({
   selector: 'app-win-no-exam-habit',
@@ -17,6 +19,7 @@ import {Student} from '../../../entity/Student';
   styleUrls: ['./win-no-exam-habit.component.css']
 })
 export class WinNoExamHabitComponent implements OnInit {
+  loginUser: LoginUser = this.usersvr.getUserStorage();
   @Input() noExamHabitWinOrder$: Subject<{nowState: string , habit: Habit}> =
     new Subject<{nowState: string , habit: Habit, circleId: string}>();
   @Output() onNoExamHabitSaved: EventEmitter<string> = new EventEmitter<string>();
@@ -31,8 +34,8 @@ export class WinNoExamHabitComponent implements OnInit {
 
   nowChooseCircleId = '';
   teacherJoinedCircleArray: Array<Circle> = new Array<Circle>();
-  constructor(private habitsvr: HabitService, private message: NzMessageService,  private circlesvr: CircleService) { }
-
+  constructor(private habitsvr: HabitService, private message: NzMessageService,
+              private usersvr: UserService, private circlesvr: CircleService) { }
 
 
 

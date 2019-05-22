@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {SysParamsService} from '../../../shared/service/system/sys-params.service';
+
 import {SystemParams} from '../../../entity/SystemParams';
 import {isNullOrUndefined} from 'util';
 

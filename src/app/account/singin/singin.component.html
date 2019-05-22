@@ -20,7 +20,7 @@
       <nz-form-item class="m-t-lg">
         <nz-form-control>
           <nz-input-group nzPrefixIcon="anticon anticon-lock">
-            <input type="password" nz-input [(ngModel)]="user.passWord" [ngModelOptions]="{standalone: true}"  placeholder="密码">
+            <input type="password" nz-input [(ngModel)]="user.passWord" [ngModelOptions]="{standalone: true}"  maxlength="20" placeholder="密码">
           </nz-input-group>
         </nz-form-control>
       </nz-form-item>

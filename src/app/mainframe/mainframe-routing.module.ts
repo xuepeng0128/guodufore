@@ -15,6 +15,7 @@ const routes: Routes = [
         { path: 'corpbasemsg', loadChildren: './../corp/basemsg/basemsg.module#BasemsgModule' }, //
         { path: 'corpdic', loadChildren: './../corp/dic/dic.module#DicModule' }, //
         { path: 'corpsystem', loadChildren: './../corp/system/system.module#SystemModule' }, //
+        { path: 'guoduschool', loadChildren: './../corp/guoduschool/guoduschool.module#GuoduschoolModule' }, //
         {path : 'schoolbasemsg', loadChildren: './../school/basemsg/basemsg.module#BasemsgModule'},
         {path : 'schoolteacherworkplatform', loadChildren: './../school/teacher-work-platform/teacher-work-platform.module#TeacherWorkPlatformModule'} , // 教师工作平台
       ]
