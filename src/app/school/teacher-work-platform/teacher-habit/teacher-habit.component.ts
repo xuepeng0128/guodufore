@@ -8,6 +8,8 @@ import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {CommonService} from '../../../shared/common.service';
 import {HabitService} from '../../../shared/service/business/habit.service';
 import {ClassesService} from '../../../shared/service/basemsg/classes.service';
+import {Subject} from 'rxjs';
+import {HabitExam} from '../../../entity/HabitExam';
 
 @Component({
   selector: 'app-teacher-habit',
@@ -15,6 +17,10 @@ import {ClassesService} from '../../../shared/service/basemsg/classes.service';
   styleUrls: ['./teacher-habit.component.css']
 })
 export class TeacherHabitComponent implements OnInit {
+  examHabitWinOrder$: Subject<{nowState: string , habitExam: HabitExam, habits: Array<Habit>}> =
+    new Subject<{nowState: string , habitExam: HabitExam, habits: Array<Habit>}>();
+  noExamHabitWinOrder$: Subject<{nowState: string , habit: Habit}> =
+    new Subject<{nowState: string , habit: Habit}>();
   user: LoginUser = this.usersvr.getUserStorage();
   habitStyle = 'normal';
   examHabitArray: Array<Habit> = new Array<Habit>();
@@ -50,6 +56,13 @@ export class TeacherHabitComponent implements OnInit {
           }
       );
   }
+  onAdd = () => {
+   if (this.habitStyle === 'normal') {
+      this.noExamHabitWinOrder$.next({nowState: 'add', habit: null});
+   } else {
+       this.examHabitWinOrder$.next({nowState: 'add', habitExam : null, habits: null});
+   }
+  }
  onQueryExamHabit = () => {
    this.examQueryParam.pageBegin = 0;
    this.examQueryParam.pageSize = 10;
@@ -70,6 +83,7 @@ export class TeacherHabitComponent implements OnInit {
   }
   onQueryNoExamHabit = () => {
     this.noExamQueryParam.pageBegin = 0;
+    this.noExamQueryParam.pageNo = 1;
     this.noExamQueryParam.pageSize = 10;
     this.habitsvr.habitList(this.noExamQueryParam).subscribe(
       re => this.noExamHabitArray = re
@@ -88,5 +102,11 @@ export class TeacherHabitComponent implements OnInit {
   }
 
 
+  examHabitSaved = () => {
+       this.onQueryExamHabit();
+  }
 
+  noExamHabitSaved = () => {
+       this.onQueryNoExamHabit();
+  }
 }

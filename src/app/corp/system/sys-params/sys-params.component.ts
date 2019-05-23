@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import {SystemParams} from '../../../entity/SystemParams';
 import {isNullOrUndefined} from 'util';
+import {SysParamsService} from '../../../shared/service/system/sys-params.service';
 
 @Component({
   selector: 'app-sys-params',

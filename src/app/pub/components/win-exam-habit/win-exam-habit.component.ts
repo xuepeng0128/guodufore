@@ -12,6 +12,7 @@ import {LoginUser} from '../../../entity/LoginUser';
 import {Student} from '../../../entity/Student';
 import {Circle} from '../../../entity/Circle';
 import {CircleService} from '../../../shared/service/business/circle.service';
+import {HabitTemplate} from '../../../entity/HabitTemplate';
 
 @Component({
   selector: 'app-win-exam-habit',
@@ -20,13 +21,14 @@ import {CircleService} from '../../../shared/service/business/circle.service';
 })
 export class WinExamHabitComponent implements OnInit {
   loginUser: LoginUser = this.usersvr.getUserStorage();
-  @Input() examHabitWinOrder$: Subject<{nowState: string , habitExam: HabitExam, habits: Array<Habit>, circleId: string}> =
-    new Subject<{nowState: string , habitExam: HabitExam, habits: Array<Habit>, circleId: string}>();
+  @Input() examHabitWinOrder$: Subject<{nowState: string , habitExam: HabitExam, habits: Array<Habit>}> =
+    new Subject<{nowState: string , habitExam: HabitExam, habits: Array<Habit>}>();
   @Output() onExamHabitSaved: EventEmitter<string> = new EventEmitter<string>();
   iconWinOrder$: Subject<string> = new Subject<string>();
+  habitTemplateChooseSign$: Subject<string> = new Subject<string>();
   currentExam: HabitExam = new HabitExam();
   habitArray: Array<Habit> = new Array<Habit>();
-  currentHabit: Habit = new Habit({});
+  currentHabit: Habit = new Habit({mode : 1});
   isExamHabitModalShow = false;
   nowState = 'browse';
   nowEditHabit = 'browse';
@@ -100,6 +102,7 @@ export class WinExamHabitComponent implements OnInit {
   onAddHabit = () => {
       this.currentHabit =  new Habit({
       circleId : this.nowChooseCircleId,
+        mode : 1,
       habitExamId : this.currentExam.habitExamId,
       buildTeacherId: this.loginUser.teacher.teacherId
     });
@@ -125,7 +128,29 @@ export class WinExamHabitComponent implements OnInit {
     this.currentHabit.icon = iconUrl;
   }
 
+  onChooseHabitTemplate = () => {
+    this.habitTemplateChooseSign$.next('open');
+  }
 
+  tempChoosed = (habitTemplate: HabitTemplate) => {
+    this.currentHabit.habitName = habitTemplate.habitTemplateName;
+    this.currentHabit.habitClassId = habitTemplate.habitClassId;
+    this.currentHabit.habitClassName = habitTemplate.habitClassName;
+    this.currentHabit.subHabitClassId = habitTemplate.subHabitClassId;
+    this.currentHabit.subHabitClassName = habitTemplate.subHabitClassName;
+    this.currentHabit.icon = habitTemplate.icon;
+    this.currentHabit.color = habitTemplate.color;
+    this.currentHabit.memo = habitTemplate.memo;
+    this.currentHabit.picUrl = habitTemplate.picUrl;
+    this.currentHabit.pirTime = habitTemplate.perTime;
+    this.currentHabit.timeUnit = habitTemplate.timeUnit;
+    this.currentHabit.mode = habitTemplate.mode;
+    this.currentHabit.timeModeNum = habitTemplate.timeModeNum;
+    this.currentHabit.countModeNum = habitTemplate.countModeNum;
+    this.currentHabit.valueModeNum = habitTemplate.valueModeNum;
+    this.currentHabit.unitName = habitTemplate.unitName;
+
+  }
 
 
 

@@ -59,7 +59,7 @@ export class Habit {
     this.unitName = options.unitName || '';
     this.guoduCoin = options.guoduCoin || 0 ;
     this.score = options.score ;
-    this.habitExamId = options.habitExamId ;n
+    this.habitExamId = options.habitExamId ;
     this.examTitle = options.examTitle ;
     this.totalScore = options.totalScore;
     this.buildTime = options.buildTime ;

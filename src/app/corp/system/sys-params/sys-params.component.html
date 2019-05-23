@@ -1,5 +1,5 @@
 <div nz-row>
-  <div nz-col [nzSpan]="6">
+  <div nz-col [nzSpan]="16">
     <nz-form-item>
       <nz-form-label [nzSpan]="6">每日获取果度币上限</nz-form-label>
       <nz-form-control [nzSpan]="15">
@@ -7,7 +7,10 @@
       </nz-form-control>
     </nz-form-item>
   </div>
-  <div nz-col [nzSpan]="9">
+</div>
+<div nz-row>
+
+  <div nz-col [nzSpan]="16">
     <nz-form-item>
       <nz-form-label [nzSpan]="6">打卡一次获取果度币值</nz-form-label>
       <nz-form-control [nzSpan]="3">
@@ -27,7 +30,10 @@
       </nz-form-control>
     </nz-form-item>
   </div>
-  <div nz-col [nzSpan]="9">
+</div>
+<div nz-row>
+
+ <div nz-col [nzSpan]="16">
     <nz-form-item>
       <nz-form-label [nzSpan]="6">等级</nz-form-label>
       <nz-form-control [nzSpan]="3">
@@ -48,4 +54,9 @@
     </nz-form-item>
   </div>
 
+</div>
+<div class="m-t-sm text-center" nz-row>
+  <div nz-col [nzSpan]="24" class="text-center">
+    <a href="javaScript:;" class="ant-btn ant-btn-primary" (click)="onSave()">保存</a>
+  </div>
 </div>

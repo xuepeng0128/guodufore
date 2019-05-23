@@ -4,7 +4,7 @@
           (nzOnCancel)="isHabitTemplateChooseModalShow=false"
           [nzOkText]="''"
           [nzMaskClosable]="false"
-          [nzWidth]="800"
+          [nzWidth]="1000"
 >
   <div nz-col [nzSpan]="24">
     <input nz-input  placeholder="输入名称" [(ngModel)]="entFilter" >
@@ -49,7 +49,7 @@
           {{data.subHabitClassName}}
         </td>
         <td >
-          <img [src]="data.icon" style="width: 40px; height : 40px" />
+          <img [src]="data.icon" style="width: 30px; height : 30px" />
         </td>
         <td [ngStyle]="{'background-color': data.color }"></td>
         <td> 每{{data.perTime + data.timeUnit}} 打卡一次</td>
@@ -69,7 +69,9 @@
           {{data.mode ===3 ? data.unitName : ''}}
         </td>
 
-        <td align="center" *ngIf="singleChoose"><a href="javascript:;"  (click)="onSingleChoose(data)">[选择]</a> </td>
+        <td align="center">
+          <a href="javascript:;"  (click)="onSingleChoose(data)">[选择]</a>
+        </td>
 
       </tr>
       </tbody>

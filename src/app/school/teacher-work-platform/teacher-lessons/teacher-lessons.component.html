@@ -113,7 +113,7 @@
       <app-kind-edit [editOrder$]="editOrder$"  (onHtmlTextChanged)="receiveHtml($event)"></app-kind-edit>
     </div>
     <div nz-col [nzSpan]="24" [hidden]="nowEditSubLesson.mode !==2">
-      <div nz-col [nzSpan]="4" *ngFor="let icon of iconArray">
+      <div nz-col [nzSpan]="4" >
         <nz-upload
           class="avatar"
           name="file"
@@ -126,12 +126,12 @@
             <i class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></i>
             <div class="ant-upload-text">上传</div>
           </ng-container>
-          <video *ngIf="nowEditSubLesson.videoUrl!==''" [src]="nowEditSubLesson.videoUrl" class="avatar" />
+          <video *ngIf="nowEditSubLesson.videoUrl!==''" [src]="nowEditSubLesson.videoUrl" class="avatar" ></video>
         </nz-upload>
       </div>
     </div>
     <div nz-col [nzSpan]="24" [hidden]="nowEditSubLesson.mode !==3">
-      <div nz-col [nzSpan]="4" *ngFor="let icon of iconArray">
+      <div nz-col [nzSpan]="4" >
         <nz-upload
           class="avatar"
           name="file"
@@ -144,11 +144,9 @@
             <i class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></i>
             <div class="ant-upload-text">上传</div>
           </ng-container>
-          <audio *ngIf="nowEditSubLesson.audioUrl!==''" [src]="nowEditSubLesson.audioUrl" class="avatar" />
+          <audio *ngIf="nowEditSubLesson.audioUrl!==''" [src]="nowEditSubLesson.audioUrl" class="avatar" ></audio>
         </nz-upload>
       </div>
     </div>
   </div>
 </div>
-
-<!--<app-win-teacher-article [teacherArticleWinOrder$]="teacherArticleWinOrder$" (onArticleSaved)="onSaved($event)"></app-win-teacher-article>-->

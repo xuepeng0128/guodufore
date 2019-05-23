@@ -1,19 +1,19 @@
 export class TeacherLesson {
-  lessonId : string ;
-  lessonTitle : string;
-  memo : string;
-  guoduCoin : number;
-  makeTeacherId : string;
-  makeTeackerName : string;
-  makeTime : Date;
-  schoolId : string;
-  schoolName : string;
-  publishTime : Date;
+  lessonId: string ;
+  lessonTitle: string;
+  memo: string;
+  guoduCoin: number;
+  makeTeacherId: string;
+  makeTeackerName: string;
+  makeTime: Date;
+  schoolId: string;
+  schoolName: string;
+  publishTime: Date;
 
 
-  constructor(options :{lessonId?: string, lessonTitle?: string, memo?: string,
+  constructor(options: {lessonId?: string, lessonTitle?: string, memo?: string,
                         guoduCoin?: number, makeTeacherId?: string, makeTeackerName?: string,
-                        makeTime?: Date, schoolId?: string, schoolName?: string, publishTime?: Date}={}) {
+                        makeTime?: Date, schoolId?: string, schoolName?: string, publishTime?: Date}= {}) {
     this.lessonId = options.lessonId || '';
     this.lessonTitle = options.lessonTitle || '';
     this.memo = options.memo || '';

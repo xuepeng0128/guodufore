@@ -6,6 +6,7 @@ import {PowerMgrComponent} from './power-mgr/power-mgr.component';
 import {ChangePasswordComponent} from './change-password/change-password.component';
 import {SchoolAdminMgrComponent} from './school-admin-mgr/school-admin-mgr.component';
 import {TrainSchoolAdminComponent} from './train-school-admin/train-school-admin.component';
+import {SysParamsComponent} from './sys-params/sys-params.component';
 
 const routes: Routes = [
   { path : '' , redirectTo : 'employee', pathMatch: 'full'},
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'userPower', component: PowerMgrComponent },
   { path: 'schoolAdmin', component: SchoolAdminMgrComponent },
   { path: 'trainschoolAdmin', component: TrainSchoolAdminComponent },
+  { path: 'sysparams' , component : SysParamsComponent},
   { path: 'changePwd', component: ChangePasswordComponent },
 ];
 

@@ -70,7 +70,7 @@ export class TeacherLessonsComponent implements OnInit {
     this.nowEdit = 'add';
     this.showKindEdit = true;
     const lessonId = this.teacherlessonsvr.makeLessonId();
-    this.currentLesson = new TeacherLesson({lessonId,  teacherId: this.loginUser.teacher.teacherId,
+    this.currentLesson = new TeacherLesson({lessonId,  makeTeacherId: this.loginUser.teacher.teacherId,
       schoolId: this.loginUser.school.schoolId, guoduCoin: 0});
     this.currentSubLessonArray = new Array<SubTeacherLesson>();
     this.nowEditSubLesson = new SubTeacherLesson({lessonId, lessonNo : 1 , noPay: true });

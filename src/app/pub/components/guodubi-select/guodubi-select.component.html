@@ -1,0 +1,4 @@
+<nz-select [nzSize]="'default'" [(ngModel)]="currentValue" >
+  <nz-option [nzLabel]="0" [nzValue]="0"></nz-option>
+  <nz-option *ngFor="let item of params.setPutCardGuodubiGrades" [nzLabel]="item" [nzValue]="item"></nz-option>
+</nz-select>
