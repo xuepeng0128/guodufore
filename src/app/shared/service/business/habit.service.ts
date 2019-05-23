@@ -40,6 +40,9 @@ export class HabitService {
     return 'HEXAM' + t;
   }
 
-
+onMakeHabitId=() =>{
+  const t = new Date().getTime();
+  return 'HAB' + t;
+}
 
 }

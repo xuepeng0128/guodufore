@@ -101,6 +101,7 @@ export class WinExamHabitComponent implements OnInit {
 
   onAddHabit = () => {
       this.currentHabit =  new Habit({
+        habitId : this.habitsvr.onMakeHabitId(),
       circleId : this.nowChooseCircleId,
         mode : 1,
       habitExamId : this.currentExam.habitExamId,

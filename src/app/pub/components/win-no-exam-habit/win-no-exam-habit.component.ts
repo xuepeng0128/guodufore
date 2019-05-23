@@ -47,6 +47,7 @@ export class WinNoExamHabitComponent implements OnInit {
       this.nowState = re.nowState;
       if (re.nowState === 'add') {
         this.currentHabit = new Habit({
+          habitId : this.habitsvr.onMakeHabitId(),
           circleId : this.nowChooseCircleId,
           mode : 1
         });
@@ -69,8 +70,9 @@ export class WinNoExamHabitComponent implements OnInit {
 
   onSave = () => {
    const hlist: Array<Habit> = new Array<Habit>();
+
    hlist.push(this.currentHabit);
-   this.habitsvr.insertExamHabit({ habitExam: null, habits: hlist, studentIds: this.choosedStudents.map(v => v.studentId)}).subscribe(
+   this.habitsvr.insertNoExamHabit({ habitExam: null, habits: hlist, studentIds: this.choosedStudents.map(v => v.studentId)}).subscribe(
       re => {
         if (!isNullOrUndefined(re)) {
           this.message.create('success', MSG_SAVE_SUCCESS);
