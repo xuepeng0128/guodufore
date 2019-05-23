@@ -42,6 +42,7 @@ export class TeacherLessonsComponent implements OnInit {
   nowlessonNo = 1;
   total = 0;
   loading = false;
+  toSave=false;
   constructor(private usersvr: UserService , private  teacherlessonsvr: TeacherLessonService,
               private modalService: NzModalService, private message: NzMessageService) { }
 
@@ -67,16 +68,21 @@ export class TeacherLessonsComponent implements OnInit {
 
 
   onAdd = () => {
+    this.toSave=false;
     this.nowEdit = 'add';
     this.showKindEdit = true;
     const lessonId = this.teacherlessonsvr.makeLessonId();
     this.currentLesson = new TeacherLesson({lessonId,  makeTeacherId: this.loginUser.teacher.teacherId,
       schoolId: this.loginUser.school.schoolId, guoduCoin: 0});
     this.currentSubLessonArray = new Array<SubTeacherLesson>();
-    this.nowEditSubLesson = new SubTeacherLesson({lessonId, lessonNo : 1 , noPay: true });
+    this.nowlessonNo=1;
+    this.currentSubLessonArray.push(new SubTeacherLesson({lessonId : this.currentLesson.lessonId,
+      lessonNo : this.currentSubLessonArray.length + 1, noPay: true,mode :1 }));
+    this.nowEditSubLesson = this.currentSubLessonArray[0];
     this.editOrder$.next({order: 'setHtml', htmlContent: ''});
   }
   onEdit = (teacherLesson: TeacherLesson) => {
+    this.toSave=false;
     this.nowEdit = 'edit';
     this.showKindEdit = true;
     this.currentLesson = teacherLesson;
@@ -84,6 +90,7 @@ export class TeacherLessonsComponent implements OnInit {
       re => {
         this.currentSubLessonArray = re;
         this.nowEditSubLesson = this.currentSubLessonArray[0];
+        this.nowlessonNo=1;
         this.editOrder$.next({order: 'setHtml', htmlContent:  this.nowEditSubLesson.memo});
       }
     );
@@ -91,7 +98,7 @@ export class TeacherLessonsComponent implements OnInit {
   onDelete = (teacherLesson: TeacherLesson) => {
     this.modalService.confirm({
       nzTitle: '<i>提示</i>',
-      nzContent: '<b>确定删除该文章吗?</b>',
+      nzContent: '<b>确定删除该套课程吗?</b>',
       nzOnOk: () => {
         this.teacherlessonsvr.deleteTeacherLesson(teacherLesson.lessonId).subscribe(
           re =>  this.onQuery()
@@ -101,9 +108,12 @@ export class TeacherLessonsComponent implements OnInit {
   }
 
   onAddLesson = () => {
-     this.nowEditSubLesson = new SubTeacherLesson({lessonId : this.currentLesson.lessonId, lessonNo : this.currentSubLessonArray.length + 1, noPay: true });
-     this.currentSubLessonArray.push(this.nowEditSubLesson);
+     this.editOrder$.next({order: 'getHtml', htmlContent: ''});
+     this.currentSubLessonArray.push( new SubTeacherLesson({lessonId : this.currentLesson.lessonId,
+       lessonNo : this.currentSubLessonArray.length + 1, noPay: true,mode :1 }));
+     this.nowEditSubLesson = this.currentSubLessonArray[this.currentSubLessonArray.length-1];
      this.nowlessonNo = this.currentSubLessonArray.length;
+     this.editOrder$.next({order: 'setHtml', htmlContent:  ''});
   }
 onRemoveLesson = () => {
   this.modalService.confirm({
@@ -115,12 +125,14 @@ onRemoveLesson = () => {
           this.onAddLesson();
        } else {
           this.nowEditSubLesson = this.currentSubLessonArray.filter(o => o.lessonNo === this.nowlessonNo--)[0];
+          this.editOrder$.next({order: 'setHtml', htmlContent:  this.nowEditSubLesson.memo});
        }
     }
   });
 }
 
 onSelectLessonNoChange = () => {
+    this.editOrder$.next({order: 'getHtml', htmlContent: ''});
     this.nowEditSubLesson = this.currentSubLessonArray.filter(o => o.lessonNo === this.nowlessonNo)[0];
 }
   onPublish = (teacherLesson: TeacherLesson) => {
@@ -128,18 +140,21 @@ onSelectLessonNoChange = () => {
   }
 
   onSave = () => {
+    this.toSave=true;
     this.editOrder$.next({order: 'getHtml', htmlContent: ''});
   }
 
   receiveHtml = (html) => {
     this.nowEditSubLesson.memo = html;
-    this.teacherlessonsvr.saveTeacherLesson({teacherLesson: this.currentLesson, subTeacherLessons: this.currentSubLessonArray}).subscribe(
+    if (this.toSave){
+      this.teacherlessonsvr.saveTeacherLesson({teacherLesson: this.currentLesson, subTeacherLessons: this.currentSubLessonArray}).subscribe(
         re =>   {
           this.onQuery();
           this.total += 1;
         }
       );
-    this.showKindEdit = false;
+      this.showKindEdit = false;
+    }
   }
 
   handlevideoChange = (info: { file: UploadFile }) => {

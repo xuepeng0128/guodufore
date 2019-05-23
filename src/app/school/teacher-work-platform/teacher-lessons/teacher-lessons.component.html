@@ -62,37 +62,45 @@
     <div nz-col [nzSpan]="18">
             <nz-form-item>
               <nz-form-label [nzSpan]="4"> 课程标题</nz-form-label>
-              <nz-form-control [nzSpan]="18">
+              <nz-form-control [nzSpan]="20">
                 <input nz-input [(ngModel)]="currentLesson.lessonTitle" >
               </nz-form-control>
             </nz-form-item>
     </div>
     <div nz-col [nzSpan]="6">
       <nz-form-item>
-        <nz-form-label [nzSpan]="12"> 学习需花费果度币</nz-form-label>
-        <nz-form-control [nzSpan]="12">
+        <nz-form-label [nzSpan]="16"> 学习需花费果度币</nz-form-label>
+        <nz-form-control [nzSpan]="8">
           <nz-input-number [(ngModel)]="currentLesson.guoduCoin" [nzMin]="1" [nzMax]="1000" [nzStep]="1"></nz-input-number>
         </nz-form-control>
       </nz-form-item>
     </div>
   </div>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="4"> 课程简介</nz-form-label>
-    <nz-form-control [nzSpan]="18">
-      <input nz-input [(ngModel)]="currentLesson.memo" >
-    </nz-form-control>
-  </nz-form-item>
   <div nz-row>
-    <div nz-col [nzSpan]="4">
+      <div nz-col [nzSpan]="24">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="3"> 课程简介</nz-form-label>
+              <nz-form-control [nzSpan]="21">
+                <textarea [(ngModel)]="currentLesson.memo"  style="width:100%"></textarea>
+              </nz-form-control>
+            </nz-form-item>
+      </div>
+  </div>
+  <div nz-row>
+    <div nz-col [nzSpan]="24">
       <nz-form-item>
-        <nz-form-label [nzSpan]="4">第</nz-form-label>
-        <nz-form-control [nzSpan]="4">
+        <nz-form-label [nzSpan]="2">课时</nz-form-label>
+        <nz-form-control [nzSpan]="2">
           <nz-select [nzSize]="'default'" [(ngModel)]="nowlessonNo"  (ngModelChange)="onSelectLessonNoChange()" >
             <nz-option *ngFor="let item of currentSubLessonArray" [nzLabel]="item.lessonNo" [nzValue]="item.lessonNo"></nz-option>
           </nz-select>
         </nz-form-control>
+        <nz-form-control [nzSpan]="8">
+          <a href="javaScript:;" class="ant-btn ant-btn-primary m-l-xs" (click)="onAddLesson()" >添加课程</a>
+          <a href="javaScript:;" class="ant-btn ant-btn-primary m-l-xs" (click)="onRemoveLesson()" >删除课程</a>
+        </nz-form-control>
         <nz-form-control [nzSpan]="4">
-          课 <label nz-checkbox [(ngModel)]="nowEditSubLesson.noPay" [hidden]="currentLesson.guoduCoin===0">免费试学</label>
+           <label nz-checkbox [(ngModel)]="nowEditSubLesson.noPay" [hidden]="currentLesson.guoduCoin===0">免费试学</label>
         </nz-form-control>
         <nz-form-control [nzSpan]="4">
           <nz-select [(ngModel)]="nowEditSubLesson.mode">
@@ -101,10 +109,7 @@
                <nz-option [nzLabel]="'音频形式'" [nzValue]="3"></nz-option>
           </nz-select>
         </nz-form-control>
-        <nz-form-control [nzSpan]="8">
-          <a href="javaScript:;" class="ant-btn ant-btn-primary m-l-xs" (click)="onAddLesson()" >添加课程</a>
-          <a href="javaScript:;" class="ant-btn ant-btn-primary m-l-xs" (click)="onRemoveLesson()" >删除课程</a>
-        </nz-form-control>
+
       </nz-form-item>
     </div>
   </div>

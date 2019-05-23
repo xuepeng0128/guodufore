@@ -27,8 +27,9 @@ export class KindEditComponent implements OnInit, OnChanges {
         resizeType: 1,
         allowPreviewEmoticons: true,
         allowImageUpload: true,
+
       });
-      console.log(this.edit);
+
     });
 
 
