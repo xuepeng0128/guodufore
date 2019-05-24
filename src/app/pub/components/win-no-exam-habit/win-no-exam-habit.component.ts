@@ -13,6 +13,7 @@ import {Student} from '../../../entity/Student';
 import {LoginUser} from '../../../entity/LoginUser';
 import {UserService} from '../../../shared/user.service';
 import {HabitTemplate} from '../../../entity/HabitTemplate';
+import {CommonService} from '../../../shared/common.service';
 
 @Component({
   selector: 'app-win-no-exam-habit',
@@ -38,7 +39,7 @@ export class WinNoExamHabitComponent implements OnInit {
   nowChooseCircleId = '';
   teacherJoinedCircleArray: Array<Circle> = new Array<Circle>();
   constructor(private habitsvr: HabitService, private message: NzMessageService,
-              private usersvr: UserService, private circlesvr: CircleService) { }
+              private usersvr: UserService, private circlesvr: CircleService, private  commonsvr: CommonService) { }
 
 
 
@@ -49,6 +50,9 @@ export class WinNoExamHabitComponent implements OnInit {
         this.currentHabit = new Habit({
           habitId : this.habitsvr.onMakeHabitId(),
           circleId : this.nowChooseCircleId,
+          putCardBeginDate: new Date(),
+          putCardEndDate : this.commonsvr.dateAdd(new Date(), 30),
+          buildTeacherId : this.loginUser.teacher.teacherId,
           mode : 1
         });
       } else if (re.nowState === 'edit') {
@@ -70,6 +74,7 @@ export class WinNoExamHabitComponent implements OnInit {
 
   onSave = () => {
    const hlist: Array<Habit> = new Array<Habit>();
+   this.currentHabit.timeModeNum = this.commonsvr.retHMSstr(this.limitTime);
 
    hlist.push(this.currentHabit);
    this.habitsvr.insertNoExamHabit({ habitExam: null, habits: hlist, studentIds: this.choosedStudents.map(v => v.studentId)}).subscribe(

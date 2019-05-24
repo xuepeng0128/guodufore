@@ -27,7 +27,7 @@ export class WinExamHabitComponent implements OnInit {
   iconWinOrder$: Subject<string> = new Subject<string>();
   habitTemplateChooseSign$: Subject<string> = new Subject<string>();
   currentExam: HabitExam = new HabitExam();
-  habitArray: Array<Habit> = new Array<Habit>();
+  examHabitList: Array<Habit> = new Array<Habit>();
   currentHabit: Habit = new Habit({mode : 1});
   isExamHabitModalShow = false;
   nowState = 'browse';
@@ -57,7 +57,7 @@ export class WinExamHabitComponent implements OnInit {
 
       } else if (re.nowState === 'edit') {
         this.currentExam = re.habitExam;
-        this.habitArray = re.habits;
+        this.examHabitList = re.habits;
       }
       this.isExamHabitModalShow = true;
     });
@@ -74,8 +74,13 @@ export class WinExamHabitComponent implements OnInit {
   }
 
   onSave = () => {
+    this.examHabitList.forEach(v => {
+        v.putCardBeginDate = this.currentExam.examBeginDate;
+        v.putCardEndDate = this.currentExam.examEndDate;
+
+    });
     this.habitsvr.insertExamHabit(
-      { habitExam: this.currentExam, habits: this.habitArray, studentIds: this.choosedStudents.map(v => v.studentId)}).subscribe(
+      { habitExam: this.currentExam, habits: this.examHabitList, studentIds: this.choosedStudents.map(v => v.studentId)}).subscribe(
       re => {
         if (!isNullOrUndefined(re)) {
           this.message.create('success', MSG_SAVE_SUCCESS);
@@ -102,10 +107,12 @@ export class WinExamHabitComponent implements OnInit {
   onAddHabit = () => {
       this.currentHabit =  new Habit({
         habitId : this.habitsvr.onMakeHabitId(),
-      circleId : this.nowChooseCircleId,
+        circleId : this.nowChooseCircleId,
         mode : 1,
-      habitExamId : this.currentExam.habitExamId,
-      buildTeacherId: this.loginUser.teacher.teacherId
+       habitExamId : this.currentExam.habitExamId,
+       buildTeacherId: this.loginUser.teacher.teacherId,
+       putCardBeginDate : this.currentExam.examBeginDate,
+       putCardEndDate : this.currentExam.examEndDate
     });
 
       this.iscurrentExamHabitModalShow = true;
@@ -118,7 +125,7 @@ export class WinExamHabitComponent implements OnInit {
   }
   onJoinedHabit = () => {
      if (this.nowEditHabit === 'add') {
-       this.habitArray.push(this.currentHabit);
+       this.examHabitList.push(this.currentHabit);
      }
      this.iscurrentExamHabitModalShow = false;
   }

@@ -56,6 +56,18 @@ export class CommonService {
     return date;
   }
 
+  // 返回时分秒字符串
+  retHMSstr = (nowDate: Date): string => {
+      const hstr = nowDate.getHours() >= 10 ? nowDate.getHours().toString() : '0' + nowDate.getHours().toString();
+      const mstr = nowDate.getMinutes() >= 10 ? nowDate.getMinutes().toString() : '0' + nowDate.getMinutes().toString();
+      const sstr = nowDate.getSeconds() >= 10 ? nowDate.getSeconds().toString() : '0' + nowDate.getSeconds().toString();
+      return hstr + ':' + mstr + ':' + sstr;
+}
+
+
+
+
+
   // 计算小学年级
   calculateSchoolYearPrimarySchool = (gradeyear: number): string => {
       const nowDate = new Date();

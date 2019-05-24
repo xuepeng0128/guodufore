@@ -134,13 +134,13 @@
     </div>
   </div>
   <div nz-row>
-    <button nz-button [nzSize]="'small'" (click)="showStudentChoose()">添加学生</button>
+    <button nz-button [nzSize]="'small'" (click)="showStudentChoose()" style="float: right">添加学生</button>
   </div>
   <div nz-row>
     <div nz-col [nzSpan]="24">
       <nz-form-item>
         <nz-form-label [nzSpan]="6">参与学生</nz-form-label>
-        <nz-form-control [nzSpan]="8">
+        <nz-form-control [nzSpan]="18">
           <nz-tag
             *ngFor="let student of choosedStudents; let i = index"
             [nzMode]="'closeable'"

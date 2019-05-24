@@ -34,9 +34,9 @@
   <div nz-row>
     <div nz-col [nzSpan]="24">
       <nz-form-item>
-        <nz-form-label [nzSpan]="6">考核说明</nz-form-label>
-        <nz-form-control [nzSpan]="8">
-           <textarea [(ngModel)]="currentExam.examMemo"></textarea>
+        <nz-form-label [nzSpan]="4">考核说明</nz-form-label>
+        <nz-form-control [nzSpan]="20">
+           <textarea [(ngModel)]="currentExam.examMemo" style="width: 100%"></textarea>
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -69,59 +69,32 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-    <div nz-col [nzSpan]="6">
+    <div nz-col [nzSpan]="9">
       <nz-form-item>
-        <nz-form-label [nzSpan]="6">考核开始日期</nz-form-label>
-        <nz-form-control [nzSpan]="17">
+        <nz-form-label [nzSpan]="12">考核开始日期</nz-form-label>
+        <nz-form-control [nzSpan]="12">
           <nz-date-picker [(ngModel)]="currentExam.examBeginDate" ></nz-date-picker>
         </nz-form-control>
       </nz-form-item>
     </div>
-    <div nz-col [nzSpan]="6">
+    <div nz-col [nzSpan]="9">
       <nz-form-item>
-        <nz-form-label [nzSpan]="6">考核结束日期</nz-form-label>
-        <nz-form-control [nzSpan]="17">
+        <nz-form-label [nzSpan]="12">考核结束日期</nz-form-label>
+        <nz-form-control [nzSpan]="12">
           <nz-date-picker [(ngModel)]="currentExam.examEndDate" ></nz-date-picker>
         </nz-form-control>
       </nz-form-item>
     </div>
   </div>
   <div nz-row>
-    <button nz-button [nzSize]="'small'" (click)="onAddHabit()">添加习惯</button>
+    <button nz-button [nzSize]="'small'" (click)="onAddHabit()">添加习惯</button>{{examHabitList.length}}
   </div>
   <div class="m-t-sm" nz-row>
     <div nz-col [nzSpan]="24">
-      <nz-table
-        #ajaxTableshabit
-        nzBordered
-        nzShowSizeChanger
-        [nzFrontPagination]="false"
-        [nzData]="habitArray"
-      >
-        <thead >
-        <tr>
-          <th>序号</th>
-          <th>习惯</th>
-          <th>操作</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let data of ajaxTableshabit.data ;let no=index">
-          <td>{{no+1}}</td>
-          <td>{{data.habitName}}</td>
-          <td>
-            <a href="javaScript:;" *ngIf="data.buildTeacherId === loginUser.teacher.teacherId && currentExam.examBeginDate> nowtime.getTime()" (click)="onEditHabit(data)" >修改</a>
-            <nz-divider nzType="vertical"></nz-divider>
-            <a href="javaScript:;" *ngIf="data.teacherId === loginUser.teacher.teacherId  && currentExam.examBeginDate> nowtime.getTime()" (click)="onRemoveHabit(data)" >>删除</a>
-          </td>
-        </tr>
-        </tbody>
-      </nz-table>
+       <p *ngFor="let item of examHabitList ; let no= index" >  {{no+1}}.&nbsp;&nbsp;{{item.habitName}}  </p>
     </div>
   </div>
 </nz-modal>
-<app-circle-student-choose [circleStudentChooseSign$]="circleStudentChooseSign$" (onStudentChoosed)="studentChoosed($event)"></app-circle-student-choose>
-<app-win-icon-choose [iconWinOrder$]="iconWinOrder$" (onIconChoosed)="iconHavechoosed($event)"></app-win-icon-choose>
 <nz-modal [(nzVisible)]="iscurrentExamHabitModalShow"
           [nzTitle]="'习惯'"
           [nzCancelText]="'关闭'"
@@ -250,4 +223,9 @@
 
 
 </nz-modal>
+<app-circle-student-choose [circleStudentChooseSign$]="circleStudentChooseSign$" (onStudentChoosed)="studentChoosed($event)"></app-circle-student-choose>
+<app-win-icon-choose [iconWinOrder$]="iconWinOrder$" (onIconChoosed)="iconHavechoosed($event)"></app-win-icon-choose>
 <app-habit-template-choose [habitTemplateChooseSign$]="habitTemplateChooseSign$" (onHabitTemplateChoosed)="tempChoosed($event)" ></app-habit-template-choose>
+
+
+
