@@ -102,11 +102,11 @@ export class TeacherHabitComponent implements OnInit {
   }
 
 
-  examHabitSaved = () => {
+  examHabitSaved = (e) => {
        this.onQueryExamHabit();
   }
 
-  noExamHabitSaved = () => {
+  noExamHabitSaved = (e) => {
        this.onQueryNoExamHabit();
   }
 }

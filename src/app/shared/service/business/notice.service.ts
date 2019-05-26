@@ -26,8 +26,8 @@ export class NoticeService {
     return this.httpsvr.onHttpGet('/api/basemsg/notice/noticeStudentList', queryParams);
   }
 
-  insertNotice = (queryParams: {notice: Notice, noticeStudents: Array<NoticeStudent>}): Observable<string > => {
-      return this.httpsvr.onHttpPost('/api/basemsg/notice/insertNotice', queryParams).pipe(
+  insertNotice = (params: {notice: Notice, noticeStudents: Array<NoticeStudent>}): Observable<string > => {
+      return this.httpsvr.onHttpPost('/api/basemsg/notice/insertNotice', params).pipe(
         map(re => re.result)
       );
   }

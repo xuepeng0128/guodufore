@@ -4,6 +4,7 @@ export interface ISchoolQueryParams {
    cityId?: string ;
    districtId?: string ;
    schoolStyle?: string ;
+   address? : string;
   regTimeBegin?: Date;
   regTimeEnd?: Date;
    train?: number ;

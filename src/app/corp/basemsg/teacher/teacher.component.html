@@ -16,21 +16,13 @@
       </nz-form-control>
     </nz-form-item>
   </div>
-  <div nz-col [nzSpan]="8">
-    <nz-form-item>
-      <nz-form-label [nzSpan]="6">职务</nz-form-label>
-      <nz-form-control [nzSpan]="15">
-        <input nz-input [(ngModel)]="queryParams.duty">
-      </nz-form-control>
-    </nz-form-item>
-  </div>
 </div>
 
 
 <div class="m-t-sm text-center" nz-row>
   <div nz-col [nzSpan]="24" class="text-center">
     <a href="javaScript:;" class="ant-btn ant-btn-primary" (click)="onQuery()">查询</a>
-    <a href="javaScript:;" class="ant-btn ant-btn-primary m-l-xs"  *ngIf="user.supperAdmin " (click)="onExcelExport()" >excel导出</a>
+    <a href="javaScript:;" class="ant-btn ant-btn-primary m-l-xs"  *ngIf="user.isSupperAdmin " (click)="onExcelExport()" >excel导出</a>
   </div>
 </div>
 <div class="m-t-sm" nz-row>
