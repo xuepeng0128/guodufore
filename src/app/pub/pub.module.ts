@@ -43,6 +43,7 @@ import { WinExamHabitComponent } from './components/win-exam-habit/win-exam-habi
 import { CircleStudentChooseComponent } from './components/circle-student-choose/circle-student-choose.component';
 import { HabitTemplateChooseComponent } from './components/habit-template-choose/habit-template-choose.component';
 import { GuodubiSelectComponent } from './components/guodubi-select/guodubi-select.component';
+import {UEditorModule} from 'ngx-ueditor';
 
 
 
@@ -84,7 +85,17 @@ import { GuodubiSelectComponent } from './components/guodubi-select/guodubi-sele
     HttpClientModule,
     NgZorroAntdModule,
     ColorPickerModule,
-    NgxLoadingModule.forRoot({})
+    NgxLoadingModule.forRoot({}),
+    UEditorModule.forRoot({
+      js: [
+        `./assets/ueditor/ueditor.config.js`,
+        `./assets/ueditor/ueditor.all.js`,
+      ],
+      // 默认前端配置项
+      options: {
+        UEDITOR_HOME_URL: './assets/ueditor/'
+      }
+    })
   ],
   exports: [
     CommonModule,
@@ -93,6 +104,7 @@ import { GuodubiSelectComponent } from './components/guodubi-select/guodubi-sele
     HttpClientModule,
     NgZorroAntdModule,
     ColorPickerModule,
+    UEditorModule,
     WinSchoolComponent,
     WinEmployeeComponent,
     NgxLoadingModule,
