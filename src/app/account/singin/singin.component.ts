@@ -27,9 +27,6 @@ declare var  UE: any;
   styleUrls: ['./singin.component.css']
 })
 export class SinginComponent implements OnInit {
-  html = 'hello ';
-  @ViewChild('full') full: UEditorComponent;
-  editOrder$: Subject<{order: string; htmlContent: string}> = new Subject<{order: string; htmlContent: string}>();
   user: User = new User();
   loading = false;
   pro = 0;
@@ -52,19 +49,7 @@ export class SinginComponent implements OnInit {
               private router: Router ) { }
 
   ngOnInit() {
-    const ue = UE.getEditor('container');
-    UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;
-    UE.Editor.prototype.getActionUrl = function(action) {
-      if (action === 'uploadimage' || action === 'uploadscrawl' || action === 'uploadimage') {
-        return 'http://localhost:8080/eguodu/uploadMediaFile'; // 在这里返回我们实际的上传图片地址
-      } else {
-        return this._bkGetActionUrl.call(this, action);
-      }
-    };
 
-  }
-  getit = (e) => {
-     console.log(e);
   }
   onLogin = () => {
     this.loading = true;
@@ -170,56 +155,6 @@ export class SinginComponent implements OnInit {
 
 
 
-
-
-
-  onPreReady = (comp: UEditorComponent) => {
-    UE.registerUI('button', (editor, uiName) => {
-      // 注册按钮执行时的command命令，使用命令默认就会带有回退操作
-      editor.registerCommand(uiName, {
-        execCommand() {
-          // alert('execCommand:' + uiName);
-
-        }
-      });
-      // 创建一个button
-      const btn = new UE.ui.Button({
-        // 按钮的名字
-        name: uiName,
-        // 提示
-        title: uiName,
-        // 添加额外样式，指定icon图标，这里默认使用一个重复的icon
-        cssRules: 'background-position: -726px -77px;',
-        // 点击时执行的命令
-        onclick : () => {
-          // 这里可以不用执行命令,做你自己的操作也可
-         // editor.execCommand(uiName);
-          this.onchooseimg();
-        }
-      });
-      // 当点到编辑内容上时，按钮要做的状态反射
-      editor.addListener('selectionchange', () => {
-        const state = editor.queryCommandState(uiName);
-        if (state == -1) {
-          btn.setDisabled(true);
-          btn.setChecked(false);
-        } else {
-          btn.setDisabled(false);
-          btn.setChecked(state);
-        }
-      });
-      // 因为你是添加button,所以需要返回这个button
-      return btn;
-    }, 5, comp.id);
-    // comp.id 是指当前UEditor实例Id
-  }
-
-
-  onchooseimg = () => {
-
-    this.full.Instance.execCommand('inserthtml', '<img src="http://pic44.nipic.com/20140716/8716187_010828140000_2.jpg" />');
-   alert(this.html);
-  }
 
 
 }

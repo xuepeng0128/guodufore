@@ -1,157 +1,157 @@
-<div [hidden]="showKindEdit">
-  <div class="m-t-sm text-center" nz-row>
-    <div nz-col [nzSpan]="3" >
-      <a href="javaScript:;" class="ant-btn ant-btn-primary m-l-xs" (click)="onAdd()" >添加</a>
-    </div>
-  </div>
+<!--<div [hidden]="showKindEdit">-->
+  <!--<div class="m-t-sm text-center" nz-row>-->
+    <!--<div nz-col [nzSpan]="3" >-->
+      <!--<a href="javaScript:;" class="ant-btn ant-btn-primary m-l-xs" (click)="onAdd()" >添加</a>-->
+    <!--</div>-->
+  <!--</div>-->
 
 
-  <div class="m-t-sm" nz-row>
-    <div nz-col [nzSpan]="24">
-      <nz-table
-        #ajaxTablelesson
-        nzBordered
-        nzShowSizeChanger
-        [nzFrontPagination]="false"
-        [nzData]="lessonArray"
-        [nzTotal]="total"
-        [(nzPageIndex)]="queryParams.pageNo"
-        [(nzPageSize)]="queryParams.pageSize"
-        (nzPageIndexChange)="onPageChange($event)"
-      >
-        <thead >
-        <tr>
-          <th>序号</th>
-          <th>课程标题</th>
-          <th>创作时间</th>
-          <th>创作老师</th>
-          <th>果度币购买</th>
-          <th>发布到习惯数</th>
+  <!--<div class="m-t-sm" nz-row>-->
+    <!--<div nz-col [nzSpan]="24">-->
+      <!--<nz-table-->
+        <!--#ajaxTablelesson-->
+        <!--nzBordered-->
+        <!--nzShowSizeChanger-->
+        <!--[nzFrontPagination]="false"-->
+        <!--[nzData]="lessonArray"-->
+        <!--[nzTotal]="total"-->
+        <!--[(nzPageIndex)]="queryParams.pageNo"-->
+        <!--[(nzPageSize)]="queryParams.pageSize"-->
+        <!--(nzPageIndexChange)="onPageChange($event)"-->
+      <!--&gt;-->
+        <!--<thead >-->
+        <!--<tr>-->
+          <!--<th>序号</th>-->
+          <!--<th>课程标题</th>-->
+          <!--<th>创作时间</th>-->
+          <!--<th>创作老师</th>-->
+          <!--<th>果度币购买</th>-->
+          <!--<th>发布到习惯数</th>-->
 
-          <th>操作</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let data of ajaxTablelesson.data ;let no=index">
-          <td>{{no+1}}</td>
-          <td>{{data.lessonTitle}}</td>
-          <td>{{data.makeDate}}</td>
-          <td>{{data.teacherName}}</td>
-          <td>{{data.guoduCoin}}</td>
-          <td>{{data.habitNum}}</td>
-          <td>
-            <a href="javaScript:;" *ngIf="data.teacherId === loginUser.teacher.teacherId && !data.published" (click)="onEdit(data)" title="修改课程">修改</a>
-            <nz-divider nzType="vertical"></nz-divider>
-            <a href="javaScript:;" *ngIf="data.teacherId === loginUser.teacher.teacherId" (click)="onPublish(data)" title="发布该课程，发布后，该课程将不能修改及删除">发布</a>
-            <nz-divider nzType="vertical"></nz-divider>
-            <a href="javaScript:;" *ngIf="data.teacherId === loginUser.teacher.teacherId && !data.published" (click)="onDelete(data)" title="删除该课程">>删除</a>
-          </td>
-        </tr>
-        </tbody>
-      </nz-table>
-    </div>
-  </div>
-</div>
-<div [hidden]="!showKindEdit">
-  <div class="m-t-sm text-center" nz-row>
-    <div nz-col [nzSpan]="3" >
-      <a href="javaScript:;" class="ant-btn ant-btn-primary m-l-xs" (click)="onSave()" >保存</a>
-    </div>
-  </div>
-  <div nz-row>
-    <div nz-col [nzSpan]="18">
-            <nz-form-item>
-              <nz-form-label [nzSpan]="4"> 课程标题</nz-form-label>
-              <nz-form-control [nzSpan]="20">
-                <input nz-input [(ngModel)]="currentLesson.lessonTitle" >
-              </nz-form-control>
-            </nz-form-item>
-    </div>
-    <div nz-col [nzSpan]="6">
-      <nz-form-item>
-        <nz-form-label [nzSpan]="16"> 学习需花费果度币</nz-form-label>
-        <nz-form-control [nzSpan]="8">
-          <nz-input-number [(ngModel)]="currentLesson.guoduCoin" [nzMin]="1" [nzMax]="1000" [nzStep]="1"></nz-input-number>
-        </nz-form-control>
-      </nz-form-item>
-    </div>
-  </div>
-  <div nz-row>
-      <div nz-col [nzSpan]="24">
-            <nz-form-item>
-              <nz-form-label [nzSpan]="3"> 课程简介</nz-form-label>
-              <nz-form-control [nzSpan]="21">
-                <textarea [(ngModel)]="currentLesson.memo"  style="width:100%"></textarea>
-              </nz-form-control>
-            </nz-form-item>
-      </div>
-  </div>
-  <div nz-row>
-    <div nz-col [nzSpan]="24">
-      <nz-form-item>
-        <nz-form-label [nzSpan]="2">课时</nz-form-label>
-        <nz-form-control [nzSpan]="2">
-          <nz-select [nzSize]="'default'" [(ngModel)]="nowlessonNo"  (ngModelChange)="onSelectLessonNoChange()" >
-            <nz-option *ngFor="let item of currentSubLessonArray" [nzLabel]="item.lessonNo" [nzValue]="item.lessonNo"></nz-option>
-          </nz-select>
-        </nz-form-control>
-        <nz-form-control [nzSpan]="8">
-          <a href="javaScript:;" class="ant-btn ant-btn-primary m-l-xs" (click)="onAddLesson()" >添加课程</a>
-          <a href="javaScript:;" class="ant-btn ant-btn-primary m-l-xs" (click)="onRemoveLesson()" >删除课程</a>
-        </nz-form-control>
-        <nz-form-control [nzSpan]="4">
-           <label nz-checkbox [(ngModel)]="nowEditSubLesson.noPay" [hidden]="currentLesson.guoduCoin===0">免费试学</label>
-        </nz-form-control>
-        <nz-form-control [nzSpan]="4">
-          <nz-select [(ngModel)]="nowEditSubLesson.mode">
-               <nz-option [nzLabel]="'文字形式'" [nzValue]="1"></nz-option>
-               <nz-option [nzLabel]="'视频形式'" [nzValue]="2"></nz-option>
-               <nz-option [nzLabel]="'音频形式'" [nzValue]="3"></nz-option>
-          </nz-select>
-        </nz-form-control>
+          <!--<th>操作</th>-->
+        <!--</tr>-->
+        <!--</thead>-->
+        <!--<tbody>-->
+        <!--<tr *ngFor="let data of ajaxTablelesson.data ;let no=index">-->
+          <!--<td>{{no+1}}</td>-->
+          <!--<td>{{data.lessonTitle}}</td>-->
+          <!--<td>{{data.makeDate}}</td>-->
+          <!--<td>{{data.teacherName}}</td>-->
+          <!--<td>{{data.guoduCoin}}</td>-->
+          <!--<td>{{data.habitNum}}</td>-->
+          <!--<td>-->
+            <!--<a href="javaScript:;" *ngIf="data.teacherId === loginUser.teacher.teacherId && !data.published" (click)="onEdit(data)" title="修改课程">修改</a>-->
+            <!--<nz-divider nzType="vertical"></nz-divider>-->
+            <!--<a href="javaScript:;" *ngIf="data.teacherId === loginUser.teacher.teacherId" (click)="onPublish(data)" title="发布该课程，发布后，该课程将不能修改及删除">发布</a>-->
+            <!--<nz-divider nzType="vertical"></nz-divider>-->
+            <!--<a href="javaScript:;" *ngIf="data.teacherId === loginUser.teacher.teacherId && !data.published" (click)="onDelete(data)" title="删除该课程">>删除</a>-->
+          <!--</td>-->
+        <!--</tr>-->
+        <!--</tbody>-->
+      <!--</nz-table>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
+<!--<div [hidden]="!showKindEdit">-->
+  <!--<div class="m-t-sm text-center" nz-row>-->
+    <!--<div nz-col [nzSpan]="3" >-->
+      <!--<a href="javaScript:;" class="ant-btn ant-btn-primary m-l-xs" (click)="onSave()" >保存</a>-->
+    <!--</div>-->
+  <!--</div>-->
+  <!--<div nz-row>-->
+    <!--<div nz-col [nzSpan]="18">-->
+            <!--<nz-form-item>-->
+              <!--<nz-form-label [nzSpan]="4"> 课程标题</nz-form-label>-->
+              <!--<nz-form-control [nzSpan]="20">-->
+                <!--<input nz-input [(ngModel)]="currentLesson.lessonTitle" >-->
+              <!--</nz-form-control>-->
+            <!--</nz-form-item>-->
+    <!--</div>-->
+    <!--<div nz-col [nzSpan]="6">-->
+      <!--<nz-form-item>-->
+        <!--<nz-form-label [nzSpan]="16"> 学习需花费果度币</nz-form-label>-->
+        <!--<nz-form-control [nzSpan]="8">-->
+          <!--<nz-input-number [(ngModel)]="currentLesson.guoduCoin" [nzMin]="1" [nzMax]="1000" [nzStep]="1"></nz-input-number>-->
+        <!--</nz-form-control>-->
+      <!--</nz-form-item>-->
+    <!--</div>-->
+  <!--</div>-->
+  <!--<div nz-row>-->
+      <!--<div nz-col [nzSpan]="24">-->
+            <!--<nz-form-item>-->
+              <!--<nz-form-label [nzSpan]="3"> 课程简介</nz-form-label>-->
+              <!--<nz-form-control [nzSpan]="21">-->
+                <!--<textarea [(ngModel)]="currentLesson.memo"  style="width:100%"></textarea>-->
+              <!--</nz-form-control>-->
+            <!--</nz-form-item>-->
+      <!--</div>-->
+  <!--</div>-->
+  <!--<div nz-row>-->
+    <!--<div nz-col [nzSpan]="24">-->
+      <!--<nz-form-item>-->
+        <!--<nz-form-label [nzSpan]="2">课时</nz-form-label>-->
+        <!--<nz-form-control [nzSpan]="2">-->
+          <!--<nz-select [nzSize]="'default'" [(ngModel)]="nowlessonNo"  (ngModelChange)="onSelectLessonNoChange()" >-->
+            <!--<nz-option *ngFor="let item of currentSubLessonArray" [nzLabel]="item.lessonNo" [nzValue]="item.lessonNo"></nz-option>-->
+          <!--</nz-select>-->
+        <!--</nz-form-control>-->
+        <!--<nz-form-control [nzSpan]="8">-->
+          <!--<a href="javaScript:;" class="ant-btn ant-btn-primary m-l-xs" (click)="onAddLesson()" >添加课程</a>-->
+          <!--<a href="javaScript:;" class="ant-btn ant-btn-primary m-l-xs" (click)="onRemoveLesson()" >删除课程</a>-->
+        <!--</nz-form-control>-->
+        <!--<nz-form-control [nzSpan]="4">-->
+           <!--<label nz-checkbox [(ngModel)]="nowEditSubLesson.noPay" [hidden]="currentLesson.guoduCoin===0">免费试学</label>-->
+        <!--</nz-form-control>-->
+        <!--<nz-form-control [nzSpan]="4">-->
+          <!--<nz-select [(ngModel)]="nowEditSubLesson.mode">-->
+               <!--<nz-option [nzLabel]="'文字形式'" [nzValue]="1"></nz-option>-->
+               <!--<nz-option [nzLabel]="'视频形式'" [nzValue]="2"></nz-option>-->
+               <!--<nz-option [nzLabel]="'音频形式'" [nzValue]="3"></nz-option>-->
+          <!--</nz-select>-->
+        <!--</nz-form-control>-->
 
-      </nz-form-item>
-    </div>
-  </div>
-  <div nz-row>
-    <div nz-col [nzSpan]="24" [hidden]="nowEditSubLesson.mode !==1">
-      <app-kind-edit [editOrder$]="editOrder$"  (onHtmlTextChanged)="receiveHtml($event)"></app-kind-edit>
-    </div>
-    <div nz-col [nzSpan]="24" [hidden]="nowEditSubLesson.mode !==2">
-      <div nz-col [nzSpan]="4" >
-        <nz-upload
-          class="avatar"
-          name="file"
-          [nzAction]="uploadMediaPath"
-          nzListType="picture-card"
-          [nzShowUploadList]="false"
-          (nzChange)="handlevideoChange($event)"
-        >
-          <ng-container *ngIf="nowEditSubLesson.videoUrl===''">
-            <i class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></i>
-            <div class="ant-upload-text">上传</div>
-          </ng-container>
-          <video *ngIf="nowEditSubLesson.videoUrl!==''" [src]="nowEditSubLesson.videoUrl" class="avatar" ></video>
-        </nz-upload>
-      </div>
-    </div>
-    <div nz-col [nzSpan]="24" [hidden]="nowEditSubLesson.mode !==3">
-      <div nz-col [nzSpan]="4" >
-        <nz-upload
-          class="avatar"
-          name="file"
-          [nzAction]="uploadMediaPath"
-          nzListType="picture-card"
-          [nzShowUploadList]="false"
-          (nzChange)="handleaudioChange($event)"
-        >
-          <ng-container *ngIf="nowEditSubLesson.audioUrl===''">
-            <i class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></i>
-            <div class="ant-upload-text">上传</div>
-          </ng-container>
-          <audio *ngIf="nowEditSubLesson.audioUrl!==''" [src]="nowEditSubLesson.audioUrl" class="avatar" ></audio>
-        </nz-upload>
-      </div>
-    </div>
-  </div>
-</div>
+      <!--</nz-form-item>-->
+    <!--</div>-->
+  <!--</div>-->
+  <!--<div nz-row>-->
+    <!--<div nz-col [nzSpan]="24" [hidden]="nowEditSubLesson.mode !==1">-->
+      <!--<app-kind-edit [editOrder$]="editOrder$"  (onHtmlTextChanged)="receiveHtml($event)"></app-kind-edit>-->
+    <!--</div>-->
+    <!--<div nz-col [nzSpan]="24" [hidden]="nowEditSubLesson.mode !==2">-->
+      <!--<div nz-col [nzSpan]="4" >-->
+        <!--<nz-upload-->
+          <!--class="avatar"-->
+          <!--name="file"-->
+          <!--[nzAction]="uploadMediaPath"-->
+          <!--nzListType="picture-card"-->
+          <!--[nzShowUploadList]="false"-->
+          <!--(nzChange)="handlevideoChange($event)"-->
+        <!--&gt;-->
+          <!--<ng-container *ngIf="nowEditSubLesson.videoUrl===''">-->
+            <!--<i class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></i>-->
+            <!--<div class="ant-upload-text">上传</div>-->
+          <!--</ng-container>-->
+          <!--<video *ngIf="nowEditSubLesson.videoUrl!==''" [src]="nowEditSubLesson.videoUrl" class="avatar" ></video>-->
+        <!--</nz-upload>-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<div nz-col [nzSpan]="24" [hidden]="nowEditSubLesson.mode !==3">-->
+      <!--<div nz-col [nzSpan]="4" >-->
+        <!--<nz-upload-->
+          <!--class="avatar"-->
+          <!--name="file"-->
+          <!--[nzAction]="uploadMediaPath"-->
+          <!--nzListType="picture-card"-->
+          <!--[nzShowUploadList]="false"-->
+          <!--(nzChange)="handleaudioChange($event)"-->
+        <!--&gt;-->
+          <!--<ng-container *ngIf="nowEditSubLesson.audioUrl===''">-->
+            <!--<i class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></i>-->
+            <!--<div class="ant-upload-text">上传</div>-->
+          <!--</ng-container>-->
+          <!--<audio *ngIf="nowEditSubLesson.audioUrl!==''" [src]="nowEditSubLesson.audioUrl" class="avatar" ></audio>-->
+        <!--</nz-upload>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { KindEditComponent } from './kind-edit.component';
+import { RichEditorComponent } from './rich-editor.component';
 
-describe('KindEditComponent', () => {
-  let component: KindEditComponent;
-  let fixture: ComponentFixture<KindEditComponent>;
+describe('RichEditorComponent', () => {
+  let component: RichEditorComponent;
+  let fixture: ComponentFixture<RichEditorComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ KindEditComponent ]
+      declarations: [ RichEditorComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(KindEditComponent);
+    fixture = TestBed.createComponent(RichEditorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

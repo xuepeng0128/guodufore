@@ -1,0 +1,37 @@
+<ueditor  [(ngModel)]="currentValue"
+          [config]="{ wordCount: true }"
+          [loadingTip]="'加载中……'"
+          (onPreReady)="onPreReady($event)"
+          #full ></ueditor>
+
+
+
+<nz-modal [(nzVisible)]="isImgUpModalShow"
+          [nzTitle]="'上传图片'"
+          [nzCancelText]="'关闭'"
+          (nzOnCancel)="isImgUpModalShow=false"
+          [nzOkText]="'保存'"
+          (nzOnOk)="onSave()"
+          [nzMaskClosable]="false"
+          [nzWidth]="200"
+>
+
+<div nz-row>
+  <div nz-col [nzSpan]="24" >
+    <nz-upload
+      class="avatar"
+      name="file"
+      [nzAction]="uploadMediaPath"
+      nzListType="picture-card"
+      [nzShowUploadList]="false"
+      (nzChange)="handleChange($event)"
+    >
+      <ng-container *ngIf="iconUrl===''">
+        <i class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></i>
+        <div class="ant-upload-text">上传</div>
+      </ng-container>
+      <img *ngIf="iconUrl!==''" [src]="iconUrl" class="avatar" />
+    </nz-upload>
+  </div>
+</div>
+</nz-modal>

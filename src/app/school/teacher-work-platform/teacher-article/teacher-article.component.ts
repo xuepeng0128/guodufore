@@ -15,11 +15,10 @@ import {NzMessageService, NzModalService} from 'ng-zorro-antd';
   styleUrls: ['./teacher-article.component.css']
 })
 export class TeacherArticleComponent implements OnInit {
-  showKindEdit = false;
-  editOrder$: Subject<{order: string; htmlContent: string}> = new Subject<{order: string; htmlContent: string}>();
-
-
-  nowEdit = 'browse';
+ html='';
+  istestShow=true;
+  teacherArticleWinOrder$ : Subject<{nowState: string , teacherArticle: TeacherArticle}>
+          =new Subject<{nowState: string, teacherArticle: TeacherArticle}>();
   loginUser: LoginUser = this.usersvr.getUserStorage();
   queryParams: ITeacherArticleQueryParams = {
     teacherId : this.loginUser.teacher.master ? '' : this.loginUser.teacher.teacherId,
@@ -58,17 +57,12 @@ export class TeacherArticleComponent implements OnInit {
 
 
   onAdd = () => {
-    this.nowEdit = 'add';
-    this.showKindEdit = true;
-    this.currentArticle = new TeacherArticle({  teacherId: this.loginUser.teacher.teacherId,
-                                                             schoolId: this.loginUser.school.schoolId});
-    this.editOrder$.next({order: 'setHtml', htmlContent: ''});
+    this.teacherArticleWinOrder$.next({nowState:'add',teacherArticle : null});
   }
  onEdit = (teacherArticle: ITeacherArticleQueryResult) => {
-   this.nowEdit = 'edit';
-   this.showKindEdit = true;
+
    this.currentArticle = new TeacherArticle({articleId: teacherArticle.articleId, articleTitle: teacherArticle.articleTitle, articleContent: teacherArticle.articleContent});
-   this.editOrder$.next({order: 'setHtml', htmlContent: this.currentArticle.articleContent});
+   this.teacherArticleWinOrder$.next({nowState:'edit',  teacherArticle: this.currentArticle});
  }
 onDelete = (teacherArticle: TeacherArticle) => {
   this.modalService.confirm({
@@ -85,27 +79,5 @@ onPublish = (teacherArticle: TeacherArticle) => {
 
 }
 
-onSave = () => {
-       this.editOrder$.next({order: 'getHtml', htmlContent: ''});
-
-}
-
-  receiveHtml = (html) => {
-    this.currentArticle.articleContent = html;
-    if (this.nowEdit === 'add') {
-      this.teacherarticlesvr.insertTeacherArticle(this.currentArticle).subscribe(
-         re =>   {
-           this.onQuery();
-           this.total += 1;
-         }
-      );
-    } else {
-      this.teacherarticlesvr.updateTeacherArticle(this.currentArticle).subscribe(
-        re =>     this.onQuery()
-      );
-    }
-
-    this.showKindEdit = false;
-  }
 
 }

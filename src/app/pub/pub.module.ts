@@ -32,7 +32,6 @@ import { WinIconChooseComponent } from './components/win-icon-choose/win-icon-ch
 import { HabitModeSelectComponent } from './components/habit-mode-select/habit-mode-select.component';
 import { HabitTimeUnitSelectComponent } from './components/habit-time-unit-select/habit-time-unit-select.component';
 import {NgxLoadingModule} from 'ngx-loading';
-import { KindEditComponent } from './components/kind-edit/kind-edit.component';
 import { WinStudentComponent } from './components/win-student/win-student.component';
 import { SexSelectComponent } from './components/sex-select/sex-select.component';
 import { WinCircleComponent } from './components/win-circle/win-circle.component';
@@ -44,6 +43,7 @@ import { CircleStudentChooseComponent } from './components/circle-student-choose
 import { HabitTemplateChooseComponent } from './components/habit-template-choose/habit-template-choose.component';
 import { GuodubiSelectComponent } from './components/guodubi-select/guodubi-select.component';
 import {UEditorModule} from 'ngx-ueditor';
+import { RichEditorComponent } from './components/rich-editor/rich-editor.component';
 
 
 
@@ -65,7 +65,6 @@ import {UEditorModule} from 'ngx-ueditor';
     WinIconChooseComponent,
     HabitModeSelectComponent,
     HabitTimeUnitSelectComponent,
-    KindEditComponent,
     WinStudentComponent,
     SexSelectComponent,
     WinCircleComponent,
@@ -75,7 +74,8 @@ import {UEditorModule} from 'ngx-ueditor';
     WinExamHabitComponent,
     CircleStudentChooseComponent,
     HabitTemplateChooseComponent,
-    GuodubiSelectComponent
+    GuodubiSelectComponent,
+    RichEditorComponent
 
   ],
   imports: [
@@ -129,7 +129,6 @@ import {UEditorModule} from 'ngx-ueditor';
     WinIconChooseComponent,
     HabitModeSelectComponent,
     HabitTimeUnitSelectComponent,
-    KindEditComponent,
     WinStudentComponent,
     SexSelectComponent,
     TeacherChooseComponent,
@@ -140,7 +139,8 @@ import {UEditorModule} from 'ngx-ueditor';
     WinExamHabitComponent,
     CircleStudentChooseComponent,
     HabitTemplateChooseComponent,
-    GuodubiSelectComponent
+    GuodubiSelectComponent,
+    RichEditorComponent
   ]
 })
 export class PubModule { }
