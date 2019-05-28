@@ -19,6 +19,7 @@ export class HabitTemplateChooseComponent implements OnInit {
 
   isHabitTemplateChooseModalShow = false;
   habitTemplateList: Array<HabitTemplate> = new Array<HabitTemplate>() ;
+  entFilter='';
   constructor(private habittemplatesvr: HabitTemplateService, private usersvr: UserService) { }
 
   ngOnInit() {

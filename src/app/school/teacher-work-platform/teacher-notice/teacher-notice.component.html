@@ -14,7 +14,7 @@
 <div class="m-t-sm text-center" nz-row>
   <div nz-col [nzSpan]="24" class="text-center">
     <a href="javaScript:;" class="ant-btn ant-btn-primary" (click)="onQuery()">查询</a>
-    <a class="ant-btn ant-btn-primary m-l-xs"   >添加</a>
+    <a class="ant-btn ant-btn-primary m-l-xs"  (click)="onAdd()" >添加</a>
   </div>
 </div>
 <div class="m-t-sm" nz-row>
@@ -66,23 +66,21 @@
 >
 
   <div nz-row>
-    <div nz-col [nzSpan]="6">
+
+    <div nz-col [nzSpan]="24">
       <nz-form-item>
-        <nz-form-label [nzSpan]="6">编号</nz-form-label>
-        <nz-form-control [nzSpan]="17">
-          <input nz-input [(ngModel)]="currentNotice.noticeId"  [readonly]="true" placeholder="系统生成" >
+        <nz-form-label [nzSpan]="4">发送班级</nz-form-label>
+        <nz-form-control [nzSpan]="20">
+          <nz-checkbox-group [(ngModel)]="checkeClasses"></nz-checkbox-group>
         </nz-form-control>
       </nz-form-item>
-    </div>
-    <div nz-col [nzSpan]="18">
-      <nz-checkbox-group [(ngModel)]="checkeClasses"></nz-checkbox-group>
     </div>
   </div>
   <div nz-row>
     <div nz-col [nzSpan]="24">
       <nz-form-item>
-        <nz-form-label [nzSpan]="6">内容</nz-form-label>
-        <nz-form-control [nzSpan]="17">
+        <nz-form-label [nzSpan]="4">通知内容</nz-form-label>
+        <nz-form-control [nzSpan]="20">
            <textarea [(ngModel)]="currentNotice.noticeContent" style="width: 100%;height:200px"></textarea>
         </nz-form-control>
       </nz-form-item>

@@ -1,219 +1,219 @@
-<nz-spin [nzSize]="'large'" [nzSpinning]='rolesvr.loading'>
-  <div nz-row>
-    <div nz-col [nzSpan]="12" [hidden]="user.userId ==='admin'">
-      <div nz-row>
-        <div nz-col nzSpan="24">
-          <nz-form-item>
-            <nz-form-label [nzSpan]="2">{{groupRoleName}}</nz-form-label>
-            <nz-form-control [nzSpan]="22">
-              <button class="pull-right" nz-button  nzType="primary" (click)="onAdd()">新增角色</button>
-            </nz-form-control>
-          </nz-form-item>
-        </div>
-      </div>
-      <div nz-row>
-        <div nz-col nzSpan="24">
-          <nz-table
-            #ajaxTable
-            nzBordered
-            nzShowSizeChanger
-            [nzFrontPagination]="false"
-            [nzData]="roleList$ | async"
-            [nzTotal]="total$ |async"
-            [(nzPageIndex)]="pageNo"
-            [(nzPageSize)]="pageSize"
-            (nzPageIndexChange)="onPageIndexChange()"
-          >
-            <thead >
-            <tr>
-              <th>序号</th>
-              <th>角色编号</th>
-              <th>角色名称</th>
-              <th>备注</th>
-              <th>操作</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let data of ajaxTable.data ;let no=index">
-              <td>{{no+1}}</td>
-              <td>{{data.roleId}}</td>
-              <td>{{data.roleName}}</td>
-              <td>{{data.memo}}</td>
-              <td>
-                <a href="javaScript:;" (click)="onUpdate(data)">修改</a>
-                <nz-divider nzType="vertical"></nz-divider>
-                <a href="javaScript:;" (click)="onDelete(data)">删除</a>
-                <nz-divider nzType="vertical"></nz-divider>
-                <a href="javaScript:;" (click)="onpower(data)">设置权限</a>
-              </td>
-            </tr>
-            </tbody>
-          </nz-table>
-        </div>
-      </div>
-    </div>
-    <div nz-col [nzSpan]="12" [hidden]="user.userId !=='admin'">
-      <div nz-row>
-        <div nz-col nzSpan="24">
-          <nz-form-item>
-            <nz-form-label [nzSpan]="2">角色列表</nz-form-label>
-          </nz-form-item>
-        </div>
-      </div>
-      <div nz-row>
-        <div nz-col nzSpan="24">
-          <nz-table
-            #ajaxTableByAdmin
-            nzBordered
-            nzShowSizeChanger
-            [nzFrontPagination]="false"
-            [nzData]="roleListByAdmin$ | async"
-            [nzTotal]="total$ |async"
-            [(nzPageIndex)]="pageNo"
-            [(nzPageSize)]="pageSize"
-            (nzPageIndexChange)="onAdminPageIndexChange()"
-          >
-            <thead >
-            <tr>
-              <th>序号</th>
-              <th>角色分组编号</th>
-              <th>角色分组名称</th>
-              <th>角色编号</th>
-              <th>角色名称</th>
-              <th>备注</th>
-              <th>操作</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let data of ajaxTableByAdmin.data ;let no=index">
-              <td>{{no+1}}</td>
-              <td>{{data.groupRoleId}}</td>
-              <td>{{data.groupRoleName}}</td>
-              <td>{{data.roleId}}</td>
-              <td>{{data.roleName}}</td>
-              <td>{{data.memo}}</td>
-              <td>
-                <a href="javaScript:;" (click)="onpower(data)">权限查询</a>
-              </td>
-            </tr>
-            </tbody>
-          </nz-table>
-        </div>
-      </div>
-    </div>
-    <div nz-col [nzSpan]="12" style="padding-left:1%;">
-      <div nz-row>
-        <div nz-col nzSpan="24">
-          <nz-form-item>
-            <nz-form-label [nzSpan]="2">权限管理</nz-form-label>
-            <nz-form-control [nzSpan]="22">
-              <button class="pull-right" nz-button  nzType="primary" [hidden]="user.userId ==='admin'" (click)="onSavePower()">保存权限</button>
-            </nz-form-control>
-          </nz-form-item>
-        </div>
-      </div>
-      <div nz-row>
-        <div nz-col nzSpan="24">
-          <nz-table
-            #ajaxTablePower
-            nzBordered
-            nzShowSizeChanger
-            [nzFrontPagination]="false"
-            [nzData]="rolePowerArray "
-            [nzTotal]="total$ |async"
-            [(nzPageIndex)]="pageNo"
-            [(nzPageSize)]="pageSize"
-            (nzPageIndexChange)="onPageIndexChange()"
-          >
-            <thead >
-            <tr>
-              <th>一级菜单</th>
-              <th>二级菜单</th>
-              <th>权限</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let data of ajaxTablePower.data ;let no=index">
-              <td>{{data.pareMenuId==='0' ? data.menuName :''}}</td>
-              <td>{{data.pareMenuId !=='0' ? data.menuName :''}}</td>
-              <td>
-                <ng-container *ngIf="data.pareMenuId!=='0'" >
-                  <input type="checkbox" [(ngModel)]="data.opPower.browse">浏览
-                  <ng-container *ngIf=" data.opPower.edit !== undefined && data.opPower.edit !==null"> <input type="checkbox" [(ngModel)]="data.opPower.edit">编辑</ng-container>
-                  <ng-container *ngIf=" data.opPower.excel !== undefined && data.opPower.excel !==null"><input type="checkbox" [(ngModel)]="data.opPower.excel">Excel导出</ng-container>
-                  <ng-container *ngIf=" data.opPower.check !== undefined && data.opPower.check !==null"><input type="checkbox" [(ngModel)]="data.opPower.check">审核</ng-container>
-                  <ng-container *ngIf=" data.opPower.policy !== undefined && data.opPower.policy !==null"><input type="checkbox" [(ngModel)]="data.opPower.policy">策略</ng-container>
-                  <ng-container *ngIf=" data.opPower.submit !== undefined && data.opPower.submit !==null"><input type="checkbox" [(ngModel)]="data.opPower.submit">提交下发</ng-container>
-                  <ng-container *ngIf=" data.opPower.replace !== undefined && data.opPower.replace !==null"><input type="checkbox" [(ngModel)]="data.opPower.replace">替换</ng-container>
-                  <ng-container *ngIf=" data.opPower.nextissue !== undefined && data.opPower.nextissue !==null"><input type="checkbox" [(ngModel)]="data.opPower.nextissue">下刊</ng-container>
-                  <ng-container *ngIf=" data.opPower.upload !== undefined && data.opPower.upload !==null"><input type="checkbox" [(ngModel)]="data.opPower.upload">上传广告</ng-container>
-                  <ng-container *ngIf=" data.opPower.choose !== undefined && data.opPower.choose !==null"><input type="checkbox" [(ngModel)]="data.opPower.choose">设备选择</ng-container>
-                  <ng-container *ngIf=" data.opPower.download !== undefined && data.opPower.download !==null"><input type="checkbox" [(ngModel)]="data.opPower.download">下载文件包</ng-container>
-                  <ng-container *ngIf=" data.opPower.print !== undefined && data.opPower.print !==null"><input type="checkbox" [(ngModel)]="data.opPower.print">打印报表</ng-container>
-                  <ng-container *ngIf=" data.opPower.submitcheck !== undefined && data.opPower.submitcheck !==null"><input type="checkbox" [(ngModel)]="data.opPower.submitcheck">提交审核</ng-container>
-                  <ng-container *ngIf=" data.opPower.affirm !== undefined && data.opPower.affirm !==null"><input type="checkbox" [(ngModel)]="data.opPower.affirm">订单确认</ng-container>
-                  <ng-container *ngIf=" data.opPower.cancel !== undefined && data.opPower.cancel !==null"><input type="checkbox" [(ngModel)]="data.opPower.cancel">订单撤销</ng-container>
-                </ng-container>
-              </td>
-            </tr>
-            </tbody>
-          </nz-table>
-        </div>
+<!--<nz-spin [nzSize]="'large'" [nzSpinning]='rolesvr.loading'>-->
+  <!--<div nz-row>-->
+    <!--<div nz-col [nzSpan]="12" [hidden]="user.userId ==='admin'">-->
+      <!--<div nz-row>-->
+        <!--<div nz-col nzSpan="24">-->
+          <!--<nz-form-item>-->
+            <!--<nz-form-label [nzSpan]="2">{{groupRoleName}}</nz-form-label>-->
+            <!--<nz-form-control [nzSpan]="22">-->
+              <!--<button class="pull-right" nz-button  nzType="primary" (click)="onAdd()">新增角色</button>-->
+            <!--</nz-form-control>-->
+          <!--</nz-form-item>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--<div nz-row>-->
+        <!--<div nz-col nzSpan="24">-->
+          <!--<nz-table-->
+            <!--#ajaxTable-->
+            <!--nzBordered-->
+            <!--nzShowSizeChanger-->
+            <!--[nzFrontPagination]="false"-->
+            <!--[nzData]="roleList$ | async"-->
+            <!--[nzTotal]="total$ |async"-->
+            <!--[(nzPageIndex)]="pageNo"-->
+            <!--[(nzPageSize)]="pageSize"-->
+            <!--(nzPageIndexChange)="onPageIndexChange()"-->
+          <!--&gt;-->
+            <!--<thead >-->
+            <!--<tr>-->
+              <!--<th>序号</th>-->
+              <!--<th>角色编号</th>-->
+              <!--<th>角色名称</th>-->
+              <!--<th>备注</th>-->
+              <!--<th>操作</th>-->
+            <!--</tr>-->
+            <!--</thead>-->
+            <!--<tbody>-->
+            <!--<tr *ngFor="let data of ajaxTable.data ;let no=index">-->
+              <!--<td>{{no+1}}</td>-->
+              <!--<td>{{data.roleId}}</td>-->
+              <!--<td>{{data.roleName}}</td>-->
+              <!--<td>{{data.memo}}</td>-->
+              <!--<td>-->
+                <!--<a href="javaScript:;" (click)="onUpdate(data)">修改</a>-->
+                <!--<nz-divider nzType="vertical"></nz-divider>-->
+                <!--<a href="javaScript:;" (click)="onDelete(data)">删除</a>-->
+                <!--<nz-divider nzType="vertical"></nz-divider>-->
+                <!--<a href="javaScript:;" (click)="onpower(data)">设置权限</a>-->
+              <!--</td>-->
+            <!--</tr>-->
+            <!--</tbody>-->
+          <!--</nz-table>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<div nz-col [nzSpan]="12" [hidden]="user.userId !=='admin'">-->
+      <!--<div nz-row>-->
+        <!--<div nz-col nzSpan="24">-->
+          <!--<nz-form-item>-->
+            <!--<nz-form-label [nzSpan]="2">角色列表</nz-form-label>-->
+          <!--</nz-form-item>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--<div nz-row>-->
+        <!--<div nz-col nzSpan="24">-->
+          <!--<nz-table-->
+            <!--#ajaxTableByAdmin-->
+            <!--nzBordered-->
+            <!--nzShowSizeChanger-->
+            <!--[nzFrontPagination]="false"-->
+            <!--[nzData]="roleListByAdmin$ | async"-->
+            <!--[nzTotal]="total$ |async"-->
+            <!--[(nzPageIndex)]="pageNo"-->
+            <!--[(nzPageSize)]="pageSize"-->
+            <!--(nzPageIndexChange)="onAdminPageIndexChange()"-->
+          <!--&gt;-->
+            <!--<thead >-->
+            <!--<tr>-->
+              <!--<th>序号</th>-->
+              <!--<th>角色分组编号</th>-->
+              <!--<th>角色分组名称</th>-->
+              <!--<th>角色编号</th>-->
+              <!--<th>角色名称</th>-->
+              <!--<th>备注</th>-->
+              <!--<th>操作</th>-->
+            <!--</tr>-->
+            <!--</thead>-->
+            <!--<tbody>-->
+            <!--<tr *ngFor="let data of ajaxTableByAdmin.data ;let no=index">-->
+              <!--<td>{{no+1}}</td>-->
+              <!--<td>{{data.groupRoleId}}</td>-->
+              <!--<td>{{data.groupRoleName}}</td>-->
+              <!--<td>{{data.roleId}}</td>-->
+              <!--<td>{{data.roleName}}</td>-->
+              <!--<td>{{data.memo}}</td>-->
+              <!--<td>-->
+                <!--<a href="javaScript:;" (click)="onpower(data)">权限查询</a>-->
+              <!--</td>-->
+            <!--</tr>-->
+            <!--</tbody>-->
+          <!--</nz-table>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<div nz-col [nzSpan]="12" style="padding-left:1%;">-->
+      <!--<div nz-row>-->
+        <!--<div nz-col nzSpan="24">-->
+          <!--<nz-form-item>-->
+            <!--<nz-form-label [nzSpan]="2">权限管理</nz-form-label>-->
+            <!--<nz-form-control [nzSpan]="22">-->
+              <!--<button class="pull-right" nz-button  nzType="primary" [hidden]="user.userId ==='admin'" (click)="onSavePower()">保存权限</button>-->
+            <!--</nz-form-control>-->
+          <!--</nz-form-item>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--<div nz-row>-->
+        <!--<div nz-col nzSpan="24">-->
+          <!--<nz-table-->
+            <!--#ajaxTablePower-->
+            <!--nzBordered-->
+            <!--nzShowSizeChanger-->
+            <!--[nzFrontPagination]="false"-->
+            <!--[nzData]="rolePowerArray "-->
+            <!--[nzTotal]="total$ |async"-->
+            <!--[(nzPageIndex)]="pageNo"-->
+            <!--[(nzPageSize)]="pageSize"-->
+            <!--(nzPageIndexChange)="onPageIndexChange()"-->
+          <!--&gt;-->
+            <!--<thead >-->
+            <!--<tr>-->
+              <!--<th>一级菜单</th>-->
+              <!--<th>二级菜单</th>-->
+              <!--<th>权限</th>-->
+            <!--</tr>-->
+            <!--</thead>-->
+            <!--<tbody>-->
+            <!--<tr *ngFor="let data of ajaxTablePower.data ;let no=index">-->
+              <!--<td>{{data.pareMenuId==='0' ? data.menuName :''}}</td>-->
+              <!--<td>{{data.pareMenuId !=='0' ? data.menuName :''}}</td>-->
+              <!--<td>-->
+                <!--<ng-container *ngIf="data.pareMenuId!=='0'" >-->
+                  <!--<input type="checkbox" [(ngModel)]="data.opPower.browse">浏览-->
+                  <!--<ng-container *ngIf=" data.opPower.edit !== undefined && data.opPower.edit !==null"> <input type="checkbox" [(ngModel)]="data.opPower.edit">编辑</ng-container>-->
+                  <!--<ng-container *ngIf=" data.opPower.excel !== undefined && data.opPower.excel !==null"><input type="checkbox" [(ngModel)]="data.opPower.excel">Excel导出</ng-container>-->
+                  <!--<ng-container *ngIf=" data.opPower.check !== undefined && data.opPower.check !==null"><input type="checkbox" [(ngModel)]="data.opPower.check">审核</ng-container>-->
+                  <!--<ng-container *ngIf=" data.opPower.policy !== undefined && data.opPower.policy !==null"><input type="checkbox" [(ngModel)]="data.opPower.policy">策略</ng-container>-->
+                  <!--<ng-container *ngIf=" data.opPower.submit !== undefined && data.opPower.submit !==null"><input type="checkbox" [(ngModel)]="data.opPower.submit">提交下发</ng-container>-->
+                  <!--<ng-container *ngIf=" data.opPower.replace !== undefined && data.opPower.replace !==null"><input type="checkbox" [(ngModel)]="data.opPower.replace">替换</ng-container>-->
+                  <!--<ng-container *ngIf=" data.opPower.nextissue !== undefined && data.opPower.nextissue !==null"><input type="checkbox" [(ngModel)]="data.opPower.nextissue">下刊</ng-container>-->
+                  <!--<ng-container *ngIf=" data.opPower.upload !== undefined && data.opPower.upload !==null"><input type="checkbox" [(ngModel)]="data.opPower.upload">上传广告</ng-container>-->
+                  <!--<ng-container *ngIf=" data.opPower.choose !== undefined && data.opPower.choose !==null"><input type="checkbox" [(ngModel)]="data.opPower.choose">设备选择</ng-container>-->
+                  <!--<ng-container *ngIf=" data.opPower.download !== undefined && data.opPower.download !==null"><input type="checkbox" [(ngModel)]="data.opPower.download">下载文件包</ng-container>-->
+                  <!--<ng-container *ngIf=" data.opPower.print !== undefined && data.opPower.print !==null"><input type="checkbox" [(ngModel)]="data.opPower.print">打印报表</ng-container>-->
+                  <!--<ng-container *ngIf=" data.opPower.submitcheck !== undefined && data.opPower.submitcheck !==null"><input type="checkbox" [(ngModel)]="data.opPower.submitcheck">提交审核</ng-container>-->
+                  <!--<ng-container *ngIf=" data.opPower.affirm !== undefined && data.opPower.affirm !==null"><input type="checkbox" [(ngModel)]="data.opPower.affirm">订单确认</ng-container>-->
+                  <!--<ng-container *ngIf=" data.opPower.cancel !== undefined && data.opPower.cancel !==null"><input type="checkbox" [(ngModel)]="data.opPower.cancel">订单撤销</ng-container>-->
+                <!--</ng-container>-->
+              <!--</td>-->
+            <!--</tr>-->
+            <!--</tbody>-->
+          <!--</nz-table>-->
+        <!--</div>-->
 
-      </div>
+      <!--</div>-->
 
-    </div>
-  </div>
-</nz-spin>
+    <!--</div>-->
+  <!--</div>-->
+<!--</nz-spin>-->
 
-<nz-modal [(nzVisible)]="isSaveModalShow"
-          nzTitle="新增角色信息"
-          (nzOnCancel)="isSaveModalShow=false"
-          (nzOnOk)=" onSave()"
-          [nzWidth]="700"
->
-  <form nz-form>
-    <div nz-row>
-      <div nz-col [nzSpan]="8">
-        <nz-form-item>
-          <nz-form-label [nzSpan]="8"><b class="col-red">*</b>角色编号</nz-form-label>
-          <nz-form-control [nzSpan]="16">
-            <input nz-input [(ngModel)]="currentRole.roleId" [ngModelOptions]="{standalone: true}">
-          </nz-form-control>
-        </nz-form-item>
-      </div>
-      <div nz-col [nzSpan]="8">
-        <nz-form-item>
-          <nz-form-label [nzSpan]="8"><b class="col-red">*</b>角色名称</nz-form-label>
-          <nz-form-control [nzSpan]="16">
-            <input nz-input [(ngModel)]="currentRole.roleName" [ngModelOptions]="{standalone: true}">
-          </nz-form-control>
-        </nz-form-item>
-      </div>
-      <div nz-col [nzSpan]="8">
-        <nz-form-item>
-          <nz-form-label [nzSpan]="8">备注</nz-form-label>
-          <nz-form-control [nzSpan]="16">
-            <input nz-input [(ngModel)]="currentRole.memo" [ngModelOptions]="{standalone: true}">
-          </nz-form-control>
-        </nz-form-item>
-      </div>
-    </div>
-  </form>
-</nz-modal>
+<!--<nz-modal [(nzVisible)]="isSaveModalShow"-->
+          <!--nzTitle="新增角色信息"-->
+          <!--(nzOnCancel)="isSaveModalShow=false"-->
+          <!--(nzOnOk)=" onSave()"-->
+          <!--[nzWidth]="700"-->
+<!--&gt;-->
+  <!--<form nz-form>-->
+    <!--<div nz-row>-->
+      <!--<div nz-col [nzSpan]="8">-->
+        <!--<nz-form-item>-->
+          <!--<nz-form-label [nzSpan]="8"><b class="col-red">*</b>角色编号</nz-form-label>-->
+          <!--<nz-form-control [nzSpan]="16">-->
+            <!--<input nz-input [(ngModel)]="currentRole.roleId" [ngModelOptions]="{standalone: true}">-->
+          <!--</nz-form-control>-->
+        <!--</nz-form-item>-->
+      <!--</div>-->
+      <!--<div nz-col [nzSpan]="8">-->
+        <!--<nz-form-item>-->
+          <!--<nz-form-label [nzSpan]="8"><b class="col-red">*</b>角色名称</nz-form-label>-->
+          <!--<nz-form-control [nzSpan]="16">-->
+            <!--<input nz-input [(ngModel)]="currentRole.roleName" [ngModelOptions]="{standalone: true}">-->
+          <!--</nz-form-control>-->
+        <!--</nz-form-item>-->
+      <!--</div>-->
+      <!--<div nz-col [nzSpan]="8">-->
+        <!--<nz-form-item>-->
+          <!--<nz-form-label [nzSpan]="8">备注</nz-form-label>-->
+          <!--<nz-form-control [nzSpan]="16">-->
+            <!--<input nz-input [(ngModel)]="currentRole.memo" [ngModelOptions]="{standalone: true}">-->
+          <!--</nz-form-control>-->
+        <!--</nz-form-item>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</form>-->
+<!--</nz-modal>-->
 
-<nz-modal [(nzVisible)]="isDaleteModalShow"
-          nzTitle="删除角色信息"
-          (nzOnCancel)="isDaleteModalShow=false"
-          (nzOnOk)=" onDaleteRole()"
-          [nzWidth]="400"
->
-  <form nz-form>
-    <div nz-row>
-      <div nz-col [nzSpan]="24">
-        <h4 class="text-center">确认删除该角色信息？</h4>
-      </div>
-    </div>
-  </form>
-</nz-modal>
+<!--<nz-modal [(nzVisible)]="isDaleteModalShow"-->
+          <!--nzTitle="删除角色信息"-->
+          <!--(nzOnCancel)="isDaleteModalShow=false"-->
+          <!--(nzOnOk)=" onDaleteRole()"-->
+          <!--[nzWidth]="400"-->
+<!--&gt;-->
+  <!--<form nz-form>-->
+    <!--<div nz-row>-->
+      <!--<div nz-col [nzSpan]="24">-->
+        <!--<h4 class="text-center">确认删除该角色信息？</h4>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</form>-->
+<!--</nz-modal>-->
 

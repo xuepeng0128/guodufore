@@ -1,14 +1,14 @@
 
 <nz-layout class="layout">
   <nz-header style="background: #2A6FA8;position:fixed; width:100%;z-index:999">
-    <span class="logo text-left" style="width:70%"> 管 理 平 台</span>
+    <span class="logo text-left" style="width:70%; color :white ; font-size: 18px">果 度 微 习 惯 大 数 据 管 理 平 台</span>
     <div style="float:right;margin-top:20px;margin-right:10px;font-size: 14px">
       <span style="color:yellow">欢迎</span>{{ (user.isSupperAdmin || user.isSchoolAdmin) ? user.user.account :
                                           user.teacher.teacherName
       }}
-      <a href="javascript:void(0)" style="color:white" ><b style="color:black">[首页]</b> </a>
+      <a href="javascript:void(0)" style="color:white" ><b >[首页]</b> </a>
       <a href="javascript:void(0)"  style="color:white"><b style="color:black">[修改密码]</b></a> &nbsp;&nbsp;
-      <a href="javascript:void(0)"  style="color:white"><b style="color:black">[退出登录]</b></a> &nbsp;&nbsp;<span style="color:white"><b style="color:black">版本号： V 1.0.0</b></span>
+      <a href="javascript:void(0)"  style="color:white"><b style="color:black">[退出登录]</b></a> &nbsp;&nbsp;
     </div>
   </nz-header>
   <nz-layout>

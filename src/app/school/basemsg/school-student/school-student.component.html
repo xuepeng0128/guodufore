@@ -27,7 +27,7 @@
 <div class="m-t-sm text-center" nz-row>
   <div nz-col [nzSpan]="24" class="text-center">
     <a href="javaScript:;" class="ant-btn ant-btn-primary" (click)="onQuery()">查询</a>
-    <a class="ant-btn ant-btn-primary m-l-xs" download="学生资源.xls" *ngIf="user.supperAdmin "  >excel导出</a>
+    <a class="ant-btn ant-btn-primary m-l-xs" download="学生资源.xls" *ngIf="user.isSchoolAdmin "  >excel导出</a>
   </div>
 </div>
 <div class="m-t-sm" nz-row>
