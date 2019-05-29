@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {NzMessageService, NzModalService, UploadFile} from 'ng-zorro-antd';
 import {TeacherLessonService} from '../../../shared/service/business/teacher-lesson.service';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -6,7 +6,7 @@ import {MSG_SAVE_ERROR, MSG_SAVE_SUCCESS} from '../../../shared/SysMessage';
 import {UEditorComponent} from 'ngx-ueditor';
 import {UPLOAD_MEDIA_PATH} from '../../../shared/const';
 import {SubTeacherLesson} from '../../../entity/SubTeacherLesson';
-
+declare  var UE : any;
 @Component({
   selector: 'app-teacher-lessons-detail',
   templateUrl: './teacher-lessons-detail.component.html',
@@ -22,7 +22,7 @@ export class TeacherLessonsDetailComponent implements OnInit {
   nowEdit = 'browse';
   editingLesson: SubTeacherLesson = new SubTeacherLesson({});
   constructor(public  teacherlessonsvr: TeacherLessonService, private modalService: NzModalService,
-              private message: NzMessageService, private route: ActivatedRoute, private router: Router) { }
+              private cd: ChangeDetectorRef,private message: NzMessageService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     this.nowEdit = this.route.snapshot.queryParams.nowEdit as string;
