@@ -5,19 +5,7 @@
   </div>
 </div>
 
-<nz-modal [(nzVisible)]="istestShow"
-          [nzTitle]="'圈子'"
-          [nzCancelText]="'关闭'"
-          (nzOnCancel)="istestShow=false"
-          [nzOkText]="'保存'"
-          [nzMaskClosable]="false"
-          [nzWidth]="800"
->
-<ueditor  [(ngModel)]="html"
-          [config]="{ wordCount: true }"
-          [loadingTip]="'加载中……'"
-          #full ></ueditor>
-</nz-modal>
+
 <div class="m-t-sm" nz-row>
   <div nz-col [nzSpan]="24">
     <nz-table
@@ -27,8 +15,8 @@
       [nzFrontPagination]="false"
       [nzData]="articleArray"
       [nzTotal]="total"
-      [(nzPageIndex)]="queryParams.pageNo"
-      [(nzPageSize)]="queryParams.pageSize"
+      [(nzPageIndex)]="teacherarticlesvr.queryParams.pageNo"
+      [(nzPageSize)]="teacherarticlesvr.queryParams.pageSize"
       (nzPageIndexChange)="onPageChange($event)"
     >
       <thead >
@@ -45,7 +33,7 @@
       <tr *ngFor="let data of ajaxTablearticle.data ;let no=index">
         <td>{{no+1}}</td>
         <td>{{data.articleTitle}}</td>
-        <td>{{data.makeDate}}</td>
+        <td>{{data.makeDate | date : 'yyyy-MM-dd'}}</td>
         <td>{{data.teacherName}}</td>
         <td>{{data.habitNum}}</td>
         <td>
@@ -62,4 +50,3 @@
 </div>
 
 
-<app-win-teacher-article [teacherArticleWinOrder$]="teacherArticleWinOrder$" (onArticleSaved)="onSaved($event)"></app-win-teacher-article>

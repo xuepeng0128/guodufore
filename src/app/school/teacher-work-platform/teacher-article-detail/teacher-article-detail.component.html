@@ -1,0 +1,56 @@
+<div class="m-t-sm text-center" nz-row>
+  <div nz-col [nzSpan]="3" >
+    <a href="javaScript:;" class="ant-btn ant-btn-primary m-l-xs" (click)="onSave()" >保存</a>
+  </div>
+  <div nz-col [nzSpan]="3" >
+    <a href="javaScript:;" class="ant-btn ant-btn-primary m-l-xs" (click)="onback()" >返回</a>
+  </div>
+</div>
+<div nz-row>
+  <div nz-col [nzSpan]="24">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="3">文章标题</nz-form-label>
+      <nz-form-control [nzSpan]="17">
+        <input nz-input [(ngModel)]="teacherarticlesvr.currentArticle.articleTitle"  >
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+</div>
+<div nz-row>
+  <div nz-col [nzSpan]="24">
+    <ueditor  [(ngModel)]="teacherarticlesvr.currentArticle.articleContent"
+              [config]="{ wordCount: true }"
+              [loadingTip]="'加载中……'"
+              (onPreReady)="onPreReady($event)"
+              #full ></ueditor>
+  </div>
+</div>
+
+<nz-modal [(nzVisible)]="isImgUpModalShow"
+          [nzTitle]="'上传图片'"
+          [nzCancelText]="null"
+          (nzOnCancel)="isImgUpModalShow=false"
+          [nzOkText]="null"
+          [nzMaskClosable]="false"
+          [nzWidth]="150"
+>
+
+  <div nz-row>
+    <div nz-col [nzSpan]="24" >
+      <nz-upload
+        class="avatar"
+        name="file"
+        [nzAction]="uploadMediaPath"
+        nzListType="picture-card"
+        [nzShowUploadList]="false"
+        (nzChange)="handleChange($event)"
+      >
+        <ng-container *ngIf="iconUrl===''">
+          <i class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></i>
+          <div class="ant-upload-text">上传</div>
+        </ng-container>
+        <img *ngIf="iconUrl!==''" [src]="iconUrl" class="avatar" />
+      </nz-upload>
+    </div>
+  </div>
+</nz-modal>

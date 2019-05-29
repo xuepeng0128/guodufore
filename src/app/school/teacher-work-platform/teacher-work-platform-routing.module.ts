@@ -7,6 +7,8 @@ import {TeacherLessonsComponent} from './teacher-lessons/teacher-lessons.compone
 import {TeacherArticleComponent} from './teacher-article/teacher-article.component';
 import {TeacherNoticeComponent} from './teacher-notice/teacher-notice.component';
 import {TeacherHabitComponent} from './teacher-habit/teacher-habit.component';
+import {TeacherArticleDetailComponent} from './teacher-article-detail/teacher-article-detail.component';
+import {TeacherLessonsDetailComponent} from './teacher-lessons-detail/teacher-lessons-detail.component';
 
 const routes: Routes = [
   { path : '' , redirectTo : 'classesmgr', pathMatch: 'full'},
@@ -14,7 +16,9 @@ const routes: Routes = [
   { path: 'classescircle', component: ClassesCircleComponent},
   { path: 'teacherhabit', component: TeacherHabitComponent},
   { path: 'teacherarticle', component: TeacherArticleComponent},
+  { path: 'teacherarticledetail', component: TeacherArticleDetailComponent},
   { path: 'teacherlessons', component: TeacherLessonsComponent},
+  { path: 'teacherlessonsdetail', component: TeacherLessonsDetailComponent},
   { path: 'exammgr', component: ExamMgrComponent},
   { path: 'teachernotice', component: TeacherNoticeComponent},
 ];

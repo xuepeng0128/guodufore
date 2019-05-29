@@ -11,6 +11,16 @@ import {TeacherArticle} from '../../../entity/TeacherArticle';
 })
 export class TeacherArticleService {
 
+  queryParams: ITeacherArticleQueryParams = {
+    teacherId : '',
+    teacherName : '',
+    schoolId : '',
+    schoolName : '',
+    pageNo : 1,
+    pageSize : 10 ,
+    pageBegin : 0
+  };
+  currentArticle: TeacherArticle = new TeacherArticle({});
   constructor(private httpsvr: HttpService) { }
 
 

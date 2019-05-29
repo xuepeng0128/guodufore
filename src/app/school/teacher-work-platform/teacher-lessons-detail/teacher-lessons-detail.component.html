@@ -1,0 +1,146 @@
+
+  <div class="m-t-sm text-center" nz-row>
+    <div nz-col [nzSpan]="3" >
+      <a href="javaScript:;" class="ant-btn ant-btn-primary m-l-xs" (click)="onSave()" >保存</a>
+    </div>
+    <div nz-col [nzSpan]="3" >
+      <a href="javaScript:;" class="ant-btn ant-btn-primary m-l-xs" (click)="onback()" >返回</a>
+    </div>
+  </div>
+  <div nz-row>
+    <div nz-col [nzSpan]="18">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="4"> 课程标题</nz-form-label>
+        <nz-form-control [nzSpan]="20">
+          <input nz-input [(ngModel)]="teacherlessonsvr.currentLesson.lessonTitle" >
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="16"> 学习需花费果度币</nz-form-label>
+        <nz-form-control [nzSpan]="8">
+          <nz-input-number [(ngModel)]="teacherlessonsvr.currentLesson.guoduCoin" [nzMin]="1" [nzMax]="1000" [nzStep]="1"></nz-input-number>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row>
+    <div nz-col [nzSpan]="24">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="3"> 课程简介</nz-form-label>
+        <nz-form-control [nzSpan]="21">
+          <textarea [(ngModel)]="teacherlessonsvr.currentLesson.memo"  style="width:100%"></textarea>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row>
+    <div nz-col [nzSpan]="24">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="2">课时</nz-form-label>
+        <nz-form-control [nzSpan]="10">
+
+          <nz-tag
+            *ngFor="let item of teacherlessonsvr.currentSubLessonArray"
+            [nzMode]="i === 0 ? 'default' : 'closeable'"
+            [nzColor]=" item.lessonNo=== editingLesson.lessonNo ? 'purple': 'blue'"
+
+            (nzAfterClose)="removeLesson(item)"
+            (click)="chooseLesson(item)"
+          >
+            第{{ item.lessonNo}} 课
+          </nz-tag>
+          <nz-tag  class="editable-tag" nzNoAnimation (click)="addNewLesson()">
+            <i nz-icon type="plus"></i> 新增课时
+          </nz-tag>
+        </nz-form-control>
+        <nz-form-control [nzSpan]="4">
+          <label nz-checkbox [(ngModel)]="editingLesson.noPay" [hidden]="teacherlessonsvr.currentLesson.guoduCoin===0">免费试学</label>
+        </nz-form-control>
+        <nz-form-control [nzSpan]="4">
+          <nz-select [(ngModel)]="editingLesson.mode">
+            <nz-option [nzLabel]="'文字形式'" [nzValue]="1"></nz-option>
+            <nz-option [nzLabel]="'视频形式'" [nzValue]="2"></nz-option>
+            <nz-option [nzLabel]="'音频形式'" [nzValue]="3"></nz-option>
+          </nz-select>
+        </nz-form-control>
+
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row>
+    <div nz-col [nzSpan]="24" [hidden]="editingLesson.mode !==1">
+      <ueditor  [(ngModel)]="editingLesson.memo"
+                [config]="{ wordCount: true }"
+                [loadingTip]="'加载中……'"
+                (onPreReady)="onPreReady($event)"
+                #full ></ueditor>
+    </div>
+    <div nz-col [nzSpan]="24" [hidden]="editingLesson.mode !==2">
+      <div nz-col [nzSpan]="4" >
+        <nz-upload
+          class="avatar"
+          name="file"
+          [nzAction]="uploadMediaPath"
+          nzListType="picture-card"
+          [nzShowUploadList]="false"
+          (nzChange)="handlevideoChange($event)"
+        >
+          <ng-container *ngIf="editingLesson.videoUrl===''">
+            <i class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></i>
+            <div class="ant-upload-text">上传</div>
+          </ng-container>
+          <video *ngIf="editingLesson.videoUrl!==''" [src]="editingLesson.videoUrl" class="avatar" ></video>
+        </nz-upload>
+      </div>
+    </div>
+    <div nz-col [nzSpan]="24" [hidden]="editingLesson.mode !==3">
+      <div nz-col [nzSpan]="4" >
+        <nz-upload
+          class="avatar"
+          name="file"
+          [nzAction]="uploadMediaPath"
+          nzListType="picture-card"
+          [nzShowUploadList]="false"
+          (nzChange)="handleaudioChange($event)"
+        >
+          <ng-container *ngIf="editingLesson.audioUrl===''">
+            <i class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></i>
+            <div class="ant-upload-text">上传</div>
+          </ng-container>
+          <audio *ngIf="editingLesson.audioUrl!==''" [src]="editingLesson.audioUrl" class="avatar" ></audio>
+        </nz-upload>
+      </div>
+    </div>
+  </div>
+
+
+  <nz-modal [(nzVisible)]="isImgUpModalShow"
+            [nzTitle]="'上传图片'"
+            [nzCancelText]="null"
+            (nzOnCancel)="isImgUpModalShow=false"
+            [nzOkText]="null"
+            [nzMaskClosable]="false"
+            [nzWidth]="150"
+  >
+
+    <div nz-row>
+      <div nz-col [nzSpan]="24" >
+        <nz-upload
+          class="avatar"
+          name="file"
+          [nzAction]="uploadMediaPath"
+          nzListType="picture-card"
+          [nzShowUploadList]="false"
+          (nzChange)="handleChange($event)"
+        >
+          <ng-container *ngIf="iconUrl===''">
+            <i class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></i>
+            <div class="ant-upload-text">上传</div>
+          </ng-container>
+          <img *ngIf="iconUrl!==''" [src]="iconUrl" class="avatar" />
+        </nz-upload>
+      </div>
+    </div>
+  </nz-modal>

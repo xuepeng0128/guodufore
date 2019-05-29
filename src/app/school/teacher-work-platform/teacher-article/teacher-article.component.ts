@@ -8,6 +8,7 @@ import {Subject} from 'rxjs';
 import {School} from '../../../entity/School';
 import {TeacherArticle} from '../../../entity/TeacherArticle';
 import {NzMessageService, NzModalService} from 'ng-zorro-antd';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-teacher-article',
@@ -15,54 +16,54 @@ import {NzMessageService, NzModalService} from 'ng-zorro-antd';
   styleUrls: ['./teacher-article.component.css']
 })
 export class TeacherArticleComponent implements OnInit {
- html='';
-  istestShow=true;
-  teacherArticleWinOrder$ : Subject<{nowState: string , teacherArticle: TeacherArticle}>
-          =new Subject<{nowState: string, teacherArticle: TeacherArticle}>();
   loginUser: LoginUser = this.usersvr.getUserStorage();
-  queryParams: ITeacherArticleQueryParams = {
-    teacherId : this.loginUser.teacher.master ? '' : this.loginUser.teacher.teacherId,
-    teacherName : '',
-    schoolId : this.loginUser.school.schoolId,
-    schoolName : '',
-    pageNo : 1,
-    pageSize : 10 ,
-    pageBegin : 0
-  };
   articleArray: Array<ITeacherArticleQueryResult> = new Array<ITeacherArticleQueryResult>();
   currentArticle: TeacherArticle = new TeacherArticle({});
   total = 0;
-  constructor(private usersvr: UserService , private  teacherarticlesvr: TeacherArticleService,
-              private modalService: NzModalService, private message: NzMessageService) { }
+  constructor(private usersvr: UserService , public  teacherarticlesvr: TeacherArticleService,
+              private modalService: NzModalService, private message: NzMessageService, private router: Router) { }
 
   ngOnInit() {
-    this.onQuery();
+    this.teacherarticlesvr.queryParams.teacherId = this.loginUser.teacher.master ? '' : this.loginUser.teacher.teacherId;
+    this.teacherarticlesvr.queryParams.schoolId = this.loginUser.school.schoolId;
+    this.teacherarticlesvr.teacherArticleList(this.teacherarticlesvr.queryParams).subscribe(
+      re => this.articleArray = re
+    );
+    this.teacherarticlesvr.teacherArticleTotal(this.teacherarticlesvr.queryParams).subscribe(
+      re => this.total = re
+    );
   }
   onQuery = () => {
-    this.queryParams.pageNo = 1;
-    this.queryParams.pageBegin = (this.queryParams.pageNo - 1) * this.queryParams.pageSize;
-    this.teacherarticlesvr.teacherArticleList(this.queryParams).subscribe(
+    this.teacherarticlesvr.queryParams.pageNo = 1;
+    this.teacherarticlesvr.queryParams.pageBegin = (this.teacherarticlesvr.queryParams.pageNo - 1) * this.teacherarticlesvr.queryParams.pageSize;
+    this.teacherarticlesvr.teacherArticleList(this.teacherarticlesvr.queryParams).subscribe(
           re => this.articleArray = re
        );
-    this.teacherarticlesvr.teacherArticleTotal(this.queryParams).subscribe(
+    this.teacherarticlesvr.teacherArticleTotal(this.teacherarticlesvr.queryParams).subscribe(
       re => this.total = re
     );
   }
   onPageChange = (e) => {
-    this.queryParams.pageNo = e;
-    this.teacherarticlesvr.teacherArticleList(this.queryParams).subscribe(
+    this.teacherarticlesvr.queryParams.pageNo = e;
+    this.teacherarticlesvr.queryParams.pageBegin = (this.teacherarticlesvr.queryParams.pageNo - 1) * this.teacherarticlesvr.queryParams.pageSize;
+    this.teacherarticlesvr.teacherArticleList(this.teacherarticlesvr.queryParams).subscribe(
       re => this.articleArray = re
     );
   }
 
 
   onAdd = () => {
-    this.teacherArticleWinOrder$.next({nowState:'add',teacherArticle : null});
+       this.teacherarticlesvr.currentArticle = new TeacherArticle({
+       teacherId: this.loginUser.teacher.teacherId,
+       schoolId : this.loginUser.school.schoolId
+     });
+       this.router.navigate(['/frame/schoolteacherworkplatform/teacherarticledetail'], {queryParams: {nowEdit : 'add'}});
+
   }
  onEdit = (teacherArticle: ITeacherArticleQueryResult) => {
 
-   this.currentArticle = new TeacherArticle({articleId: teacherArticle.articleId, articleTitle: teacherArticle.articleTitle, articleContent: teacherArticle.articleContent});
-   this.teacherArticleWinOrder$.next({nowState:'edit',  teacherArticle: this.currentArticle});
+   this.teacherarticlesvr.currentArticle = new TeacherArticle({articleId: teacherArticle.articleId, articleTitle: teacherArticle.articleTitle, articleContent: teacherArticle.articleContent});
+   this.router.navigate(['/frame/schoolteacherworkplatform/teacherarticledetail'], {queryParams: {nowEdit : 'edit' }});
  }
 onDelete = (teacherArticle: TeacherArticle) => {
   this.modalService.confirm({

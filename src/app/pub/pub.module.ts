@@ -25,7 +25,6 @@ import { TeacherdutySelectComponent } from './components/teacherduty-select/teac
 
 import { WinTeacherComponent } from './components/win-teacher/win-teacher.component';
 import { StudentCardComponent } from './components/student-card/student-card.component';
-import { WinTeacherArticleComponent } from './components/win-teacher-article/win-teacher-article.component';
 import { WinHabitTemplateComponent } from './components/win-habit-template/win-habit-template.component';
 import { HabitUnitSelectComponent } from './components/habit-unit-select/habit-unit-select.component';
 import { WinIconChooseComponent } from './components/win-icon-choose/win-icon-choose.component';
@@ -59,7 +58,7 @@ import { RichEditorComponent } from './components/rich-editor/rich-editor.compon
     TeacherdutySelectComponent,
     WinTeacherComponent,
     StudentCardComponent,
-    WinTeacherArticleComponent,
+
     WinHabitTemplateComponent,
     HabitUnitSelectComponent,
     WinIconChooseComponent,
@@ -123,7 +122,6 @@ import { RichEditorComponent } from './components/rich-editor/rich-editor.compon
     StudentCardComponent,
     CutSizePipe,
     ArrayTextFilterPipe,
-    WinTeacherArticleComponent,
     WinHabitTemplateComponent,
     HabitUnitSelectComponent,
     WinIconChooseComponent,

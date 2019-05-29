@@ -12,6 +12,7 @@ import {TeacherLesson} from '../../../entity/TeacherLesson';
 import {TeacherLessonService} from '../../../shared/service/business/teacher-lesson.service';
 import {SubTeacherLesson} from '../../../entity/SubTeacherLesson';
 import {Icon} from '../../../entity/Icon';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-teacher-lessons',
@@ -19,79 +20,59 @@ import {Icon} from '../../../entity/Icon';
   styleUrls: ['./teacher-lessons.component.css']
 })
 export class TeacherLessonsComponent implements OnInit {
-  showKindEdit = false;
-  editOrder$: Subject<{order: string; htmlContent: string}> = new Subject<{order: string; htmlContent: string}>();
 
-
-  nowEdit = 'browse';
   loginUser: LoginUser = this.usersvr.getUserStorage();
-  queryParams: ITeacherLessonQueryParams = {
-    teacherId : this.loginUser.teacher.master ? '' : this.loginUser.teacher.teacherId,
-    teacherName : '',
-    schoolId : this.loginUser.school.schoolId,
-    schoolName : '',
-    pageNo : 1,
-    pageSize : 10 ,
-    pageBegin : 0
-  };
-  lessonArray: Array<TeacherLesson> = new Array<TeacherLesson>();
-
-  currentLesson: TeacherLesson = new TeacherLesson({});
-  currentSubLessonArray: Array<SubTeacherLesson> = new Array<SubTeacherLesson>();
-  nowEditSubLesson: SubTeacherLesson = new SubTeacherLesson({});
-  nowlessonNo = 1;
   total = 0;
   loading = false;
-  toSave=false;
-  constructor(private usersvr: UserService , private  teacherlessonsvr: TeacherLessonService,
-              private modalService: NzModalService, private message: NzMessageService) { }
-
+  constructor(private usersvr: UserService , public  teacherlessonsvr: TeacherLessonService,
+              private modalService: NzModalService, private message: NzMessageService, private router: Router) { }
   ngOnInit() {
-    this.onQuery();
-  }
-  onQuery = () => {
-    this.queryParams.pageNo = 1;
-    this.queryParams.pageBegin = (this.queryParams.pageNo - 1) * this.queryParams.pageSize;
-    this.teacherlessonsvr.teacherLessonList(this.queryParams).subscribe(
+    this.teacherlessonsvr.queryParams.teacherId = this.loginUser.teacher.master ? '' : this.loginUser.teacher.teacherId;
+    this.teacherlessonsvr.queryParams.schoolId = this.loginUser.school.schoolId;
+    this.teacherlessonsvr.teacherLessonList(this.teacherlessonsvr.queryParams).subscribe(
       re => this.lessonArray = re
     );
-    this.teacherlessonsvr.teacherLessonListTotal(this.queryParams).subscribe(
+    this.teacherlessonsvr.teacherLessonListTotal(this.teacherlessonsvr.queryParams).subscribe(
+      re => this.total = re
+    );
+  }
+  onQuery = () => {
+    this.teacherlessonsvr.queryParams.pageNo = 1;
+    this.teacherlessonsvr.queryParams.pageBegin = 0;
+    this.teacherlessonsvr.teacherLessonList(this.teacherlessonsvr.queryParams).subscribe(
+      re => this.lessonArray = re
+    );
+    this.teacherlessonsvr.teacherLessonListTotal(this.teacherlessonsvr.queryParams).subscribe(
       re => this.total = re
     );
   }
   onPageChange = (e) => {
-    this.queryParams.pageNo = e;
-    this.teacherlessonsvr.teacherLessonList(this.queryParams).subscribe(
+    this.teacherlessonsvr.queryParams.pageNo = e;
+    this.teacherlessonsvr.teacherLessonList(this.teacherlessonsvr.queryParams).subscribe(
       re => this.lessonArray = re
     );
   }
 
 
   onAdd = () => {
-    this.toSave=false;
-    this.nowEdit = 'add';
-    this.showKindEdit = true;
+
     const lessonId = this.teacherlessonsvr.makeLessonId();
-    this.currentLesson = new TeacherLesson({lessonId,  makeTeacherId: this.loginUser.teacher.teacherId,
-      schoolId: this.loginUser.school.schoolId, guoduCoin: 0});
-    this.currentSubLessonArray = new Array<SubTeacherLesson>();
-    this.nowlessonNo=1;
-    this.currentSubLessonArray.push(new SubTeacherLesson({lessonId : this.currentLesson.lessonId,
-      lessonNo : this.currentSubLessonArray.length + 1, noPay: true,mode :1 }));
-    this.nowEditSubLesson = this.currentSubLessonArray[0];
-    this.editOrder$.next({order: 'setHtml', htmlContent: ''});
+    this.teacherlessonsvr.currentLesson = new TeacherLesson({
+      lessonId,
+      teacherId: this.loginUser.teacher.teacherId,
+      schoolId : this.loginUser.school.schoolId
+    });
+
+    this.teacherlessonsvr.currentSubLessonArray = new Array<SubTeacherLesson>();
+    this.teacherlessonsvr.currentSubLessonArray.push(new SubTeacherLesson({lessonId, lessonNo: 1}));
+    this.router.navigate(['/frame/schoolteacherworkplatform/teacherlessonsdetail'], {queryParams: {nowEdit : 'add'}});
   }
   onEdit = (teacherLesson: TeacherLesson) => {
-    this.toSave=false;
-    this.nowEdit = 'edit';
-    this.showKindEdit = true;
-    this.currentLesson = teacherLesson;
+    this.teacherlessonsvr.currentLesson = TeacherLesson;
     this.teacherlessonsvr.subTeacherLessonList(teacherLesson.lessonId).subscribe(
       re => {
-        this.currentSubLessonArray = re;
-        this.nowEditSubLesson = this.currentSubLessonArray[0];
-        this.nowlessonNo=1;
-        this.editOrder$.next({order: 'setHtml', htmlContent:  this.nowEditSubLesson.memo});
+        this.teacherlessonsvr.currentSubLessonArray=re;
+        this.router.navigate(['/frame/schoolteacherworkplatform/teacherlessonsdetail'], {queryParams: {nowEdit : 'edit'}});
       }
     );
   }
@@ -107,83 +88,8 @@ export class TeacherLessonsComponent implements OnInit {
     });
   }
 
-  onAddLesson = () => {
-     this.editOrder$.next({order: 'getHtml', htmlContent: ''});
-     this.currentSubLessonArray.push( new SubTeacherLesson({lessonId : this.currentLesson.lessonId,
-       lessonNo : this.currentSubLessonArray.length + 1, noPay: true,mode :1 }));
-     this.nowEditSubLesson = this.currentSubLessonArray[this.currentSubLessonArray.length-1];
-     this.nowlessonNo = this.currentSubLessonArray.length;
-     this.editOrder$.next({order: 'setHtml', htmlContent:  ''});
-  }
-onRemoveLesson = () => {
-  this.modalService.confirm({
-    nzTitle: '<i>提示</i>',
-    nzContent: '<b>确定删除这一课时吗?</b>',
-    nzOnOk: () => {
-       this.currentSubLessonArray = this.currentSubLessonArray.filter(o => o.lessonNo !== this.nowEditSubLesson.lessonNo);
-       if (this.currentSubLessonArray.length === 0) {
-          this.onAddLesson();
-       } else {
-          this.nowEditSubLesson = this.currentSubLessonArray.filter(o => o.lessonNo === this.nowlessonNo--)[0];
-          this.editOrder$.next({order: 'setHtml', htmlContent:  this.nowEditSubLesson.memo});
-       }
-    }
-  });
-}
-
-onSelectLessonNoChange = () => {
-    this.editOrder$.next({order: 'getHtml', htmlContent: ''});
-    this.nowEditSubLesson = this.currentSubLessonArray.filter(o => o.lessonNo === this.nowlessonNo)[0];
-}
   onPublish = (teacherLesson: TeacherLesson) => {
 
-  }
-
-  onSave = () => {
-    this.toSave=true;
-    this.editOrder$.next({order: 'getHtml', htmlContent: ''});
-  }
-
-  receiveHtml = (html) => {
-    this.nowEditSubLesson.memo = html;
-    if (this.toSave){
-      this.teacherlessonsvr.saveTeacherLesson({teacherLesson: this.currentLesson, subTeacherLessons: this.currentSubLessonArray}).subscribe(
-        re =>   {
-          this.onQuery();
-          this.total += 1;
-        }
-      );
-      this.showKindEdit = false;
-    }
-  }
-
-  handlevideoChange = (info: { file: UploadFile }) => {
-    switch (info.file.status) {
-      case 'uploading':
-        this.loading = true;
-        break;
-      case 'done':
-        this.nowEditSubLesson.videoUrl = info.file.response.aliUrl;
-        this.loading = false;
-        break;
-      case 'error':
-        this.message.error('网络错误');
-        break;
-    }
-  }
-  handleaudioChange = (info: { file: UploadFile }) => {
-    switch (info.file.status) {
-      case 'uploading':
-        this.loading = true;
-        break;
-      case 'done':
-        this.nowEditSubLesson.audioUrl = info.file.response.aliUrl;
-        this.loading = false;
-        break;
-      case 'error':
-        this.message.error('网络错误');
-        break;
-    }
   }
 
 }

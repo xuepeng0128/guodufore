@@ -1,66 +1,64 @@
-import {Component, forwardRef, Input, OnInit, ViewChild} from '@angular/core';
-
-import {NG_VALUE_ACCESSOR} from '@angular/forms';
-import {UEditorComponent} from 'ngx-ueditor';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {UPLOAD_MEDIA_PATH} from '../../../shared/const';
+import {UEditorComponent} from 'ngx-ueditor';
 import {NzMessageService, UploadFile} from 'ng-zorro-antd';
-import {Icon} from '../../../entity/Icon';
-declare var UE: any;
+import {TeacherArticle} from '../../../entity/TeacherArticle';
+import {iif, of} from 'rxjs';
+import {ActivatedRoute, Router} from '@angular/router';
+import {MSG_SAVE_ERROR, MSG_SAVE_SUCCESS} from '../../../shared/SysMessage';
+import {TeacherArticleService} from '../../../shared/service/business/teacher-article.service';
+declare  var UE: any;
 @Component({
-  selector: 'app-rich-editor',
-  templateUrl: './rich-editor.component.html',
-  styleUrls: ['./rich-editor.component.css'],
-  providers: [{
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => RichEditorComponent),
-    multi: true
-  }]
+  selector: 'app-teacher-article-detail',
+  templateUrl: './teacher-article-detail.component.html',
+  styleUrls: ['./teacher-article-detail.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class RichEditorComponent implements OnInit {
+export class TeacherArticleDetailComponent implements OnInit {
   @ViewChild('full') full: UEditorComponent;
   isImgUpModalShow = false;
-  loading = false;
-  private _CURRENTVALUE = ''; // 市州选择 ngModel
-  uploadMediaPath = UPLOAD_MEDIA_PATH;
   iconUrl = '';
-  private onValueChangeCallBack: any = {};
-
-  get currentValue(): string {
-    return this._CURRENTVALUE;
-  }
-
-  set currentValue(value: string) {
-    this._CURRENTVALUE = value;
-    this.onValueChangeCallBack(value);
-  }
-
-
-
-  writeValue(obj: any): void {
-    if (obj) {
-      this._CURRENTVALUE = obj;
-    }
-  }
-
-  registerOnChange(fn: any): void {
-    this.onValueChangeCallBack = fn;
-  }
-
-  registerOnTouched(fn: any): void {
-  }
-  constructor( private message: NzMessageService) { }
+  loading = false;
+  uploadMediaPath = UPLOAD_MEDIA_PATH;
+  nowEdit = 'browse';
+  constructor( public  teacherarticlesvr: TeacherArticleService, private message: NzMessageService,
+               private cd: ChangeDetectorRef, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
+    this.nowEdit = this.route.snapshot.queryParams.nowEdit as string;
+    setInterval(() => {
+      this.cd.markForCheck();
+    }, 1000);
   }
 
+  onSave = () => {
+    iif (() => this.nowEdit === 'add',
+      this.teacherarticlesvr.insertTeacherArticle(this.teacherarticlesvr.currentArticle),
+      this.teacherarticlesvr.updateTeacherArticle(this.teacherarticlesvr.currentArticle)
+    ).subscribe(
+      re => {
+        if (re === 'ok') {
+          this.message.create('success', MSG_SAVE_SUCCESS);
+          this.router.navigate(['/frame/schoolteacherworkplatform/teacherarticle']);
+        } else {
+          this.message.create('error', MSG_SAVE_ERROR);
+        }
+      });
+
+  }
+
+onBack = () => {
+     window.history.back();
+}
+
+
   onPreReady = (comp: UEditorComponent) => {
-    const uiName = 'uploadOosImg';
     UE.registerUI('button', (editor, uiName) => {
       // 注册按钮执行时的command命令，使用命令默认就会带有回退操作
       editor.registerCommand(uiName, {
         execCommand() {
           // alert('execCommand:' + uiName);
-
+        //  this.isImgUpModalShow = true;
         }
       });
       // 创建一个button
@@ -74,14 +72,13 @@ export class RichEditorComponent implements OnInit {
         // 点击时执行的命令
         onclick : () => {
           // 这里可以不用执行命令,做你自己的操作也可
-          // editor.execCommand(uiName);
-          this.onchooseimg();
+          this.isImgUpModalShow = !this.isImgUpModalShow;
         }
       });
       // 当点到编辑内容上时，按钮要做的状态反射
       editor.addListener('selectionchange', () => {
         const state = editor.queryCommandState(uiName);
-        if (state == -1) {
+        if (state === -1) {
           btn.setDisabled(true);
           btn.setChecked(false);
         } else {
@@ -95,14 +92,11 @@ export class RichEditorComponent implements OnInit {
     // comp.id 是指当前UEditor实例Id
   }
 
-
   onchooseimg = () => {
     setTimeout(() => {
       this.iconUrl = '';
-      this.isImgUpModalShow = true;
 
     }, 300);
-
   }
 
   handleChange = (info: { file: UploadFile }) => {

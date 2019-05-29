@@ -4,12 +4,23 @@ import {Observable} from 'rxjs';
 import {TeacherLesson} from '../../../entity/TeacherLesson';
 import {map} from 'rxjs/operators';
 import {SubTeacherLesson} from '../../../entity/SubTeacherLesson';
+import {ITeacherLessonQueryParams} from '../../interface/queryparams/ITeacherLessonQueryParams';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TeacherLessonService {
-
+  queryParams: ITeacherLessonQueryParams = {
+    teacherId : '',
+    teacherName : '',
+    schoolId : '',
+    schoolName : '',
+    pageNo : 1,
+    pageSize : 10 ,
+    pageBegin : 0
+  };
+  currentLesson: TeacherLesson = new TeacherLesson({});
+  currentSubLessonArray: Array<SubTeacherLesson> = new Array<SubTeacherLesson>();
   constructor(private httpsvr: HttpService) { }
 
   teacherLessonList = (queryParams: any): Observable<Array<TeacherLesson>> => {
