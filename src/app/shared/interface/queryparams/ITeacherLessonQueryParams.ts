@@ -1,4 +1,5 @@
 export interface ITeacherLessonQueryParams {
+  lessonTitle?: string;
   teacherId?: string;
   teacherName?: string;
   schoolId?: string;

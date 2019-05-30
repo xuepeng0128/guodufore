@@ -45,7 +45,6 @@
             *ngFor="let item of teacherlessonsvr.currentSubLessonArray"
             [nzMode]="i === 0 ? 'default' : 'closeable'"
             [nzColor]=" item.lessonNo=== editingLesson.lessonNo ? 'purple': 'blue'"
-
             (nzAfterClose)="removeLesson(item)"
             (click)="chooseLesson(item)"
           >

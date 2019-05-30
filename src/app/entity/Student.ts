@@ -1,16 +1,17 @@
 export class Student {
-  id: number;
-  studentPaperId: string;
-  studentId: string;
-  studentName: string;
-  sex: number;
-  birthday: Date;
-  schoolId: string;
+  id: number; // id
+  studentPaperId: string; // 身份证号
+  studentId: string; // 学籍号
+  studentName: string; // 名称
+  sex: number; // 性别 1.男，2.女
+  birthday: Date; // 出生日期
+  schoolId: string; // 学校编号
+  schoolName: string; // 学校名称
   address: string ; // 家庭住址
-  tel: string;
-  headimg: string;
-  nickname: string;
-  regTime: Date;
+  tel: string; // 联系电话
+  headimg: string; // 头像
+  nickname: string; // 昵称
+  regTime: Date; // 入校时间
   wxcode: string; // 小程序openid
   constructor(options: {id?: number, studentPaperId?: string, studentId?: string, studentName?: string,
                         sex?: number, birthday?: Date, schoolId?: string, address?: string, tel?: string,

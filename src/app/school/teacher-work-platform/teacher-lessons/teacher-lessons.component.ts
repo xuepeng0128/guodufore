@@ -24,7 +24,7 @@ export class TeacherLessonsComponent implements OnInit {
   loginUser: LoginUser = this.usersvr.getUserStorage();
   total = 0;
   loading = false;
-  lessonArray :Array<TeacherLesson>= new Array<TeacherLesson>();
+  lessonArray: Array<TeacherLesson> = new Array<TeacherLesson>();
   constructor(private usersvr: UserService , public  teacherlessonsvr: TeacherLessonService,
               private modalService: NzModalService, private message: NzMessageService, private router: Router) { }
   ngOnInit() {
@@ -72,7 +72,7 @@ export class TeacherLessonsComponent implements OnInit {
     this.teacherlessonsvr.currentLesson = teacherLesson;
     this.teacherlessonsvr.subTeacherLessonList(teacherLesson.lessonId).subscribe(
       re => {
-        this.teacherlessonsvr.currentSubLessonArray=re;
+        this.teacherlessonsvr.currentSubLessonArray = re;
         this.router.navigate(['/frame/schoolteacherworkplatform/teacherlessonsdetail'], {queryParams: {nowEdit : 'edit'}});
       }
     );

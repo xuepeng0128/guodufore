@@ -8,10 +8,11 @@ export class Teacher {
     master: boolean;
     address: string; // 当前任教
    schoolId: string;
+   schoolName : string;
    regTime: Date;
 
   constructor(options: { teacherId?: string, teacherPaperId?: string, tel?: string, teacherName?: string, teacherDutyId?: string,
-                          master?: boolean , teacherDutyName?: string, address?: string, schoolId?: string, regTime?: Date}= {}) {
+                          master?: boolean , teacherDutyName?: string, address?: string, schoolId?: string,schoolName? : string, regTime?: Date}= {}) {
     this.teacherId = options.teacherId || '';
     this.teacherPaperId = options.teacherPaperId || '';
     this.tel = options.tel || '';
@@ -21,6 +22,7 @@ export class Teacher {
     this.master = options.master || false;
     this.address = options.address || '';
     this.schoolId = options.schoolId || '';
+    this.schoolName=options.schoolName || '';
     this.regTime = options.regTime;
   }
 }

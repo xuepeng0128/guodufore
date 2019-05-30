@@ -12,6 +12,7 @@ import {DOWNLOAD_TEMPLATE_PATH, UPLOAD_STUDENT_TEMPLATE_PATH} from '../../../sha
 import {Student} from '../../../entity/Student';
 import {ClassesTeacher} from '../../../entity/ClassesTeacher';
 import {Teacher} from '../../../entity/Teacher';
+import {ExceloutService} from '../../../shared/excelout.service';
 
 @Component({
   selector: 'app-classes-mgr',
@@ -41,7 +42,7 @@ export class ClassesMgrComponent implements OnInit {
   uploadExcelpath = UPLOAD_STUDENT_TEMPLATE_PATH;
   prepareImportStudents: Array<Student> = new Array<Student>();
   constructor(private usersvr: UserService, private classessvr: ClassesService,
-              public commonsvr: CommonService,
+              public commonsvr: CommonService, private  exceloutsvr: ExceloutService,
               private modalService: NzModalService, private message: NzMessageService) { }
 
   ngOnInit() {
@@ -61,9 +62,9 @@ export class ClassesMgrComponent implements OnInit {
           ).subscribe(
              res => {
                this.allGrades = res;
-               if(this.allGrades.length>0){
-                   this.choosedGrade=this.allGrades[0];
-                  this.onChooseGrade();
+               if (this.allGrades.length > 0) {
+                   this.choosedGrade = this.allGrades[0];
+                   this.onChooseGrade();
                }
              }
           );
@@ -119,11 +120,11 @@ export class ClassesMgrComponent implements OnInit {
           schoolStyle: this.loginUser.school.schoolStyle
         });
         this.classessvr.saveTeacherAtClasses(cteacher).subscribe(
-               re =>{
-                    const tc=this.currentChoosedClasses.teachers.
-                    filter(x=>x.studySubjectId=== cteacher.studySubjectId)[0];
-               tc.teacherId=cteacher.teacherId;
-               tc.teacherName =cteacher.teacherName;
+               re => {
+                    const tc = this.currentChoosedClasses.teachers.
+                    filter(x => x.studySubjectId === cteacher.studySubjectId)[0];
+                    tc.teacherId = cteacher.teacherId;
+                    tc.teacherName = cteacher.teacherName;
                }
 
 
@@ -166,14 +167,14 @@ export class ClassesMgrComponent implements OnInit {
     if (file.file.response !== null) {
       this.isStudentExcelImpModalShow = true;
       this.prepareImportStudents = new Array<Student>();
-      (file.file.response as Array<Student>).forEach( v =>{
-         v.id=0;
-         v.headimg=null;
-         v.nickname=null;
-         v.wxcode =null;
-         v.regTime=null;
+      (file.file.response as Array<Student>).forEach( v => {
+         v.id = 0;
+         v.headimg = null;
+         v.nickname = null;
+         v.wxcode = null;
+         v.regTime = null;
 
-          this.prepareImportStudents.push(  JSON.parse(JSON.stringify(v)) as Student );
+         this.prepareImportStudents.push(  JSON.parse(JSON.stringify(v)) as Student );
       }
 
       );
@@ -181,4 +182,28 @@ export class ClassesMgrComponent implements OnInit {
     }
 
   }
+
+
+
+  exportExcel = () => {
+    const tHeader = [
+      '学号',
+      '身份证',
+      '名称',
+      '性别',
+      '出生日期',
+      '联系电话',
+      '家庭住址',
+      '邀请码'
+    ];
+    const body = [];
+    this.currentChoosedClasses.students.forEach( v => {
+      body.push({studentId : v.studentId.toString(), studentPaperId : v.studentPaperId.toString(), studentName : v.studentName, sex : v.sex === 1 ? '男' : '女' ,
+        birthday :  (v.birthday + '').substring(0, 10) , tel: v.tel.toString() + ' ' ,
+        address : v.address, inviteCode : v.inviteCode});
+    });
+    this.exceloutsvr.export2Excel(tHeader, body, '班级学生');
+  }
+
+
 }

@@ -4,11 +4,10 @@
     <nz-form-item>
       <nz-form-label [nzSpan]="6">课程标题</nz-form-label>
       <nz-form-control [nzSpan]="15">
-        <input  nz-input [(ngModel)]="queryParams.circleTitle">
+        <input  nz-input [(ngModel)]="teacherlessonsvr.queryParams.lessonTitle">
       </nz-form-control>
     </nz-form-item>
   </div>
-
 </div>
   <div class="m-t-sm text-center" nz-row>
     <div nz-col [nzSpan]="3" >
@@ -26,8 +25,8 @@
         [nzFrontPagination]="false"
         [nzData]="lessonArray"
         [nzTotal]="total"
-        [(nzPageIndex)]="queryParams.pageNo"
-        [(nzPageSize)]="queryParams.pageSize"
+        [(nzPageIndex)]="teacherlessonsvr.queryParams.pageNo"
+        [(nzPageSize)]="teacherlessonsvr.queryParams.pageSize"
         (nzPageIndexChange)="onPageChange($event)"
       >
         <thead >
@@ -38,7 +37,6 @@
           <th>创作老师</th>
           <th>果度币购买</th>
           <th>发布到习惯数</th>
-
           <th>操作</th>
         </tr>
         </thead>

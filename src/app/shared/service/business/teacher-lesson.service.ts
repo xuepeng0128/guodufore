@@ -11,6 +11,7 @@ import {ITeacherLessonQueryParams} from '../../interface/queryparams/ITeacherLes
 })
 export class TeacherLessonService {
   queryParams: ITeacherLessonQueryParams = {
+    lessonTitle : '',
     teacherId : '',
     teacherName : '',
     schoolId : '',
