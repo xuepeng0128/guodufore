@@ -45,15 +45,15 @@
           <td>{{no+1}}</td>
           <td>{{data.lessonTitle}}</td>
           <td>{{data.makeDate}}</td>
-          <td>{{data.teacherName}}</td>
+          <td>{{data.makeTeackerName}}</td>
           <td>{{data.guoduCoin}}</td>
           <td>{{data.habitNum}}</td>
           <td>
-            <a href="javaScript:;" *ngIf="data.teacherId === loginUser.teacher.teacherId && !data.published" (click)="onEdit(data)" title="修改课程">修改</a>
+            <a href="javaScript:;" *ngIf="data.makeTeacherId === loginUser.teacher.teacherId && !!data.publishTime" (click)="onEdit(data)" title="修改课程">修改</a>
             <nz-divider nzType="vertical"></nz-divider>
-            <a href="javaScript:;" *ngIf="data.teacherId === loginUser.teacher.teacherId" (click)="onPublish(data)" title="发布该课程，发布后，该课程将不能修改及删除">发布</a>
+            <a href="javaScript:;" *ngIf="data.makeTeacherId === loginUser.teacher.teacherId" (click)="onPublish(data)" title="发布该课程，发布后，该课程将不能修改及删除">发布</a>
             <nz-divider nzType="vertical"></nz-divider>
-            <a href="javaScript:;" *ngIf="data.teacherId === loginUser.teacher.teacherId && !data.published" (click)="onDelete(data)" title="删除该课程">>删除</a>
+            <a href="javaScript:;" *ngIf="data.makeTeacherId === loginUser.teacher.teacherId && !!data.publishTime" (click)="onDelete(data)" title="删除该课程">>删除</a>
           </td>
         </tr>
         </tbody>
@@ -61,3 +61,4 @@
     </div>
   </div>
 
+<app-habit-choose [habitChooseSign$]="habitChooseSign$" (onHabitChoosed)="onHabitChoose($event)"></app-habit-choose>

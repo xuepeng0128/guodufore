@@ -1,14 +1,12 @@
 
   <div class="m-t-sm text-center" nz-row>
-    <div nz-col [nzSpan]="3" >
+    <div nz-col [nzSpan]="4" >
       <a href="javaScript:;" class="ant-btn ant-btn-primary m-l-xs" (click)="onSave()" >保存</a>
-    </div>
-    <div nz-col [nzSpan]="3" >
       <a href="javaScript:;" class="ant-btn ant-btn-primary m-l-xs" (click)="onback()" >返回</a>
     </div>
   </div>
   <div nz-row>
-    <div nz-col [nzSpan]="18">
+    <div nz-col [nzSpan]="14">
       <nz-form-item>
         <nz-form-label [nzSpan]="4"> 课程标题</nz-form-label>
         <nz-form-control [nzSpan]="20">
@@ -19,7 +17,7 @@
     <div nz-col [nzSpan]="6">
       <nz-form-item>
         <nz-form-label [nzSpan]="16"> 学习需花费果度币</nz-form-label>
-        <nz-form-control [nzSpan]="8">
+        <nz-form-control [nzSpan]="6">
           <nz-input-number [(ngModel)]="teacherlessonsvr.currentLesson.guoduCoin" [nzMin]="1" [nzMax]="1000" [nzStep]="1"></nz-input-number>
         </nz-form-control>
       </nz-form-item>
@@ -29,7 +27,7 @@
     <div nz-col [nzSpan]="24">
       <nz-form-item>
         <nz-form-label [nzSpan]="3"> 课程简介</nz-form-label>
-        <nz-form-control [nzSpan]="21">
+        <nz-form-control [nzSpan]="20">
           <textarea [(ngModel)]="teacherlessonsvr.currentLesson.memo"  style="width:100%"></textarea>
         </nz-form-control>
       </nz-form-item>
@@ -43,15 +41,16 @@
 
           <nz-tag
             *ngFor="let item of teacherlessonsvr.currentSubLessonArray"
-            [nzMode]="i === 0 ? 'default' : 'closeable'"
             [nzColor]=" item.lessonNo=== editingLesson.lessonNo ? 'purple': 'blue'"
-            (nzAfterClose)="removeLesson(item)"
             (click)="chooseLesson(item)"
           >
             第{{ item.lessonNo}} 课
           </nz-tag>
           <nz-tag  class="editable-tag" nzNoAnimation (click)="addNewLesson()">
             <i nz-icon type="plus"></i> 新增课时
+          </nz-tag>
+          <nz-tag  class="editable-tag" nzNoAnimation (click)="removeLesson()">
+            <i nz-icon type="plus"></i> 移除课时
           </nz-tag>
         </nz-form-control>
         <nz-form-control [nzSpan]="4">
@@ -90,7 +89,8 @@
             <i class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></i>
             <div class="ant-upload-text">上传</div>
           </ng-container>
-          <video *ngIf="editingLesson.videoUrl!==''" [src]="editingLesson.videoUrl" class="avatar" ></video>
+
+          <video *ngIf="editingLesson.videoUrl!==''"   [src]="editingLesson.videoUrl" class="avatar" controls="controls" ></video>
         </nz-upload>
       </div>
     </div>
@@ -108,7 +108,7 @@
             <i class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></i>
             <div class="ant-upload-text">上传</div>
           </ng-container>
-          <audio *ngIf="editingLesson.audioUrl!==''" [src]="editingLesson.audioUrl" class="avatar" ></audio>
+          <audio *ngIf="editingLesson.audioUrl!==''" [src]="editingLesson.audioUrl" class="avatar" controls="controls" ></audio>
         </nz-upload>
       </div>
     </div>
@@ -121,10 +121,11 @@
             (nzOnCancel)="isImgUpModalShow=false"
             [nzOkText]="null"
             [nzMaskClosable]="false"
-            [nzWidth]="150"
+            [nzWidth]="300"
+
   >
 
-    <div nz-row>
+    <div nz-row style="text-align: center">
       <div nz-col [nzSpan]="24" >
         <nz-upload
           class="avatar"
@@ -132,6 +133,7 @@
           [nzAction]="uploadMediaPath"
           nzListType="picture-card"
           [nzShowUploadList]="false"
+          [nzFileType]="'image/png,image/jpeg,image/gif,image/bmp'"
           (nzChange)="handleChange($event)"
         >
           <ng-container *ngIf="iconUrl===''">

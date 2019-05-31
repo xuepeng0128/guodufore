@@ -9,6 +9,8 @@ import {School} from '../../../entity/School';
 import {TeacherArticle} from '../../../entity/TeacherArticle';
 import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {Router} from '@angular/router';
+import {Habit} from '../../../entity/Habit';
+import {MSG_SAVE_ERROR, MSG_SAVE_SUCCESS} from '../../../shared/SysMessage';
 
 @Component({
   selector: 'app-teacher-article',
@@ -16,6 +18,8 @@ import {Router} from '@angular/router';
   styleUrls: ['./teacher-article.component.css']
 })
 export class TeacherArticleComponent implements OnInit {
+  habitChooseSign$: Subject<{ singleChoose: boolean, haveChoosedHabit: Array<Habit>}>
+    = new Subject<{ singleChoose: boolean, haveChoosedHabit: Array<Habit>}>();
   loginUser: LoginUser = this.usersvr.getUserStorage();
   articleArray: Array<ITeacherArticleQueryResult> = new Array<ITeacherArticleQueryResult>();
   currentArticle: TeacherArticle = new TeacherArticle({});
@@ -76,8 +80,21 @@ onDelete = (teacherArticle: TeacherArticle) => {
     }
   });
 }
+  onHabitChoose = (habit: Habit) => {
+    this.teacherarticlesvr.publishToHabit(habit.habitId, this.teacherarticlesvr.currentArticle.articleId).subscribe(
+      re => {
+        if (re === 'ok') {
+          this.message.create('success', MSG_SAVE_SUCCESS);
+          this.onQuery();
+        } else {
+          this.message.create('error', MSG_SAVE_ERROR);
+        }
+      }
+    );
+  }
 onPublish = (teacherArticle: TeacherArticle) => {
-
+  this.teacherarticlesvr.currentArticle = teacherArticle;
+  this.habitChooseSign$.next({singleChoose: true, haveChoosedHabit: null});
 }
 
 

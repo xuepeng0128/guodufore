@@ -43,6 +43,7 @@ import { HabitTemplateChooseComponent } from './components/habit-template-choose
 import { GuodubiSelectComponent } from './components/guodubi-select/guodubi-select.component';
 import {UEditorModule} from 'ngx-ueditor';
 import { RichEditorComponent } from './components/rich-editor/rich-editor.component';
+import { HabitChooseComponent } from './components/habit-choose/habit-choose.component';
 
 
 
@@ -74,7 +75,8 @@ import { RichEditorComponent } from './components/rich-editor/rich-editor.compon
     CircleStudentChooseComponent,
     HabitTemplateChooseComponent,
     GuodubiSelectComponent,
-    RichEditorComponent
+    RichEditorComponent,
+    HabitChooseComponent
 
   ],
   imports: [
@@ -138,7 +140,8 @@ import { RichEditorComponent } from './components/rich-editor/rich-editor.compon
     CircleStudentChooseComponent,
     HabitTemplateChooseComponent,
     GuodubiSelectComponent,
-    RichEditorComponent
+    RichEditorComponent,
+    HabitChooseComponent
   ]
 })
 export class PubModule { }

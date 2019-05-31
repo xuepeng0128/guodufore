@@ -27,6 +27,9 @@ declare var  UE: any;
   styleUrls: ['./singin.component.css']
 })
 export class SinginComponent implements OnInit {
+  @ViewChild('test') test: HTMLElement;
+  text = 'sdgfdsgreterwtgsdg';
+  aa: any;
   user: User = new User();
   loading = false;
   pro = 0;
@@ -51,6 +54,14 @@ export class SinginComponent implements OnInit {
   ngOnInit() {
 
   }
+  onselecttext = (e) => {
+    this.aa = getSelection();
+    alert(this.aa.toString());
+    alert(e.target.selectionStart);
+    alert(e.target.selectionEnd);
+  }
+
+
   onLogin = () => {
     this.loading = true;
     this.usersvr.onvalidateLogin(this.user).pipe(

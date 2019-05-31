@@ -6,7 +6,8 @@ import {MSG_SAVE_ERROR, MSG_SAVE_SUCCESS} from '../../../shared/SysMessage';
 import {UEditorComponent} from 'ngx-ueditor';
 import {UPLOAD_MEDIA_PATH} from '../../../shared/const';
 import {SubTeacherLesson} from '../../../entity/SubTeacherLesson';
-declare  var UE : any;
+import {isNullOrUndefined} from 'util';
+declare  var UE: any;
 @Component({
   selector: 'app-teacher-lessons-detail',
   templateUrl: './teacher-lessons-detail.component.html',
@@ -20,27 +21,53 @@ export class TeacherLessonsDetailComponent implements OnInit {
   loading = false;
   uploadMediaPath = UPLOAD_MEDIA_PATH;
   nowEdit = 'browse';
-  editingLesson: SubTeacherLesson = new SubTeacherLesson({});
+  editingLesson: SubTeacherLesson = new SubTeacherLesson({
+   });
   constructor(public  teacherlessonsvr: TeacherLessonService, private modalService: NzModalService,
-              private cd: ChangeDetectorRef,private message: NzMessageService, private route: ActivatedRoute, private router: Router) { }
+              private cd: ChangeDetectorRef, private message: NzMessageService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
-    this.nowEdit = this.route.snapshot.queryParams.nowEdit as string;
-    this.editingLesson = this.teacherlessonsvr.currentSubLessonArray[0];
-    setInterval(() => {
-      this.cd.markForCheck();
-    }, 1000);
+    if (isNullOrUndefined(this.teacherlessonsvr.currentSubLessonArray) || this.teacherlessonsvr.currentSubLessonArray.length === 0) {
+      this.router.navigate(['/frame/schoolteacherworkplatform/teacherlessons']);
+    } else {
+      this.nowEdit = this.route.snapshot.queryParams.nowEdit as string;
+      if (this.nowEdit === 'add') {
+        this.teacherlessonsvr.currentSubLessonArray.length=0;
+        this.addNewLesson();
+      } else {
+        this.editingLesson = this.teacherlessonsvr.currentSubLessonArray[0];
+      }
+
+      setInterval(() => {
+        this.cd.markForCheck();
+      }, 1000);
+    }
+
+  }
+  addNewLesson = () => {
+    this.editingLesson = new SubTeacherLesson({
+       lessonId : this.teacherlessonsvr.currentLesson.lessonId,
+       lessonNo : this.teacherlessonsvr.currentSubLessonArray.length + 1,
+       videoUrl : 'http://wxg-sign.oss-cn-qingdao.aliyuncs.com/mediafile/2019-05-31/16fe90db68d842909112f83d12080b75-QQ%E8%A7%86%E9%A2%9120190201143834.mp4'
+    });
+    this.teacherlessonsvr.currentSubLessonArray.push(this.editingLesson);
   }
   chooseLesson = (lesson: SubTeacherLesson) => {
      this.editingLesson = lesson;
   }
-  removeLesson = (lesson: SubTeacherLesson) => {
+  removeLesson = () => {
     this.modalService.confirm({
       nzTitle: '<i>提示</i>',
       nzContent: '<b>确定删除该课时吗?</b>',
       nzOnOk: () => {
-        this.teacherlessonsvr.currentSubLessonArray = this.teacherlessonsvr.currentSubLessonArray.filter(o => o.lessonNo !== lesson.lessonNo);
+        this.teacherlessonsvr.currentSubLessonArray = this.teacherlessonsvr.currentSubLessonArray.filter(o => o.lessonNo !== this.editingLesson.lessonNo);
         this.teacherlessonsvr.currentSubLessonArray.forEach((v, k) => v.lessonNo = k + 1);
+        if (this.teacherlessonsvr.currentSubLessonArray.length === 0) {
+          this.addNewLesson();
+        } else {
+          this.editingLesson = this.teacherlessonsvr.currentSubLessonArray[0];
+        }
+
       }
     });
   }

@@ -47,7 +47,11 @@ export class TeacherLessonService {
 publishTeacherLesson = (paras: {lessonId: string , teacherHabitIds: Array<string>}) => {
 
 }
-
+publishToHabit = (lessonId: string , habitId: string ): Observable<string> => {
+  return this.httpsvr.onHttpGet('api/business/teacherLesson/publishToHabit', {habitId, lessonId}).pipe(
+    map( re => re.result)
+  );
+}
   deleteTeacherLesson = (lessonId: string): Observable<string> => {
        return null;
   }

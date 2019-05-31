@@ -13,6 +13,8 @@ import {TeacherLessonService} from '../../../shared/service/business/teacher-les
 import {SubTeacherLesson} from '../../../entity/SubTeacherLesson';
 import {Icon} from '../../../entity/Icon';
 import {Router} from '@angular/router';
+import {Habit} from '../../../entity/Habit';
+import {MSG_SAVE_ERROR, MSG_SAVE_SUCCESS} from '../../../shared/SysMessage';
 
 @Component({
   selector: 'app-teacher-lessons',
@@ -21,6 +23,8 @@ import {Router} from '@angular/router';
 })
 export class TeacherLessonsComponent implements OnInit {
 
+  habitChooseSign$: Subject<{ singleChoose: boolean, haveChoosedHabit: Array<Habit>}>
+    = new Subject<{ singleChoose: boolean, haveChoosedHabit: Array<Habit>}>();
   loginUser: LoginUser = this.usersvr.getUserStorage();
   total = 0;
   loading = false;
@@ -65,7 +69,7 @@ export class TeacherLessonsComponent implements OnInit {
     });
 
     this.teacherlessonsvr.currentSubLessonArray = new Array<SubTeacherLesson>();
-    this.teacherlessonsvr.currentSubLessonArray.push(new SubTeacherLesson({lessonId, lessonNo: 1}));
+    this.teacherlessonsvr.currentSubLessonArray.push(new SubTeacherLesson({}));
     this.router.navigate(['/frame/schoolteacherworkplatform/teacherlessonsdetail'], {queryParams: {nowEdit : 'add'}});
   }
   onEdit = (teacherLesson: TeacherLesson) => {
@@ -88,9 +92,21 @@ export class TeacherLessonsComponent implements OnInit {
       }
     });
   }
-
+  onHabitChoose = (habit: Habit) => {
+      this.teacherlessonsvr.publishToHabit(habit.habitId, this.teacherlessonsvr.currentLesson.lessonId).subscribe(
+         re => {
+           if (re === 'ok') {
+             this.message.create('success', MSG_SAVE_SUCCESS);
+             this.onQuery();
+           } else {
+             this.message.create('error', MSG_SAVE_ERROR);
+           }
+         }
+      );
+  }
   onPublish = (teacherLesson: TeacherLesson) => {
-
+    this.teacherlessonsvr.currentLesson = teacherLesson;
+    this.habitChooseSign$.next({singleChoose: true, haveChoosedHabit: null});
   }
 
 }

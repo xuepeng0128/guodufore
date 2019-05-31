@@ -1,0 +1,40 @@
+<nz-modal [(nzVisible)]="isHabitChooseModalShow"
+          [nzTitle]="'选择习惯'"
+          [nzCancelText]="null"
+          (nzOnCancel)="isHabitChooseModalShow=false"
+          [nzOkText]="null"
+          [nzMaskClosable]="false"
+          [nzWidth]="800"
+>
+  <div nz-col [nzSpan]="24">
+    <input nz-input  placeholder="输入名称过滤习惯" [(ngModel)]="entFilter" >
+  </div>
+  <div nz-col [nzSpan]="24">
+    <nz-table
+      #ajaxTable_habit
+      nzBordered
+      [nzScroll]="{ y: '240px' }"
+      [nzHideOnSinglePage]="true"
+      [nzFrontPagination]="false"
+      [nzData]="habitList"
+    >
+      <thead>
+      <tr>
+        <th nzWidth="5%" *ngIf="!singleChoose" ></th>
+        <th>习惯标题</th>
+        <th>所属圈子</th>
+        <th *ngIf="singleChoose">选择</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of ajaxTable_habit.data  | arrayTextFilter: {keyName: 'habitName', filterText: entFilter} ;let no=index   ">
+        <td align="center" nzShowCheckbox [(nzChecked)]="data.choosed"  *ngIf="!singleChoose"></td>
+        <td align="center">{{data.habitName}}</td>
+        <td align="center">{{data.circleTitle}}</td>
+        <td align="center" *ngIf="singleChoose"><a href="javascript:;"  (click)="onSingleChoose(data)">[选择]</a> </td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</nz-modal>
+

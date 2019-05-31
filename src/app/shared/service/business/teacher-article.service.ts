@@ -53,7 +53,11 @@ export class TeacherArticleService {
       map( re => re.result)
     );
   }
-
+  publishToHabit = (articleId: string , habitId: string ): Observable<string> => {
+    return this.httpsvr.onHttpGet('api/business/teacherArticle/publishToHabit', {habitId, articleId}).pipe(
+      map( re => re.result)
+    );
+  }
   deleteTeacherArticle = (articleId: string): Observable<string> => {
     return this.httpsvr.onHttpGet('api/business/teacherArticle/deleteTeacherArticle', {articleId}).pipe(
       map( re =>  re.result)
