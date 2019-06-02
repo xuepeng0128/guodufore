@@ -12,10 +12,11 @@ export class Student {
   headimg: string; // 头像
   nickname: string; // 昵称
   regTime: Date; // 入校时间
+  relationShipId : string; //亲属关系id
   wxcode: string; // 小程序openid
   constructor(options: {id?: number, studentPaperId?: string, studentId?: string, studentName?: string,
                         sex?: number, birthday?: Date, schoolId?: string, address?: string, tel?: string,
-                         headimg?: string, nickname?: string, regTime?: Date, wxcode?: string}= {}) {
+                         headimg?: string, nickname?: string, regTime?: Date,relationShipId? : string,  wxcode?: string}= {}) {
     this.id = options.id;
     this.studentPaperId = options.studentPaperId || '';
     this.studentId = options.studentId || '';
@@ -28,6 +29,7 @@ export class Student {
     this.headimg = options.headimg || '';
     this.nickname = options.nickname || '';
     this.regTime = options.regTime;
+    this.relationShipId=options.relationShipId;
     this.wxcode = options.wxcode || '';
   }
 }

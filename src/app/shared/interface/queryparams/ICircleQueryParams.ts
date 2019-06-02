@@ -1,6 +1,7 @@
 export interface ICircleQueryParams {
 
   circleTitle?: string; // 圈子名称
+  circleClassId?: string; // 圈子类别
   schoolId? : string;
   schoolName? : string;
   classesId? : string; // 班级编号
@@ -9,6 +10,8 @@ export interface ICircleQueryParams {
   classesName? : string;
   buildTeacherId? : string ;// 建圈老师id
   buildTeacherName? : string;
+  buildStudentId? : string ; // 建圈学生id
+  buildStudentName? : string; //建圈学生名称
   buildTimeBegin?  : string;// 建圈日期起
    buildTimeEnd?  : string;// 建圈日期起
    closeMan? : string; // 关闭人

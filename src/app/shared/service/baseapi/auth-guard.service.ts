@@ -12,7 +12,7 @@ export class AuthGuardService implements CanActivate, CanActivateChild {
   constructor(private router: Router, private usersvr: UserService) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    if (!this.usersvr.getUserStorage()) {
+    if (!this.usersvr.getUserStorage() || this.usersvr.getUserStorage()=== null) {
       this.router.navigate(['/account/signin']);
     }
     return true;

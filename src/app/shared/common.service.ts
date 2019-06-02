@@ -99,7 +99,7 @@ export class CommonService {
 
 
 
-  // 计算初中
+  // 计算初中年级
   calculateSchoolYearMiddleSchool = (gradeyear: number): string => {
     const nowDate = new Date();
     let nj = 0;

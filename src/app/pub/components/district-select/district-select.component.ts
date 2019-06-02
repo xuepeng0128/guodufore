@@ -62,7 +62,7 @@ export class DistrictSelectComponent implements OnInit , OnChanges {
                     this.nationsvr.nationList().pipe(
                       map( (re: Array<Nation> ) => [
                         new Nation({nationId : '0', nationName : this.defaultShow })
-                      ].concat(re.filter(o => o.nationId.indexOf('00000000') === -1 && o.nationId.substring(0, 4) === this.cityId.substring(0, 4) )),
+                      ].concat(re.filter(o => o.nationId.indexOf('00') === -1 && o.nationId.substring(0, 4) === this.cityId.substring(0, 4) )),
                     ))
       );
     this._CURRENTVALUE='0';

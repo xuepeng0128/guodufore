@@ -60,7 +60,7 @@ export class CitySelectComponent implements OnInit {
     this.cityArray$ = this.nationsvr.nationList().pipe(
       map( (re: Array<Nation> ) => [
         new Nation({nationId : '0', nationName : this.defaultShow })
-      ].concat(re.filter(o => o.nationId.indexOf('00000000') !== -1 ))),
+      ].concat(re.filter(o => o.nationId.indexOf('00') !== -1 && o.nationId.indexOf("0000")===-1  ))),
 
     );
   }
