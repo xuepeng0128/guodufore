@@ -20,10 +20,10 @@
       <nz-form-item>
         <nz-form-label [nzSpan]="6">省市</nz-form-label>
         <nz-form-control [nzSpan]="8">
-          <app-province-select [(ngModel)]="queryParams.cityId" [defaultShow]="'--全部--'"></app-province-select>
+          <app-province-select [(ngModel)]="queryParams.provinceId" [defaultShow]="'--全部--'"></app-province-select>
         </nz-form-control>
         <nz-form-control [nzSpan]="8">
-          <app-city-select [(ngModel)]="queryParams.cityId" [defaultShow]="'--全部--'"></app-city-select>
+          <app-city-select [(ngModel)]="queryParams.cityId" [defaultShow]="'--全部--'" [provinceId]="queryParams.provinceId"></app-city-select>
         </nz-form-control>
       </nz-form-item>
     </div>

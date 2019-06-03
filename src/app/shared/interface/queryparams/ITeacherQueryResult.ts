@@ -9,4 +9,5 @@ export interface ITeacherQueryResult {
    master?: boolean;
    schoolId?: string;
    schoolName?: string;
+   inviteCode? : string;
 }

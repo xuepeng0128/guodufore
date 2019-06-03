@@ -85,7 +85,7 @@ export class SchoolAdminMgrComponent implements OnInit {
                    } else {
 
                      this.isSchoolAdminModalShow = false;
-                     this.userArray$ = iif(
+                      iif(
                        () => this.editState === 'add',
                        this.usersvr.insertUser(this.currentUser),
                        this.usersvr.updateUser(this.currentUser)
@@ -93,8 +93,10 @@ export class SchoolAdminMgrComponent implements OnInit {
                        switchMap(() =>
                          this.usersvr.userList(this.queryParams)
                        )
+                     ).subscribe(
+                        re => this.userArray = re
                      );
-                     this.total$ = this.editState === 'add' ? this.total$.pipe(map(re => re + 1)) : this.total$;
+                     this.total = this.editState === 'add' ? this.total+1 : this.total;
 
                    }
 

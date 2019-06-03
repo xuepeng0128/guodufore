@@ -1,4 +1,4 @@
-<div [innerHtml]="aa">
+<div [innerHtml]="aa" *ngIf="false">
 
 </div>
 <div nz-row>
@@ -37,6 +37,9 @@
       <button nz-button><i nz-icon type="upload"></i><span>excel导入</span></button>
     </nz-upload>
   </div>
+  <div nz-col [nzSpan]="3" >
+    <a  class="ant-btn ant-btn-primary m-l-xs"  (click)="" >导出</a>
+  </div>
 </div>
 <div class="m-t-sm" nz-row>
   <div nz-col [nzSpan]="24">
@@ -54,7 +57,6 @@
       <thead >
       <tr>
         <th>序号</th>
-        <th>编号</th>
         <th>身份证</th>
         <th>姓名</th>
         <th>当前职务</th>
@@ -65,7 +67,6 @@
       <tbody>
       <tr *ngFor="let data of ajaxTabletl.data ;let no=index">
         <td>{{no+1}}</td>
-        <td>{{data.teacherId}}</td>
         <td>{{data.teacherPaperId}}</td>
         <td>{{data.teacherName}}</td>
         <td>{{data.teacherDutyName}}</td>
@@ -75,7 +76,7 @@
           <nz-divider nzType="vertical"></nz-divider>
           <a href="javaScript:;" *ngIf="loginUser.isSchoolAdmin" (click)="onQuitDuty(data)" title="教师调走，辞职等">离职</a>
           <nz-divider nzType="vertical"></nz-divider>
-          <a href="javaScript:;" *ngIf="loginUser.isSchoolAdmin" (click)="onDelete(data)" title="教师录入信息错误，删除信息">>删除</a>
+          <a href="javaScript:;" *ngIf="loginUser.isSchoolAdmin" (click)="onDelete(data)" title="教师录入信息错误，删除信息">删除</a>
         </td>
       </tr>
       </tbody>

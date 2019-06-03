@@ -137,4 +137,27 @@ handleExcelChange = (file: UploadFile) => {
 getSchoolId = () => {
   return {schoolId : this.loginUser.school.schoolId};
 }
+
+
+
+  exportExcel = () => {
+    const tHeader = [
+      '身份证',
+      '名称',
+      '联系电话',
+      '邀请码'
+    ];
+    const body = [];
+    this.teacherList.forEach( v => {
+      body.push({teacherPaperId : v.teacherPaperId.toString(), teacherName : v.teacherName.toString(), tel : v.tel ,
+                 inviteCode : v.inviteCode});
+    });
+    this.exceloutsvr.export2Excel(tHeader, body, '班级学生');
+  }
+
+
+
+
+
+
 }

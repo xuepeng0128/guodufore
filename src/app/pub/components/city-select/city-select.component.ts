@@ -68,7 +68,7 @@ export class CitySelectComponent implements OnInit, OnChanges {
         this.nationsvr.nationList().pipe(
           map( (re: Array<Nation> ) => [
               new Nation({nationId : '0', nationName : this.defaultShow })
-            ].concat(re.filter(o => o.nationId.indexOf('00') !== -1 && o.nationId.substring(0, 2) === this.provinceId.substring(0, 2) )),
+            ].concat(re.filter(o => o.nationId.indexOf('00') !== -1 && o.nationId.indexOf('0000') === -1 && o.nationId.substring(0, 2) === this.provinceId.substring(0, 2) )),
           ))
       );
     this._CURRENTVALUE = '0';

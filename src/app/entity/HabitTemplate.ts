@@ -38,7 +38,7 @@ export class HabitTemplate {
     this.timeCompare = options.timeCompare || 'gt';
     this.countModeNum = options.countModeNum || 1;
     this.valueModeNum = options.valueModeNum || 1;
-    this.unitName = options.unitName || '';
+    this.unitName = options.unitName || '请选择';
 
   }
 }
