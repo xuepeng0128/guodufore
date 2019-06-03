@@ -1,5 +1,5 @@
-import {Component, EventEmitter, forwardRef, Input, OnInit, Output} from '@angular/core';
-import {from, Observable, of} from 'rxjs';
+import {Component, EventEmitter, forwardRef, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {from, iif, Observable, of} from 'rxjs';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
 
 
@@ -19,9 +19,10 @@ import {NationService} from '../../../shared/service/dic/nation.service';
     multi: true
   }]
 })
-export class CitySelectComponent implements OnInit {
+export class CitySelectComponent implements OnInit, OnChanges {
 // 默認顯示
   @Input() defaultShow: string;
+  @Input() provinceId: string ; // 选择的省
   // 当选择的值发生变化，激发事件
   @Output() onValueChanged: EventEmitter<any> = new EventEmitter<any>();
 
@@ -57,12 +58,22 @@ export class CitySelectComponent implements OnInit {
   constructor(private  nationsvr: NationService) { }
 
   ngOnInit() {
-    this.cityArray$ = this.nationsvr.nationList().pipe(
-      map( (re: Array<Nation> ) => [
-        new Nation({nationId : '0', nationName : this.defaultShow })
-      ].concat(re.filter(o => o.nationId.indexOf('00') !== -1 && o.nationId.indexOf("0000")===-1  ))),
-
-    );
   }
+
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.cityArray$ =
+      iif( () => this.provinceId === '0',
+        of([new Nation({nationId : '0' , nationName: this.defaultShow})]),
+        this.nationsvr.nationList().pipe(
+          map( (re: Array<Nation> ) => [
+              new Nation({nationId : '0', nationName : this.defaultShow })
+            ].concat(re.filter(o => o.nationId.indexOf('00') !== -1 && o.nationId.substring(0, 2) === this.provinceId.substring(0, 2) )),
+          ))
+      );
+    this._CURRENTVALUE = '0';
+  }
+
+
 
 }

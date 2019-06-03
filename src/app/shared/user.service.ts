@@ -34,6 +34,12 @@ export class UserService {
 userList = (queryParams: any): Observable<Array<IUserQueryResult>> => {
   return this.httpsvr.onHttpGet('api/system/user/userList', queryParams);
 }
+findUserAcount = (account: string, userId: string): Observable<boolean> => {
+  return this.httpsvr.onHttpGet('api/system/user/findUserAccount', {account, userId}).pipe(
+     map(re => re.result === '1' ? true : false)
+  );
+}
+
   userListTotal = (queryParams: any): Observable<number> => {
     return this.httpsvr.onHttpGet('api/system/user/userListTotal', queryParams);
   }

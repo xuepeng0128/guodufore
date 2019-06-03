@@ -5,6 +5,7 @@ import {Employee} from './Employee';
 export class School {
    schoolId: string; // 学校编号
    schoolName: string ; // 学校名称
+   provinceId: string;
    cityId: string;
    districtId: string;
    longitude: number; // 经度坐标
@@ -18,11 +19,12 @@ export class School {
    train: boolean;
 
 
-  constructor(options: { schoolId?: string, schoolName?: string, cityId?: string, districtId?: string,
+  constructor(options: { schoolId?: string, schoolName?: string, provinceId?: string, cityId?: string, districtId?: string,
                          longitude?: number, latitude?: number, tel?: string, linkMan?: string, address?: string,
                           schoolStyle?: number, saleManId?: string, regTime?: Date, train?: boolean} = {}) {
     this.schoolId = options.schoolId || '';
     this.schoolName = options.schoolName || '';
+    this.provinceId = options.provinceId || '0';
     this.cityId = options.cityId || '0';
     this.districtId = options.districtId || '0';
     this.longitude = options.longitude || 0;

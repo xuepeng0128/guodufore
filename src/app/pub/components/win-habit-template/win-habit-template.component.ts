@@ -6,6 +6,7 @@ import {ISupUploadfiles} from '../../../shared/interface/ISupUploadfiles';
 import {isNullOrUndefined} from 'util';
 import {MSG_SAVE_ERROR, MSG_SAVE_SUCCESS} from '../../../shared/SysMessage';
 import {HabitTemplateService} from '../../../shared/service/dic/habit-template.service';
+import {CommonService} from '../../../shared/common.service';
 
 @Component({
   selector: 'app-win-habit-template',
@@ -27,7 +28,7 @@ export class WinHabitTemplateComponent implements OnInit {
   nowState = 'browse';
 
   limitTime = new Date('2001-01-01 00:30:00');
-  constructor(private habittemplatesvr: HabitTemplateService, private message: NzMessageService) { }
+  constructor(private habittemplatesvr: HabitTemplateService, private message: NzMessageService, private commonsvr: CommonService) { }
 
   ngOnInit() {
     this.habitTemplateWinOrder$.subscribe(re => {
@@ -36,13 +37,27 @@ export class WinHabitTemplateComponent implements OnInit {
         this.currentHabitTemplate = new HabitTemplate({});
       } else if (re.nowState === 'edit') {
         this.currentHabitTemplate = re.habitTemplate;
+        this.limitTime = this.commonsvr.setHMSTime(this.currentHabitTemplate.timeModeNum);
       }
       this.isHabitTemplateModalShow = true;
     });
   }
 
   onSave = () => {
+    // 验证
+    this.message.remove();
+    if (this.currentHabitTemplate.habitTemplateName.length === 0 || isNullOrUndefined(this.currentHabitTemplate.habitTemplateName)) {
+      this.message.create('error', '请输入名称'); return;
+    }
+    if (this.currentHabitTemplate.subHabitClassId === '0') {
+      this.message.create('error', '请选择类别'); return;
+    }
 
+    if (this.currentHabitTemplate.icon.length === 0 || isNullOrUndefined(this.currentHabitTemplate.icon)) {
+      this.message.create('error', '请选择图标'); return;
+    }
+
+    this.currentHabitTemplate.timeModeNum = this.commonsvr.retHMSstr(this.limitTime);
     iif (  () => this.nowState === 'add' ,
       this.habittemplatesvr.insertHabitTemplate(this.currentHabitTemplate),
       this.habittemplatesvr.updateHabitTemplate(this.currentHabitTemplate)

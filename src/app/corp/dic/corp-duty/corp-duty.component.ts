@@ -3,12 +3,11 @@ import { CorpDuty } from 'src/app/entity/CorpDuty';
 import { UserService } from 'src/app/shared/user.service';
 import { CorpdutyService } from 'src/app/shared/service/dic/corpduty.service';
 import {iif} from 'rxjs/internal/observable/iif';
-import {User} from '../../../entity/User';
 import {flatMap, map, switchMap} from 'rxjs/operators';
-import {ClassesService} from '../../../shared/service/basemsg/classes.service';
 import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {MSG_SAVE_ERROR, MSG_SAVE_SUCCESS} from '../../../shared/SysMessage';
 import {LoginUser} from '../../../entity/LoginUser';
+import {isNullOrUndefined} from "util";
 
 @Component({
   selector: 'app-corp-duty',
@@ -43,6 +42,11 @@ export class CorpDutyComponent implements OnInit {
     this.isCorpDutyModalShow = true;
   }
   onSave = () => {
+    // 验证
+    this.message.remove();
+    if (this.currentCorpDuty.corpDutyName.length === 0 || isNullOrUndefined(this.currentCorpDuty.corpDutyName)) {
+      this.message.create('error', '请输入职务名称'); return;
+    }
     iif(
       () => this.editState === 'add',
           this.corpdutysvr.insertCorpDuty(this.currentCorpDuty),

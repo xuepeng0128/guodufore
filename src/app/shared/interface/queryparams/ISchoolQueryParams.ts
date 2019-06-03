@@ -1,6 +1,7 @@
 export interface ISchoolQueryParams {
     schoolId?: string ;
   schoolName?: string ;
+  provinceId?: string;
    cityId?: string ;
    districtId?: string ;
    schoolStyle?: string ;

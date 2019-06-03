@@ -4,9 +4,7 @@ import {Observable, of} from 'rxjs/index';
 import {flatMap, map} from 'rxjs/operators';
 import {User} from '../../../entity/User';
 import {UserService} from '../../../shared/user.service';
-import {isNullOrUndefined} from 'util';
-import {MSG_DELETE_ERROR, MSG_SAVE_SUCCESS} from '../../../shared/SysMessage';
-import {LoginUser} from '../../../entity/LoginUser';
+
 
 
 @Component({

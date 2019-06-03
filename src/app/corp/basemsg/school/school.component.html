@@ -18,8 +18,11 @@
     </div>
     <div nz-col [nzSpan]="8">
       <nz-form-item>
-        <nz-form-label [nzSpan]="6">市</nz-form-label>
-        <nz-form-control [nzSpan]="15">
+        <nz-form-label [nzSpan]="6">省市</nz-form-label>
+        <nz-form-control [nzSpan]="8">
+          <app-province-select [(ngModel)]="queryParams.cityId" [defaultShow]="'--全部--'"></app-province-select>
+        </nz-form-control>
+        <nz-form-control [nzSpan]="8">
           <app-city-select [(ngModel)]="queryParams.cityId" [defaultShow]="'--全部--'"></app-city-select>
         </nz-form-control>
       </nz-form-item>
@@ -79,6 +82,7 @@
           <th>序号</th>
           <th [nzWidth]="50">学校编号</th>
           <th>学校名称</th>
+          <th>省</th>
           <th>市</th>
           <th>区</th>
           <th>地址</th>
@@ -99,6 +103,7 @@
           <td>{{no+1}}</td>
           <td >{{data.schoolId}}</td>
           <td>{{data.schoolName}}</td>
+          <td>{{data.provinceName}}</td>
           <td>{{data.cityName}}</td>
           <td>{{data.districtName}}</td>
           <td>{{data.address | cutSizePipe:18}}</td>

@@ -7,6 +7,7 @@ import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {ISchoolQueryResult} from '../../../shared/interface/queryparams/ISchoolQueryResult';
 import {ISchoolQueryParams} from '../../../shared/interface/queryparams/ISchoolQueryParams';
 import {CommonService} from '../../../shared/common.service';
+import {isNullOrUndefined} from "util";
 
 @Component({
   selector: 'app-school',
@@ -20,6 +21,7 @@ export class SchoolComponent implements OnInit {
   total = 0;
   queryParams: ISchoolQueryParams = {
             schoolName : '',
+            provinceId : '0',
             cityId : '0',
             districtId : '0',
             schoolStyle: '0',
@@ -63,6 +65,11 @@ onRegist = () => {
 
   }
 onSaved = (editstate: string) => {
+
+
+
+
+
   this.schoolsvr.schoolList(this.queryParams).subscribe(
     re => this.schoolList = re
   );

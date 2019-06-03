@@ -13,8 +13,8 @@
       nzBordered
       nzShowSizeChanger
       [nzFrontPagination]="false"
-      [nzData]="userArray$ | async"
-      [nzTotal]="total$ | async"
+      [nzData]="userArray"
+      [nzTotal]="total"
       [(nzPageIndex)]="queryParams.pageNo"
       [(nzPageSize)]="queryParams.pageSize"
       (nzPageIndexChange)="onPageChange($event)"

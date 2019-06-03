@@ -78,8 +78,14 @@
         <nz-form-control [nzSpan]="3">
           打卡一次,
         </nz-form-control>
-        <nz-form-control [nzSpan]="8"  *ngIf="currentHabit.mode===1">
-          任务完成时间不超过   <nz-time-picker [(ngModel)]="limitTime" [nzDefaultOpenValue]="defaultOpenValue" style="width: 120px"></nz-time-picker>
+        <nz-form-control [nzSpan]="5"  *ngIf="currentHabit.mode===1">
+          任务完成时间不超过 <nz-radio-group [(ngModel)]="currentHabitTemplate.timeCompare">
+          <label nz-radio nzValue="gt">超过</label>
+          <label nz-radio nzValue="lt">不超过</label>
+        </nz-radio-group>
+        </nz-form-control>
+        <nz-form-control [nzSpan]="3">
+          <nz-time-picker [(ngModel)]="limitTime" [nzDefaultOpenValue]="defaultOpenValue" style="width: 120px"></nz-time-picker>
         </nz-form-control>
         <nz-form-control [nzSpan]="8"  *ngIf="currentHabit.mode===2">
           任务完成次数不少于    <nz-input-number [(ngModel)]="currentHabit.countModeNum" [nzMin]="1"  [nzStep]="1" style="width:70px"></nz-input-number>次

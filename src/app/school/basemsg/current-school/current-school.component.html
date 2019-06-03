@@ -23,8 +23,11 @@
         <div nz-col [nzSpan]="12">
           <nz-form-item>
             <nz-form-label [nzSpan]="6">所在市</nz-form-label>
-            <nz-form-control [nzSpan]="17">
-              <app-city-select [(ngModel)]="currentSchool.cityId" [defaultShow]="'--请选择--'"></app-city-select>
+            <nz-form-control [nzSpan]="8">
+              <app-province-select [(ngModel)]="currentSchool.provinceId" [defaultShow]="'--请选择--'" ></app-province-select>
+            </nz-form-control>
+            <nz-form-control [nzSpan]="8">
+              <app-city-select [(ngModel)]="currentSchool.cityId" [defaultShow]="'--请选择--'" [provinceId]="currentSchool.provinceId"></app-city-select>
             </nz-form-control>
           </nz-form-item>
         </div>

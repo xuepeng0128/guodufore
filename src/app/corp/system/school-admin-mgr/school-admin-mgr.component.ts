@@ -8,6 +8,7 @@ import {NzMessageService} from 'ng-zorro-antd';
 import {LoginUser} from '../../../entity/LoginUser';
 import {IUserQueryResult} from '../../../shared/interface/queryparams/IUserQueryResult';
 import {IUserQueryParams} from '../../../shared/interface/queryparams/IUserQueryParams';
+import {isNullOrUndefined} from 'util';
 
 
 @Component({
@@ -18,8 +19,8 @@ import {IUserQueryParams} from '../../../shared/interface/queryparams/IUserQuery
 export class SchoolAdminMgrComponent implements OnInit {
   loginUser: LoginUser = this.usersvr.getUserStorage();
   isSchoolAdminModalShow = false;
-  userArray$: Observable<Array<IUserQueryResult>> = of([]);
-  total$ = of(0);
+  userArray: Array<IUserQueryResult> = new Array<IUserQueryResult>();
+  total = 0 ;
   currentUser: User = new User({});
   editState = 'browse';
   queryParams: IUserQueryParams = {
@@ -36,13 +37,19 @@ export class SchoolAdminMgrComponent implements OnInit {
   onQuery = () => {
     this.queryParams.pageNo = 1;
     this.queryParams.pageBegin = 0;
-    this.userArray$ = this.usersvr.userList(this.queryParams);
-    this.total$ = this.usersvr.userListTotal(this.queryParams);
+    this.usersvr.userList(this.queryParams).subscribe(
+      re => this.userArray = re
+    );
+    this.usersvr.userListTotal(this.queryParams).subscribe(
+       re => this.total = re
+    );
   }
   onPageChange = (e) => {
     this.queryParams.pageNo = e;
     this.queryParams.pageBegin = (this.queryParams.pageNo - 1) * this.queryParams.pageSize;
-    this.userArray$ = this.usersvr.userList(this.queryParams);
+    this.usersvr.userList(this.queryParams).subscribe(
+      re => this.userArray = re
+    );
   }
   onAdd = () => {
     this.editState = 'add';
@@ -58,18 +65,53 @@ export class SchoolAdminMgrComponent implements OnInit {
     this.isSchoolAdminModalShow = true;
   }
   onSave = () => {
-    this.isSchoolAdminModalShow = false;
-    this.userArray$ = iif(
-      () => this.editState === 'add',
-      this.usersvr.insertUser(this.currentUser),
-      this.usersvr.updateUser(this.currentUser)
-    ).pipe(
-       switchMap(() =>
-        this.usersvr.userList(this.queryParams)
-        )
-    );
-    this.total$ = this.editState === 'add' ? this.total$.pipe(map(re => re + 1)) : this.total$;
+
+    // 验证
+    this.message.remove();
+    if (this.currentUser.account === '') {
+      this.message.create('error', '请输入账号'); return;
+    }
+
+    if (this.currentUser.schoolId === '0') {
+      this.message.create('error', '请选择学校!'); return;
+    }
+
+
+
+    this.usersvr.findUserAcount(this.currentUser.account, this.currentUser.userId).subscribe(
+             re => {
+                   if (re ) {
+                     this.message.create('error', '账号已存在!'); return;
+                   } else {
+
+                     this.isSchoolAdminModalShow = false;
+                     this.userArray$ = iif(
+                       () => this.editState === 'add',
+                       this.usersvr.insertUser(this.currentUser),
+                       this.usersvr.updateUser(this.currentUser)
+                     ).pipe(
+                       switchMap(() =>
+                         this.usersvr.userList(this.queryParams)
+                       )
+                     );
+                     this.total$ = this.editState === 'add' ? this.total$.pipe(map(re => re + 1)) : this.total$;
+
+                   }
+
+             }
+          );
+
+
+
   }
+
+
+
+
+
+
+
+
   // onDelete = (u: User) => {
   //   this.usersvr.deleteUser(u.account).pipe(
   //     switchMap(() => this.usersvr.userList({schoolAdmin : '1', pageSize: 1000, pageNo: 1, getTotal: '1'}))

@@ -1,0 +1,3 @@
+<nz-select [nzSize]="'default'" [(ngModel)]="currentValue" >
+  <nz-option *ngFor="let item of provinceArray$ | async " [nzLabel]="item.nationName" [nzValue]="item.nationId"></nz-option>
+</nz-select>

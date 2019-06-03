@@ -9,6 +9,7 @@ import {MSG_SAVE_ERROR, MSG_SAVE_SUCCESS} from '../../../shared/SysMessage';
 import {switchMap} from 'rxjs/operators';
 import {HabitClass} from '../../../entity/HabitClass';
 import {HabitClassService} from '../../../shared/service/dic/habit-class.service';
+import {isNullOrUndefined} from 'util';
 
 @Component({
   selector: 'app-habit-class',
@@ -43,6 +44,14 @@ export class HabitClassComponent implements OnInit {
     this.isHabitClassModalShow = true;
   }
   onSave = () => {
+    // 验证
+    this.message.remove();
+    if (this.currentHabitClass.habitClassName.length === 0 || isNullOrUndefined(this.currentHabitClass.habitClassName)) {
+      this.message.create('error', '请输入类别名称'); return;
+    }
+    if (this.currentHabitClass.pareHabitClassId === '0') {
+      this.message.create('error', '请选择上级类别'); return;
+    }
     iif(
       () => this.editState === 'add',
       this.habitclasssvr.insertHabitClass(this.currentHabitClass),

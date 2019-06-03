@@ -9,6 +9,7 @@ import {ClassesService} from '../../../shared/service/basemsg/classes.service';
 import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {MSG_SAVE_ERROR, MSG_SAVE_SUCCESS} from '../../../shared/SysMessage';
 import {LoginUser} from '../../../entity/LoginUser';
+import {isNullOrUndefined} from "util";
 
 @Component({
   selector: 'app-study-subject',
@@ -43,6 +44,11 @@ export class StudySubjectComponent implements OnInit {
     this.isStudySubjectModalShow = true;
   }
   onSave = () => {
+    // 验证
+    this.message.remove();
+    if (this.currentStudySubject.subHabitClassName.length === 0 || isNullOrUndefined(this.currentStudySubject.subHabitClassName)) {
+      this.message.create('error', '请输入学科名称'); return;
+    }
     iif(
       () => this.editState === 'add',
       this.studysubjectsvr.insertStudySubject(this.currentStudySubject),

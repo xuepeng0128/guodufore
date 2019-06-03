@@ -1,5 +1,5 @@
 import {Component, forwardRef, OnInit} from '@angular/core';
-import {NG_VALUE_ACCESSOR} from "@angular/forms";
+import {NG_VALUE_ACCESSOR} from '@angular/forms';
 
 @Component({
   selector: 'app-habit-mode-select',

@@ -7,6 +7,7 @@ import {switchMap} from 'rxjs/operators';
 import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {MSG_SAVE_ERROR, MSG_SAVE_SUCCESS} from '../../../shared/SysMessage';
 import {LoginUser} from '../../../entity/LoginUser';
+import {isNullOrUndefined} from "util";
 
 
 @Component({
@@ -42,6 +43,12 @@ export class TeacherDutyComponent implements OnInit {
     this.isTeacherDutyModalShow = true;
   }
   onSave = () => {
+    // 验证
+    this.message.remove();
+    if (this.currentTeacherDuty.teacherDutyName.length === 0 || isNullOrUndefined(this.currentTeacherDuty.teacherDutyName)) {
+      this.message.create('error', '请输入职务名称'); return;
+    }
+
     iif(
       () => this.editState === 'add',
       this.teacherdutysvr.insertTeacherDuty(this.currentTeacherDuty),

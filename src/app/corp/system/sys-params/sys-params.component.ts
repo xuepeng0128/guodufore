@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import {SystemParams} from '../../../entity/SystemParams';
 import {isNullOrUndefined} from 'util';
 import {SysParamsService} from '../../../shared/service/system/sys-params.service';
+import {NzMessageService} from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-sys-params',
@@ -17,7 +18,7 @@ export class SysParamsComponent implements OnInit {
     diamond: 400,
     Supreme: 500
   });
-  constructor(private sysparamssvr: SysParamsService) { }
+  constructor(private message: NzMessageService, private sysparamssvr: SysParamsService ) { }
 
   ngOnInit() {
     this.sysparamssvr.getParams().subscribe(re => {
@@ -27,8 +28,17 @@ export class SysParamsComponent implements OnInit {
       });
   }
   onSave = () => {
-     this.sysparamssvr.setParams(this.params).subscribe(
-          re => console.log(re)
+    // 验证
+    this.message.remove();
+    if (this.params.honerSet.Supreme <= this.params.honerSet.diamond || this.params.honerSet.diamond <= this.params.honerSet.gold
+        ||  this.params.honerSet.gold <= this.params.honerSet.silver || this.params.honerSet.silver <= this.params.honerSet.bronze
+    ) {
+      this.message.create('error', '勋章数量录入非法'); return;
+    }
+
+
+    this.sysparamssvr.setParams(this.params).subscribe(
+          re =>     this.message.create('success', '保存成功')
      );
   }
 

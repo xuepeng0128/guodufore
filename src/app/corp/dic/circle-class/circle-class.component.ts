@@ -8,6 +8,7 @@ import {switchMap} from 'rxjs/operators';
 import {CircleClass} from '../../../entity/CircleClass';
 import {CircleClassService} from '../../../shared/service/dic/circle-class.service';
 import {UPLOAD_MEDIA_PATH} from '../../../shared/const';
+import {isNullOrUndefined} from "util";
 
 @Component({
   selector: 'app-circle-class',
@@ -44,6 +45,16 @@ export class CircleClassComponent implements OnInit {
     this.currentCircleClass = circleClass;
   }
   onSave = () => {
+
+    // 验证
+    this.message.remove();
+    if (this.currentCircleClass.circleClassName.length === 0 || isNullOrUndefined(this.currentCircleClass.circleClassName)) {
+      this.message.create('error', '请输入类别名称'); return;
+    }
+
+    if (this.currentCircleClass.icon.length === 0 || isNullOrUndefined(this.currentCircleClass.icon)) {
+      this.message.create('error', '请设置图标'); return;
+    }
     iif(
       () => this.editState === 'add',
       this.circleclasssvr.insertCircleClass(this.currentCircleClass),

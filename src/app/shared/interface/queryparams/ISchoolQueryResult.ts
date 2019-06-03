@@ -1,6 +1,8 @@
 export interface ISchoolQueryResult {
    schoolId?: string ;
   schoolName?: string ;
+  provinceId?: string;
+  provinceName?: string;
   cityId?: string ;
   cityName?: string ;
   districtId ?: string ;

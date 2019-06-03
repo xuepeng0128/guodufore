@@ -17,6 +17,7 @@ export class Habit {
   timeUnit: string;
   mode: number;
   timeModeNum: string;
+  timeCompare: string;
   countModeNum: number;
   valueModeNum: number;
   unitName: string;
@@ -34,7 +35,7 @@ export class Habit {
 
   constructor(options: { habitId?: string, grade?: number, classes?: number, circleId?: string, circleName?: string, habitClassId?: string, habitClassName?: string, subHabitClassId?: string,
               subHabitClassName?: string , icon?: string, color?: string, habitName?: string, memo?: string, picUrl?: string,
-              pirTime?: number, timeUnit?: string, mode?: number, timeModeNum?: string, countModeNum?: number,
+              pirTime?: number, timeUnit?: string, mode?: number, timeModeNum?: string, timeCompare?: string; countModeNum?: number,
               valueModeNum?: number, unitName?: string, guoduCoin?: number, score?: number, habitExamId?: string, examTitle?: string, totalScore?: number,
               buildTime?: Date, buildTeacherId?: string, buildStudentId?: string, putCardBeginDate?: Date, putCardEndDate?: Date, joinStudents?: number } = {}) {
     this.habitId = options.habitId || '';
@@ -54,6 +55,7 @@ export class Habit {
     this.timeUnit = options.timeUnit || '';
     this.mode = options.mode || 1;
     this.timeModeNum = options.timeModeNum  || '';
+    this.timeCompare = options.timeCompare || 'gt';
     this.countModeNum = options.countModeNum || 1;
     this.valueModeNum = options.valueModeNum || 1;
     this.unitName = options.unitName || '';

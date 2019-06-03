@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import {isNullOrUndefined} from 'util';
 
 @Injectable({
   providedIn: 'root'
@@ -64,7 +65,15 @@ export class CommonService {
       return hstr + ':' + mstr + ':' + sstr;
 }
 
+// 根据时分秒字符串设置时间
 
+  setHMSTime = (hms: string): Date => {
+     if (isNullOrUndefined(hms) || hms === '') {
+       return new Date('2001-01-01 00:30:00');
+     } else {
+        return new Date(`2001-01-01 ${hms}`);
+     }
+  }
 
 
 
