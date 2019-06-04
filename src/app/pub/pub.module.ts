@@ -42,7 +42,6 @@ import { CircleStudentChooseComponent } from './components/circle-student-choose
 import { HabitTemplateChooseComponent } from './components/habit-template-choose/habit-template-choose.component';
 import { GuodubiSelectComponent } from './components/guodubi-select/guodubi-select.component';
 import {UEditorModule} from 'ngx-ueditor';
-import { RichEditorComponent } from './components/rich-editor/rich-editor.component';
 import { HabitChooseComponent } from './components/habit-choose/habit-choose.component';
 import { ProvinceSelectComponent } from './components/province-select/province-select.component';
 
@@ -76,7 +75,6 @@ import { ProvinceSelectComponent } from './components/province-select/province-s
     CircleStudentChooseComponent,
     HabitTemplateChooseComponent,
     GuodubiSelectComponent,
-    RichEditorComponent,
     HabitChooseComponent,
     ProvinceSelectComponent
 
@@ -142,7 +140,6 @@ import { ProvinceSelectComponent } from './components/province-select/province-s
     CircleStudentChooseComponent,
     HabitTemplateChooseComponent,
     GuodubiSelectComponent,
-    RichEditorComponent,
     HabitChooseComponent,
     ProvinceSelectComponent
   ]

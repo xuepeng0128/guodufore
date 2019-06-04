@@ -16,7 +16,10 @@ export class EmployeeMgrComponent implements OnInit {
   employeeWinOrder$: Subject<{nowState: string , employee: Employee}> = new Subject<{nowState: string , employee: Employee}>() ;
 
   queryParams = {
-    employeeName : ''
+    employeePaperId : '',
+    tel : '',
+    employeeName : '',
+    corpDutyName : ''
   };
   employeeArray$: Observable<Array<Employee>> = of([]);
   constructor(private employeesvr: EmployeeService , private usersvr: UserService,
