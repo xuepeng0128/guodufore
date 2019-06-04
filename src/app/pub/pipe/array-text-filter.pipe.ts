@@ -7,7 +7,7 @@ export class ArrayTextFilterPipe implements PipeTransform {
 
   transform(value: Array<any>, args: {keyName: string, filterText: string}): Array<any> {
 
-   return  value.filter(o => (<string> o[args.keyName]).indexOf(args.filterText)  !== -1 );
+   return  value.filter(o => (o[args.keyName] as string).indexOf(args.filterText)  !== -1 );
   }
 
 }

@@ -43,11 +43,10 @@ export class HabitChooseComponent implements OnInit {
   onQuery = () => {
     this.habitsvr.habitList(this.queryParams).pipe(
       map(re => {
-        return  re.filter(o => o.putCardEndDate.getTime() > new Date().getTime());
+        return  re.filter(o => new Date(o.putCardEndDate.toString()).getTime() > new Date().getTime());
       })
     ).subscribe( re => {
       this.habitList = re;
-
     });
   }
 

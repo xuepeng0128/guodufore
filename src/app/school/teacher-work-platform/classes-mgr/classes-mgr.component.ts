@@ -89,7 +89,7 @@ export class ClassesMgrComponent implements OnInit {
       );
   }
   onSelectClasses = (classesId: string) => {
-       this.currentChoosedClasses = this.gradeChoosedClasses.filter(o => o.classesId = classesId)[0];
+       this.currentChoosedClasses = this.gradeChoosedClasses.filter(o => o.classesId === classesId)[0];
   }
   onToImportStudent = () => {
     this.classessvr.groupAddStudents({ classesId: this.currentChoosedClasses.classesId, studentList: this.prepareImportStudents}).subscribe(

@@ -1,11 +1,9 @@
 import {Component, EventEmitter, forwardRef, Input, OnInit, Output} from '@angular/core';
-import {Observable} from "rxjs";
-import {Nation} from "../../../entity/Nation";
-import {NationService} from "../../../shared/service/dic/nation.service";
-import {map} from "rxjs/operators";
-import {NG_VALUE_ACCESSOR} from "@angular/forms";
-import {HabitUnitService} from "../../../shared/service/dic/habit-unit.service";
-import {HabitUnit} from "../../../entity/HabitUnit";
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {NG_VALUE_ACCESSOR} from '@angular/forms';
+import {HabitUnitService} from '../../../shared/service/dic/habit-unit.service';
+import {HabitUnit} from '../../../entity/HabitUnit';
 
 @Component({
   selector: 'app-habit-unit-select',

@@ -7,7 +7,7 @@ import { ClassesCircleComponent } from './classes-circle/classes-circle.componen
 import { ExamMgrComponent } from './exam-mgr/exam-mgr.component';
 import {PubModule} from '../../pub/pub.module';
 import { TeacherLessonsComponent } from './teacher-lessons/teacher-lessons.component';
-import {TeacherArticleComponent} from "./teacher-article/teacher-article.component";
+import {TeacherArticleComponent} from './teacher-article/teacher-article.component';
 import { TeacherNoticeComponent } from './teacher-notice/teacher-notice.component';
 import { TeacherHabitComponent } from './teacher-habit/teacher-habit.component';
 import { TeacherArticleDetailComponent } from './teacher-article-detail/teacher-article-detail.component';

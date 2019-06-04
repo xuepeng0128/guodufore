@@ -42,9 +42,9 @@ export class Habit {
     this.grade = options.grade ;
     this.circleId = options.circleId || '';
     this.circleTitle = options.circleName || '';
-    this.habitClassId = options.habitClassId || '';
+    this.habitClassId = options.habitClassId || '1';
     this.habitClassName = options.habitClassName || '';
-    this.subHabitClassId = options.subHabitClassId || '';
+    this.subHabitClassId = options.subHabitClassId || '101';
     this.subHabitClassName = options.subHabitClassName || '';
     this.icon = options.icon || '';
     this.color = options.color || '';
@@ -52,7 +52,7 @@ export class Habit {
     this.memo = options.memo || '';
     this.picUrl = options.picUrl || '';
     this.pirTime = options.pirTime || 1;
-    this.timeUnit = options.timeUnit || '';
+    this.timeUnit = options.timeUnit || '天';
     this.mode = options.mode || 1;
     this.timeModeNum = options.timeModeNum  || '';
     this.timeCompare = options.timeCompare || 'gt';

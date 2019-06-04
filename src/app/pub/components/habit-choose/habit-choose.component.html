@@ -1,6 +1,6 @@
 <nz-modal [(nzVisible)]="isHabitChooseModalShow"
           [nzTitle]="'选择习惯'"
-          [nzCancelText]="null"
+          [nzCancelText]="'关闭'"
           (nzOnCancel)="isHabitChooseModalShow=false"
           [nzOkText]="null"
           [nzMaskClosable]="false"
@@ -21,17 +21,17 @@
       <thead>
       <tr>
         <th nzWidth="5%" *ngIf="!singleChoose" ></th>
-        <th>习惯标题</th>
+        <th style="width:50%">习惯标题</th>
         <th>所属圈子</th>
-        <th *ngIf="singleChoose">选择</th>
+        <th *ngIf="singleChoose" style="width:100px">选择</th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let data of ajaxTable_habit.data  | arrayTextFilter: {keyName: 'habitName', filterText: entFilter} ;let no=index   ">
         <td align="center" nzShowCheckbox [(nzChecked)]="data.choosed"  *ngIf="!singleChoose"></td>
-        <td align="center">{{data.habitName}}</td>
+        <td align="center" style="width:50%">{{data.habitName}}</td>
         <td align="center">{{data.circleTitle}}</td>
-        <td align="center" *ngIf="singleChoose"><a href="javascript:;"  (click)="onSingleChoose(data)">[选择]</a> </td>
+        <td align="center" *ngIf="singleChoose" style="width:100px"><a href="javascript:;"  (click)="onSingleChoose(data)">[选择]</a> </td>
       </tr>
       </tbody>
     </nz-table>

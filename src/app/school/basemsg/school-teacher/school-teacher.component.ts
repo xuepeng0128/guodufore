@@ -10,6 +10,7 @@ import {DOWNLOAD_TEMPLATE_PATH, UPLOAD_TEACHER_TEMPLATE_PATH} from '../../../sha
 import {Teacher} from '../../../entity/Teacher';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {flatMap} from 'rxjs/operators';
+import {ExceloutService} from '../../../shared/excelout.service';
 
 @Component({
   selector: 'app-school-teacher',
@@ -40,7 +41,7 @@ export class SchoolTeacherComponent implements OnInit {
   prepareImportTeachers: Array<Teacher> = new Array<Teacher>();
 constructor(private teachersvr: TeacherService, private  usersvr: UserService,
             private message: NzMessageService, private modalService: NzModalService,
-            private sanitizer: DomSanitizer ) { }
+            private sanitizer: DomSanitizer, private exceloutsvr: ExceloutService ) { }
 
 ngOnInit() {
   this.onQuery();
@@ -152,7 +153,7 @@ getSchoolId = () => {
       body.push({teacherPaperId : v.teacherPaperId.toString(), teacherName : v.teacherName.toString(), tel : v.tel ,
                  inviteCode : v.inviteCode});
     });
-    this.exceloutsvr.export2Excel(tHeader, body, '班级学生');
+    this.exceloutsvr.export2Excel(tHeader, body, '老师');
   }
 
 

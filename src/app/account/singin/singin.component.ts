@@ -105,7 +105,7 @@ export class SinginComponent implements OnInit {
         return this.schoolsvr.schoolList(this.schoolQueryParams).pipe(
               map( (re: Array < ISchoolQueryResult >) => {
                       const result: ISchoolQueryResult = re[0];
-                      this.loginUser.school = new School({schoolId: result.schoolId, schoolName: result.schoolName, cityId: result.cityId,
+                      this.loginUser.school = new School({schoolId: result.schoolId, schoolName: result.schoolName, provinceId : result.provinceId,cityId: result.cityId,
                                                                       districtId: result.districtId, longitude: result.longitude, latitude: result.latitude,
                                                                       tel: result.tel, linkMan: result.linkMan, address: result.address, schoolStyle: result.schoolStyle,
                                                                       saleManId: result.saleManId, regTime: result.regTime, train: result.train }) ;

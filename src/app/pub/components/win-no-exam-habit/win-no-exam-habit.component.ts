@@ -50,7 +50,10 @@ export class WinNoExamHabitComponent implements OnInit {
         this.currentHabit = new Habit({
           habitId : this.habitsvr.onMakeHabitId(),
           circleId : this.nowChooseCircleId,
+          habitClassId : '1',
+          subHabitClassId : '101',
           putCardBeginDate: new Date(),
+
           putCardEndDate : this.commonsvr.dateAdd(new Date(), 30),
           buildTeacherId : this.loginUser.teacher.teacherId,
           mode : 1

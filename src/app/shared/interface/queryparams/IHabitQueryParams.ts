@@ -10,6 +10,8 @@ export interface IHabitQueryParams {
    buildTeacherId?: string ;
    buildStudentId?: string ;
     examed?: string;
+    allHabitStudentId?: string;
+   todayStudentId?: string;
    pageSize?: number ;
    pageNo?: number ;
    pageBegin?: number ;

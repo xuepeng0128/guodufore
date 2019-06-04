@@ -69,31 +69,31 @@
     <div nz-col [nzSpan]="24">
       <nz-form-item>
         <nz-form-label [nzSpan]="3">打卡要求</nz-form-label>
-        <nz-form-control [nzSpan]="4">
+        <nz-form-control [nzSpan]="3">
           每 <nz-input-number [(ngModel)]="currentHabit.pirTime" [nzMin]="1" [nzMax]="10" [nzStep]="1" style="width:70px"></nz-input-number>
         </nz-form-control>
         <nz-form-control [nzSpan]="3">
           <app-habit-time-unit-select [(ngModel)]="currentHabit.timeUnit"  ></app-habit-time-unit-select>
         </nz-form-control>
-        <nz-form-control [nzSpan]="3">
-          打卡一次,
+        <nz-form-control [nzSpan]="6">
+          打卡一次, <ng-container *ngIf="currentHabit.mode===1">任务完成时间</ng-container> <ng-container *ngIf="currentHabit.mode===3">任务完成量不少于</ng-container>
         </nz-form-control>
         <nz-form-control [nzSpan]="5"  *ngIf="currentHabit.mode===1">
-          任务完成时间不超过 <nz-radio-group [(ngModel)]="currentHabitTemplate.timeCompare">
+          <nz-radio-group [(ngModel)]="currentHabit.timeCompare">
           <label nz-radio nzValue="gt">超过</label>
           <label nz-radio nzValue="lt">不超过</label>
         </nz-radio-group>
         </nz-form-control>
-        <nz-form-control [nzSpan]="3">
+        <nz-form-control [nzSpan]="3"  *ngIf="currentHabit.mode===1">
           <nz-time-picker [(ngModel)]="limitTime" [nzDefaultOpenValue]="defaultOpenValue" style="width: 120px"></nz-time-picker>
         </nz-form-control>
         <nz-form-control [nzSpan]="8"  *ngIf="currentHabit.mode===2">
-          任务完成次数不少于    <nz-input-number [(ngModel)]="currentHabit.countModeNum" [nzMin]="1"  [nzStep]="1" style="width:70px"></nz-input-number>次
+             <nz-input-number [(ngModel)]="currentHabit.countModeNum" [nzMin]="1"  [nzStep]="1" style="width:70px"></nz-input-number>次
         </nz-form-control>
-        <nz-form-control [nzSpan]="8"  *ngIf="currentHabit.mode===3">
-          任务完成量不少于    <nz-input-number [(ngModel)]="currentHabit.valueModeNum" [nzMin]="1"  [nzStep]="1" style="width:70px"></nz-input-number>
+        <nz-form-control [nzSpan]="4"  *ngIf="currentHabit.mode===3">
+              <nz-input-number [(ngModel)]="currentHabit.valueModeNum" [nzMin]="1"  [nzStep]="1" style="width:70px"></nz-input-number>
         </nz-form-control>
-        <nz-form-control [nzSpan]="2"  *ngIf="currentHabit.mode===3">
+        <nz-form-control [nzSpan]="4"  *ngIf="currentHabit.mode===3">
           <app-habit-unit-select [(ngModel)]="currentHabit.unitName" ></app-habit-unit-select>
         </nz-form-control>
       </nz-form-item>
@@ -102,7 +102,7 @@
   <div nz-row>
     <div nz-col [nzSpan]="12">
       <nz-form-item>
-        <nz-form-label [nzSpan]="8">打卡周期</nz-form-label>
+        <nz-form-label [nzSpan]="6">打卡周期</nz-form-label>
         <nz-form-control [nzSpan]="8">
           <nz-date-picker [(ngModel)]="currentHabit.putCardBeginDate" ></nz-date-picker>
         </nz-form-control>
@@ -145,8 +145,8 @@
   <div nz-row>
     <div nz-col [nzSpan]="24">
       <nz-form-item>
-        <nz-form-label [nzSpan]="6">参与学生</nz-form-label>
-        <nz-form-control [nzSpan]="18">
+        <nz-form-label [nzSpan]="3">参与学生</nz-form-label>
+        <nz-form-control [nzSpan]="20">
           <nz-tag
             *ngFor="let student of choosedStudents; let i = index"
             [nzMode]="'closeable'"
