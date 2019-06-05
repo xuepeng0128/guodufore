@@ -33,18 +33,20 @@
     <a class="ant-btn ant-btn-primary m-l-xs" download="学生资源.xls" *ngIf="user.isSupperAdmin "  >excel导出</a>
   </div>
 </div>
+
+
+
 <div class="m-t-sm" nz-row>
   <div nz-col [nzSpan]="24">
     <nz-table
       #ajaxTable
-      nzBordered
       nzShowSizeChanger
       [nzFrontPagination]="false"
       [nzData]="studentList"
       [nzTotal]="total"
       [(nzPageIndex)]="queryParams.pageNo"
       [(nzPageSize)]="queryParams.pageSize"
-      (nzPageIndexChange)="onPageChange($event)"
+      (nzPageIndexChange)="onPageChange()"
     >
       <thead >
       <tr>
@@ -64,7 +66,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let data of ajaxTable.data ;let no=index">
+           <tr *ngFor="let data of ajaxTable.data ;let no=index">
         <td>{{no+1}}</td>
         <td>{{data.studentId}}</td>
         <td>{{data.studentPaperId}}</td>

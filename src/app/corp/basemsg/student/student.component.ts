@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {Observable, of} from 'rxjs';
-import {Student} from '../../../entity/Student';
+
 import {StudentService} from '../../../shared/service/basemsg/student.service';
-import {map} from 'rxjs/operators';
+
 import {CommonService} from '../../../shared/common.service';
-import {User} from '../../../entity/User';
+
 import {UserService} from '../../../shared/user.service';
-import {ClassesService} from '../../../shared/service/basemsg/classes.service';
+
 import {NzMessageService} from 'ng-zorro-antd';
 import {LoginUser} from '../../../entity/LoginUser';
 import {IStudentQueryParams} from '../../../shared/interface/queryparams/IStudentQueryParams';
@@ -25,7 +24,7 @@ export class StudentComponent implements OnInit {
         studentPaperId : '',
         studentName: '',
         schoolName: '',
-        pageSize : 20,
+        pageSize : 10,
         pageNo : 1,
         pageBegin : 0
   };
@@ -47,8 +46,7 @@ export class StudentComponent implements OnInit {
     );
   }
 
-  onPageChange = (e) => {
-    this.queryParams.pageNo = e;
+  onPageChange = () => {
     this.studentsvr.studentList(this.queryParams).subscribe(
      re => this.studentList = re
    );

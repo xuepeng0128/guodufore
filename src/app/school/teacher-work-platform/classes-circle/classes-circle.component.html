@@ -4,7 +4,7 @@
     <nz-form-item>
       <nz-form-label [nzSpan]="6">圈子标题</nz-form-label>
       <nz-form-control [nzSpan]="15">
-        <input  nz-input [(ngModel)]="queryParams.circleTitle">
+        <input  nz-input [(ngModel)]="circlesvr.queryParams.circleTitle">
       </nz-form-control>
     </nz-form-item>
   </div>
@@ -26,9 +26,10 @@
       nzShowSizeChanger
       [nzFrontPagination]="false"
       [nzData]="circleArray"
+      [nzShowPagination]="false"
       [nzTotal]="total"
-      [(nzPageIndex)]="queryParams.pageNo"
-      [(nzPageSize)]="queryParams.pageSize"
+      [(nzPageIndex)]="circlesvr.queryParams.pageNo"
+      [(nzPageSize)]="circlesvr.queryParams.pageSize"
       (nzPageIndexChange)="onPageChange($event)"
     >
       <thead >
@@ -66,4 +67,4 @@
     </nz-table>
   </div>
 </div>
-<app-win-circle  [circleWinOrder$]="circleWinOrder$" (onCircleSaved)="circleSaved($event)"></app-win-circle>
+<!--<app-win-circle  [circleWinOrder$]="circleWinOrder$" (onCircleSaved)="circleSaved($event)"></app-win-circle>-->

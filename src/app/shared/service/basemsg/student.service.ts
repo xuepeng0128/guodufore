@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpService} from '../baseapi/http.service';
 import {Observable} from 'rxjs';
-import {Student} from '../../../entity/Student';
 import {IStudentQueryResult} from '../../interface/queryparams/IStudentQueryResult';
 import {IStudentQueryParams} from '../../interface/queryparams/IStudentQueryParams';
 

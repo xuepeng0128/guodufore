@@ -26,7 +26,7 @@ export class SchoolComponent implements OnInit {
             districtId : '0',
             schoolStyle: '0',
             saleManId : '',
-            pageSize : 20 ,
+            pageSize : 10 ,
             pageNo : 1,
             pageBegin : 0
   };
@@ -50,7 +50,6 @@ export class SchoolComponent implements OnInit {
     );
   }
   onPageChange = (e) => {
-    this.queryParams.pageNo = e;
     this.queryParams.pageBegin = (this.queryParams.pageNo - 1) * this.queryParams.pageSize;
     this.schoolsvr.schoolList(this.queryParams).subscribe(
       re => this.schoolList = re

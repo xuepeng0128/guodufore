@@ -7,10 +7,11 @@ import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {CommonService} from '../../../shared/common.service';
 import {map} from 'rxjs/operators';
 import {Circle} from '../../../entity/Circle';
-import {Subject} from 'rxjs';
-import {School} from '../../../entity/School';
+
 import {ClassesService} from '../../../shared/service/basemsg/classes.service';
 import {Classes} from '../../../entity/Classes';
+import {TeacherArticle} from '../../../entity/TeacherArticle';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-classes-circle',
@@ -18,57 +19,52 @@ import {Classes} from '../../../entity/Classes';
   styleUrls: ['./classes-circle.component.css']
 })
 export class ClassesCircleComponent implements OnInit {
-  circleWinOrder$: Subject<{nowState: string , circle: Circle, teacherTeachedClasses: Array<Classes>}>
-    = new Subject<{nowState: string , circle: Circle, teacherTeachedClasses: Array<Classes>}>();
   user: LoginUser = this.usersvr.getUserStorage();
-  queryParams: ICircleQueryParams = {
-  circleTitle : '', // 圈子名称
-  schoolId : this.user.school.schoolId,
-  classesId  :  '0', // 班级编号
-  grade : 0 ,
-  classes : 0,
-  buildTeacherId : this.user.teacher.master ?  '' : this.user.teacher.teacherId  , // 建圈老师id
-  pageSize : 10,
-  pageNo : 1 ,
-  pageBegin : 0
-};
+
   circleArray: Array<Circle> = new Array<Circle>();
   total = 0;
-  teacherTeachedClasses: Array<Classes> = new Array<Classes>();
-  constructor(private usersvr: UserService, private circlesvr: CircleService,
+  constructor(private usersvr: UserService, public circlesvr: CircleService,
               private modalService: NzModalService,
               private message: NzMessageService, public commonsvr: CommonService,
-              private classessvr: ClassesService) { }
+              private classessvr: ClassesService , private  router: Router) { }
   ngOnInit(): void {
-    this.classessvr.teacherTeachedClasses(this.user.teacher.teacherId, this.user.school.schoolId, this.user.school.schoolStyle).subscribe(
-      re => {
-        this.teacherTeachedClasses = re;
-      }
+    this.circlesvr.queryParams.schoolId = this.user.school.schoolId;
+    this.circlesvr.queryParams. buildTeacherId = this.user.teacher.master ?  '' : this.user.teacher.teacherId ; // 建圈老师id
+
+    this.circlesvr.circleList(this.circlesvr.queryParams).subscribe(
+      re => this.circleArray = re
     );
-    this.onQuery();
+    this.circlesvr.circleListTotal(this.circlesvr.queryParams).subscribe(
+      re => this.total = re
+    );
   }
   onQuery = () => {
-    this.queryParams.pageBegin = 0;
-    this.queryParams.pageSize = 10;
-    this.circlesvr.circleList(this.queryParams).subscribe(
+    this.circlesvr.queryParams.pageBegin = 0;
+    this.circlesvr.queryParams.pageSize = 10;
+    this.circlesvr.circleList(this.circlesvr.queryParams).subscribe(
         re => this.circleArray = re
     );
-    this.circlesvr.circleListTotal(this.queryParams).subscribe(
+    this.circlesvr.circleListTotal(this.circlesvr.queryParams).subscribe(
           re => this.total = re
     );
   }
   onPageChange = (e) => {
-    this.queryParams.pageNo = e;
-    this.queryParams.pageBegin = (this.queryParams.pageNo - 1) * this.queryParams.pageSize;
-    this.circlesvr.circleList(this.queryParams).subscribe(
+    this.circlesvr.queryParams.pageNo = e;
+    this.circlesvr.queryParams.pageBegin = (this.circlesvr.queryParams.pageNo - 1) * this.circlesvr.queryParams.pageSize;
+    this.circlesvr.circleList(this.circlesvr.queryParams).subscribe(
       re => this.circleArray = re
     );
   }
 onAdd = () => {
-  this.circleWinOrder$.next({nowState: 'add', circle: null, teacherTeachedClasses : this.teacherTeachedClasses });
+  this.circlesvr.currentCircle = new Circle({
+    schoolId: this.user.school.schoolId,
+    classesId: '',
+    buildTeacherId: this.user.teacher.teacherId });
+  this.router.navigate(['/frame/schoolteacherworkplatform/classescircledetail'], {queryParams: {nowEdit : 'add'}});
 }
 onEdit = (circle: Circle) => {
-  this.circleWinOrder$.next({nowState: 'edit', circle, teacherTeachedClasses : this.teacherTeachedClasses  });
+  this.circlesvr.currentCircle = circle;
+  this.router.navigate(['/frame/schoolteacherworkplatform/classescircledetail'], {queryParams: {nowEdit : 'edit'}});
 }
 
 onDelete = (circle: Circle) => {
@@ -76,26 +72,12 @@ onDelete = (circle: Circle) => {
     nzTitle: '<i>提示</i>',
     nzContent: '<b>确定删除该数据吗?</b>',
     nzOnOk: () => {
-
       this.circlesvr.deleteCircle(circle).subscribe(re => {
-        this.queryParams.pageBegin = (this.queryParams.pageNo - 1) * this.queryParams.pageSize;
-        this.circlesvr.circleList(this.queryParams).subscribe(
-          res => this.circleArray = res
-        );
-        this.total -= 1;
+         this.onQuery();
       });
     }
   });
 }
-
- circleSaved = (editstate: string) => {
-   this.circlesvr.circleList(this.queryParams).subscribe(
-     res => this.circleArray = res
-   );
-   if ( editstate === 'add') {
-     this.total += 1;
-   }
-  }
   onCloseCircle = (circle: Circle) => {
     this.modalService.confirm({
       nzTitle: '<i>提示</i>',
@@ -105,6 +87,7 @@ onDelete = (circle: Circle) => {
           re => {
             if (re) {
               this.message.create('success', '圈子已关闭!');
+              this.onQuery();
             } else {
               this.message.create('error', `圈子未正常关闭!${re}`);
             }
@@ -113,6 +96,4 @@ onDelete = (circle: Circle) => {
       }
     });
   }
-
-
 }

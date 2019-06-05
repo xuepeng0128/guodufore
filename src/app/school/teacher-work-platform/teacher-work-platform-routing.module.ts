@@ -9,11 +9,13 @@ import {TeacherNoticeComponent} from './teacher-notice/teacher-notice.component'
 import {TeacherHabitComponent} from './teacher-habit/teacher-habit.component';
 import {TeacherArticleDetailComponent} from './teacher-article-detail/teacher-article-detail.component';
 import {TeacherLessonsDetailComponent} from './teacher-lessons-detail/teacher-lessons-detail.component';
+import {ClassesCircleDetailComponent} from './classes-circle-detail/classes-circle-detail.component';
 
 const routes: Routes = [
   { path : '' , redirectTo : 'classesmgr', pathMatch: 'full'},
   { path: 'classesmgr', component: ClassesMgrComponent},
   { path: 'classescircle', component: ClassesCircleComponent},
+  { path: 'classescircledetail', component: ClassesCircleDetailComponent},
   { path: 'teacherhabit', component: TeacherHabitComponent},
   { path: 'teacherarticle', component: TeacherArticleComponent},
   { path: 'teacherarticledetail', component: TeacherArticleDetailComponent},

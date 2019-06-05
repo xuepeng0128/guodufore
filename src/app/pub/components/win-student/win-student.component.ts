@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {LoginUser} from '../../../entity/LoginUser';
 import {iif, Subject} from 'rxjs';
-import {Student} from '../../../entity/Student';
 import {NzMessageService} from 'ng-zorro-antd';
 import {StudentService} from '../../../shared/service/basemsg/Student.service';
 import {UserService} from '../../../shared/user.service';
@@ -22,7 +21,7 @@ export class WinStudentComponent implements OnInit {
   isStudentModalShow = false;
   nowState = 'browse';
   constructor( private message: NzMessageService, private classessvr: ClassesService,
-               private Studentsvr: StudentService, private usersvr: UserService) { }
+               private studentsvr: StudentService, private usersvr: UserService) { }
 
   ngOnInit() {
 

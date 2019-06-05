@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {LoginUser} from '../../../entity/LoginUser';
-import {IStudentQueryResult} from '../../../shared/interface/queryparams/IStudentQueryResult';
-import {IStudentQueryParams} from '../../../shared/interface/queryparams/IStudentQueryParams';
-import {StudentService} from '../../../shared/service/basemsg/student.service';
 import {CommonService} from '../../../shared/common.service';
 import {UserService} from '../../../shared/user.service';
 import {NzMessageService} from 'ng-zorro-antd';
@@ -11,7 +8,6 @@ import {NoticeService} from '../../../shared/service/business/notice.service';
 import {NoticeStudent} from '../../../entity/NoticeStudent';
 import {ClassesService} from '../../../shared/service/basemsg/classes.service';
 import {Classes} from '../../../entity/Classes';
-import {Student} from '../../../entity/Student';
 import {ClassesStudent} from '../../../entity/ClassesStudent';
 import {MSG_SAVE_ERROR, MSG_SAVE_SUCCESS} from '../../../shared/SysMessage';
 

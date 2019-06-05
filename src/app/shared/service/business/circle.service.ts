@@ -11,6 +11,18 @@ import {Student} from '../../../entity/Student';
 })
 export class CircleService {
 
+  queryParams: ICircleQueryParams = {
+    circleTitle : '', // 圈子名称
+    schoolId : '',
+    classesId  :  '0', // 班级编号
+    grade : 0 ,
+    classes : 0,
+    buildTeacherId : '' , // 建圈老师id
+    pageSize : 10,
+    pageNo : 1 ,
+    pageBegin : 0
+  };
+  currentCircle: Circle = new Circle({});
   constructor(private httpsvr: HttpService) { }
 
   circleList = (queryparams: ICircleQueryParams): Observable<Array<Circle>> => {

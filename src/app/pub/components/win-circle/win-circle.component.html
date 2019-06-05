@@ -61,8 +61,7 @@
             (nzChange)="handleChange($event)"
           >
             <ng-container *ngIf="currentCircle.picUrl===''">
-              <i class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></i>
-              <div class="ant-upload-text">上传</div>
+              <i nz-icon type="upload"></i><span>上传</span>
             </ng-container>
             <img *ngIf="currentCircle.picUrl!==''" [src]="currentCircle.picUrl" class="avatar" />
           </nz-upload>
