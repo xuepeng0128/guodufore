@@ -17,7 +17,9 @@ export class SchoolService {
          return this.httpsvr.onHttpGet('api/basemsg/school/schoolList', queryparam);
   }
  schoolListTotal = (queryparam: ISchoolQueryParams): Observable<number> => {
-   return this.httpsvr.onHttpGet('api/basemsg/school/schoolListTotal', queryparam);
+   return this.httpsvr.onHttpGet('api/basemsg/school/schoolListTotal', queryparam).pipe(
+      map(re => re.total)
+   );
  }
   insertSchool = (school: School): Observable<string> => {
         return this.httpsvr.onHttpPost('api/basemsg/school/insertSchool', school).pipe(

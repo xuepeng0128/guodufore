@@ -17,7 +17,9 @@ export class TeacherService {
     return this.httpsvr.onHttpGet('api/basemsg/teacher/teacherList', queryParams);
   }
  teacherListTotal = (queryParams: ITeacherQueryParams): Observable<number> => {
-   return this.httpsvr.onHttpGet('api/basemsg/teacher/teacherListTotal', queryParams);
+   return this.httpsvr.onHttpGet('api/basemsg/teacher/teacherListTotal', queryParams).pipe(
+      map( re => re.total)
+   );
  }
 insertTeacher = (teacher: Teacher): Observable<string> => {
   return  this.httpsvr.onHttpPost('api/basemsg/teacher/insertTeacher', teacher).pipe(

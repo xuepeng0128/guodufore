@@ -1,17 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {Subject} from 'rxjs';
 import {LoginUser} from '../../../entity/LoginUser';
-import {ITeacherArticleQueryParams} from '../../../shared/interface/queryparams/ITeacherArticleQueryParams';
-import {ITeacherArticleQueryResult} from '../../../shared/interface/queryparams/ITeacherArticleQueryResult';
-import {TeacherArticle} from '../../../entity/TeacherArticle';
 import {UserService} from '../../../shared/user.service';
-import {TeacherArticleService} from '../../../shared/service/business/teacher-article.service';
 import {NzMessageService, NzModalService, UploadFile} from 'ng-zorro-antd';
-import {ITeacherLessonQueryParams} from '../../../shared/interface/queryparams/ITeacherLessonQueryParams';
 import {TeacherLesson} from '../../../entity/TeacherLesson';
 import {TeacherLessonService} from '../../../shared/service/business/teacher-lesson.service';
 import {SubTeacherLesson} from '../../../entity/SubTeacherLesson';
-import {Icon} from '../../../entity/Icon';
 import {Router} from '@angular/router';
 import {Habit} from '../../../entity/Habit';
 import {MSG_SAVE_ERROR, MSG_SAVE_SUCCESS} from '../../../shared/SysMessage';

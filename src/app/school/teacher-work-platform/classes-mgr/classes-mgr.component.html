@@ -17,7 +17,6 @@
   </div>
   <div nz-col [nzSpan]="4">
     <nz-upload [nzAction]="uploadExcelpath+'?schoolId=' + loginUser.school.schoolId"  [nzShowUploadList]="false" (nzChange)="handleExcelChange($event)"
-
     >
       <button nz-button><i nz-icon type="upload"></i><span>excel导入</span></button>
     </nz-upload>

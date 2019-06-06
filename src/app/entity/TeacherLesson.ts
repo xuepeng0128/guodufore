@@ -4,27 +4,35 @@ export class TeacherLesson {
   memo: string;
   guoduCoin: number;
   makeTeacherId: string;
-  makeTeackerName: string;
+  makeTeacherName: string;
   makeTime: Date;
   schoolId: string;
   schoolName: string;
   publishTime: Date;
-  habitNum: number;
-
+  habitId: string;
+  habitName: string;
+  circleId: string;
+  circleTitle: string;
+  picUrl: string;
 
   constructor(options: {lessonId?: string, lessonTitle?: string, memo?: string,
-                        guoduCoin?: number, makeTeacherId?: string, makeTeackerName?: string,
-                        makeTime?: Date, schoolId?: string, schoolName?: string, publishTime?: Date, habitNum?: number}= {}) {
+                        guoduCoin?: number, makeTeacherId?: string, makeTeacherName?: string,
+                        makeTime?: Date, schoolId?: string, schoolName?: string, publishTime?: Date, habitId?: string,
+                       habitName?: string, circleId?: string, circleTitle?: string, picUrl?: string}= {}) {
     this.lessonId = options.lessonId || '';
     this.lessonTitle = options.lessonTitle || '';
     this.memo = options.memo || '';
     this.guoduCoin = options.guoduCoin || 0;
     this.makeTeacherId = options.makeTeacherId || '';
-    this.makeTeackerName = options.makeTeackerName || '';
+    this.makeTeacherName = options.makeTeacherName || '';
     this.makeTime = options.makeTime;
     this.schoolId = options.schoolId || '';
     this.schoolName = options.schoolName || '';
     this.publishTime = options.publishTime;
-    this.habitNum = options.habitNum || 0 ;
+    this.habitId = options.habitId || '';
+    this.habitName = options.habitName || '';
+    this.circleId = options.circleId || '' ;
+    this.circleTitle = options.circleTitle || '';
+    this.picUrl = options.picUrl;
   }
 }

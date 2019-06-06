@@ -48,7 +48,7 @@ export class TeacherLessonsDetailComponent implements OnInit {
     this.editingLesson = new SubTeacherLesson({
        lessonId : this.teacherlessonsvr.currentLesson.lessonId,
        lessonNo : this.teacherlessonsvr.currentSubLessonArray.length + 1,
-       videoUrl : 'http://wxg-sign.oss-cn-qingdao.aliyuncs.com/mediafile/2019-05-31/16fe90db68d842909112f83d12080b75-QQ%E8%A7%86%E9%A2%9120190201143834.mp4'
+       videoUrl : ''
     });
     this.teacherlessonsvr.currentSubLessonArray.push(this.editingLesson);
   }
@@ -193,4 +193,24 @@ export class TeacherLessonsDetailComponent implements OnInit {
         break;
     }
   }
+
+
+
+  handlepicUrlChange=(info: { file: UploadFile }) => {
+    switch (info.file.status) {
+      case 'uploading':
+        this.loading = true;
+        break;
+      case 'done':
+        this.teacherlessonsvr.currentLesson.picUrl = info.file.response.aliUrl;
+        this.loading = false;
+        break;
+      case 'error':
+        this.message.error('网络错误');
+        break;
+    }
+  }
+
+
+
 }

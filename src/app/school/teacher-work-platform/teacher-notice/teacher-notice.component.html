@@ -24,30 +24,28 @@
       nzBordered
       nzShowSizeChanger
       [nzFrontPagination]="false"
-      [nzData]="noticeList"
+      [nzData]="teacherNoticeList"
       [nzTotal]="total"
       [(nzPageIndex)]="queryParams.pageNo"
       [(nzPageSize)]="queryParams.pageSize"
-      (nzPageIndexChange)="onPageChange($event)"
+      (nzPageIndexChange)="onPageChange()"
     >
       <thead >
       <tr>
         <th>序号</th>
         <th>编号</th>
+        <th>圈子</th>
         <th>内容</th>
         <th>发布时间</th>
-        <th>发送学生</th>
-        <th>已查看学生</th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let data of ajaxTable.data ;let no=index">
         <td>{{no+1}}</td>
-        <td>{{data.noticeId}}</td>
-        <td [title]="data.noticeContent">{{data.noticeContent}}</td>
-        <td>{{data.sendTime}}</td>
-        <td>{{ data.receiveStudentNums}}</td>
-        <td>{{ data.haveReadStudentNums}}</td>
+        <td>{{data.teacherNoticeId}}</td>
+        <td>{{data.sendCircleTitles}}</td>
+        <td>{{data.memo}}</td>
+        <td>{{data.buildDate}}</td>
       </tr>
       </tbody>
     </nz-table>
@@ -69,9 +67,11 @@
 
     <div nz-col [nzSpan]="24">
       <nz-form-item>
-        <nz-form-label [nzSpan]="4">发送班级</nz-form-label>
+        <nz-form-label [nzSpan]="4">发送圈子</nz-form-label>
         <nz-form-control [nzSpan]="20">
-          <nz-checkbox-group [(ngModel)]="checkeClasses"></nz-checkbox-group>
+          <nz-select [(ngModel)]="currentNotice.sendCircleIds" class="form-input fullWidth">
+            <nz-option [nzValue]="item.circleId" [nzLabel]="item.circleTitle" *ngFor="let item of teacherJoinedCircleList"></nz-option>
+          </nz-select>
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -81,7 +81,7 @@
       <nz-form-item>
         <nz-form-label [nzSpan]="4">通知内容</nz-form-label>
         <nz-form-control [nzSpan]="20">
-           <textarea [(ngModel)]="currentNotice.noticeContent" style="width: 100%;height:200px"></textarea>
+           <textarea [(ngModel)]="currentNotice.memo" style="width: 100%;height:200px"></textarea>
         </nz-form-control>
       </nz-form-item>
     </div>

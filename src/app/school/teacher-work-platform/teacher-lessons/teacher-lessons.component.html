@@ -36,7 +36,8 @@
           <th>创作时间</th>
           <th>创作老师</th>
           <th>果度币购买</th>
-          <th>发布到习惯数</th>
+          <th>发布到圈子</th>
+          <th>发布到习惯</th>
           <th>操作</th>
         </tr>
         </thead>
@@ -44,16 +45,17 @@
         <tr *ngFor="let data of ajaxTablelesson.data ;let no=index">
           <td>{{no+1}}</td>
           <td>{{data.lessonTitle}}</td>
-          <td>{{data.makeDate}}</td>
-          <td>{{data.makeTeackerName}}</td>
+          <td>{{data.makeTime | date  :'yyyy-mm-dd'}}</td>
+          <td>{{data.makeTeacherName}}</td>
           <td>{{data.guoduCoin}}</td>
-          <td>{{data.habitNum}}</td>
+          <td>{{data.circleTitle}}</td>
+          <td>{{data.habitName}}</td>
           <td>
-            <a href="javaScript:;" *ngIf="data.makeTeacherId === loginUser.teacher.teacherId && !!data.publishTime" (click)="onEdit(data)" title="修改课程">修改</a>
+            <a href="javaScript:;" *ngIf="data.makeTeacherId === loginUser.teacher.teacherId && data.publishTime === null" (click)="onEdit(data)" title="修改课程">修改</a>
             <nz-divider nzType="vertical"></nz-divider>
             <a href="javaScript:;" *ngIf="data.makeTeacherId === loginUser.teacher.teacherId" (click)="onPublish(data)" title="发布该课程，发布后，该课程将不能修改及删除">发布</a>
             <nz-divider nzType="vertical"></nz-divider>
-            <a href="javaScript:;" *ngIf="data.makeTeacherId === loginUser.teacher.teacherId && !!data.publishTime" (click)="onDelete(data)" title="删除该课程">>删除</a>
+            <a href="javaScript:;" *ngIf="data.makeTeacherId === loginUser.teacher.teacherId && data.publishTime === null " (click)="onDelete(data)" title="删除该课程">>删除</a>
           </td>
         </tr>
         </tbody>

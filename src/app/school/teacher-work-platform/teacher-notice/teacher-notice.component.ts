@@ -3,13 +3,12 @@ import {LoginUser} from '../../../entity/LoginUser';
 import {CommonService} from '../../../shared/common.service';
 import {UserService} from '../../../shared/user.service';
 import {NzMessageService} from 'ng-zorro-antd';
-import {Notice} from '../../../entity/Notice';
-import {NoticeService} from '../../../shared/service/business/notice.service';
-import {NoticeStudent} from '../../../entity/NoticeStudent';
-import {ClassesService} from '../../../shared/service/basemsg/classes.service';
-import {Classes} from '../../../entity/Classes';
-import {ClassesStudent} from '../../../entity/ClassesStudent';
 import {MSG_SAVE_ERROR, MSG_SAVE_SUCCESS} from '../../../shared/SysMessage';
+import {ITeacherNoticeParams} from '../../../shared/interface/queryparams/ITeacherNoticeParams';
+import {TeacherNotice} from '../../../entity/TeacherNotice';
+import {Circle} from '../../../entity/Circle';
+import {TeacherNoticeService} from '../../../shared/service/business/teacher-notice.service';
+import {CircleService} from '../../../shared/service/business/circle.service';
 
 @Component({
   selector: 'app-teacher-notice',
@@ -18,73 +17,57 @@ import {MSG_SAVE_ERROR, MSG_SAVE_SUCCESS} from '../../../shared/SysMessage';
 })
 export class TeacherNoticeComponent implements OnInit {
   loginUser: LoginUser = this.usersvr.getUserStorage();
-  noticeList: Array<Notice> = new Array<Notice>();
+  teacherNoticeList: Array<TeacherNotice> = new Array<TeacherNotice>();
   total = 0;
-  queryParams = {
-    teacherId : this.loginUser.teacher.teacherId,
-    noticeContent : '',
+  queryParams: ITeacherNoticeParams = {
+    buildTeacherId : this.loginUser.teacher.teacherId,
+    schoolId : this.loginUser.school.schoolId,
     pageSize : 10,
     pageNo : 1,
     pageBegin : 0
   };
   isNoticeModalShow = false;
-  currentNotice: Notice = new Notice();
-  teachedClassesList: Array<Classes> = new Array<Classes>();
-  choosedStudents: Array<NoticeStudent> = new Array<NoticeStudent>();
-  checkeClasses: Array<{ label: string ; value: string; checked: boolean;  students: Array<ClassesStudent>}>
-    = new Array<{label: string, value: string, checked: boolean, students: Array<ClassesStudent>}>();
-  constructor(private noticesvr: NoticeService, private classessvr: ClassesService,
+  currentNotice: TeacherNotice = new TeacherNotice();
+  teacherJoinedCircleList: Array<Circle> = new Array<Circle>();
+
+  constructor(private teachernoticesvr: TeacherNoticeService, private circlesvr: CircleService,
               public  commonsvr: CommonService,
               private usersvr: UserService, private message: NzMessageService) { }
 
   ngOnInit() {
-
-    this.classessvr.teacherTeachedClasses( this.loginUser.teacher.teacherId, this.loginUser.school.schoolId, this.loginUser.school.schoolStyle).subscribe(
-        re => {
-          this.teachedClassesList = re;
-          this.teachedClassesList.forEach( v => {
-            this.checkeClasses.push(
-              { label: this.clag(v.grade) + '年级' + v.classes + '班' , value: v.classesId, checked: true,  students : v.students}
-              );
-          });
-        }
-    );
+     this.circlesvr.teacherJoinedCircles(this.loginUser.teacher.teacherId).subscribe(
+         re => this.teacherJoinedCircleList = re
+     );
   }
 
   onQuery = () => {
-    this.queryParams.pageBegin = (this.queryParams.pageNo - 1) * this.queryParams.pageSize;
-    this.queryParams.pageNo = 1;
-    this.noticesvr.noticeList(this.queryParams).subscribe(
-      re => this.noticeList = re
+    this.teachernoticesvr.teacherNoticeList(this.queryParams).subscribe(
+      re => this.teacherNoticeList = re
     );
 
-    this.noticesvr.noticeListTotal(this.queryParams).subscribe(
+    this.teachernoticesvr.teacherNoticeListTotal(this.queryParams).subscribe(
       re => this.total = re
     );
   }
 
-  onPageChange = (e) => {
-    this.queryParams.pageNo = e;
+  onPageChange = () => {
     this.queryParams.pageBegin = (this.queryParams.pageNo - 1) * this.queryParams.pageSize;
-    this.noticesvr.noticeList(this.queryParams).subscribe(
-      re => this.noticeList = re
+    this.teachernoticesvr.teacherNoticeList(this.queryParams).subscribe(
+      re => this.teacherNoticeList = re
     );
   }
 
  onAdd = () => {
-    this.currentNotice = new Notice({});
-    this.choosedStudents.length = 0;
+    this.currentNotice = new TeacherNotice({
+      teacherNoticeId : this.teachernoticesvr.makeTeacherNoticeId(),
+      schoolId : this.loginUser.school.schoolId,
+      buildTeacherId: this.loginUser.teacher.teacherId,
+      sendCircleIds : this.teacherJoinedCircleList[0].circleId || ''
+    });
     this.isNoticeModalShow = true;
  }
  onSend = () => {
-    this.currentNotice.noticeId = this.noticesvr.makeNoticeId();
-    this.checkeClasses.filter(v => v.checked).forEach(
-       s =>  s.students.forEach( k =>
-         this.choosedStudents.push( new NoticeStudent({noticeId : this.currentNotice.noticeId, studentId: k.studentId}))
-       )
-    );
-
-    this.noticesvr.insertNotice({notice : this.currentNotice, noticeStudents : this.choosedStudents}).subscribe(re => {
+    this.teachernoticesvr.insertTeacherNotice(this.currentNotice).subscribe(re => {
         if (re) {
           this.message.create('success', MSG_SAVE_SUCCESS);
           this.onQuery();
@@ -98,8 +81,5 @@ export class TeacherNoticeComponent implements OnInit {
 
 
 
- clag = (grade: number): string => {
-   return  this.loginUser.school.schoolStyle === 1 ? this.commonsvr.calculateSchoolYearPrimarySchool(grade) : this.commonsvr.calculateSchoolYearMiddleSchool(grade);
- }
 
 }

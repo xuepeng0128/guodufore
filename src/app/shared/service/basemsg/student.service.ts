@@ -3,6 +3,7 @@ import {HttpService} from '../baseapi/http.service';
 import {Observable} from 'rxjs';
 import {IStudentQueryResult} from '../../interface/queryparams/IStudentQueryResult';
 import {IStudentQueryParams} from '../../interface/queryparams/IStudentQueryParams';
+import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,9 @@ export class StudentService {
   }
 
   studentListTotal = (queryparams: IStudentQueryParams): Observable<number> => {
-    return this.httpsvr.onHttpGet('api/basemsg/student/studentListTotal', queryparams);
+    return this.httpsvr.onHttpGet('api/basemsg/student/studentListTotal', queryparams).pipe(
+         map(re => re.total)
+    );
   }
 
 

@@ -6,7 +6,7 @@
     </div>
   </div>
   <div nz-row>
-    <div nz-col [nzSpan]="14">
+    <div nz-col [nzSpan]="16">
       <nz-form-item>
         <nz-form-label [nzSpan]="4"> 课程标题</nz-form-label>
         <nz-form-control [nzSpan]="20">
@@ -14,7 +14,7 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-    <div nz-col [nzSpan]="6">
+    <div nz-col [nzSpan]="8">
       <nz-form-item>
         <nz-form-label [nzSpan]="16"> 学习需花费果度币</nz-form-label>
         <nz-form-control [nzSpan]="6">
@@ -29,6 +29,29 @@
         <nz-form-label [nzSpan]="3"> 课程简介</nz-form-label>
         <nz-form-control [nzSpan]="20">
           <textarea [(ngModel)]="teacherlessonsvr.currentLesson.memo"  style="width:100%"></textarea>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row>
+    <div nz-col [nzSpan]="24">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="3"> 宣传画</nz-form-label>
+        <nz-form-control [nzSpan]="20">
+          <nz-upload
+            class="avatar"
+            name="file"
+            [nzAction]="uploadMediaPath"
+            nzListType="picture-card"
+            [nzShowUploadList]="false"
+            (nzChange)="handlepicUrlChange($event)"
+          >
+            <ng-container *ngIf="teacherlessonsvr.currentLesson.picUrl===''">
+              <i class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></i>
+              <div class="ant-upload-text">上传</div>
+            </ng-container>
+            <img *ngIf="teacherlessonsvr.currentLesson.picUrl!==''" [src]="teacherlessonsvr.currentLesson.picUrl" class="avatar" />
+          </nz-upload>
         </nz-form-control>
       </nz-form-item>
     </div>

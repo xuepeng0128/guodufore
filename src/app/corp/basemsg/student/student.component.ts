@@ -10,6 +10,7 @@ import {NzMessageService} from 'ng-zorro-antd';
 import {LoginUser} from '../../../entity/LoginUser';
 import {IStudentQueryParams} from '../../../shared/interface/queryparams/IStudentQueryParams';
 import {IStudentQueryResult} from '../../../shared/interface/queryparams/IStudentQueryResult';
+import {of} from 'rxjs';
 
 @Component({
   selector: 'app-student',
@@ -42,11 +43,11 @@ export class StudentComponent implements OnInit {
     );
 
     this.studentsvr.studentListTotal(this.queryParams).subscribe(
-      re => this.total = re
-    );
+        re => this.total = re
+     );
   }
 
-  onPageChange = () => {
+  onPageChange = (e) => {
     this.studentsvr.studentList(this.queryParams).subscribe(
      re => this.studentList = re
    );
