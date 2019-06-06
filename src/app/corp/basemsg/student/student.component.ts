@@ -47,7 +47,7 @@ export class StudentComponent implements OnInit {
      );
   }
 
-  onPageChange = (e) => {
+  onPageChange = () => {
     this.studentsvr.studentList(this.queryParams).subscribe(
      re => this.studentList = re
    );

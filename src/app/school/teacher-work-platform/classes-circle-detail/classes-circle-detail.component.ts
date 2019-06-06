@@ -125,4 +125,21 @@ export class ClassesCircleDetailComponent implements OnInit {
     }, 5, comp.id);
     // comp.id 是指当前UEditor实例Id
   }
+
+  handleChange = (info: { file: UploadFile }) => {
+    switch (info.file.status) {
+      case 'uploading':
+        this.loading = true;
+        break;
+      case 'done':
+        this.iconUrl = info.file.response.aliUrl;
+        this.loading = false;
+        this.isImgUpModalShow = false;
+        this.full.Instance.execCommand('inserthtml', `<img src="${this.iconUrl}" />`);
+        break;
+      case 'error':
+        this.message.error('网络错误');
+        break;
+    }
+  }
 }

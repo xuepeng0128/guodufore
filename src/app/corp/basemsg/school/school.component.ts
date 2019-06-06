@@ -49,7 +49,7 @@ export class SchoolComponent implements OnInit {
         re => this.total = re
     );
   }
-  onPageChange = (e) => {
+  onPageChange = () => {
     this.queryParams.pageBegin = (this.queryParams.pageNo - 1) * this.queryParams.pageSize;
     this.schoolsvr.schoolList(this.queryParams).subscribe(
       re => this.schoolList = re

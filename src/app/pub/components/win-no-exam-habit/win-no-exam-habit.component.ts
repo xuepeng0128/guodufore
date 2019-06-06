@@ -78,7 +78,7 @@ export class WinNoExamHabitComponent implements OnInit {
   onSave = () => {
    const hlist: Array<Habit> = new Array<Habit>();
    this.currentHabit.timeModeNum = this.commonsvr.retHMSstr(this.limitTime);
-
+   this.currentHabit.circleId=this.nowChooseCircleId;
    hlist.push(this.currentHabit);
    this.habitsvr.insertNoExamHabit({ habitExam: null, habits: hlist, studentIds: this.choosedStudents.map(v => v.studentId)}).subscribe(
       re => {
