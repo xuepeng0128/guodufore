@@ -1,0 +1,3 @@
+<nz-select [nzSize]="'default'" [(ngModel)]="currentValue" >
+  <nz-option *ngFor="let item of examKindArray$ | async " [nzLabel]="item.examKindName" [nzValue]="item.examKindId"></nz-option>
+</nz-select>

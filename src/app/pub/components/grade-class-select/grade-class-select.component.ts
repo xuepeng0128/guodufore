@@ -1,4 +1,4 @@
-import {Component, forwardRef, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, forwardRef, Input, OnInit, Output} from '@angular/core';
 import {Observable} from "rxjs";
 import {CircleClass} from "../../../entity/CircleClass";
 import {CircleClassService} from "../../../shared/service/dic/circle-class.service";
@@ -21,6 +21,7 @@ export class GradeClassSelectComponent implements OnInit {
 
   @Input()   classesArray: Observable<Array<Classes>>;
   @Input() schoolStyle : number;
+  @Output() classesSelectChange : EventEmitter<string>= new EventEmitter<string>();
   private _CURRENTVALUE: string;
   private onValueChangeCallBack: any = {};
 
@@ -53,4 +54,7 @@ export class GradeClassSelectComponent implements OnInit {
   registerOnTouched(fn: any): void {
   }
 
+  onChange=()=>{
+      this.classesSelectChange.emit('change');
+  }
 }

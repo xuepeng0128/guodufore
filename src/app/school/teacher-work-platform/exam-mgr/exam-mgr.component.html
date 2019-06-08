@@ -1,1 +1,60 @@
 
+<div class="m-t-sm text-center" nz-row>
+  <div nz-col [nzSpan]="24" class="text-center">
+    <a href="javaScript:;" class="ant-btn ant-btn-primary" (click)="onQuery()">查询</a>
+    <a href="javaScript:;" class="ant-btn ant-btn-primary m-l-xs"  (click)="onAdd()" >新增</a>
+  </div>
+</div>
+<div class="m-t-sm" nz-row>
+  <div nz-col [nzSpan]="24">
+    <nz-table
+      #ajaxTable
+      nzBordered
+      nzShowSizeChanger
+      [nzFrontPagination]="false"
+      [nzData]="examArray"
+      [nzTotal]="total"
+      [(nzPageIndex)]="examsvr.queryParams.pageNo"
+      [(nzPageSize)]="examsvr.queryParams.pageSize"
+      (nzPageIndexChange)="onPageChange()"
+    >
+      <thead >
+      <tr>
+        <th>序号</th>
+        <th>学科</th>
+        <th>学级</th>
+        <th>班级</th>
+        <th>考试年级</th>
+        <th>学期</th>
+        <th>考试类型</th>
+        <th>考试名称</th>
+        <th>任教老师</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of ajaxTable.data ;let no=index">
+        <td>{{no+1}}</td>
+        <td>{{data.studySubjectName}}</td>
+        <td >{{data.grade}}籍</td>
+        <td>{{data.classes}}班</td>
+        <td>{{ data.iyear}}年级</td>
+        <td>{{ data.term ==='up' ? '上':'下' }}学期</td>
+        <td>{{ data.examKindName}}</td>
+        <td>{{ data.examName}}</td>
+        <td>{{ data.teachedTeacherName}}</td>
+        <td>
+          <a href="javaScript:;"  (click)="onEdit(data)">修改</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a href="javaScript:;"  (click)="onDelete(data)" >删除</a>
+        </td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+
+
+
+
+

@@ -13,9 +13,10 @@ import { TeacherHabitComponent } from './teacher-habit/teacher-habit.component';
 import { TeacherArticleDetailComponent } from './teacher-article-detail/teacher-article-detail.component';
 import { TeacherLessonsDetailComponent } from './teacher-lessons-detail/teacher-lessons-detail.component';
 import { ClassesCircleDetailComponent } from './classes-circle-detail/classes-circle-detail.component';
+import { ExamMgrDetailComponent } from './exam-mgr-detail/exam-mgr-detail.component';
 
 @NgModule({
-  declarations: [ClassesMgrComponent, ClassesCircleComponent,  ExamMgrComponent, TeacherLessonsComponent, TeacherArticleComponent, TeacherNoticeComponent, TeacherHabitComponent, TeacherArticleDetailComponent, TeacherLessonsDetailComponent, ClassesCircleDetailComponent],
+  declarations: [ClassesMgrComponent, ClassesCircleComponent,  ExamMgrComponent, TeacherLessonsComponent, TeacherArticleComponent, TeacherNoticeComponent, TeacherHabitComponent, TeacherArticleDetailComponent, TeacherLessonsDetailComponent, ClassesCircleDetailComponent, ExamMgrDetailComponent],
   imports: [
     CommonModule,
     PubModule,

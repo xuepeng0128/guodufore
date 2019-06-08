@@ -1,0 +1,172 @@
+<div class="m-t-sm text-center" nz-row>
+  <div nz-col [nzSpan]="3" >
+    <a href="javaScript:;" class="ant-btn ant-btn-primary m-l-xs" (click)="onSave()" >保存</a>
+  </div>
+  <div nz-col [nzSpan]="3" >
+    <a href="javaScript:;" class="ant-btn ant-btn-primary m-l-xs" (click)="onBack()" >返回</a>
+  </div>
+</div>
+<div nz-row>
+  <div nz-col [nzSpan]="8">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6">班级</nz-form-label>
+      <nz-form-control [nzSpan]="18">
+       <app-grade-class-select [schoolStyle]="loginUser.school.schoolStyle" [classesArray]="examsvr.teacherTeachedClasses"
+                               [(ngModel)]="examsvr.currentExam.classesId" (classesSelectChange)="onClassesChange()" ></app-grade-class-select>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  <div nz-col [nzSpan]="6">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6">学科</nz-form-label>
+      <nz-form-control [nzSpan]="18">
+          <app-study-subject-select [defaultShow]="'--请选择--'" [(ngModel)]="examsvr.currentExam.studySubjectId" (onValueChanged)="studySubjectChange()" ></app-study-subject-select>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  <div nz-col [nzSpan]="4">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6">年级</nz-form-label>
+      <nz-form-control [nzSpan]="18">
+        <nz-input-number [(ngModel)]="examsvr.currentExam.iyear" [nzMin]="1" [nzMax]="
+           user.school.schoolStyle===1 ? parseInt(commonsvr.calculateSchoolYearPrimarySchool(examsvr.currentExam.grade), 10) :
+                                            parseInt( commonsvr.calculateSchoolYearMiddleSchool(examsvr.currentExam.grade), 10)
+                                            " [nzStep]="1"></nz-input-number>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  <div nz-col [nzSpan]="4">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6">学期</nz-form-label>
+      <nz-form-control [nzSpan]="18">
+        <nz-select [(ngModel)]="examsvr.currentExam.term" >
+            <nz-option [nzValue]="'up'" [nzLabel]="'上学期'"></nz-option>
+            <nz-option [nzValue]="'down'" [nzLabel]="'下学期'"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+</div>
+<div nz-row>
+  <div nz-col [nzSpan]="12">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6">考试名称</nz-form-label>
+      <nz-form-control [nzSpan]="18">
+        <input nz-input [(ngModel)]="examsvr.currentExam.examName">
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  <div nz-col [nzSpan]="6">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6">考试类型</nz-form-label>
+      <nz-form-control [nzSpan]="18">
+       <app-exam-kind-select [defaultShow]="'--请选择--'" [(ngModel)]="examsvr.currentExam.examKindId"></app-exam-kind-select>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+</div>
+<div nz-row>
+  <div nz-col [nzSpan]="8">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="8">类别</nz-form-label>
+      <nz-form-control [nzSpan]="16">
+        <app-circle-class-select [(ngModel)]="circlesvr.currentCircle.circleClassId" [defaultShow]="'请选择'"></app-circle-class-select>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  <div nz-col [nzSpan]="8">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="8">班级</nz-form-label>
+      <nz-form-control [nzSpan]="16">
+        <app-grade-class-select [classesArray]="teacherTeachedClasses"
+                                [schoolStyle]="user.school.schoolStyle" [(ngModel)]="circlesvr.currentCircle.classesId" ></app-grade-class-select>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  <div nz-col [nzSpan]="8">
+
+  </div>
+</div>
+<div nz-row>
+  <div nz-col [nzSpan]="24">
+    <nz-table
+      #ajaxTable_setscore
+      nzBordered
+      nzShowSizeChanger
+      [nzFrontPagination]="false"
+      [nzData]="examsvr.currentExam.subExams"
+    >
+      <thead >
+      <tr>
+        <th>序号</th>
+        <th>学号</th>
+        <th>姓名</th>
+        <th>题型</th>
+        <th>难易度</th>
+        <th>满分</th>
+        <th>得分</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of ajaxTable_subexam.data ;let no=index">
+        <td>{{no+1}}</td>
+        <td *ngIf="data.studentIdShow" [attr.rowspan]="rowSpan">{{data.studentId}}</td>
+        <td *ngIf="data.studentIdShow" [attr.rowspan]="rowSpan">{{data.studentName}}籍</td>
+        <td *ngIf="data.subjectExamClassNameshow" [attr.rowspan]="3">{{data.subjectExamClassName}}</td>
+        <td>{{ data.defficulty=== 1 ? '容易' : ( data.defficulty === 2 ? '普通' :'困难')}}</td>
+        <td>   {{ data.score }}  </td>
+        <td><nz-input-number
+          [(ngModel)]="data.getScore"
+          [nzMin]="1"
+          [nzMax]="100"
+          [nzStep]="0.5"
+          [nzPlaceHolder]="'填写得分'"
+        ></nz-input-number></td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col [nzSpan]="24">
+    <nz-table
+      #ajaxTable_subexam
+      nzBordered
+      nzShowSizeChanger
+      [nzFrontPagination]="false"
+      [nzData]="examsvr.currentExam.subExams"
+    >
+      <thead >
+      <tr>
+        <th>序号</th>
+        <th>学号</th>
+        <th>姓名</th>
+        <th>题型</th>
+        <th>难易度</th>
+        <th>满分</th>
+        <th>得分</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of ajaxTable_subexam.data ;let no=index">
+        <td>{{no+1}}</td>
+        <td *ngIf="data.studentIdShow" [attr.rowspan]="rowSpan">{{data.studentId}}</td>
+        <td *ngIf="data.studentIdShow" [attr.rowspan]="rowSpan">{{data.studentName}}籍</td>
+        <td *ngIf="data.subjectExamClassNameshow" [attr.rowspan]="3">{{data.subjectExamClassName}}</td>
+        <td>{{ data.defficulty=== 1 ? '容易' : ( data.defficulty === 2 ? '普通' :'困难')}}</td>
+        <td>   {{ data.score }}  </td>
+        <td><nz-input-number
+          [(ngModel)]="data.getScore"
+          [nzMin]="1"
+          [nzMax]="100"
+          [nzStep]="0.5"
+          [nzPlaceHolder]="'填写得分'"
+        ></nz-input-number></td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>

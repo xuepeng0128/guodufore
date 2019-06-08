@@ -48,8 +48,7 @@ export class ClassesCircleComponent implements OnInit {
           re => this.total = re
     );
   }
-  onPageChange = (e) => {
-    this.circlesvr.queryParams.pageNo = e;
+  onPageChange = () => {
     this.circlesvr.queryParams.pageBegin = (this.circlesvr.queryParams.pageNo - 1) * this.circlesvr.queryParams.pageSize;
     this.circlesvr.circleList(this.circlesvr.queryParams).subscribe(
       re => this.circleArray = re

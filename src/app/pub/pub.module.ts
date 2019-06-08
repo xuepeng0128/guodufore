@@ -44,6 +44,7 @@ import { GuodubiSelectComponent } from './components/guodubi-select/guodubi-sele
 import {UEditorModule} from 'ngx-ueditor';
 import { HabitChooseComponent } from './components/habit-choose/habit-choose.component';
 import { ProvinceSelectComponent } from './components/province-select/province-select.component';
+import { ExamKindSelectComponent } from './components/exam-kind-select/exam-kind-select.component';
 
 
 
@@ -76,7 +77,8 @@ import { ProvinceSelectComponent } from './components/province-select/province-s
     HabitTemplateChooseComponent,
     GuodubiSelectComponent,
     HabitChooseComponent,
-    ProvinceSelectComponent
+    ProvinceSelectComponent,
+    ExamKindSelectComponent
 
   ],
   imports: [
@@ -141,7 +143,8 @@ import { ProvinceSelectComponent } from './components/province-select/province-s
     HabitTemplateChooseComponent,
     GuodubiSelectComponent,
     HabitChooseComponent,
-    ProvinceSelectComponent
+    ProvinceSelectComponent,
+    ExamKindSelectComponent
   ]
 })
 export class PubModule { }

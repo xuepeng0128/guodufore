@@ -26,11 +26,10 @@
       nzShowSizeChanger
       [nzFrontPagination]="false"
       [nzData]="circleArray"
-      [nzShowPagination]="false"
       [nzTotal]="total"
       [(nzPageIndex)]="circlesvr.queryParams.pageNo"
       [(nzPageSize)]="circlesvr.queryParams.pageSize"
-      (nzPageIndexChange)="onPageChange($event)"
+      (nzPageIndexChange)="onPageChange()"
     >
       <thead >
       <tr>
