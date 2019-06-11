@@ -11,6 +11,7 @@ import {iif, of} from "rxjs";
 import {flatMap, map} from "rxjs/operators";
 import {Circle} from "../../../entity/Circle";
 import {Exam} from "../../../entity/Exam";
+import {StudySubjectService} from "../../../shared/service/dic/study-subject.service";
 
 
 @Component({
@@ -19,12 +20,13 @@ import {Exam} from "../../../entity/Exam";
   styleUrls: ['./exam-mgr.component.css']
 })
 export class ExamMgrComponent implements OnInit {
-  user: LoginUser = this.usersvr.getUserStorage();
+  loginUser: LoginUser = this.usersvr.getUserStorage();
   examArray : Array<Exam> = new Array<Exam>();
   total = 0;
   constructor(private usersvr: UserService, private modalService: NzModalService,
               private message: NzMessageService, public commonsvr: CommonService,
-              private classessvr: ClassesService , private  router: Router,public examsvr : ExamService) {
+              private classessvr: ClassesService , private  router: Router,
+              public examsvr : ExamService, private studysubjectsvr : StudySubjectService) {
 
 
   }
@@ -51,6 +53,10 @@ export class ExamMgrComponent implements OnInit {
              re => this.total=re
         );
     });
+
+    this.studysubjectsvr.studySubjectList().subscribe(
+       re =>   this.examsvr.studySubjects=re
+    );
   }
  onQuery=()=>{
    this.examsvr.queryParams.pageNo=1;
@@ -72,8 +78,9 @@ export class ExamMgrComponent implements OnInit {
     );
   }
   onAdd = () => {
+
     this.examsvr.currentExam = new Exam({
-      schoolId: this.user.school.schoolId
+      schoolId: this.loginUser.school.schoolId
     });
     this.router.navigate(['/frame/schoolteacherworkplatform/exammgrdetail'], {queryParams: {nowEdit : 'add'}});
   }

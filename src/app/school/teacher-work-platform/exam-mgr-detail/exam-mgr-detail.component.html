@@ -20,7 +20,8 @@
     <nz-form-item>
       <nz-form-label [nzSpan]="6">学科</nz-form-label>
       <nz-form-control [nzSpan]="18">
-          <app-study-subject-select [defaultShow]="'--请选择--'" [(ngModel)]="examsvr.currentExam.studySubjectId" (onValueChanged)="studySubjectChange()" ></app-study-subject-select>
+          <app-study-subject-select [defaultShow]="'--请选择--'" [(ngModel)]="examsvr.currentExam.studySubjectId"
+                                    (onValueChanged)="studySubjectChange()" ></app-study-subject-select>
       </nz-form-control>
     </nz-form-item>
   </div>
@@ -29,8 +30,8 @@
       <nz-form-label [nzSpan]="6">年级</nz-form-label>
       <nz-form-control [nzSpan]="18">
         <nz-input-number [(ngModel)]="examsvr.currentExam.iyear" [nzMin]="1" [nzMax]="
-           user.school.schoolStyle===1 ? parseInt(commonsvr.calculateSchoolYearPrimarySchool(examsvr.currentExam.grade), 10) :
-                                            parseInt( commonsvr.calculateSchoolYearMiddleSchool(examsvr.currentExam.grade), 10)
+           loginUser.school.schoolStyle===1 ? commonsvr.calculateSchoolYearPrimarySchoolNo(examsvr.currentExam.grade) :
+                                                commonsvr.calculateSchoolYearMiddleSchoolNo(examsvr.currentExam.grade)
                                             " [nzStep]="1"></nz-input-number>
       </nz-form-control>
     </nz-form-item>
@@ -65,28 +66,7 @@
     </nz-form-item>
   </div>
 </div>
-<div nz-row>
-  <div nz-col [nzSpan]="8">
-    <nz-form-item>
-      <nz-form-label [nzSpan]="8">类别</nz-form-label>
-      <nz-form-control [nzSpan]="16">
-        <app-circle-class-select [(ngModel)]="circlesvr.currentCircle.circleClassId" [defaultShow]="'请选择'"></app-circle-class-select>
-      </nz-form-control>
-    </nz-form-item>
-  </div>
-  <div nz-col [nzSpan]="8">
-    <nz-form-item>
-      <nz-form-label [nzSpan]="8">班级</nz-form-label>
-      <nz-form-control [nzSpan]="16">
-        <app-grade-class-select [classesArray]="teacherTeachedClasses"
-                                [schoolStyle]="user.school.schoolStyle" [(ngModel)]="circlesvr.currentCircle.classesId" ></app-grade-class-select>
-      </nz-form-control>
-    </nz-form-item>
-  </div>
-  <div nz-col [nzSpan]="8">
 
-  </div>
-</div>
 <div nz-row>
   <div nz-col [nzSpan]="24">
     <nz-table
@@ -94,25 +74,21 @@
       nzBordered
       nzShowSizeChanger
       [nzFrontPagination]="false"
+      [nzShowPagination]="false"
       [nzData]="examsvr.currentExam.subExams"
     >
       <thead >
       <tr>
-        <th>序号</th>
-        <th>学号</th>
-        <th>姓名</th>
         <th>题型</th>
         <th>难易度</th>
         <th>满分</th>
-        <th>得分</th>
-        <th>操作</th>
+        <th>题数</th>
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let data of ajaxTable_subexam.data ;let no=index">
-        <td>{{no+1}}</td>
+      <tr *ngFor="let data of ajaxTable_setscore.data ">
         <td *ngIf="data.studentIdShow" [attr.rowspan]="rowSpan">{{data.studentId}}</td>
-        <td *ngIf="data.studentIdShow" [attr.rowspan]="rowSpan">{{data.studentName}}籍</td>
+        <td *ngIf="data.studentNameShow" [attr.rowspan]="rowSpan">{{data.studentName}}</td>
         <td *ngIf="data.subjectExamClassNameshow" [attr.rowspan]="3">{{data.subjectExamClassName}}</td>
         <td>{{ data.defficulty=== 1 ? '容易' : ( data.defficulty === 2 ? '普通' :'困难')}}</td>
         <td>   {{ data.score }}  </td>
@@ -132,7 +108,7 @@
 <div nz-row>
   <div nz-col [nzSpan]="24">
     <nz-table
-      #ajaxTable_subexam
+      #ajaxTable_setscore
       nzBordered
       nzShowSizeChanger
       [nzFrontPagination]="false"
@@ -140,21 +116,18 @@
     >
       <thead >
       <tr>
-        <th>序号</th>
         <th>学号</th>
         <th>姓名</th>
         <th>题型</th>
         <th>难易度</th>
         <th>满分</th>
         <th>得分</th>
-        <th>操作</th>
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let data of ajaxTable_subexam.data ;let no=index">
-        <td>{{no+1}}</td>
+      <tr *ngFor="let data of ajaxTable_subexam.data ">
         <td *ngIf="data.studentIdShow" [attr.rowspan]="rowSpan">{{data.studentId}}</td>
-        <td *ngIf="data.studentIdShow" [attr.rowspan]="rowSpan">{{data.studentName}}籍</td>
+        <td *ngIf="data.studentNameShow" [attr.rowspan]="rowSpan">{{data.studentName}}</td>
         <td *ngIf="data.subjectExamClassNameshow" [attr.rowspan]="3">{{data.subjectExamClassName}}</td>
         <td>{{ data.defficulty=== 1 ? '容易' : ( data.defficulty === 2 ? '普通' :'困难')}}</td>
         <td>   {{ data.score }}  </td>

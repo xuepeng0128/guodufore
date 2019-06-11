@@ -6,6 +6,7 @@ import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {SubExam} from "../../../entity/SubExam";
 import {Classes} from "../../../entity/Classes";
+import {StudySubject} from "../../../entity/StudySubject";
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,7 @@ export class ExamService {
   }
   currentExam :Exam =new Exam();
   teacherTeachedClasses : Array<Classes> = new Array<Classes>();
+  studySubjects : Array<StudySubject> = new Array<StudySubject>();
   constructor(private httpsvr: HttpService) { }
 
   examList=(queryparams : IExamQueryParams) :Observable<Array<Exam>> =>{
@@ -54,18 +56,25 @@ deleteExam =(examId : string) : Observable<string> =>{
                            v.studentIdShow=true;
                            v.studentNameShow=true;
                            tmpstudentId=v.studentId;
+                       }else {
+                           v.studentIdShow=false;
+                           v.studentNameShow=false;
                        }
                        if (v.subjectExamClassId !== tmpsubjectExamClassId){
                           v.subjectExamClassNameshow=true;
                           tmpsubjectExamClassId=v.subjectExamClassId;
+                       }else {
+                          v.subjectExamClassNameshow=false;
                        }
+                       tmpList.push(v);
                   });
                   return tmpList;
          })
     );
   }
+
   initSubExamList=(schoolId : string,classesId: string ,studySubjectId: string) : Observable<Array<SubExam>> =>{
-    return this.httpsvr.onHttpGet('/api/business/exam/subExamList',{schoolId,classesId,studySubjectId}).pipe(
+    return this.httpsvr.onHttpGet('/api/business/exam/initSubExamList',{schoolId,classesId,studySubjectId}).pipe(
       map( re =>{
         let tmpList : Array<SubExam> = new Array<SubExam>();
         let tmpstudentId : string ='';
@@ -76,11 +85,17 @@ deleteExam =(examId : string) : Observable<string> =>{
             v.studentIdShow=true;
             v.studentNameShow=true;
             tmpstudentId=v.studentId;
+          }else {
+             v.studentIdShow=false;
+             v.studentNameShow=false;
           }
           if (v.subjectExamClassId !== tmpsubjectExamClassId){
             v.subjectExamClassNameshow=true;
             tmpsubjectExamClassId=v.subjectExamClassId;
+          }else {
+            v.subjectExamClassNameshow=false;
           }
+          tmpList.push(v);
         });
         return tmpList;
       })

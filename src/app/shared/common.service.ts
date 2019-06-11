@@ -95,6 +95,18 @@ export class CommonService {
         return nj.toString();
       }
   }
+  // 计算小学年级
+  calculateSchoolYearPrimarySchoolNo = (gradeyear: number): number => {
+    const nowDate = new Date();
+    let nj = 0;
+    if (nowDate.getMonth() + 1 >= 9) {
+      nj = nowDate.getFullYear() - gradeyear + 1;
+    } else {
+      nj = nowDate.getFullYear() - gradeyear;
+    }
+
+     return nj;
+  }
 
   // 计算学籍
   calculateGradeSchool = (schoolyear: number): number => {
@@ -127,6 +139,17 @@ export class CommonService {
     }
   }
 
+  // 计算初中年级
+  calculateSchoolYearMiddleSchoolNo = (gradeyear: number): number => {
+    const nowDate = new Date();
+    let nj = 0;
+    if (nowDate.getMonth() + 1 >= 9) {
+      nj = nowDate.getFullYear() - gradeyear + 1;
+    } else {
+      nj = nowDate.getFullYear() - gradeyear;
+    }
 
+     return nj;
+  }
 
 }
