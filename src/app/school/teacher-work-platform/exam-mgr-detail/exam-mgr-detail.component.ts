@@ -84,6 +84,7 @@ export class ExamMgrDetailComponent implements OnInit {
           re =>  {
             this.examsvr.currentExam.subExams=re;
             this.rowSpan=this.calRowspan();
+            this.setScoreSubject=this.setScoreArray();
           }
         );
     }
@@ -97,6 +98,7 @@ export class ExamMgrDetailComponent implements OnInit {
           re =>  {
             this.examsvr.currentExam.subExams=re;
             this.rowSpan=this.calRowspan();
+            this.setScoreSubject=this.setScoreArray();
           }
         );
     }
@@ -105,7 +107,14 @@ export class ExamMgrDetailComponent implements OnInit {
     window.history.back();
   }
 
-
+  onChangeScorceSubjects=()=>{
+       this.setScoreSubject.forEach(v =>{
+            this.examsvr.currentExam.subExams.filter(o=> o.subjectExamClassId === v.subjectExamClassNameId && o.defficulty=== v.defficulty).forEach(sv =>{
+                sv.score=v.score;
+                sv.subjects=v.subjects;
+            });
+       });
+  }
   calRowspan=() :number=>{
       let temp =0;
       let sid=this.examsvr.currentExam.subExams[0].studentId;
@@ -113,7 +122,6 @@ export class ExamMgrDetailComponent implements OnInit {
           if (v.studentId=== sid){
                  temp ++;
           }else {
-
                  return temp;
           }
       });
