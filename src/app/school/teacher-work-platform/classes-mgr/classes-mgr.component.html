@@ -94,7 +94,7 @@
 
 
 <app-teacher-choose [teacherChooseSign$]="teacherChooseSign$" (onTeacherChoosed)="choosedStudySubjectTeacher($event)"></app-teacher-choose>
-
+<app-win-student [classStudentWinOrder$]="classStudentWinOrder$" (onStudentSaved)="onSaveSingleStudent($event)"></app-win-student>
 
 <nz-modal [(nzVisible)]="isStudentExcelImpModalShow"
           [nzTitle]="'导入学生'"

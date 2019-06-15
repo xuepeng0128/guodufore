@@ -151,6 +151,7 @@
         <th>得分</th>
         <th>总题数</th>
         <th>答对数</th>
+        <th>部分答对数</th>
       </tr>
       </thead>
       <tbody>
@@ -174,6 +175,13 @@
           [nzMax]="data.subjects"
           [nzStep]="1"
           [nzPlaceHolder]="'填写答对数'"
+        ></nz-input-number></td>
+        <td><nz-input-number
+          [(ngModel)]="data.rightSubjects"
+          [nzMin]="0"
+          [nzMax]="data.subjects"
+          [nzStep]="1"
+          [nzPlaceHolder]="'部分答对数'"
         ></nz-input-number></td>
       </tr>
       </tbody>

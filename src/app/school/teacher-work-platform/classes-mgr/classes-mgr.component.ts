@@ -138,6 +138,15 @@ export class ClassesMgrComponent implements OnInit {
   onEdit = (classesStudent: ClassesStudent) => {
       this.classStudentWinOrder$.next({nowState: 'edit', classesStudent, classesId: this.currentChoosedClasses.classesId});
   }
+  onSaveSingleStudent =(e : {nowState: string, classesStudent: ClassesStudent})=>{
+    if (e.nowState==='add')
+    {
+      this.currentChoosedClasses.students.push(e.classesStudent);
+    }else {
+       this.currentChoosedClasses.students.filter(o=> o.studentId=== e.classesStudent.studentId)[0]= e.classesStudent;
+    }
+  this.onSelectClasses(this.currentChoosedClasses.classesId);
+  }
   onTranSchool = (classesStudent: ClassesStudent) => {
     this.modalService.confirm({
       nzTitle: '<i>提示</i>',

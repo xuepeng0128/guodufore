@@ -7,6 +7,7 @@ import {UserService} from '../../../shared/user.service';
 import {MSG_SAVE_ERROR, MSG_SAVE_SUCCESS} from '../../../shared/SysMessage';
 import {ClassesService} from '../../../shared/service/basemsg/classes.service';
 import {ClassesStudent} from '../../../entity/ClassesStudent';
+import {isNullOrUndefined} from "util";
 
 @Component({
   selector: 'app-win-student',
@@ -16,7 +17,7 @@ import {ClassesStudent} from '../../../entity/ClassesStudent';
 export class WinStudentComponent implements OnInit {
   loginUser: LoginUser = this.usersvr.getUserStorage();
   @Input() classStudentWinOrder$: Subject<{nowState: string , classesStudent: ClassesStudent, classesId: string}> ;
-  @Output() onStudentSaved: EventEmitter<string> = new EventEmitter<string>();
+  @Output() onStudentSaved: EventEmitter<{nowState: string , classesStudent : ClassesStudent}> = new EventEmitter<{nowState: string , classesStudent : ClassesStudent}>();
   currentStudent: ClassesStudent = new ClassesStudent({sex : 1});
   isStudentModalShow = false;
   nowState = 'browse';
@@ -38,6 +39,17 @@ export class WinStudentComponent implements OnInit {
   }
 
   onSave = () => {
+    // 验证
+    this.message.remove();
+    if (this.currentStudent.studentId.length === 0 || isNullOrUndefined(this.currentStudent.studentId)) {
+      this.message.create('error', '请输入学号'); return;
+    }
+    if (this.currentStudent.studentName.length === 0 || isNullOrUndefined(this.currentStudent.studentName)) {
+      this.message.create('error', '请输入姓名'); return;
+    }
+    if (this.currentStudent.studentName.length === 0 || isNullOrUndefined(this.currentStudent.studentName)) {
+      this.message.create('error', '请输入姓名'); return;
+    }
     // 补全school区，Student
     iif (() => this.nowState === 'add',
       this.classessvr.insertClassesStudent(this.currentStudent),
@@ -46,7 +58,7 @@ export class WinStudentComponent implements OnInit {
       re => {
         if (re === 'ok') {
           this.message.create('success', MSG_SAVE_SUCCESS);
-          this.onStudentSaved.emit(re);
+          this.onStudentSaved.emit({nowState: this.nowState, classesStudent: this.currentStudent});
           this.isStudentModalShow = false;
         } else {
           this.message.create('error', MSG_SAVE_ERROR);

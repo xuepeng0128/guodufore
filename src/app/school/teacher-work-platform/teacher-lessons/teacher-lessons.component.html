@@ -51,9 +51,9 @@
           <td>{{data.circleTitle}}</td>
           <td>{{data.habitName}}</td>
           <td>
-            <a href="javaScript:;" *ngIf="data.makeTeacherId === loginUser.teacher.teacherId && data.publishTime === null" (click)="onEdit(data)" title="修改课程">修改</a>
+            <a href="javaScript:;" *ngIf="data.makeTeacherId === loginUser.teacher.teacherId " (click)="onEdit(data)" title="修改课程">修改</a>
             <nz-divider nzType="vertical"></nz-divider>
-            <a href="javaScript:;" *ngIf="data.makeTeacherId === loginUser.teacher.teacherId" (click)="onPublish(data)" title="发布该课程，发布后，该课程将不能修改及删除">发布</a>
+            <a href="javaScript:;" *ngIf="data.makeTeacherId === loginUser.teacher.teacherId && data.publishTime === null" (click)="onPublish(data)" title="发布该课程，发布后，该课程将不能修改及删除">发布</a>
             <nz-divider nzType="vertical"></nz-divider>
             <a href="javaScript:;" *ngIf="data.makeTeacherId === loginUser.teacher.teacherId && data.publishTime === null " (click)="onDelete(data)" title="删除该课程">>删除</a>
           </td>
