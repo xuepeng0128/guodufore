@@ -3,7 +3,7 @@
           [nzTitle]="'一般习惯'"
           [nzCancelText]="'关闭'"
           (nzOnCancel)="isNoExamHabitModalShow=false"
-          [nzOkText]="'发布'"
+          [nzOkText]=" nowState==='browse'? null : '发布'"
           (nzOnOk)="onSave()"
           [nzMaskClosable]="false"
           [nzWidth]="800"

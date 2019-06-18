@@ -46,7 +46,8 @@
           <td>{{data.joinStudents}}</td>
           <td>{{data.buildTime | date :'yyyy-MM-dd'}}</td>
           <td>
-            <a href="javaScript:;" >详细</a>
+            <a href="javaScript:;" (click)="noExamHabitDetail(data)" >详细</a>
+            <a href="javaScript:;" (click)="noExamHabitUpdate(data)">修改</a>
           </td>
         </tr>
         </tbody>
@@ -99,7 +100,8 @@
           <td>{{data.joinStudents}}</td>
           <td>{{data.buildTime | date :'yyyy-MM-dd'}}</td>
           <td>
-            <a href="javaScript:;" >详细</a>
+            <a href="javaScript:;" (click)="examHabitDetail(data)">详细</a>
+            <a href="javaScript:;" (click)="examHabitUpdate(data)">修改</a>
           </td>
         </tr>
         </tbody>

@@ -53,15 +53,31 @@ export class WinExamHabitComponent implements OnInit {
       if (re.nowState === 'add') {
         const habitExamId = this.habitsvr.onMakeExamId();
         this.currentExam = new HabitExam({habitExamId, teacherId: this.loginUser.teacher.teacherId, examBeginDate : new Date(), examEndDate : this.commonsvr.dateAdd(new Date(), 7) });
-
+        this.examHabitList=new Array<Habit>() ;
 
       } else if (re.nowState === 'edit') {
         this.currentExam = re.habitExam;
-        this.examHabitList = re.habits;
+        this.habitsvr.examHabits(re.habitExam.habitExamId).subscribe(
+          re =>{
+            this.examHabitList=re;
+            this.habitsvr.getHabitStudents(re[0].habitId,this.loginUser.school.schoolId).subscribe(
+              res => this.choosedStudents=res
+            ) ;
+          }
+        )
+      }else {
+        this.currentExam = re.habitExam;
+        this.habitsvr.examHabits(re.habitExam.habitExamId).subscribe(
+          re =>{
+                  this.examHabitList=re;
+                  this.habitsvr.getHabitStudents(re[0].habitId,this.loginUser.school.schoolId).subscribe(
+                       res => this.choosedStudents=res
+                  ) ;
+          }
+        )
       }
       this.isExamHabitModalShow = true;
     });
-
 
     this.circlesvr.teacherJoinedCircles(this.loginUser.teacher.teacherId).subscribe(
       re => {
@@ -74,6 +90,21 @@ export class WinExamHabitComponent implements OnInit {
   }
 
   onSave = () => {
+    // 验证
+    this.message.remove();
+    if (this.currentExam.examTitle ==='') {
+      this.message.create('error', '请输入考核目标'); return;
+    }
+    if ( this.choosedStudents.length===0) {
+      this.message.create('error', '请加入学生');
+      return;
+    }
+    if (this.examHabitList.length===0){
+      this.message.create('error', '请加入习惯');
+      return;
+    }
+
+
     this.examHabitList.forEach(v => {
         v.putCardBeginDate = this.currentExam.examBeginDate;
         v.putCardEndDate = this.currentExam.examEndDate;
@@ -105,6 +136,8 @@ export class WinExamHabitComponent implements OnInit {
 
 
   onAddHabit = () => {
+
+
       this.currentHabit =  new Habit({
         habitId : this.habitsvr.onMakeHabitId(),
         circleId : this.nowChooseCircleId,
@@ -124,7 +157,14 @@ export class WinExamHabitComponent implements OnInit {
         this.nowEditHabit = 'edit';
   }
   onJoinedHabit = () => {
-     if (this.nowEditHabit === 'add') {
+    // 验证
+    this.message.remove();
+    if (this.currentHabit.habitName ==='') {
+      this.message.create('error', '请输入习惯标题'); return;
+    }
+
+
+    if (this.nowEditHabit === 'add') {
        this.examHabitList.push(this.currentHabit);
      }
      this.iscurrentExamHabitModalShow = false;
@@ -160,7 +200,22 @@ export class WinExamHabitComponent implements OnInit {
 
   }
 
+  showCurrentHabit=(item : Habit) =>{
+    this.currentHabit=item;
+    this.isExamHabitModalShow=true;
+  }
+
+  removeCurrentHabit=(item : Habit) =>{
+      this.examHabitList=this.examHabitList.filter(o=>o.habitId !== item.habitId);
+  }
 
 
+  // 考核日期修改后，改变 习惯日期
+  changeBeginEndDate=()=>{
+       this.examHabitList.forEach(v =>{
+          v.putCardBeginDate =this.currentExam.examBeginDate;
+          v.putCardEndDate=this.currentExam.examEndDate;
+       });
+  }
 
 }

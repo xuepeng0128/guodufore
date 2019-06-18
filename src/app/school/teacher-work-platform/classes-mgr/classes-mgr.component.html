@@ -13,7 +13,7 @@
   <div nz-col [nzSpan]="8" >
     <a href="javaScript:;" class="ant-btn ant-btn-primary m-l-xs" (click)="onAdd()" >添加</a>
     <a [href]="downloadTemplateExcel" class="ant-btn ant-btn-primary m-l-xs"  >模板下载</a>
-    <a href="javaScript:;" class="ant-btn ant-btn-primary m-l-xs"  (click)="exportExcel()" >导出</a>
+    <!--<a href="javaScript:;" class="ant-btn ant-btn-primary m-l-xs"  (click)="exportExcel()" >导出</a>-->
   </div>
   <div nz-col [nzSpan]="4">
     <nz-upload [nzAction]="uploadExcelpath+'?schoolId=' + loginUser.school.schoolId"  [nzShowUploadList]="false" (nzChange)="handleExcelChange($event)"

@@ -18,14 +18,14 @@ export class GuodubiSelectComponent implements OnInit {
 
  params: SystemParams = new SystemParams();
 
-  private _CURRENTVALUE = '0'; // 市州选择 ngModel
+  private _CURRENTVALUE = 0; // 市州选择 ngModel
   private onValueChangeCallBack: any = {};
 
-  get currentValue(): string {
+  get currentValue(): number {
     return this._CURRENTVALUE;
   }
 
-  set currentValue(value: string) {
+  set currentValue(value: number) {
     this._CURRENTVALUE = value;
     this.onValueChangeCallBack(value);
   }

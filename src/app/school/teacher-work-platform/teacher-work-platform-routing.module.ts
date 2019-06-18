@@ -11,6 +11,7 @@ import {TeacherArticleDetailComponent} from './teacher-article-detail/teacher-ar
 import {TeacherLessonsDetailComponent} from './teacher-lessons-detail/teacher-lessons-detail.component';
 import {ClassesCircleDetailComponent} from './classes-circle-detail/classes-circle-detail.component';
 import {ExamMgrDetailComponent} from "./exam-mgr-detail/exam-mgr-detail.component";
+import {StudentPutCardComponent} from "./student-put-card/student-put-card.component";
 
 const routes: Routes = [
   { path : '' , redirectTo : 'classesmgr', pathMatch: 'full'},
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'classescircle', component: ClassesCircleComponent},
   { path: 'classescircledetail', component: ClassesCircleDetailComponent},
   { path: 'teacherhabit', component: TeacherHabitComponent},
+  { path: 'studentputcard', component:StudentPutCardComponent},
   { path: 'teacherarticle', component: TeacherArticleComponent},
   { path: 'teacherarticledetail', component: TeacherArticleDetailComponent},
   { path: 'teacherlessons', component: TeacherLessonsComponent},

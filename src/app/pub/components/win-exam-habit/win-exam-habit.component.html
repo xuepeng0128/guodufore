@@ -3,7 +3,7 @@
           [nzTitle]="'考核类习惯'"
           [nzCancelText]="'关闭'"
           (nzOnCancel)="isExamHabitModalShow=false"
-          [nzOkText]="'发布'"
+          [nzOkText]=" nowState==='browse'? null : '发布'"
           (nzOnOk)="onSave()"
           [nzMaskClosable]="false"
           [nzWidth]="800"
@@ -73,7 +73,7 @@
       <nz-form-item>
         <nz-form-label [nzSpan]="12">考核开始日期</nz-form-label>
         <nz-form-control [nzSpan]="12">
-          <nz-date-picker [(ngModel)]="currentExam.examBeginDate" ></nz-date-picker>
+          <nz-date-picker [(ngModel)]="currentExam.examBeginDate"  (ngModelChange)="changeBeginEndDate()" ></nz-date-picker>
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -81,7 +81,7 @@
       <nz-form-item>
         <nz-form-label [nzSpan]="12">考核结束日期</nz-form-label>
         <nz-form-control [nzSpan]="12">
-          <nz-date-picker [(ngModel)]="currentExam.examEndDate" ></nz-date-picker>
+          <nz-date-picker [(ngModel)]="currentExam.examEndDate" (ngModelChange)="changeBeginEndDate()" ></nz-date-picker>
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -91,7 +91,33 @@
   </div>
   <div class="m-t-sm" nz-row>
     <div nz-col [nzSpan]="24">
-       <p *ngFor="let item of examHabitList ; let no= index" >  {{no+1}}.&nbsp;&nbsp;{{item.habitName}}  </p>
+      <nz-table
+        #ajaxTablehabitlist
+        nzBordered
+        nzShowSizeChanger
+        [nzFrontPagination]="false"
+        [nzShowPagination]="false"
+      >
+        <thead >
+        <tr>
+          <th>序号</th>
+          <th>习惯名称</th>
+          <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of examHabitList; let no= index">
+          <td>{{no+1}}</td>
+          <td>{{item.habitName}}</td>
+
+
+          <td>
+            <a href="javaScript:;" (click)="showCurrentHabit(item)" >详细</a>
+            <a href="javaScript:;" (click)="removeCurrentHabit(item)" >移除</a>
+          </td>
+        </tr>
+        </tbody>
+      </nz-table>
     </div>
   </div>
 </nz-modal>
@@ -99,7 +125,7 @@
           [nzTitle]="'习惯'"
           [nzCancelText]="'关闭'"
           (nzOnCancel)="iscurrentExamHabitModalShow=false"
-          [nzOkText]="'加入'"
+          [nzOkText]="nowEditHabit==='browse'? null :  '加入'"
           (nzOnOk)="onJoinedHabit()"
           [nzMaskClosable]="false"
           [nzWidth]="800"

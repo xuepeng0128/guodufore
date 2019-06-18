@@ -61,6 +61,16 @@
       </nz-form-item>
     </div>
   </div>
+  <div nz-row>
+    <div nz-col [nzSpan]="8">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">出生日期</nz-form-label>
+        <nz-form-control [nzSpan]="17">
+          <nz-date-picker [(ngModel)]="currentStudent.birthday" ></nz-date-picker>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
 
+  </div>
 
 </nz-modal>

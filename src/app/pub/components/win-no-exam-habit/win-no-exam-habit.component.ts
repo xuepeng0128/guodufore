@@ -28,7 +28,7 @@ export class WinNoExamHabitComponent implements OnInit {
   iconWinOrder$: Subject<string> = new Subject<string>();
   habitTemplateChooseSign$: Subject<string> = new Subject<string>();
 
-  currentHabit: Habit = new Habit({mode : 1 });
+  currentHabit: Habit = new Habit({mode : 1 ,guoduCoin:0});
   isNoExamHabitModalShow = false;
   nowState = 'browse';
   choosedStudents: Array<Student> = new Array<Student>();
@@ -56,10 +56,14 @@ export class WinNoExamHabitComponent implements OnInit {
 
           putCardEndDate : this.commonsvr.dateAdd(new Date(), 30),
           buildTeacherId : this.loginUser.teacher.teacherId,
-          mode : 1
+          mode : 1,
+          guoduCoin:0
         });
       } else if (re.nowState === 'edit') {
         this.currentHabit = re.habit;
+         this.habitsvr.getHabitStudents(this.currentHabit.habitId, this.loginUser.school.schoolId).subscribe(
+              re => this.choosedStudents=re
+         );
       }
       this.isNoExamHabitModalShow = true;
     });
@@ -76,7 +80,19 @@ export class WinNoExamHabitComponent implements OnInit {
   }
 
   onSave = () => {
-   const hlist: Array<Habit> = new Array<Habit>();
+    // 验证
+    this.message.remove();
+    if (this.currentHabit.habitName ==='') {
+      this.message.create('error', '请输入习惯标题'); return;
+    }
+    if ( this.choosedStudents.length===0) {
+        this.message.create('error', '请加入学生');
+         return;
+      }
+
+
+
+    const hlist: Array<Habit> = new Array<Habit>();
    this.currentHabit.timeModeNum = this.commonsvr.retHMSstr(this.limitTime);
    this.currentHabit.circleId=this.nowChooseCircleId;
    hlist.push(this.currentHabit);

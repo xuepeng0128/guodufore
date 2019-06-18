@@ -109,4 +109,22 @@ export class TeacherHabitComponent implements OnInit {
   noExamHabitSaved = (e) => {
        this.onQueryNoExamHabit();
   }
+
+  noExamHabitUpdate = (e : Habit) => {
+
+    this.noExamHabitWinOrder$.next({nowState: 'edit', habit: e});
+  }
+  noExamHabitDetail = (e : Habit) => {
+  this.noExamHabitWinOrder$.next({nowState: 'browse', habit: e});
+}
+  examHabitUpdate = (e : Habit) => {
+    this.habitsvr.habitExamByHabitId(e.habitId).subscribe(
+      re =>  this.examHabitWinOrder$.next({nowState: 'edit',  habitExam : re, habits: null})
+    )
+  }
+  examHabitDetail = (e : Habit) => {
+    this.habitsvr.habitExamByHabitId(e.habitId).subscribe(
+      re =>  this.examHabitWinOrder$.next({nowState: 'browse',  habitExam : re, habits: null})
+    )
+  }
 }

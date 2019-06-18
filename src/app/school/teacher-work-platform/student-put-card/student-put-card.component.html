@@ -1,0 +1,106 @@
+
+<div class="m-t-sm" nz-row>
+  <div nz-col [nzSpan]="24">
+    <nz-table
+      #ajaxTable
+      nzBordered
+      nzShowSizeChanger
+      [nzFrontPagination]="true"
+      [nzData]="putCardList"
+    >
+      <thead >
+      <tr>
+        <th>序号</th>
+        <th>学生号</th>
+        <th>名称</th>
+        <th>应打卡总数</th>
+        <th>实际打卡数</th>
+        <th>打卡完成任务数</th>
+        <th>完成率</th>
+        <th>获取果度币</th>
+        <th>获得分数</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of ajaxTable.data ;let no=index">
+        <td>{{no+1}}</td>
+        <td>{{data.studentId}}</td>
+        <td>{{data.studentName}}</td>
+        <td>{{data.shouldputCards}}</td>
+        <td>{{data.havePutCards}}</td>
+        <td>{{data.finished}}</td>
+        <td>{{data.finished/data.shouldputCards | percent:'2.2-2' }}</td>
+        <td>{{data.haveGuodubi }}</td>
+        <td>{{data.haveScore }}</td>
+        <td>
+          <a href="javaScript:;"  (click)="onShowCurrentPutCards(data.studentId)" >打卡详细</a>
+         </td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+
+
+
+<nz-modal [(nzVisible)]="isCurrentStudentPutCardModalShow"
+          [nzTitle]="'学生打卡详情'"
+          [nzCancelText]="'关闭'"
+          (nzOnCancel)="isCurrentStudentPutCardModalShow=false"
+          [nzOkText]=" null"
+          (nzOnOk)="onSave()"
+          [nzMaskClosable]="false"
+          [nzWidth]="800"
+>
+  <div nz-row>
+    <div nz-col [nzSpan]="24">
+      <nz-table
+        #ajaxTablep
+        nzBordered
+        nzShowSizeChanger
+        [nzFrontPagination]="true"
+        [nzData]="currentStudentPutCards"
+      >
+        <thead >
+        <tr>
+          <th>序号</th>
+          <th>规定打卡时间起</th>
+          <th>规定打卡时间止</th>
+          <th>打卡时间</th>
+          <th>可获果度币</th>
+          <th>实获果度币</th>
+          <th>是否已达上限</th>
+          <th>可获分数</th>
+          <th>实获分数</th>
+          <th>任务应完成</th>
+          <th>实际完成</th>
+          <th>打卡结果</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let data of ajaxTablep.data ;let no=index">
+          <td>{{no+1}}</td>
+          <td>{{shouldPutCardDateBegin}}</td>
+          <td>{{shouldPutCardDateEnd}}</td>
+
+          <td>{{putCardTime}}</td>
+          <td>{{canGetGuodubi}}</td>
+          <td>{{haveGuodubi}}</td>
+          <td>{{upperLimitGuodubi ===0 ? '否' :'是'}}</td>
+          <td>{{canGetScore}}</td>
+          <td>{{haveScore}}</td>
+          <td>{{shouldFinish}}</td>
+          <td>{{haveFinish}}</td>
+          <td>{{finished ===0 ? '否' :'是' }}</td>
+        </tr>
+        </tbody>
+      </nz-table>
+
+    </div>
+  </div>
+
+
+
+
+</nz-modal>
