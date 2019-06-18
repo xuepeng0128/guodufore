@@ -10,10 +10,11 @@ import {ChangePasswordComponent} from './change-password/change-password.compone
 import {PubModule} from '../../pub/pub.module';
 import { TrainSchoolAdminComponent } from './train-school-admin/train-school-admin.component';
 import { SysParamsComponent } from './sys-params/sys-params.component';
+import { SystemInformationComponent } from './system-information/system-information.component';
 
 @NgModule({
   declarations: [EmployeeMgrComponent, UserMgrComponent,
-    PowerMgrComponent, ChangePasswordComponent, SchoolAdminMgrComponent, TrainSchoolAdminComponent, SysParamsComponent],
+    PowerMgrComponent, ChangePasswordComponent, SchoolAdminMgrComponent, TrainSchoolAdminComponent, SysParamsComponent, SystemInformationComponent],
   imports: [
     CommonModule,
     PubModule,
