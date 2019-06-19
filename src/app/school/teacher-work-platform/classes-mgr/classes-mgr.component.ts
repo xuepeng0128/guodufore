@@ -13,6 +13,7 @@ import {Student} from '../../../entity/Student';
 import {ClassesTeacher} from '../../../entity/ClassesTeacher';
 import {Teacher} from '../../../entity/Teacher';
 import {ExceloutService} from '../../../shared/excelout.service';
+import {isNullOrUndefined} from 'util';
 
 @Component({
   selector: 'app-classes-mgr',
@@ -138,14 +139,13 @@ export class ClassesMgrComponent implements OnInit {
   onEdit = (classesStudent: ClassesStudent) => {
       this.classStudentWinOrder$.next({nowState: 'edit', classesStudent, classesId: this.currentChoosedClasses.classesId});
   }
-  onSaveSingleStudent =(e : {nowState: string, classesStudent: ClassesStudent})=>{
-    if (e.nowState==='add')
-    {
+  onSaveSingleStudent = (e: {nowState: string, classesStudent: ClassesStudent}) => {
+    if (e.nowState === 'add') {
       this.currentChoosedClasses.students.push(e.classesStudent);
-    }else {
-       this.currentChoosedClasses.students.filter(o=> o.studentId=== e.classesStudent.studentId)[0]= e.classesStudent;
+    } else {
+       this.currentChoosedClasses.students.filter(o => o.studentId === e.classesStudent.studentId)[0] = e.classesStudent;
     }
-  this.onSelectClasses(this.currentChoosedClasses.classesId);
+    this.onSelectClasses(this.currentChoosedClasses.classesId);
   }
   onTranSchool = (classesStudent: ClassesStudent) => {
     this.modalService.confirm({
@@ -173,7 +173,7 @@ export class ClassesMgrComponent implements OnInit {
 
   handleExcelChange = (file: UploadFile) => {
 
-    if (file.file.response !== null) {
+    if ( ! isNullOrUndefined(file.file.response)) {
       this.isStudentExcelImpModalShow = true;
       this.prepareImportStudents = new Array<Student>();
       (file.file.response as Array<Student>).forEach( v => {

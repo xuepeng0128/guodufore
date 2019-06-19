@@ -36,7 +36,10 @@ export class TeacherNoticeComponent implements OnInit {
 
   ngOnInit() {
      this.circlesvr.teacherJoinedCircles(this.loginUser.teacher.teacherId).subscribe(
-         re => this.teacherJoinedCircleList = re
+         re => {
+           this.teacherJoinedCircleList = re;
+           this.onQuery();
+         }
      );
   }
 

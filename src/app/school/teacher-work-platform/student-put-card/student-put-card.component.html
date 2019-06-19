@@ -1,4 +1,8 @@
-
+<div class="m-t-sm text-center" nz-row>
+  <div nz-col [nzSpan]="4" >
+    <a href="javaScript:;" class="ant-btn ant-btn-primary m-l-xs" (click)="onBack()" >返回</a>
+  </div>
+</div>
 <div class="m-t-sm" nz-row>
   <div nz-col [nzSpan]="24">
     <nz-table
@@ -51,7 +55,7 @@
           [nzOkText]=" null"
           (nzOnOk)="onSave()"
           [nzMaskClosable]="false"
-          [nzWidth]="800"
+          [nzWidth]="1150"
 >
   <div nz-row>
     <div nz-col [nzSpan]="24">
@@ -81,18 +85,18 @@
         <tbody>
         <tr *ngFor="let data of ajaxTablep.data ;let no=index">
           <td>{{no+1}}</td>
-          <td>{{shouldPutCardDateBegin}}</td>
-          <td>{{shouldPutCardDateEnd}}</td>
+          <td>{{data.shouldPutCardDateBegin | date:'yyyy-MM-dd'}}</td>
+          <td>{{data.shouldPutCardDateEnd | date:'yyyy-MM-dd' }}</td>
 
-          <td>{{putCardTime}}</td>
-          <td>{{canGetGuodubi}}</td>
-          <td>{{haveGuodubi}}</td>
-          <td>{{upperLimitGuodubi ===0 ? '否' :'是'}}</td>
-          <td>{{canGetScore}}</td>
-          <td>{{haveScore}}</td>
-          <td>{{shouldFinish}}</td>
-          <td>{{haveFinish}}</td>
-          <td>{{finished ===0 ? '否' :'是' }}</td>
+          <td>{{data.putCardTime | date:'yyyy-MM-dd hh:mm'}}</td>
+          <td>{{data.canGetGuodubi}}</td>
+          <td>{{data.haveGuodubi}}</td>
+          <td>{{!data.upperLimitGuodubi ? '否' :'是'}}</td>
+          <td>{{data.canGetScore}}</td>
+          <td>{{data.haveScore}}</td>
+          <td>{{data.shouldFinish}}</td>
+          <td>{{data.haveFinish}}</td>
+          <td>{{data.finished ===0 ? '否' :'是' }}</td>
         </tr>
         </tbody>
       </nz-table>

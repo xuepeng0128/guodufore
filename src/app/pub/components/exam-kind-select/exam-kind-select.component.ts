@@ -1,13 +1,18 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {ExamKindService} from "../../../shared/service/dic/exam-kind.service";
-import {Observable} from "rxjs";
-import {Employee} from "../../../entity/Employee";
-import {ExamKind} from "../../../entity/ExamKind";
+import {Component, forwardRef, Input, OnInit} from '@angular/core';
+import {ExamKindService} from '../../../shared/service/dic/exam-kind.service';
+import {Observable} from 'rxjs';
+import {ExamKind} from '../../../entity/ExamKind';
+import {NG_VALUE_ACCESSOR} from '@angular/forms';
 
 @Component({
   selector: 'app-exam-kind-select',
   templateUrl: './exam-kind-select.component.html',
-  styleUrls: ['./exam-kind-select.component.css']
+  styleUrls: ['./exam-kind-select.component.css'],
+  providers: [{
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => ExamKindSelectComponent),
+    multi: true
+  }]
 })
 export class ExamKindSelectComponent implements OnInit {
   // 默認顯示
@@ -39,10 +44,10 @@ export class ExamKindSelectComponent implements OnInit {
 
   registerOnTouched(fn: any): void {
   }
-  constructor(private examkindsvr : ExamKindService) { }
+  constructor(private examkindsvr: ExamKindService) { }
 
   ngOnInit() {
-    this.examKindArray$=this.examkindsvr.examKindList();
+    this.examKindArray$ = this.examkindsvr.examKindList();
   }
 
 }

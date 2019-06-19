@@ -29,7 +29,7 @@
       <tr *ngFor="let data of ajaxTable.data ;let no=index">
         <td>{{no+1}}</td>
         <td>{{data.information}}</td>
-        <td>{{data.sendTime}}</td>
+        <td>{{data.sendTime | date : 'yyyy-MM-dd hh:mm'}}</td>
       </tr>
       </tbody>
     </nz-table>

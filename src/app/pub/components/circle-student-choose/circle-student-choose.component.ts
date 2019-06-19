@@ -30,10 +30,12 @@ export class CircleStudentChooseComponent implements OnInit {
     this.circleStudentChooseSign$.subscribe(re => {
       this.onQuery(re.circleId);
       this.isCircleStudentChooseModalShow = true;
-      re.haveChoosedStudent.forEach(t => {
-         (t as MultiChooseStudent ).choosed=true;
+      if (this.studentList.length > 0) {
+        re.haveChoosedStudent.forEach(t => {
+          (t as MultiChooseStudent ).choosed = true;
           this.studentList.filter(o => o.studentId === t.studentId)[0].choosed = true;
         });
+      }
     });
   }
 

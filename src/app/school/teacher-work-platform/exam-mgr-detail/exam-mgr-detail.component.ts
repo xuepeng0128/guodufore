@@ -1,18 +1,17 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {LoginUser} from "../../../entity/LoginUser";
-import {UPLOAD_MEDIA_PATH} from "../../../shared/const";
-import {Classes} from "../../../entity/Classes";
-import {CircleService} from "../../../shared/service/business/circle.service";
-import {NzMessageService} from "ng-zorro-antd";
-import {UserService} from "../../../shared/user.service";
-import {ActivatedRoute, Router} from "@angular/router";
-import {ClassesService} from "../../../shared/service/basemsg/classes.service";
-import {iif} from "rxjs";
-import {isNullOrUndefined} from "util";
-import {MSG_SAVE_ERROR, MSG_SAVE_SUCCESS} from "../../../shared/SysMessage";
-import {ExamService} from "../../../shared/service/business/exam.service";
-import {SubExam} from "../../../entity/SubExam";
-import {CommonService} from "../../../shared/common.service";
+import {LoginUser} from '../../../entity/LoginUser';
+import {UPLOAD_MEDIA_PATH} from '../../../shared/const';
+import {Classes} from '../../../entity/Classes';
+import {CircleService} from '../../../shared/service/business/circle.service';
+import {NzMessageService} from 'ng-zorro-antd';
+import {UserService} from '../../../shared/user.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ClassesService} from '../../../shared/service/basemsg/classes.service';
+import {isNullOrUndefined} from 'util';
+import {MSG_SAVE_ERROR, MSG_SAVE_SUCCESS} from '../../../shared/SysMessage';
+import {ExamService} from '../../../shared/service/business/exam.service';
+import {SubExam} from '../../../entity/SubExam';
+import {CommonService} from '../../../shared/common.service';
 
 @Component({
   selector: 'app-exam-mgr-detail',
@@ -24,36 +23,38 @@ export class ExamMgrDetailComponent implements OnInit {
   loginUser: LoginUser = this.usersvr.getUserStorage();
   nowState = 'browse';
   rowSpan = 1;
-  setScoreSubject : Array<{subjectExamClassNameId : string , subjectExamClassNameName : string ,defficulty : number,score : number,subjects : number}> =
-       new Array<{subjectExamClassNameId: string, subjectExamClassNameName: string, defficulty: number,score : number,subjects : number}>();
+  setScoreSubject: Array<{subjectExamClassNameId: string , subjectExamClassNameName: string , defficulty: number, score: number, subjects: number}> =
+       new Array<{subjectExamClassNameId: string, subjectExamClassNameName: string, defficulty: number, score: number, subjects: number}>();
   constructor(public examsvr: ExamService, private message: NzMessageService,
-                private usersvr: UserService,private classessvr : ClassesService,
-               private route: ActivatedRoute, private router: Router,public commonsvr : CommonService) {
+              private usersvr: UserService, private classessvr: ClassesService,
+              private route: ActivatedRoute, private router: Router, public commonsvr: CommonService) {
   }
 
   ngOnInit() {
     this.nowState = this.route.snapshot.queryParams.nowEdit as string;
-    if (this.nowState==='add'){
-          this.examsvr.currentExam.schoolId=this.loginUser.school.schoolId;
-          this.examsvr.currentExam.classesId=this.examsvr.teacherTeachedClasses.length===0 ?  '' :
+    if (this.nowState === 'add') {
+          this.examsvr.currentExam.schoolId = this.loginUser.school.schoolId;
+          this.examsvr.currentExam.classesId = this.examsvr.teacherTeachedClasses.length === 0 ?  '' :
                                                this.examsvr.teacherTeachedClasses[0].classesId ;
-          this.examsvr.currentExam.studySubjectId=this.examsvr.studySubjects.length>0 ? this.examsvr.studySubjects[0].studySubjectId : '';
-          this.examsvr.currentExam.subExams= new Array<SubExam>();
-          this.examsvr.initSubExamList(this.loginUser.school.schoolId,this.examsvr.currentExam.classesId,
+          this.examsvr.currentExam.studySubjectId = this.examsvr.studySubjects.length > 0 ? this.examsvr.studySubjects[0].studySubjectId : '';
+          this.examsvr.currentExam.examKindId = '01';
+          this.examsvr.currentExam.examTime = new Date();
+          this.examsvr.currentExam.subExams = new Array<SubExam>();
+          this.examsvr.initSubExamList(this.loginUser.school.schoolId, this.examsvr.currentExam.classesId,
                                          this.examsvr.currentExam.studySubjectId)
             .subscribe(
                re => {
-                 this.examsvr.currentExam.subExams=re ;
-                 this.rowSpan=this.calRowspan();
-                 this.setScoreSubject=this.setScoreArray();
+                 this.examsvr.currentExam.subExams = re ;
+                 this.rowSpan = this.calRowspan();
+                 this.setScoreSubject = this.setScoreArray();
                }
             );
-    }else {
+    } else {
          this.examsvr.subExamList(this.examsvr.currentExam.examId).subscribe(
-             re =>{
-               this.examsvr.currentExam.subExams=re;
-               this.rowSpan=this.calRowspan();
-               this.setScoreSubject=this.setScoreArray();
+             re => {
+               this.examsvr.currentExam.subExams = re;
+               this.rowSpan = this.calRowspan();
+               this.setScoreSubject = this.setScoreArray();
              }
          );
     }
@@ -63,7 +64,7 @@ export class ExamMgrDetailComponent implements OnInit {
     if (this.nowState === 'add') {
       const exid = this.examsvr.makeExamId();
       this.examsvr.currentExam.examId = exid;
-      this.examsvr.currentExam.subExams.forEach(v => v.examId= exid);
+      this.examsvr.currentExam.subExams.forEach(v => v.examId = exid);
     }
     this.examsvr.saveExam(this.examsvr.currentExam).subscribe(
       re => {
@@ -75,30 +76,30 @@ export class ExamMgrDetailComponent implements OnInit {
         }
       });
   }
-  onClassesChange=()=>{
-    if( this.examsvr.currentExam.studySubjectId==='0')
-      this.examsvr.currentExam.subExams= new Array<SubExam>();
-    else{
-      this.examsvr.initSubExamList(this.loginUser.school.schoolId,this.examsvr.currentExam.classesId,this.examsvr.currentExam.studySubjectId)
+  onClassesChange = () => {
+    if ( this.examsvr.currentExam.studySubjectId === '0') {
+      this.examsvr.currentExam.subExams = new Array<SubExam>();
+    } else {
+      this.examsvr.initSubExamList(this.loginUser.school.schoolId, this.examsvr.currentExam.classesId, this.examsvr.currentExam.studySubjectId)
         .subscribe(
           re =>  {
-            this.examsvr.currentExam.subExams=re;
-            this.rowSpan=this.calRowspan();
-            this.setScoreSubject=this.setScoreArray();
+            this.examsvr.currentExam.subExams = re;
+            this.rowSpan = this.calRowspan();
+            this.setScoreSubject = this.setScoreArray();
           }
         );
     }
   }
-  studySubjectChange=()=>{
-    if( this.examsvr.currentExam.studySubjectId==='0')
-         this.examsvr.currentExam.subExams= new Array<SubExam>();
-    else{
-      this.examsvr.initSubExamList(this.loginUser.school.schoolId,this.examsvr.currentExam.classesId,this.examsvr.currentExam.studySubjectId)
+  studySubjectChange = () => {
+    if ( this.examsvr.currentExam.studySubjectId === '0') {
+         this.examsvr.currentExam.subExams = new Array<SubExam>();
+    } else {
+      this.examsvr.initSubExamList(this.loginUser.school.schoolId, this.examsvr.currentExam.classesId, this.examsvr.currentExam.studySubjectId)
         .subscribe(
           re =>  {
-            this.examsvr.currentExam.subExams=re;
-            this.rowSpan=this.calRowspan();
-            this.setScoreSubject=this.setScoreArray();
+            this.examsvr.currentExam.subExams = re;
+            this.rowSpan = this.calRowspan();
+            this.setScoreSubject = this.setScoreArray();
           }
         );
     }
@@ -107,35 +108,35 @@ export class ExamMgrDetailComponent implements OnInit {
     window.history.back();
   }
 
-  onChangeScorceSubjects=()=>{
-       this.setScoreSubject.forEach(v =>{
-            this.examsvr.currentExam.subExams.filter(o=> o.subjectExamClassId === v.subjectExamClassNameId && o.defficulty=== v.defficulty).forEach(sv =>{
-                sv.score=v.score;
-                sv.subjects=v.subjects;
+  onChangeScorceSubjects = () => {
+       this.setScoreSubject.forEach(v => {
+            this.examsvr.currentExam.subExams.filter(o => o.subjectExamClassId === v.subjectExamClassNameId && o.defficulty === v.defficulty).forEach(sv => {
+                sv.score = v.score;
+                sv.subjects = v.subjects;
             });
        });
   }
-  calRowspan=() :number=>{
-      let temp =0;
-      let sid=this.examsvr.currentExam.subExams[0].studentId;
-      this.examsvr.currentExam.subExams.forEach( v =>{
-          if (v.studentId=== sid){
+  calRowspan = (): number => {
+      let temp = 0;
+      const sid = this.examsvr.currentExam.subExams[0].studentId;
+      this.examsvr.currentExam.subExams.forEach( v => {
+          if (v.studentId === sid) {
                  temp ++;
-          }else {
+          } else {
                  return temp;
           }
       });
       return temp;
   }
 
-  setScoreArray =() :  Array<{subjectExamClassNameId : string , subjectExamClassNameName : string ,defficulty : number,score : number,subjects : number}> =>{
-    let temp : Array<{subjectExamClassNameId : string , subjectExamClassNameName : string ,defficulty : number,score : number,subjects:number}> =
-      new Array<{subjectExamClassNameId: string, subjectExamClassNameName: string, defficulty: number,score : number,subjects:number}>();
-    let sid=this.examsvr.currentExam.subExams[0].studentId;
-    this.examsvr.currentExam.subExams.forEach( v =>{
-      if (v.studentId=== sid){
-        temp.push({subjectExamClassNameId:v.subjectExamClassId,subjectExamClassNameName : v.subjectExamClassName,defficulty : v.defficulty,score:0,subjects:0});
-      }else {
+  setScoreArray = (): Array<{subjectExamClassNameId: string , subjectExamClassNameName: string , defficulty: number, score: number, subjects: number}> => {
+    const temp: Array<{subjectExamClassNameId: string , subjectExamClassNameName: string , defficulty: number, score: number, subjects: number}> =
+      new Array<{subjectExamClassNameId: string, subjectExamClassNameName: string, defficulty: number, score: number, subjects: number}>();
+    const sid = this.examsvr.currentExam.subExams[0].studentId;
+    this.examsvr.currentExam.subExams.forEach( v => {
+      if (v.studentId === sid) {
+        temp.push({subjectExamClassNameId: v.subjectExamClassId, subjectExamClassNameName : v.subjectExamClassName, defficulty : v.defficulty, score: 0, subjects: 0});
+      } else {
 
         return temp;
       }

@@ -18,7 +18,7 @@ export class SystemInformationService {
   }
 
   sysInformationListTotal=() :Observable<number> =>{
-      return this.httpsvr.onHttpGet('api/system/sysinformation/sysInformationList',{}).pipe(
+      return this.httpsvr.onHttpGet('api/system/sysinformation/sysInformationListTotal',{}).pipe(
          map(re => parseInt(re.total, 10))
       );
   }

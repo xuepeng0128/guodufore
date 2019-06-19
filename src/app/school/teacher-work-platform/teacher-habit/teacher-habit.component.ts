@@ -10,6 +10,7 @@ import {HabitService} from '../../../shared/service/business/habit.service';
 import {ClassesService} from '../../../shared/service/basemsg/classes.service';
 import {Subject} from 'rxjs';
 import {HabitExam} from '../../../entity/HabitExam';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-teacher-habit',
@@ -42,8 +43,8 @@ export class TeacherHabitComponent implements OnInit {
   };
   noExamTotal = 0;
   constructor(private usersvr: UserService, private habitsvr: HabitService,
-              private modalService: NzModalService,
-              private message: NzMessageService, public commonsvr: CommonService, private classessvr: ClassesService) { }
+              private modalService: NzModalService, private message: NzMessageService,
+              public commonsvr: CommonService, private classessvr: ClassesService , private router: Router) { }
 
   ngOnInit() {
       this.classessvr.teacherTeachedClasses(this.user.teacher.teacherId, this.user.school.schoolId, this.user.school.schoolStyle).subscribe(
@@ -110,21 +111,27 @@ export class TeacherHabitComponent implements OnInit {
        this.onQueryNoExamHabit();
   }
 
-  noExamHabitUpdate = (e : Habit) => {
+  noExamHabitUpdate = (e: Habit) => {
 
     this.noExamHabitWinOrder$.next({nowState: 'edit', habit: e});
   }
-  noExamHabitDetail = (e : Habit) => {
+  noExamHabitDetail = (e: Habit) => {
   this.noExamHabitWinOrder$.next({nowState: 'browse', habit: e});
 }
-  examHabitUpdate = (e : Habit) => {
+  examHabitUpdate = (e: Habit) => {
     this.habitsvr.habitExamByHabitId(e.habitId).subscribe(
       re =>  this.examHabitWinOrder$.next({nowState: 'edit',  habitExam : re, habits: null})
-    )
+    );
   }
-  examHabitDetail = (e : Habit) => {
+  examHabitDetail = (e: Habit) => {
     this.habitsvr.habitExamByHabitId(e.habitId).subscribe(
       re =>  this.examHabitWinOrder$.next({nowState: 'browse',  habitExam : re, habits: null})
-    )
+    );
   }
+
+
+  onPutCardShow = (habitId: string) => {
+       this.router.navigate(['/frame/schoolteacherworkplatform/studentputcard'], {queryParams: {habitId }});
+  }
+
 }

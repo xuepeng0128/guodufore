@@ -30,6 +30,7 @@
           <th>习惯</th>
           <th>参与学生</th>
           <th>创建日期</th>
+          <th>打卡情况</th>
           <th>操作</th>
         </tr>
         </thead>
@@ -45,6 +46,7 @@
           <td>{{data.habitName}}</td>
           <td>{{data.joinStudents}}</td>
           <td>{{data.buildTime | date :'yyyy-MM-dd'}}</td>
+          <td> <a href="javaScript:;" (click)="onPutCardShow(data.habitId)">打卡查看</a></td>
           <td>
             <a href="javaScript:;" (click)="noExamHabitDetail(data)" >详细</a>
             <a href="javaScript:;" (click)="noExamHabitUpdate(data)">修改</a>
@@ -83,6 +85,7 @@
           <th>习惯</th>
           <th>参与学生</th>
           <th>创建日期</th>
+          <th>打卡情况</th>
           <th>操作</th>
         </tr>
         </thead>
@@ -99,6 +102,7 @@
           <td>{{data.habitName}}</td>
           <td>{{data.joinStudents}}</td>
           <td>{{data.buildTime | date :'yyyy-MM-dd'}}</td>
+          <td> <a href="javaScript:;" (click)="onPutCardShow(data.habitId)">打卡查看</a></td>
           <td>
             <a href="javaScript:;" (click)="examHabitDetail(data)">详细</a>
             <a href="javaScript:;" (click)="examHabitUpdate(data)">修改</a>

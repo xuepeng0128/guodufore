@@ -45,7 +45,7 @@
         <td>{{data.teacherNoticeId}}</td>
         <td>{{data.sendCircleTitles}}</td>
         <td>{{data.memo}}</td>
-        <td>{{data.buildDate}}</td>
+        <td>{{data.buildDate | date : 'yyyy-MM-dd hh:mm'}}</td>
       </tr>
       </tbody>
     </nz-table>
