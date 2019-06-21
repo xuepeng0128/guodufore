@@ -41,7 +41,9 @@ findUserAcount = (account: string, userId: string): Observable<boolean> => {
 }
 
   userListTotal = (queryParams: any): Observable<number> => {
-    return this.httpsvr.onHttpGet('api/system/user/userListTotal', queryParams);
+    return this.httpsvr.onHttpGet('api/system/user/userListTotal', queryParams).pipe(
+        map(re => parseInt(re.total, 10))
+    );
   }
 insertUser = (user: User ): Observable<string> => {
   return this.httpsvr.onHttpPost('api/system/user/insertUser', user).pipe(

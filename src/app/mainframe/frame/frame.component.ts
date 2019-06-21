@@ -8,7 +8,7 @@ import {Menu} from '../../entity/Menu';
 import {MenuService} from '../../shared/service/system/menu.service';
 import {of} from 'rxjs/internal/observable/of';
 import {LoginUser} from '../../entity/LoginUser';
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-frame',
@@ -36,7 +36,7 @@ export class FrameComponent implements OnInit, AfterViewInit {
   pareMenuName = '';
   subMenuName = '';
   clientHeight: number = document.documentElement.clientHeight - 200; // 客户区高度
-  constructor( private httpsvr: HttpService, private usersvr: UserService, private menusvr: MenuService,private router : Router) { }
+  constructor( private httpsvr: HttpService, private usersvr: UserService, private menusvr: MenuService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -46,7 +46,10 @@ export class FrameComponent implements OnInit, AfterViewInit {
       }, 100);
 
  }
-  outSystem=()=>{
+ onChangePwd = () => {
+   this.router.navigate(['/frame/corpsystem/changePwd']);
+ }
+  outSystem = () => {
     this.router.navigate(['/account/signin']);
   }
 }

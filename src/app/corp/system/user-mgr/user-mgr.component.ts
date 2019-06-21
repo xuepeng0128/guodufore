@@ -21,12 +21,15 @@ import {IUserQueryResult} from '../../../shared/interface/queryparams/IUserQuery
 export class UserMgrComponent implements OnInit {
   user: LoginUser = this.usersvr.getUserStorage();
   isUserModalShow = false;
-  userArray$: Observable<Array<IUserQueryResult>> = of([]);
-  total$ = of(0);
+  userArray: Array<IUserQueryResult> = new Array<IUserQueryResult>();
+  total = 0;
   currentUser: User = new User({});
   editState = 'browse';
   queryParams: IUserQueryParams = {
-    schoolAdmin : true,
+    account : '',
+    employeeName: '',
+    schoolAdmin : false,
+    kind : 1,
     pageSize: 1000,
     pageNo: 1,
     pageBegin : 0
@@ -39,17 +42,18 @@ export class UserMgrComponent implements OnInit {
   onQuery = () => {
     this.queryParams.pageNo = 1;
     this.queryParams.pageBegin = 0;
-    this.userArray$ = this.usersvr.userList(this.queryParams);
-    this.total$ = this.usersvr.userListTotal(this.queryParams);
+    this.usersvr.userList(this.queryParams).subscribe( re => this.userArray = re);
+    this.usersvr.userListTotal(this.queryParams).subscribe(
+       re => this.total = re
+    );
   }
-  onPageChange = (e) => {
-    this.queryParams.pageNo = e;
+  onPageChange = () => {
     this.queryParams.pageBegin = (this.queryParams.pageNo - 1) * this.queryParams.pageSize;
-    this.userArray$ = this.usersvr.userList(this.queryParams);
+    this.usersvr.userList(this.queryParams).subscribe( re => this.userArray = re);
   }
   onAdd = () => {
     this.editState = 'add';
-    this.currentUser = new User();
+    this.currentUser = new User({employeeId: '0', account: ''});
     this.currentUser.schoolId = '';
     this.isUserModalShow = true;
   }
@@ -60,7 +64,7 @@ export class UserMgrComponent implements OnInit {
   }
   onSave = () => {
     this.isUserModalShow = false;
-    this.userArray$ = iif(
+    iif(
       () => this.editState === 'add',
       this.usersvr.insertUser(this.currentUser),
       this.usersvr.updateUser(this.currentUser)
@@ -68,16 +72,12 @@ export class UserMgrComponent implements OnInit {
       switchMap(() =>
         this.usersvr.userList(this.queryParams)
       )
+    ).subscribe(
+       re => this.userArray = re
     );
-    this.total$ = this.editState === 'add' ? this.total$.pipe(map(re => re + 1)) : this.total$;
+    this.total  = this.editState === 'add' ? this.total + 1  : this.total ;
   }
-  // onDelete = (u: User) => {
-  //   this.usersvr.deleteUser(u.account).pipe(
-  //     switchMap(() => this.usersvr.userList({schoolAdmin : '1', pageSize: 1000, pageNo: 1, getTotal: '1'}))
-  //   ).subscribe( re => {
-  //     this.userArray = re ;
-  //   });
-  // }
+
     onResetPwd = (user: User) => {
        this.user.user.passWord = '123456';
        this.usersvr.updateUser(this.user.user).subscribe(u => {
@@ -88,7 +88,5 @@ export class UserMgrComponent implements OnInit {
          }
        });
     }
-
-
 
   }

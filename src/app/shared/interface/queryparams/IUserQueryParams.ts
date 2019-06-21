@@ -5,7 +5,7 @@ export interface IUserQueryParams {
   employeeName?: string;
   teacherName?: string;
   schoolAdmin?: boolean;
-  kind?: string;
+  kind?: number;
   pageSize?: number;
   pageNo?: number;
   pageBegin?: number;

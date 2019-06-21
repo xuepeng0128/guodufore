@@ -12,7 +12,7 @@
     <nz-form-item>
       <nz-form-label [nzSpan]="6">姓名</nz-form-label>
       <nz-form-control [nzSpan]="15">
-        <input nz-input [(ngModel)]="queryParams.schoolName">
+        <input nz-input [(ngModel)]="queryParams.employeeName">
       </nz-form-control>
     </nz-form-item>
   </div>
@@ -31,18 +31,17 @@
       nzBordered
       nzShowSizeChanger
       [nzFrontPagination]="false"
-      [nzData]="userArray$ | async"
-      [nzTotal]="total$ | async"
+      [nzData]="userArray"
+      [nzTotal]="total"
       [(nzPageIndex)]="queryParams.pageNo"
       [(nzPageSize)]="queryParams.pageSize"
-      (nzPageIndexChange)="onPageChange($event)"
+      (nzPageIndexChange)="onPageChange()"
     >
       <thead >
       <tr>
         <th>序号</th>
         <th>账号</th>
         <th>姓名</th>
-        <th>身份证</th>
         <th>职务</th>
         <th>操作</th>
       </tr>
@@ -51,9 +50,8 @@
       <tr *ngFor="let data of ajaxTable.data ;let no=index">
         <td>{{no+1}}</td>
         <td>{{data.account}}</td>
-        <td>{{data.employee.employeeName}}</td>
-        <td>{{data.employee.employeePaperId}}</td>
-        <td>{{data.employee.corpDutyName}}</td>
+        <td>{{data.employeeName}}</td>
+        <td>{{data.corpDutyName}}</td>
         <td>
           <a href="javaScript:;" *ngIf="user.isSupperAdmin " (click)="onEdit(data)">修改</a>
           <nz-divider nzType="vertical"></nz-divider>
@@ -64,3 +62,36 @@
     </nz-table>
   </div>
 </div>
+
+
+<nz-modal [(nzVisible)]="isUserModalShow"
+          [nzTitle]="'系统用户'"
+          [nzCancelText]="'关闭'"
+          (nzOnCancel)="isUserModalShow=false"
+          [nzOkText]="'保存'"
+          (nzOnOk)="onSave()"
+          [nzMaskClosable]="false"
+          [nzWidth]="600"
+>
+
+  <div nz-row>
+
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">员工</nz-form-label>
+        <nz-form-control [nzSpan]="17">
+           <app-employee-select [defaultShow]="'--请选择--'" [(ngModel)]="currentUser.employeeId"></app-employee-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">账号</nz-form-label>
+        <nz-form-control [nzSpan]="17">
+          <input nz-input  [(ngModel)]="currentUser.account" >
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+
+</nz-modal>
