@@ -13,16 +13,16 @@ export class TeacherNoticeService {
   constructor(private httpsvr: HttpService) { }
 
   teacherNoticeList = (queryParams: ITeacherNoticeParams): Observable<Array<TeacherNotice>> => {
-    return this.httpsvr.onHttpGet('/api/business/teachernotice/teachernoticeList', queryParams);
+    return this.httpsvr.onHttpGet('api/business/teachernotice/teachernoticeList', queryParams);
   }
 
   teacherNoticeListTotal = (queryParams: ITeacherNoticeParams): Observable<number> => {
-    return this.httpsvr.onHttpGet('/api/business/teachernotice/teacherNoticeListTotal', queryParams).pipe(
+    return this.httpsvr.onHttpGet('api/business/teachernotice/teacherNoticeListTotal', queryParams).pipe(
       map( re => parseInt( re , 10))
     );
   }
  insertTeacherNotice = (teacherNotice: TeacherNotice): Observable<string > => {
-   return this.httpsvr.onHttpPost('/api/business/teachernotice/insertTeacherNotice', teacherNotice).pipe(
+   return this.httpsvr.onHttpPost('api/business/teachernotice/insertTeacherNotice', teacherNotice).pipe(
      map(re => re.result)
    );
  }

@@ -10,6 +10,6 @@ export class ExamKindService {
 
   constructor(private httpsvr : HttpService) { }
   examKindList =() : Observable<Array<ExamKind>> =>{
-      return this.httpsvr.onHttpGet('/api/dic/examkind/examKindList',{});
+      return this.httpsvr.onHttpGet('api/dic/examkind/examKindList',{});
   }
 }

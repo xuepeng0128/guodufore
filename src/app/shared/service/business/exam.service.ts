@@ -25,27 +25,27 @@ export class ExamService {
   constructor(private httpsvr: HttpService) { }
 
   examList=(queryparams : IExamQueryParams) :Observable<Array<Exam>> =>{
-    return this.httpsvr.onHttpGet('/api/business/exam/examList',queryparams);
+    return this.httpsvr.onHttpGet('api/business/exam/examList',queryparams);
   }
   examListTotal =(queryparams : IExamQueryParams) :Observable<number> =>{
-    return this.httpsvr.onHttpGet('/api/business/exam/examListTotal',queryparams).pipe(
+    return this.httpsvr.onHttpGet('api/business/exam/examListTotal',queryparams).pipe(
       map(re => re.total)
     )
   }
 saveExam =(exam : Exam) : Observable<string> =>{
-    return this.httpsvr.onHttpPost('/api/business/exam/saveExam',exam).pipe(
+    return this.httpsvr.onHttpPost('api/business/exam/saveExam',exam).pipe(
       map( re => re.result)
     );;
 }
 
 deleteExam =(examId : string) : Observable<string> =>{
-    return this.httpsvr.onHttpGet('/api/business/exam/deleteExam',{examId}).pipe(
+    return this.httpsvr.onHttpGet('api/business/exam/deleteExam',{examId}).pipe(
       map( re => re.result)
     );;
 }
 
   subExamList =(examId : string ) : Observable<Array<SubExam>> =>{
-    return this.httpsvr.onHttpGet('/api/business/exam/subExamList',{examId}).pipe(
+    return this.httpsvr.onHttpGet('api/business/exam/subExamList',{examId}).pipe(
          map( re =>{
                   let tmpList : Array<SubExam> = new Array<SubExam>();
                   let tmpstudentId : string ='';
@@ -74,7 +74,7 @@ deleteExam =(examId : string) : Observable<string> =>{
   }
 
   initSubExamList=(schoolId : string,classesId: string ,studySubjectId: string) : Observable<Array<SubExam>> =>{
-    return this.httpsvr.onHttpGet('/api/business/exam/initSubExamList',{schoolId,classesId,studySubjectId}).pipe(
+    return this.httpsvr.onHttpGet('api/business/exam/initSubExamList',{schoolId,classesId,studySubjectId}).pipe(
       map( re =>{
         let tmpList : Array<SubExam> = new Array<SubExam>();
         let tmpstudentId : string ='';

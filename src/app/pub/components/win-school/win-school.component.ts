@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {combineLatest, concat, iif, merge, Subject} from 'rxjs';
 import {School} from '../../../entity/School';
 import {SchoolService} from '../../../shared/service/basemsg/school.service';
@@ -7,6 +7,9 @@ import {isNullOrUndefined} from 'util';
 import {MSG_DELETE_ERROR, MSG_SAVE_ERROR, MSG_SAVE_SUCCESS} from '../../../shared/SysMessage';
 import {LoginUser} from '../../../entity/LoginUser';
 import {UserService} from '../../../shared/user.service';
+import {BMapService} from "../../../shared/service/bmap.service";
+
+
 
 @Component({
   selector: 'app-win-school',
@@ -14,7 +17,10 @@ import {UserService} from '../../../shared/user.service';
   styleUrls: ['./win-school.component.css']
 })
 export class WinSchoolComponent implements OnInit {
-  constructor(private schoolsvr: SchoolService, private message: NzMessageService, private usersvr: UserService) { }
+
+  constructor(private schoolsvr: SchoolService, private message: NzMessageService, private usersvr: UserService,
+                private bmapsvr : BMapService
+  ) { }
   @Input() schoolWinOrder$: Subject<{nowState: string , school: School}> = new Subject<{nowState: string , school: School}>() ;
   @Output() onSchoolSaved: EventEmitter<string> = new EventEmitter<string>();
   currentSchool: School = new School({});
@@ -32,7 +38,12 @@ export class WinSchoolComponent implements OnInit {
          this.isSchoolModalShow = true;
          this.nowState = re.nowState;
     });
+    // ------------------------------  地标--------------------------------------//
+
+
   }
+
+
 onSave = () => {
     // 验证
     this.message.remove();
@@ -68,4 +79,6 @@ onSave = () => {
                        }
                });
   }
+
+
 }

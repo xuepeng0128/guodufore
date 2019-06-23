@@ -8,6 +8,8 @@ import {ISchoolQueryResult} from '../../../shared/interface/queryparams/ISchoolQ
 import {ISchoolQueryParams} from '../../../shared/interface/queryparams/ISchoolQueryParams';
 import {CommonService} from '../../../shared/common.service';
 import {isNullOrUndefined} from "util";
+import {BMapService} from "../../../shared/service/bmap.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-school',
@@ -32,9 +34,11 @@ export class SchoolComponent implements OnInit {
   };
   constructor(private schoolsvr: SchoolService, private usersvr: UserService,
               private modalService: NzModalService, private message: NzMessageService,
-              public commonsvr: CommonService) { }
+              public commonsvr: CommonService,  private bmapsvr : BMapService,
+              private  router : Router) { }
 
   ngOnInit() {
+
     this.onQuery();
   }
 
@@ -57,24 +61,22 @@ export class SchoolComponent implements OnInit {
   }
 
 onRegist = () => {
-  this.schoolWinOrder$.next({nowState: 'add', school: null});
+  this.router.navigate(['/frame/corpbasemsg/schooldetail'], {queryParams: {nowState : 'add'}});
+  //this.schoolWinOrder$.next({nowState: 'add', school: null});
 }
   onEdit = (school: ISchoolQueryResult) => {
-    this.schoolWinOrder$.next({nowState: 'edit', school : school as School });
+    this.router.navigate(['/frame/corpbasemsg/schooldetail'], {queryParams: {nowState : 'edit',school: JSON.stringify(school)}});
+   // this.schoolWinOrder$.next({nowState: 'edit', school : school as School });
 
   }
 onSaved = (editstate: string) => {
 
-
-
-
-
-  this.schoolsvr.schoolList(this.queryParams).subscribe(
-    re => this.schoolList = re
-  );
-  if ( editstate === 'add') {
-         this.total += 1;
-  }
+  // this.schoolsvr.schoolList(this.queryParams).subscribe(
+  //   re => this.schoolList = re
+  // );
+  // if ( editstate === 'add') {
+  //        this.total += 1;
+  // }
   }
 onDelete = (school: ISchoolQueryResult) => {
     this.modalService.confirm({
@@ -91,6 +93,5 @@ onDelete = (school: ISchoolQueryResult) => {
         });
       }
     });
-
   }
 }
