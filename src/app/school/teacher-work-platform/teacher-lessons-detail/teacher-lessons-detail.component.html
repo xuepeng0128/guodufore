@@ -28,34 +28,16 @@
       <nz-form-item>
         <nz-form-label [nzSpan]="3"> 课程简介</nz-form-label>
         <nz-form-control [nzSpan]="20">
-          <textarea [(ngModel)]="teacherlessonsvr.currentLesson.memo"  style="width:100%"></textarea>
+          <ueditor  [(ngModel)]="teacherlessonsvr.currentLesson.memo"
+                    [config]="{ wordCount: true }"
+                    [loadingTip]="'加载中……'"
+                    (onPreReady)="onMemoPreReady($event)"
+                    #fullMemo ></ueditor>
         </nz-form-control>
       </nz-form-item>
     </div>
   </div>
-  <div nz-row>
-    <div nz-col [nzSpan]="24">
-      <nz-form-item>
-        <nz-form-label [nzSpan]="3"> 宣传画</nz-form-label>
-        <nz-form-control [nzSpan]="20">
-          <nz-upload
-            class="avatar"
-            name="file"
-            [nzAction]="uploadMediaPath"
-            nzListType="picture-card"
-            [nzShowUploadList]="false"
-            (nzChange)="handlepicUrlChange($event)"
-          >
-            <ng-container *ngIf="teacherlessonsvr.currentLesson.picUrl===''">
-              <i class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></i>
-              <div class="ant-upload-text">上传</div>
-            </ng-container>
-            <img *ngIf="teacherlessonsvr.currentLesson.picUrl!==''" [src]="teacherlessonsvr.currentLesson.picUrl" class="avatar" />
-          </nz-upload>
-        </nz-form-control>
-      </nz-form-item>
-    </div>
-  </div>
+
   <div nz-row>
     <div nz-col [nzSpan]="24">
       <nz-form-item>
@@ -110,7 +92,7 @@
                 #full ></ueditor>
     </div>
     <div nz-col [nzSpan]="24" [hidden]="editingLesson.mode !==2">
-      <div nz-col [nzSpan]="4" >
+         <div nz-col [nzSpan]="8" >
         <nz-upload
           class="avatar"
           name="file"
@@ -127,6 +109,27 @@
           <video *ngIf="editingLesson.videoUrl!==''"   [src]="editingLesson.videoUrl" class="avatar" controls="controls" ></video>
         </nz-upload>
       </div>
+         <div nz-col [nzSpan]="8">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="10"> 宣传画</nz-form-label>
+            <nz-form-control [nzSpan]="10">
+              <nz-upload
+                class="avatar"
+                name="file"
+                [nzAction]="uploadMediaPath"
+                nzListType="picture-card"
+                [nzShowUploadList]="false"
+                (nzChange)="handlepicUrlChange($event)"
+              >
+                <ng-container *ngIf="editingLesson.picUrl===''">
+                  <i class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></i>
+                  <div class="ant-upload-text">上传</div>
+                </ng-container>
+                <img *ngIf="editingLesson.picUrl!==''" [src]="editingLesson.picUrl" class="avatar" />
+              </nz-upload>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
     </div>
     <div nz-col [nzSpan]="24" [hidden]="editingLesson.mode !==3">
       <div nz-col [nzSpan]="4" >
@@ -148,6 +151,36 @@
     </div>
   </div>
 
+  <nz-modal [(nzVisible)]="isMemoImgUpModalShow"
+            [nzTitle]="'上传图片'"
+            [nzCancelText]="null"
+            (nzOnCancel)="isMemoImgUpModalShow=false"
+            [nzOkText]="null"
+            [nzMaskClosable]="false"
+            [nzWidth]="300"
+
+  >
+
+    <div nz-row style="text-align: center">
+      <div nz-col [nzSpan]="24" >
+        <nz-upload
+          class="avatar"
+          name="file"
+          [nzAction]="uploadMediaPath"
+          nzListType="picture-card"
+          [nzShowUploadList]="false"
+          [nzFileType]="'image/png,image/jpeg,image/gif,image/bmp'"
+          (nzChange)="handlememoChange($event)"
+        >
+          <ng-container *ngIf="iconUrl===''">
+            <i class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></i>
+            <div class="ant-upload-text">上传</div>
+          </ng-container>
+          <img *ngIf="iconUrl!==''" [src]="iconUrl" class="avatar" />
+        </nz-upload>
+      </div>
+    </div>
+  </nz-modal>
 
   <nz-modal [(nzVisible)]="isImgUpModalShow"
             [nzTitle]="'上传图片'"

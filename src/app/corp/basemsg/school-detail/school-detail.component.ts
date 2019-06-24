@@ -1,14 +1,14 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {SchoolService} from "../../../shared/service/basemsg/school.service";
-import {NzMessageService} from "ng-zorro-antd";
-import {UserService} from "../../../shared/user.service";
-import {BMapService} from "../../../shared/service/bmap.service";
-import {iif, Subject} from "rxjs";
-import {School} from "../../../entity/School";
-import {LoginUser} from "../../../entity/LoginUser";
-import {isNullOrUndefined} from "util";
-import {MSG_SAVE_ERROR, MSG_SAVE_SUCCESS} from "../../../shared/SysMessage";
-import {ActivatedRoute} from "@angular/router";
+import {SchoolService} from '../../../shared/service/basemsg/school.service';
+import {NzMessageService} from 'ng-zorro-antd';
+import {UserService} from '../../../shared/user.service';
+import {BMapService} from '../../../shared/service/bmap.service';
+import {iif, Subject} from 'rxjs';
+import {School} from '../../../entity/School';
+import {LoginUser} from '../../../entity/LoginUser';
+import {isNullOrUndefined} from 'util';
+import {MSG_SAVE_ERROR, MSG_SAVE_SUCCESS} from '../../../shared/SysMessage';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-school-detail',
@@ -17,7 +17,7 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class SchoolDetailComponent implements OnInit {
   constructor(private schoolsvr: SchoolService, private message: NzMessageService,
-              private usersvr: UserService, private bmapsvr : BMapService,
+              private usersvr: UserService, private bmapsvr: BMapService,
               private route: ActivatedRoute
   ) { }
   currentSchool: School = new School({});
@@ -27,11 +27,12 @@ export class SchoolDetailComponent implements OnInit {
     this.nowState = this.route.snapshot.queryParams.nowState as string;
     setTimeout(() => {
       this.bmapsvr.initMap('baidumap');
+      this.bmapsvr.onGetPos(this.onGetPOS);
     }, 1000);
 
 
 
-      if ( this.nowState === 'add') {
+    if ( this.nowState === 'add') {
         this.currentSchool = new School({ cityId: '0' , districtId : '0', saleManId: '0', train : false});
       } else if ( this.nowState === 'edit') {
         this.currentSchool = JSON.parse(this.route.snapshot.queryParams.school);
@@ -40,7 +41,7 @@ export class SchoolDetailComponent implements OnInit {
 
 
     // ------------------------------  地标--------------------------------------//
-     this.bmapsvr.onSetMapCenter('370000');
+    this.bmapsvr.onSetMapCenter('370000');
 
   }
 
@@ -73,11 +74,20 @@ export class SchoolDetailComponent implements OnInit {
       re => {
         if (!isNullOrUndefined(re)) {
           this.message.create('success', MSG_SAVE_SUCCESS);
-
-
         } else {
           this.message.create('error', MSG_SAVE_ERROR);
         }
       });
   }
+
+
+ onGetPOS = (value: {lng: number, lat: number}) => {
+      this.currentSchool.latitude = value.lat;
+      this.currentSchool.longitude = value.lng;
+ }
+  onBack = () => {
+    window.history.back();
+  }
+
+
 }

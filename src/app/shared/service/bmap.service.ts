@@ -88,6 +88,11 @@ export class BMapService {
     }, cityname || '济南市');
   }
 
+  onGetPos = (callback: ( value: {lng: number, lat: number}) => void ) => {
+    this.bMap.addEventListener('click', (e) => {
+      callback({lng: parseFloat(e.point.lng), lat : parseFloat(e.point.lat)});
+    });
+  }
 
 
 // ---------------------------- 计算坐标间的距离--------------------------//

@@ -95,7 +95,39 @@
   </div>
   <div nz-row>
     <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">标记位置:</nz-form-label>
+        <nz-form-control [nzSpan]="9">
+          <nz-input-number
+            [(ngModel)]="currentSchool.longitude"
+            [nzMin]="1"
+            [nzMax]="200"
+            [nzStep]="0.000001"
+            [nzPlaceHolder]="'经度'"
+          ></nz-input-number>
+        </nz-form-control>
+        <nz-form-control [nzSpan]="9">
+          <nz-input-number
+            [(ngModel)]="currentSchool.latitude"
+            [nzMin]="1"
+            [nzMax]="200"
+            [nzStep]="0.000001"
+            [nzPlaceHolder]="'纬度'"
+          ></nz-input-number>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row>
+    <div nz-col [nzSpan]="12">
       <div id="baidumap" style="width:600px; height :400px"></div>
+    </div>
+  </div>
+
+  <div class="m-t-sm text-center" nz-row>
+    <div nz-col [nzSpan]="24" class="text-center">
+      <a href="javaScript:;" class="ant-btn ant-btn-primary" (click)="onSave()">保存</a>
+      <a href="javaScript:;" class="ant-btn ant-btn-primary" (click)="onBack()">返回</a>
     </div>
   </div>
 </div>
